@@ -1,15 +1,12 @@
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
-import org.openrndr.draw.Drawer
-import org.openrndr.draw.loadFont
-import org.openrndr.draw.loadImage
-import org.openrndr.draw.tint
+import org.openrndr.draw.*
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
+import org.openrndr.math.Vector2
 import kotlin.math.cos
 import kotlin.math.sin
 
 fun main() = application {
-    val disc = Disc(100.0)
     configure {
         width = 768
         height = 576
@@ -18,31 +15,43 @@ fun main() = application {
     program {
         val image = loadImage("data/images/pm5544.png")
         val font = loadFont("data/fonts/default.otf", 64.0)
+        val ship = Ship(width/8.0)
 
         extend {
             drawer.drawStyle.colorMatrix = tint(ColorRGBa.WHITE.shade(0.2))
             drawer.image(image)
 
-//            drawer.fill = ColorRGBa.PINK
-//            drawer.circle(cos(seconds) * width / 4.0 + width / 2.0, sin( seconds) * height / 4.0 + height / 2.0, 140.0)
-            disc.draw(drawer,seconds)
-            drawer.fontMap = font
-            drawer.fill = ColorRGBa.WHITE
-            drawer.text("OPENRNDR", width / 2.0, height / 2.0)
+            drawer.fill = null
+            drawer.stroke = ColorRGBa.WHITE
+            drawer.circle(width/2.0,height/2.0, width/4.0)
+            ship.cycle(drawer,seconds)
         }
     }
 }
 
-class Disc(private val radius: Double) {
-    fun draw(drawer: Drawer, seconds: Double) {
-        val xMul = drawer.width/4.0
-        val yMul = drawer.height/4.0
-        val xCenter = drawer.width/2.0
-        val yCenter = drawer.height/2.0
-        val x = cos(seconds)*xMul + xCenter
-        val y = sin(seconds)*yMul + yCenter
-        val rad = radius*cos(seconds)
+class Ship(private val radius: Double) {
+    var realPosition: Vector2 = Vector2(0.0,0.0)
+
+    fun cycle(drawer: Drawer, seconds: Double) {
+        drawer.isolated {
+            update(drawer, seconds)
+            draw(drawer)
+        }
+    }
+
+    private fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
-        drawer.circle(x,y,rad)
+        drawer.rectangle(-radius/2.0,-radius/2.0, radius, radius)
+    }
+
+    private fun update(drawer: Drawer, seconds: Double) {
+        val sunPosition = Vector2(drawer.width/2.0, drawer.height/2.0)
+        val orbitRadius = drawer.width/4.0
+        val orbitPosition = Vector2(cos(seconds), sin(seconds))*orbitRadius
+        realPosition = orbitPosition+sunPosition
+        drawer.translate(realPosition)
+        val size = cos(seconds)
+        drawer.scale(size,size)
+        drawer.rotate(45.0+Math.toDegrees(seconds))
     }
 }
