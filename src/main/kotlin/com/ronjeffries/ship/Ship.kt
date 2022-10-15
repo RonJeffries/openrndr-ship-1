@@ -11,20 +11,24 @@ import kotlin.math.sin
 class Ship(private val radius: Double) {
     var realPosition: Vector2 = Vector2(0.0, 0.0)
     var pointing: Double = 0.0
+    var velocity = Vector2(0.0, 0.0)
 
-    fun cycle(drawer: Drawer, seconds: Double) {
+    fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
         drawer.isolated {
-            update(drawer, seconds)
+            update(deltaTime)
             draw(drawer)
         }
     }
 
     private fun draw(drawer: Drawer) {
+        val worldScale = drawer.width / 10000.0
+        val center = Vector2(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
+        drawer.translate(realPosition*worldScale)
         drawer.rectangle(-radius/2.0,-radius/2.0, radius, radius)
     }
 
-    private fun update(drawer: Drawer, seconds: Double) {
+    private fun OLDupdate(drawer: Drawer, seconds: Double) {
         val sunPosition = Vector2(drawer.width / 2.0, drawer.height / 2.0)
         val orbitRadius = drawer.width/4.0
         val orbitPosition = Vector2(cos(seconds), sin(seconds)) *orbitRadius
@@ -35,7 +39,19 @@ class Ship(private val radius: Double) {
         drawer.rotate(45.0+Math.toDegrees(seconds))
     }
 
-    fun step() {
-        realPosition += Vector2(1.0,1.0)
+    fun update(deltaTime: Double) {
+        val proposedPosition = realPosition + velocity*deltaTime
+        realPosition = cap(proposedPosition)
+    }
+
+    fun cap(v: Vector2): Vector2 {
+        return Vector2(cap(v.x), cap(v.y))
+    }
+
+    fun cap(coord: Double): Double {
+        return (coord+10000.0)%10000.0
+//        if (coord < 0.0) return coord + 10000.0
+//        if (coord > 10000.0) return coord - 10000.0
+//        return coord
     }
 }
