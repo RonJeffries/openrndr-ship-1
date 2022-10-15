@@ -21,10 +21,9 @@ class Ship(private val radius: Double) {
     }
 
     private fun draw(drawer: Drawer) {
-        val worldScale = drawer.width / 10000.0
         val center = Vector2(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
-        drawer.translate(realPosition*worldScale)
+        drawer.translate(realPosition)
         drawer.rectangle(-radius/2.0,-radius/2.0, radius, radius)
     }
 
