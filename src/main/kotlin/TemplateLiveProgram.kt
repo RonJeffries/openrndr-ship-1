@@ -1,5 +1,6 @@
 import org.openrndr.application
 import org.openrndr.color.ColorRGBa
+import org.openrndr.extra.color.presets.INDIAN_RED
 import org.openrndr.extra.olive.oliveProgram
 
 /**
@@ -16,7 +17,7 @@ fun main() = application {
     }
     oliveProgram {
         extend {
-            drawer.clear(ColorRGBa.PINK)
+            drawer.clear(ColorRGBa.INDIAN_RED)
         }
     }
 }
