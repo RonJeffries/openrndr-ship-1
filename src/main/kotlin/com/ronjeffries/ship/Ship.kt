@@ -8,10 +8,11 @@ import org.openrndr.math.Vector2
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Ship(private val radius: Double) {
+class Ship(private val radius: Double, private val controls: Controls = Controls()) {
     var realPosition: Vector2 = Vector2(0.0, 0.0)
     var pointing: Double = 0.0
     var velocity = Vector2(0.0, 0.0)
+    var acceleration = Vector2(60.0,0.0)
 
     fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
         drawer.isolated {
@@ -39,6 +40,7 @@ class Ship(private val radius: Double) {
     }
 
     fun update(deltaTime: Double) {
+        if (controls.accelerate) velocity += acceleration*deltaTime
         val proposedPosition = realPosition + velocity*deltaTime
         realPosition = cap(proposedPosition)
     }
