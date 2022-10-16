@@ -6,7 +6,7 @@ import org.openrndr.math.Vector2
 
 
 class ShipTest {
-    private val tick = 1.0/60/0
+    private val tick = 1.0/60.0
     @Test
     fun `Ship Happens`() {
         val ship = Ship(100.0)
@@ -57,6 +57,5 @@ class ShipTest {
         assertThat(actual.y)
             .describedAs("$description y")
             .isEqualTo(should.y, within(0.0001))
-
     }
 }
