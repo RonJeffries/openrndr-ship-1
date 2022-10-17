@@ -13,6 +13,7 @@ class Ship(private val radius: Double, private val controls: Controls = Controls
     var pointing: Double = 0.0
     var velocity = Vector2(0.0, 0.0)
     var acceleration = Vector2(60.0,0.0)
+    var rotationSpeed = 360.0
 
     fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
         drawer.isolated {
@@ -40,9 +41,14 @@ class Ship(private val radius: Double, private val controls: Controls = Controls
     }
 
     fun update(deltaTime: Double) {
-        if (controls.accelerate) velocity += acceleration*deltaTime
+        if (controls.left) pointing = pointing + rotationSpeed*deltaTime
+        if (controls.accelerate) velocity += rotatedAcceleration()*deltaTime
         val proposedPosition = realPosition + velocity*deltaTime
         realPosition = cap(proposedPosition)
+    }
+
+    fun rotatedAcceleration(): Vector2 {
+        return acceleration.rotate(pointing)
     }
 
     fun cap(v: Vector2): Vector2 {

@@ -50,12 +50,33 @@ class ShipTest {
         checkVector(ship.realPosition, Vector2(1.0/60.0, 0.0), "position")
     }
 
+    @Test
+    fun `ship can turn`() {
+        val control = Controls()
+        val ship = Ship(100.0, control)
+        control.left = true
+        ship.update(tick*15)
+        assertThat(ship.pointing).isEqualTo(90.0, within(0.01))
+        control.left = false
+        control.accelerate  = true
+        ship.update(tick*60)
+        checkVector(ship.velocity, Vector2(0.0,60.0), "rotated velocity")
+    }
+
+    @Test
+    fun `speed of light`() {
+        val control = Controls()
+        val ship = Ship(100.0, control)
+        control.accelerate = true
+
+    }
+
     private fun checkVector(actual:Vector2, should: Vector2, description: String) {
         assertThat(actual.x)
-            .describedAs("$description x")
+            .describedAs("$description x of (${actual.x},${actual.y})")
             .isEqualTo(should.x, within(0.0001))
         assertThat(actual.y)
-            .describedAs("$description y")
+            .describedAs("$description y of (${actual.x},${actual.y})")
             .isEqualTo(should.y, within(0.0001))
     }
 }
