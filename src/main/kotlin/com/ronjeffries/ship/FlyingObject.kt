@@ -64,4 +64,25 @@ class FlyingObject(
         val allowed = killRadius + other.killRadius
         return dist < allowed
     }
+
+    companion object {
+        fun asteroid(pos:Vector2, vel: Vector2): FlyingObject {
+            return FlyingObject(
+                position = pos,
+                velocity = vel,
+                acceleration = Vector2.ZERO,
+                killRadius = 1000.0
+            )
+        }
+
+        fun ship(pos:Vector2, control:Controls= Controls()): FlyingObject {
+            return FlyingObject(
+                position = pos,
+                velocity = Vector2.ZERO,
+                acceleration = Vector2(60.0, 0.0),
+                killRadius = 100.0,
+                controls = control
+            )
+        }
+    }
 }
