@@ -9,7 +9,12 @@ class AsteroidTest {
     private val tick = 1.0/60.0
     @Test
     fun `Asteroids Exist and Move`() {
-        val asteroid = Asteroid(Vector2(15.0,30.0))
+        val asteroid = FlyingObject(
+            Vector2.ZERO,
+            Vector2(15.0,30.0),
+            Vector2.ZERO,
+            1000.0
+        )
         asteroid.update(tick*60)
         checkVector(asteroid.position, Vector2(15.0, 30.0),"asteroid position")
     }

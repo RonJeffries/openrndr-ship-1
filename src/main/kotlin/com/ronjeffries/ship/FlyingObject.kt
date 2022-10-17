@@ -59,9 +59,9 @@ class FlyingObject(
         return (coord+10000.0)%10000.0
     }
 
-    fun collides(asteroid: Asteroid):Boolean {
-        val dist = position.distanceTo(asteroid.position)
-        val allowed = killRadius + asteroid.killRadius
+    fun collides(other: FlyingObject):Boolean {
+        val dist = position.distanceTo(other.position)
+        val allowed = killRadius + other.killRadius
         return dist < allowed
     }
 }
