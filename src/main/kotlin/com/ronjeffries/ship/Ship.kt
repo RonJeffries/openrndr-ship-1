@@ -42,6 +42,7 @@ class Ship(private val radius: Double, private val controls: Controls = Controls
 
     fun update(deltaTime: Double) {
         if (controls.left) pointing = pointing + rotationSpeed*deltaTime
+        if (controls.right) pointing = pointing - rotationSpeed*deltaTime
         if (controls.accelerate) velocity += rotatedAcceleration()*deltaTime
         val proposedPosition = realPosition + velocity*deltaTime
         realPosition = cap(proposedPosition)

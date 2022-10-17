@@ -51,7 +51,7 @@ class ShipTest {
     }
 
     @Test
-    fun `ship can turn`() {
+    fun `ship can turn left`() {
         val control = Controls()
         val ship = Ship(100.0, control)
         control.left = true
@@ -61,6 +61,15 @@ class ShipTest {
         control.accelerate  = true
         ship.update(tick*60)
         checkVector(ship.velocity, Vector2(0.0,60.0), "rotated velocity")
+    }
+
+    @Test
+    fun `ship can turn right`() {
+        val control = Controls()
+        val ship = Ship(100.0, control)
+        control.right = true
+        ship.update(tick*10)
+        assertThat(ship.pointing).isEqualTo(-60.0, within(0.01))
     }
 
     @Test
