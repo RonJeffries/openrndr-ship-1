@@ -5,14 +5,15 @@ import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import org.openrndr.math.Vector2
-import kotlin.math.cos
-import kotlin.math.sin
 
-class Ship(private val radius: Double, private val controls: Controls = Controls()) {
-    var realPosition: Vector2 = Vector2(0.0, 0.0)
+class FlyingObject(
+    var position: Vector2,
+    var velocity: Vector2,
+    private val acceleration: Vector2,
+    val killRadius: Double,
+    private val controls: Controls = Controls()
+) {
     var pointing: Double = 0.0
-    var velocity = Vector2(0.0, 0.0)
-    var acceleration = Vector2(60.0,0.0)
     var rotationSpeed = 360.0
 
     fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
@@ -25,8 +26,8 @@ class Ship(private val radius: Double, private val controls: Controls = Controls
     private fun draw(drawer: Drawer) {
         val center = Vector2(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
-        drawer.translate(realPosition)
-        drawer.rectangle(-radius/2.0,-radius/2.0, radius, radius)
+        drawer.translate(position)
+        drawer.rectangle(-killRadius /2.0,-killRadius /2.0, killRadius, killRadius)
     }
 
     fun update(deltaTime: Double) {
@@ -35,8 +36,8 @@ class Ship(private val radius: Double, private val controls: Controls = Controls
         if (controls.accelerate) {
             velocity = limitToSpeedOfLight(velocity + rotatedAcceleration()*deltaTime)
         }
-        val proposedPosition = realPosition + velocity*deltaTime
-        realPosition = cap(proposedPosition)
+        val proposedPosition = position + velocity*deltaTime
+        position = cap(proposedPosition)
     }
 
     val SPEED_OF_LIGHT = 5000.0
@@ -56,8 +57,11 @@ class Ship(private val radius: Double, private val controls: Controls = Controls
 
     fun cap(coord: Double): Double {
         return (coord+10000.0)%10000.0
-//        if (coord < 0.0) return coord + 10000.0
-//        if (coord > 10000.0) return coord - 10000.0
-//        return coord
+    }
+
+    fun collides(asteroid: Asteroid):Boolean {
+        val dist = position.distanceTo(asteroid.position)
+        val allowed = killRadius + asteroid.killRadius
+        return dist < allowed
     }
 }
