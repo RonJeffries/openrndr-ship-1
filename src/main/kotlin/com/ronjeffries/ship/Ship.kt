@@ -29,23 +29,21 @@ class Ship(private val radius: Double, private val controls: Controls = Controls
         drawer.rectangle(-radius/2.0,-radius/2.0, radius, radius)
     }
 
-    private fun OLDupdate(drawer: Drawer, seconds: Double) {
-        val sunPosition = Vector2(drawer.width / 2.0, drawer.height / 2.0)
-        val orbitRadius = drawer.width/4.0
-        val orbitPosition = Vector2(cos(seconds), sin(seconds)) *orbitRadius
-        realPosition = orbitPosition+sunPosition
-        drawer.translate(realPosition)
-        val size = cos(seconds)
-        drawer.scale(size,size)
-        drawer.rotate(45.0+Math.toDegrees(seconds))
-    }
-
     fun update(deltaTime: Double) {
         if (controls.left) pointing = pointing + rotationSpeed*deltaTime
         if (controls.right) pointing = pointing - rotationSpeed*deltaTime
-        if (controls.accelerate) velocity += rotatedAcceleration()*deltaTime
+        if (controls.accelerate) {
+            velocity = limitToSpeedOfLight(velocity + rotatedAcceleration()*deltaTime)
+        }
         val proposedPosition = realPosition + velocity*deltaTime
         realPosition = cap(proposedPosition)
+    }
+
+    val SPEED_OF_LIGHT = 5000.0
+    fun limitToSpeedOfLight(v: Vector2): Vector2 {
+        val speed = v.length
+        if (speed < SPEED_OF_LIGHT) return v
+        else return v*(SPEED_OF_LIGHT/speed)
     }
 
     fun rotatedAcceleration(): Vector2 {

@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
+import java.lang.Math.*
 
 
 class ShipTest {
@@ -76,16 +77,25 @@ class ShipTest {
     fun `speed of light`() {
         val control = Controls()
         val ship = Ship(100.0, control)
+        control.left = true
+        ship.update(tick*10) // 60 degrees north east ish
+        control.left = false
         control.accelerate = true
-
+        ship.update(100.0) // long time
+        val v = ship.velocity
+        val speed = v.length
+        assertThat(speed).isEqualTo(5000.0, within(1.0))
+        val radians60 = toRadians(60.0)
+        val expected = Vector2(cos(radians60), sin(radians60))*5000.0
+        checkVector(v, expected, "velocity", 1.0)
     }
 
-    private fun checkVector(actual:Vector2, should: Vector2, description: String) {
+    private fun checkVector(actual:Vector2, should: Vector2, description: String, delta: Double = 0.0001) {
         assertThat(actual.x)
             .describedAs("$description x of (${actual.x},${actual.y})")
-            .isEqualTo(should.x, within(0.0001))
+            .isEqualTo(should.x, within(delta))
         assertThat(actual.y)
             .describedAs("$description y of (${actual.x},${actual.y})")
-            .isEqualTo(should.y, within(0.0001))
+            .isEqualTo(should.y, within(delta))
     }
 }
