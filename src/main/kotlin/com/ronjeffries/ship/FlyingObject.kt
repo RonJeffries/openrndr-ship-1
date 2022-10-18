@@ -5,6 +5,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import org.openrndr.math.Vector2
+import java.lang.Math.random
 
 class FlyingObject(
     var position: Vector2,
@@ -73,9 +74,10 @@ class FlyingObject(
         if (splitCount< 0) return listOf()
         val newGuy = FlyingObject.asteroid(
             this.position,
-            this.velocity
+            this.velocity.rotate(random()*360.0)
         )
         killRadius /= 2.0
+        velocity = velocity.rotate(random()*360.0)
         newGuy.killRadius = killRadius
         return listOf(this, newGuy)
     }

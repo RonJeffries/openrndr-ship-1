@@ -35,4 +35,22 @@ class AsteroidTest {
         val eighthSize = quarter.split()
         assertThat(eighthSize.size).isEqualTo(0)
     }
+
+    @Test
+    fun `asteroids get new direction on split`() {
+        val startingV = Vector2(100.0,0.0)
+        val full = FlyingObject.asteroid(
+            pos = Vector2.ZERO,
+            vel = startingV
+        )
+        var v = full.velocity
+        assertThat(v.length).isEqualTo(100.0, within(1.0))
+        assertThat(v).isEqualTo(startingV)
+        val halfSize: List<FlyingObject> = full.split()
+        halfSize.forEach {
+            val v = it.velocity
+            assertThat(v.length).isEqualTo(100.0, within(1.0))
+            assertThat(v).isNotEqualTo(startingV)
+        }
+    }
 }
