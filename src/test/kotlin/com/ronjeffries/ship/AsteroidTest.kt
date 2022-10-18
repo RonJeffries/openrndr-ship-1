@@ -23,12 +23,15 @@ class AsteroidTest {
             pos = Vector2.ZERO,
             vel = Vector2.ZERO
         )
+        val radius = full.killRadius // <---
         val halfSize: List<FlyingObject> = full.split()
         assertThat(halfSize.size).isEqualTo(2)
         val half = halfSize.first()
+        assertThat(half.killRadius).isEqualTo(radius/2.0) // <---
         val quarterSize = half.split()
         assertThat(quarterSize.size).isEqualTo(2)
         val quarter = quarterSize.first()
+        assertThat(half.killRadius).isEqualTo(radius/4.0) // <---
         val eighthSize = quarter.split()
         assertThat(eighthSize.size).isEqualTo(0)
     }

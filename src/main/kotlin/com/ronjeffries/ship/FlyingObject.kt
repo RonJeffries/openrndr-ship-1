@@ -10,7 +10,7 @@ class FlyingObject(
     var position: Vector2,
     var velocity: Vector2,
     private val acceleration: Vector2,
-    val killRadius: Double,
+    var killRadius: Double,
     private val controls: Controls = Controls()
 ) {
     var pointing: Double = 0.0
@@ -73,6 +73,8 @@ class FlyingObject(
             this.position,
             this.velocity
         )
+        killRadius /= 2.0
+        newGuy.killRadius = killRadius
         return listOf(this, newGuy)
     }
 
