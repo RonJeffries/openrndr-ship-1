@@ -10,9 +10,11 @@ class FlyingObject(
     var position: Vector2,
     var velocity: Vector2,
     private val acceleration: Vector2,
-    var killRadius: Double,
+    killRad: Double,
     private val controls: Controls = Controls()
 ) {
+    var killRadius = killRad
+        private set
     var pointing: Double = 0.0
     var rotationSpeed = 360.0
     var splitCount = 2
@@ -84,7 +86,7 @@ class FlyingObject(
                 position = pos,
                 velocity = vel,
                 acceleration = Vector2.ZERO,
-                killRadius = 1000.0
+                killRad = 1000.0
             )
         }
 
@@ -93,7 +95,7 @@ class FlyingObject(
                 position = pos,
                 velocity = Vector2.ZERO,
                 acceleration = Vector2(60.0, 0.0),
-                killRadius = 100.0,
+                killRad = 100.0,
                 controls = control
             )
         }

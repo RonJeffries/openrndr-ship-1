@@ -19,7 +19,7 @@ class UniverseTest {
             position = Vector2.ZERO,
             velocity = Vector2.ZERO,
             acceleration = Vector2.ZERO,
-            killRadius = 1000.0
+            killRad = 1000.0
         )
         assertThat(ship.collides(asteroid)).describedAs("on top").isEqualTo(true)
         val tooFar = Vector2(ship.killRadius + asteroid.killRadius + 1, 0.0)
