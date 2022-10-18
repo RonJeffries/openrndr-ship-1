@@ -70,11 +70,11 @@ class FlyingObject(
     fun split(): List<FlyingObject> {
         if (splitCount < 1) return listOf()
         val meSplit = asSplit()
-        val newGuy = twin()
-        return listOf(this, newGuy)
+        val newGuy = meSplit.asTwin()
+        return listOf(meSplit, newGuy)
     }
 
-    private fun twin() = asteroid(
+    private fun asTwin() = asteroid(
         pos = this.position,
         vel = this.velocity.rotate(random() * 360.0),
         killRad = this.killRadius,
