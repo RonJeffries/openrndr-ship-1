@@ -75,10 +75,10 @@ class FlyingObject(
     }
 
     private fun asTwin() = asteroid(
-        pos = this.position,
-        vel = this.velocity.rotate(random() * 360.0),
-        killRad = this.killRadius,
-        splitCt = this.splitCount
+        pos = position,
+        vel = velocity.rotate(random() * 360.0),
+        killRad = killRadius,
+        splitCt = splitCount
     )
 
     fun update(deltaTime: Double) {
