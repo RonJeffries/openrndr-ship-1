@@ -21,6 +21,13 @@ class FlyingObject(
     var rotationSpeed = 360.0
     var splitCount = splitCt
 
+    private fun asSplit(): FlyingObject {
+        splitCount -= 1
+        killRadius /= 2.0
+        velocity = velocity.rotate(random() * 360.0)
+        return this
+    }
+
     fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
         drawer.isolated {
             update(deltaTime)
@@ -35,32 +42,11 @@ class FlyingObject(
         drawer.rectangle(-killRadius /2.0,-killRadius /2.0, killRadius, killRadius)
     }
 
-    fun update(deltaTime: Double) {
-        if (controls.left) pointing = pointing + rotationSpeed*deltaTime
-        if (controls.right) pointing = pointing - rotationSpeed*deltaTime
-        if (controls.accelerate) {
-            velocity = limitToSpeedOfLight(velocity + rotatedAcceleration()*deltaTime)
-        }
-        val proposedPosition = position + velocity*deltaTime
-        position = cap(proposedPosition)
-    }
-
-    val SPEED_OF_LIGHT = 5000.0
-    fun limitToSpeedOfLight(v: Vector2): Vector2 {
-        val speed = v.length
-        if (speed < SPEED_OF_LIGHT) return v
-        else return v*(SPEED_OF_LIGHT/speed)
-    }
-
-    fun rotatedAcceleration(): Vector2 {
-        return acceleration.rotate(pointing)
-    }
-
-    fun cap(v: Vector2): Vector2 {
+    private fun cap(v: Vector2): Vector2 {
         return Vector2(cap(v.x), cap(v.y))
     }
 
-    fun cap(coord: Double): Double {
+    private fun cap(coord: Double): Double {
         return (coord+10000.0)%10000.0
     }
 
@@ -70,20 +56,39 @@ class FlyingObject(
         return dist < allowed
     }
 
+    val SPEED_OF_LIGHT = 5000.0
+    private fun limitToSpeedOfLight(v: Vector2): Vector2 {
+        val speed = v.length
+        if (speed < SPEED_OF_LIGHT) return v
+        else return v*(SPEED_OF_LIGHT/speed)
+    }
+
+    private fun rotatedAcceleration(): Vector2 {
+        return acceleration.rotate(pointing)
+    }
+
     fun split(): List<FlyingObject> {
         if (splitCount < 1) return listOf()
-
-        splitCount -= 1
-        killRadius /= 2.0
-        velocity = velocity.rotate(random()*360.0)
-
-        val newGuy = FlyingObject.asteroid(
-            pos = this.position,
-            vel = this.velocity.rotate(random()*360.0),
-            killRad = this.killRadius,
-            splitCt = this.splitCount
-        )
+        val meSplit = asSplit()
+        val newGuy = twin()
         return listOf(this, newGuy)
+    }
+
+    private fun twin() = asteroid(
+        pos = this.position,
+        vel = this.velocity.rotate(random() * 360.0),
+        killRad = this.killRadius,
+        splitCt = this.splitCount
+    )
+
+    fun update(deltaTime: Double) {
+        if (controls.left) pointing = pointing + rotationSpeed*deltaTime
+        if (controls.right) pointing = pointing - rotationSpeed*deltaTime
+        if (controls.accelerate) {
+            velocity = limitToSpeedOfLight(velocity + rotatedAcceleration()*deltaTime)
+        }
+        val proposedPosition = position + velocity*deltaTime
+        position = cap(proposedPosition)
     }
 
     companion object {
