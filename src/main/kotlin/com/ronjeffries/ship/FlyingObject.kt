@@ -12,13 +12,14 @@ class FlyingObject(
     var velocity: Vector2,
     private val acceleration: Vector2,
     killRad: Double,
+    splitCt: Int = 0,
     private val controls: Controls = Controls()
 ) {
     var killRadius = killRad
         private set
     var pointing: Double = 0.0
     var rotationSpeed = 360.0
-    var splitCount = 2
+    var splitCount = splitCt
 
     fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
         drawer.isolated {
@@ -70,25 +71,29 @@ class FlyingObject(
     }
 
     fun split(): List<FlyingObject> {
+        if (splitCount < 1) return listOf()
+
         splitCount -= 1
-        if (splitCount< 0) return listOf()
-        val newGuy = FlyingObject.asteroid(
-            this.position,
-            this.velocity.rotate(random()*360.0)
-        )
         killRadius /= 2.0
         velocity = velocity.rotate(random()*360.0)
-        newGuy.killRadius = killRadius
+
+        val newGuy = FlyingObject.asteroid(
+            pos = this.position,
+            vel = this.velocity.rotate(random()*360.0),
+            killRad = this.killRadius,
+            splitCt = this.splitCount
+        )
         return listOf(this, newGuy)
     }
 
     companion object {
-        fun asteroid(pos:Vector2, vel: Vector2): FlyingObject {
+        fun asteroid(pos:Vector2, vel: Vector2, killRad: Double = 1000.0, splitCt: Int = 2): FlyingObject {
             return FlyingObject(
                 position = pos,
                 velocity = vel,
                 acceleration = Vector2.ZERO,
-                killRad = 1000.0
+                killRad = killRad,
+                splitCt = splitCt
             )
         }
 
