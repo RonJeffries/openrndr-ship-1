@@ -28,6 +28,13 @@ class FlyingObject(
         return this
     }
 
+    private fun asTwin() = asteroid(
+        pos = position,
+        vel = velocity.rotate(random() * 360.0),
+        killRad = killRadius,
+        splitCt = splitCount
+    )
+
     fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
         drawer.isolated {
             update(deltaTime)
@@ -73,13 +80,6 @@ class FlyingObject(
         val newGuy = meSplit.asTwin()
         return listOf(meSplit, newGuy)
     }
-
-    private fun asTwin() = asteroid(
-        pos = position,
-        vel = velocity.rotate(random() * 360.0),
-        killRad = killRadius,
-        splitCt = splitCount
-    )
 
     fun update(deltaTime: Double) {
         if (controls.left) pointing = pointing + rotationSpeed*deltaTime
