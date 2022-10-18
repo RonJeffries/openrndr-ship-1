@@ -15,6 +15,7 @@ class FlyingObject(
 ) {
     var pointing: Double = 0.0
     var rotationSpeed = 360.0
+    var splitCount = 2
 
     fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
         drawer.isolated {
@@ -63,6 +64,16 @@ class FlyingObject(
         val dist = position.distanceTo(other.position)
         val allowed = killRadius + other.killRadius
         return dist < allowed
+    }
+
+    fun split(): List<FlyingObject> {
+        splitCount -= 1
+        if (splitCount< 0) return listOf()
+        val newGuy = FlyingObject.asteroid(
+            this.position,
+            this.velocity
+        )
+        return listOf(this, newGuy)
     }
 
     companion object {
