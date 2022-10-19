@@ -81,14 +81,28 @@ class FlyingObject(
         return listOf(meSplit, newGuy)
     }
 
-    fun update(deltaTime: Double) {
-        if (controls.left) pointing = pointing + rotationSpeed*deltaTime
-        if (controls.right) pointing = pointing - rotationSpeed*deltaTime
+    fun turnBy(degrees:Double) {
+        pointing += degrees
+    }
+
+    fun update(deltaTime: Double): List<FlyingObject> {
+        val result: MutableList<FlyingObject> = mutableListOf()
+        controls.turn(this,deltaTime)
         if (controls.accelerate) {
             velocity = limitToSpeedOfLight(velocity + rotatedAcceleration()*deltaTime)
         }
+        if (controls.fire) {
+            val missileKillRadius = 10.0
+            val missileOwnVelocity = Vector2(SPEED_OF_LIGHT/100.0, 0.0)
+            val missilePos = position + Vector2(2.0*missileKillRadius, 0.0).rotate(pointing)
+            val missileVel = velocity + missileOwnVelocity
+            val missile = FlyingObject(missilePos, missileVel, Vector2.ZERO, missileKillRadius)
+            result.add(missile)
+        }
         val proposedPosition = position + velocity*deltaTime
         position = cap(proposedPosition)
+        result.add(this)
+        return result
     }
 
     companion object {

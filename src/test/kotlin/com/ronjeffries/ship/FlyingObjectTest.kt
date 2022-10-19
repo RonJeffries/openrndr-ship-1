@@ -87,6 +87,15 @@ class FlyingObjectTest {
         val expected = Vector2(cos(radians60), sin(radians60))*5000.0
         checkVector(v, expected, "velocity", 1.0)
     }
+
+    @Test
+    fun `ship can fire missile`() {
+        val controls = Controls()
+        val ship = FlyingObject.ship(Vector2.ZERO, controls)
+        controls.fire = true
+        val flyers = ship.update(tick)
+        assertThat(flyers.size).isEqualTo(2)
+    }
 }
 
 fun checkVector(actual:Vector2, should: Vector2, description: String, delta: Double = 0.0001) {
