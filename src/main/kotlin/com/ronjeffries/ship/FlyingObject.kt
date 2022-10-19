@@ -10,7 +10,7 @@ import java.lang.Math.random
 class FlyingObject(
     var position: Vector2,
     var velocity: Vector2,
-    private val acceleration: Vector2,
+    val acceleration: Vector2,
     killRad: Double,
     splitCt: Int = 0,
     private val controls: Controls = Controls()
@@ -20,6 +20,10 @@ class FlyingObject(
     var pointing: Double = 0.0
     var rotationSpeed = 360.0
     var splitCount = splitCt
+
+    fun accelerate(deltaV: Vector2) {
+        velocity = limitToSpeedOfLight(velocity + deltaV)
+    }
 
     private fun asSplit(): FlyingObject {
         splitCount -= 1
@@ -70,10 +74,6 @@ class FlyingObject(
         else return v*(SPEED_OF_LIGHT/speed)
     }
 
-    private fun rotatedAcceleration(): Vector2 {
-        return acceleration.rotate(pointing)
-    }
-
     fun split(): List<FlyingObject> {
         if (splitCount < 1) return listOf()
         val meSplit = asSplit()
@@ -88,9 +88,7 @@ class FlyingObject(
     fun update(deltaTime: Double): List<FlyingObject> {
         val result: MutableList<FlyingObject> = mutableListOf()
         controls.turn(this,deltaTime)
-        if (controls.accelerate) {
-            velocity = limitToSpeedOfLight(velocity + rotatedAcceleration()*deltaTime)
-        }
+        controls.accelerate(this, deltaTime)
         if (controls.fire) {
             val missileKillRadius = 10.0
             val missileOwnVelocity = Vector2(SPEED_OF_LIGHT/100.0, 0.0)
