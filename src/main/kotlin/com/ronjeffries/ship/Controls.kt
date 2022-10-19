@@ -12,7 +12,7 @@ class Controls {
     fun control(obj:FlyingObject, deltaTime: Double): List<FlyingObject> {
         turn(obj,deltaTime)
         accelerate(obj,deltaTime)
-        return fire(obj,deltaTime)
+        return fire(obj)
     }
 
     private fun accelerate(obj:FlyingObject, deltaTime: Double) {
@@ -22,16 +22,10 @@ class Controls {
         }
     }
 
-    private fun fire(obj: FlyingObject, deltaTime: Double): List<FlyingObject> {
+    private fun fire(obj: FlyingObject): List<FlyingObject> {
         val result: MutableList<FlyingObject> = mutableListOf()
-        if (!fire) {
-            holdFire = false
-        } else {
-            if (!holdFire) {
-                holdFire = true
-                result.add(createMissile(obj))
-            }
-        }
+        if (fire && !holdFire ) result.add(createMissile(obj))
+        holdFire = fire
         return result
     }
 
