@@ -88,10 +88,8 @@ class FlyingObject(
 
     fun update(deltaTime: Double): List<FlyingObject> {
         val result: MutableList<FlyingObject> = mutableListOf()
-        controls.turn(this,deltaTime)
-        controls.accelerate(this, deltaTime)
-        val missiles = controls.fire(this, deltaTime)
-        result.addAll(missiles)
+        val additions = controls.control(this, deltaTime)
+        result.addAll(additions)
         val proposedPosition = position + velocity*deltaTime
         position = cap(proposedPosition)
         result.add(this)

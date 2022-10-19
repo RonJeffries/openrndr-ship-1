@@ -8,6 +8,12 @@ class Controls {
     var right = false
     var fire = false
 
+    fun control(obj:FlyingObject, deltaTime: Double): List<FlyingObject> {
+        turn(obj,deltaTime)
+        accelerate(obj,deltaTime)
+        return fire(obj,deltaTime)
+    }
+
     fun accelerate(obj:FlyingObject, deltaTime: Double) {
         if (accelerate) {
             val deltaV = obj.acceleration.rotate(obj.pointing) * deltaTime
