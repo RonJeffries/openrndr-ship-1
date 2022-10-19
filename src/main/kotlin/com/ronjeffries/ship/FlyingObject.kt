@@ -7,6 +7,8 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import org.openrndr.math.Vector2
 import java.lang.Math.random
 
+const val SPEED_OF_LIGHT = 5000.0
+
 class FlyingObject(
     var position: Vector2,
     var velocity: Vector2,
@@ -67,7 +69,6 @@ class FlyingObject(
         return dist < allowed
     }
 
-    val SPEED_OF_LIGHT = 5000.0
     private fun limitToSpeedOfLight(v: Vector2): Vector2 {
         val speed = v.length
         if (speed < SPEED_OF_LIGHT) return v
@@ -89,14 +90,8 @@ class FlyingObject(
         val result: MutableList<FlyingObject> = mutableListOf()
         controls.turn(this,deltaTime)
         controls.accelerate(this, deltaTime)
-        if (controls.fire) {
-            val missileKillRadius = 10.0
-            val missileOwnVelocity = Vector2(SPEED_OF_LIGHT/100.0, 0.0)
-            val missilePos = position + Vector2(2.0*missileKillRadius, 0.0).rotate(pointing)
-            val missileVel = velocity + missileOwnVelocity
-            val missile = FlyingObject(missilePos, missileVel, Vector2.ZERO, missileKillRadius)
-            result.add(missile)
-        }
+        val missiles = controls.fire(this, deltaTime)
+        result.addAll(missiles)
         val proposedPosition = position + velocity*deltaTime
         position = cap(proposedPosition)
         result.add(this)
