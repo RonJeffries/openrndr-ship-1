@@ -55,7 +55,7 @@ class FlyingObjectTest {
         val ship = FlyingObject.ship(Vector2.ZERO, control)
         control.left = true
         ship.update(tick*15)
-        assertThat(ship.pointing).isEqualTo(90.0, within(0.01))
+        assertThat(ship.heading).isEqualTo(90.0, within(0.01))
         control.left = false
         control.accelerate  = true
         ship.update(tick*60)
@@ -68,7 +68,7 @@ class FlyingObjectTest {
         val ship = FlyingObject.ship(Vector2.ZERO, control)
         control.right = true
         ship.update(tick*10)
-        assertThat(ship.pointing).isEqualTo(-60.0, within(0.01))
+        assertThat(ship.heading).isEqualTo(-60.0, within(0.01))
     }
 
     @Test
@@ -94,6 +94,23 @@ class FlyingObjectTest {
         val ship = FlyingObject.ship(Vector2.ZERO, controls)
         controls.fire = true
         val flyers = ship.update(tick)
+        assertThat(flyers.size).isEqualTo(2)
+    }
+
+    @Test
+    fun `can only fire once per press`() {
+        val controls = Controls()
+        val ship = FlyingObject.ship(Vector2.ZERO, controls)
+        controls.fire = true
+        var flyers = ship.update(tick)
+        assertThat(flyers.size).isEqualTo(2)
+        flyers = ship.update(tick)
+        assertThat(flyers.size).isEqualTo(1)
+        controls.fire = false
+        flyers = ship.update(tick)
+        assertThat(flyers.size).isEqualTo(1)
+        controls.fire = true
+        flyers = ship.update(tick)
         assertThat(flyers.size).isEqualTo(2)
     }
 }

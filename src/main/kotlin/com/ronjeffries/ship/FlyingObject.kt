@@ -8,6 +8,21 @@ import org.openrndr.math.Vector2
 import java.lang.Math.random
 
 const val SPEED_OF_LIGHT = 5000.0
+const val UNIVERSE_SIZE = 10000.0
+
+fun Vector2.cap(): Vector2 {
+    return Vector2(this.x.cap(), this.y.cap())
+}
+
+fun Vector2.limitedToLightSpeed(): Vector2 {
+    val speed = this.length
+    return if (speed < SPEED_OF_LIGHT) this
+    else this*(SPEED_OF_LIGHT/speed)
+}
+
+fun Double.cap(): Double {
+    return (this + UNIVERSE_SIZE) % UNIVERSE_SIZE
+}
 
 class FlyingObject(
     var position: Vector2,
@@ -19,12 +34,12 @@ class FlyingObject(
 ) {
     var killRadius = killRad
         private set
-    var pointing: Double = 0.0
+    var heading: Double = 0.0
     var rotationSpeed = 360.0
     var splitCount = splitCt
 
     fun accelerate(deltaV: Vector2) {
-        velocity = limitToSpeedOfLight(velocity + deltaV)
+        velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
     private fun asSplit(): FlyingObject {
@@ -55,24 +70,14 @@ class FlyingObject(
         drawer.rectangle(-killRadius /2.0,-killRadius /2.0, killRadius, killRadius)
     }
 
-    private fun cap(v: Vector2): Vector2 {
-        return Vector2(cap(v.x), cap(v.y))
-    }
-
-    private fun cap(coord: Double): Double {
-        return (coord+10000.0)%10000.0
-    }
-
     fun collides(other: FlyingObject):Boolean {
         val dist = position.distanceTo(other.position)
         val allowed = killRadius + other.killRadius
         return dist < allowed
     }
 
-    private fun limitToSpeedOfLight(v: Vector2): Vector2 {
-        val speed = v.length
-        if (speed < SPEED_OF_LIGHT) return v
-        else return v*(SPEED_OF_LIGHT/speed)
+    private fun move(deltaTime: Double) {
+        position = (position + velocity * deltaTime).cap()
     }
 
     fun split(): List<FlyingObject> {
@@ -83,15 +88,14 @@ class FlyingObject(
     }
 
     fun turnBy(degrees:Double) {
-        pointing += degrees
+        heading += degrees
     }
 
     fun update(deltaTime: Double): List<FlyingObject> {
         val result: MutableList<FlyingObject> = mutableListOf()
         val additions = controls.control(this, deltaTime)
         result.addAll(additions)
-        val proposedPosition = position + velocity*deltaTime
-        position = cap(proposedPosition)
+        move(deltaTime)
         result.add(this)
         return result
     }
