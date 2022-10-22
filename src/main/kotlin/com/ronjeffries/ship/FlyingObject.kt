@@ -37,6 +37,7 @@ class FlyingObject(
     var heading: Double = 0.0
     var rotationSpeed = 360.0
     var splitCount = splitCt
+    var ignoreCollisions = false
 
     fun accelerate(deltaV: Vector2) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
@@ -56,6 +57,14 @@ class FlyingObject(
         splitCt = splitCount
     )
 
+    fun collides(other: FlyingObject):Boolean {
+        if ( this === other) return false
+        if ( this.ignoreCollisions && other.ignoreCollisions) return false
+        val dist = position.distanceTo(other.position)
+        val allowed = killRadius + other.killRadius
+        return dist < allowed
+    }
+
     fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
         drawer.isolated {
             update(deltaTime)
@@ -68,12 +77,6 @@ class FlyingObject(
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         drawer.rectangle(-killRadius /2.0,-killRadius /2.0, killRadius, killRadius)
-    }
-
-    fun collides(other: FlyingObject):Boolean {
-        val dist = position.distanceTo(other.position)
-        val allowed = killRadius + other.killRadius
-        return dist < allowed
     }
 
     private fun move(deltaTime: Double) {
@@ -101,14 +104,14 @@ class FlyingObject(
     }
 
     companion object {
-        fun asteroid(pos:Vector2, vel: Vector2, killRad: Double = 1000.0, splitCt: Int = 2): FlyingObject {
+        fun asteroid(pos:Vector2, vel: Vector2, killRad: Double = 400.0, splitCt: Int = 2): FlyingObject {
             return FlyingObject(
                 position = pos,
                 velocity = vel,
                 acceleration = Vector2.ZERO,
                 killRad = killRad,
                 splitCt = splitCt
-            )
+            ).also { it.ignoreCollisions = true}
         }
 
         fun ship(pos:Vector2, control:Controls= Controls()): FlyingObject {
