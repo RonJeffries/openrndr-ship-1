@@ -15,4 +15,16 @@ class FlyersTest {
         flyers.add(s)
         assertThat(flyers.size).isEqualTo(2)
     }
+
+    @Test
+    fun `collision detection`() {
+        val flyers = Flyers()
+        val a = FlyingObject.asteroid(Vector2(100.0,100.0), Vector2(50.0,50.0))
+        flyers.add(a)
+        val s = FlyingObject.ship(Vector2(100.0, 150.0))
+        flyers.add(s)
+        assertThat(flyers.size).isEqualTo(2)
+        val colliders = flyers.colliders()
+        assertThat(colliders.size).isEqualTo(2)
+    }
 }
