@@ -44,5 +44,9 @@ class Flyers {
         return colliding
     }
 
+    fun forEach(f: (FlyingObject)->Unit) {
+        flyers.forEach(f)
+    }
+
     val size get() = flyers.size
 }
