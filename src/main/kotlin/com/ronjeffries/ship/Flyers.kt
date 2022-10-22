@@ -8,10 +8,11 @@ class Flyers {
     }
 
     private fun pairsToCheck(): List<Pair<FlyingObject, FlyingObject>> {
-        val pairs = mutableListOf<Pair<FlyingObject,FlyingObject>>()
-        flyers.indices.forEach() {
-                i -> flyers.indices.minus(0..i).forEach() {
-                j -> pairs.add(flyers[i] to flyers[j]) }
+        val pairs = mutableListOf<Pair<FlyingObject, FlyingObject>>()
+        flyers.indices.forEach() { i ->
+            flyers.indices.minus(0..i).forEach() { j ->
+                pairs.add(flyers[i] to flyers[j])
+            }
         }
         return pairs
     }
