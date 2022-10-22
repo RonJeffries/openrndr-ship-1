@@ -22,17 +22,23 @@ class Flyers {
 //        print(ct)
 //        return colliding
 //    }
+//}
+
+    private fun pairsToCheck(): List<Pair<FlyingObject, FlyingObject>> {
+        val pairs = mutableListOf<Pair<FlyingObject,FlyingObject>>()
+        flyers.indices.forEach() {
+                i -> flyers.indices.minus(0..i).forEach() {
+                j -> pairs.add(flyers[i] to flyers[j]) }
+        }
+        return pairs
+    }
 
     fun colliders(): Set<FlyingObject> {
         val colliding = mutableSetOf<FlyingObject>()
-        for (i in 0 until flyers.size-1){
-            val f1 = flyers[i]
-            for (j in i until flyers.size) {
-                val f2 = flyers[j]
-                if (f1.collides(f2)) {
-                    colliding.add(f1)
-                    colliding.add(f2)
-                }
+            pairsToCheck().forEach { p ->
+            if (p.first.collides(p.second)) {
+                colliding.add(p.first)
+                colliding.add(p.second)
             }
         }
         return colliding
