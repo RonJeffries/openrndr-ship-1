@@ -17,13 +17,13 @@ class FlyersTest {
 
     @Test
     fun `collision detection`() {
-        val flyers = Flyers()
+        val game = Game()
         val a = FlyingObject.asteroid(Vector2(100.0,100.0), Vector2(50.0,50.0))
-        flyers.add(a)
+        game.add(a)
         val s = FlyingObject.ship(Vector2(100.0, 150.0))
-        flyers.add(s)
-        assertThat(flyers.size).isEqualTo(2)
-        val colliders = flyers.colliders()
+        game.add(s)
+        assertThat(game.flyers.size).isEqualTo(2)
+        val colliders = game.colliders()
         assertThat(colliders.size).isEqualTo(2)
     }
 
@@ -31,19 +31,19 @@ class FlyersTest {
     fun `stringent colliders`() {
         val p1 = Vector2(100.0,100.0)
         val p2 = Vector2(500.0, 500.0)
-        val flyers = Flyers()
+        val game = Game()
         val v = Vector2.ZERO
         val a0 = FlyingObject.asteroid(p1,v) // yes
-        flyers.add(a0)
+        game.add(a0)
         val m1 = FlyingObject(p1, v, Vector2.ZERO, 10.0) // yes
-        flyers.add(m1)
+        game.add(m1)
         val s2 = FlyingObject.ship(p1) // yes
-        flyers.add(s2)
+        game.add(s2)
         val a3 = FlyingObject.asteroid(p2,v) // no
-        flyers.add(a3)
+        game.add(a3)
         val a4 = FlyingObject.asteroid(p2,v) // no
-        flyers.add(a4)
-        val colliders = flyers.colliders()
+        game.add(a4)
+        val colliders = game.colliders()
         assertThat(colliders.size).isEqualTo(3)
     }
 }
