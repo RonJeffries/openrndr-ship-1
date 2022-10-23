@@ -12,12 +12,12 @@ class GameTest {
         val ship = FlyingObject.ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)
-        assertThat(game.colliderCount()).isEqualTo(0)
+        assertThat(game.colliders().size).isEqualTo(0)
         for (i in 1..12*60) game.update(1.0/60.0)
         val x = asteroid.position.x
         val y = asteroid.position.y
         assertThat(x).isEqualTo(100.0+12*50.0, within(0.1))
         assertThat(y).isEqualTo(100.0+12*50.0, within(0.1))
-        assertThat(game.colliderCount()).isEqualTo(2)
+        assertThat(game.colliders().size).isEqualTo(2)
     }
 }
