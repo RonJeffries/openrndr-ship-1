@@ -32,6 +32,7 @@ class FlyingObject(
     splitCt: Int = 0,
     private val controls: Controls = Controls()
 ) {
+    lateinit var view:FlyerView
     var killRadius = killRad
         private set
     var heading: Double = 0.0
@@ -76,24 +77,7 @@ class FlyingObject(
         val center = Vector2(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
-        drawShip(drawer)
-//        drawer.rectangle(-killRadius /2.0,-killRadius /2.0, killRadius, killRadius)
-    }
-
-    fun drawShip(drawer: Drawer) {
-        val points = listOf(
-            Vector2(-3.0, -2.0),
-            Vector2(-3.0, 2.0),
-            Vector2(-5.0, 4.0),
-            Vector2(7.0, 0.0),
-            Vector2(-5.0, -4.0),
-            Vector2(-3.0, -2.0)
-        )
-        drawer.scale(30.0, 30.0)
-        drawer.rotate(30.0)
-        drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 8.0/30.0
-        drawer.lineStrip(points)
+        view.draw(this, drawer)
     }
 
     private fun move(deltaTime: Double) {
@@ -138,7 +122,7 @@ class FlyingObject(
                 acceleration = Vector2(60.0, 0.0),
                 killRad = 100.0,
                 controls = control
-            )
+            ).also { it.view = ShipView()}
         }
     }
 }
