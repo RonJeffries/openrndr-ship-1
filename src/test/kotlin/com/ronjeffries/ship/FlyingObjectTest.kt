@@ -127,7 +127,7 @@ class FlyingObjectTest {
         val p2 = Vector2(500.0, 500.0)
         val v = Vector2.ZERO
         val a0 = FlyingObject.asteroid(p1,v) // yes
-        val m1 = FlyingObject(p1, v, Vector2.ZERO, 10.0) // yes
+        val m1 = FlyingObject(p1, v, 10.0) // yes
         val s2 = FlyingObject.ship(p1) // yes
         val a3 = FlyingObject.asteroid(p2,v) // no
         val a4 = FlyingObject.asteroid(p2,v) // no
@@ -156,7 +156,7 @@ class FlyingObjectTest {
         val p2 = Vector2(500.0, 500.0)
         val v = Vector2.ZERO
         val a0 = FlyingObject.asteroid(p1,v) // yes
-        val m1 = FlyingObject(p1, v, Vector2.ZERO, 10.0) // yes
+        val m1 = FlyingObject(p1, v, 10.0) // yes
         val s2 = FlyingObject.ship(p1) // yes
         val a3 = FlyingObject.asteroid(p2,v) // no
         val a4 = FlyingObject.asteroid(p2,v) // no

@@ -35,7 +35,7 @@ class FlyersTest {
         val v = Vector2.ZERO
         val a0 = FlyingObject.asteroid(p1,v) // yes
         game.add(a0)
-        val m1 = FlyingObject(p1, v, Vector2.ZERO, 10.0) // yes
+        val m1 = FlyingObject(p1, v, 10.0, ) // yes
         game.add(m1)
         val s2 = FlyingObject.ship(p1) // yes
         game.add(s2)

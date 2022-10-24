@@ -27,18 +27,13 @@ fun Double.cap(): Double {
 class FlyingObject(
     var position: Vector2,
     var velocity: Vector2,
-    val acceleration: Vector2,
-    killRad: Double,
-    splitCt: Int = 0,
-    private val controls: Controls = Controls()
+    var killRadius: Double,
+    var splitCount: Int = 0,
+    val ignoreCollisions: Boolean = false,
+    val view: FlyerView = NullView(),
+    val controls: Controls = Controls()
 ) {
-    lateinit var view:FlyerView
-    var killRadius = killRad
-        private set
     var heading: Double = 0.0
-    var rotationSpeed = 360.0
-    var splitCount = splitCt
-    var ignoreCollisions = false
 
     fun accelerate(deltaV: Vector2) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
@@ -109,20 +104,23 @@ class FlyingObject(
             return FlyingObject(
                 position = pos,
                 velocity = vel,
-                acceleration = Vector2.ZERO,
-                killRad = killRad,
-                splitCt = splitCt
-            ).also { it.ignoreCollisions = true}
+                killRadius = killRad,
+                splitCount = splitCt,
+                ignoreCollisions = true,
+                view = ShipView()
+            )
         }
 
         fun ship(pos:Vector2, control:Controls= Controls()): FlyingObject {
             return FlyingObject(
                 position = pos,
                 velocity = Vector2.ZERO,
-                acceleration = Vector2(60.0, 0.0),
-                killRad = 100.0,
-                controls = control
-            ).also { it.view = ShipView()}
+                killRadius = 100.0,
+                splitCount = 0,
+                ignoreCollisions = false,
+                view = ShipView(),
+                controls = control,
+            )
         }
     }
 }

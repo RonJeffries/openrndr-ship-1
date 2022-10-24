@@ -25,3 +25,10 @@ class ShipView : FlyerView {
         drawer.lineStrip(points)
     }
 }
+
+class NullView: FlyerView {
+    override fun draw(ship: FlyingObject, drawer: Drawer) {
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.text("???")
+    }
+}

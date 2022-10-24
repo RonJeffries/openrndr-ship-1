@@ -9,6 +9,9 @@ class Controls {
     var fire = false
     var holdFire = false
 
+    val acceleration = Vector2(60.0, 0.0)
+    val rotationSpeed = 360.0
+
     fun control(obj:FlyingObject, deltaTime: Double): List<FlyingObject> {
         turn(obj,deltaTime)
         accelerate(obj,deltaTime)
@@ -17,7 +20,7 @@ class Controls {
 
     private fun accelerate(obj:FlyingObject, deltaTime: Double) {
         if (accelerate) {
-            val deltaV = obj.acceleration.rotate(obj.heading) * deltaTime
+            val deltaV = acceleration.rotate(obj.heading) * deltaTime
             obj.accelerate(deltaV)
         }
     }
@@ -35,11 +38,11 @@ class Controls {
         val missileOwnVelocity = Vector2(SPEED_OF_LIGHT / 100.0, 0.0)
         val missilePos = obj.position + Vector2(2.0 * missileKillRadius, 0.0).rotate(obj.heading)
         val missileVel = obj.velocity + missileOwnVelocity
-        return FlyingObject(missilePos, missileVel, Vector2.ZERO, missileKillRadius)
+        return FlyingObject(missilePos, missileVel, missileKillRadius, 0, false, ShipView(),)
     }
 
     private fun turn(obj: FlyingObject, deltaTime: Double) {
-        if (left) obj.turnBy(obj.rotationSpeed*deltaTime)
-        if (right) obj.turnBy(-obj.rotationSpeed*deltaTime)
+        if (left) obj.turnBy(rotationSpeed*deltaTime)
+        if (right) obj.turnBy(-rotationSpeed*deltaTime)
     }
 }
