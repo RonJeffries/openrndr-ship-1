@@ -107,7 +107,7 @@ class FlyingObject(
                 killRadius = killRad,
                 splitCount = splitCt,
                 ignoreCollisions = true,
-                view = ShipView()
+                view = AsteroidView()
             )
         }
 

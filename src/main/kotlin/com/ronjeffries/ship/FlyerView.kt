@@ -26,6 +26,30 @@ class ShipView : FlyerView {
     }
 }
 
+class AsteroidView: FlyerView {
+    override fun draw(ship: FlyingObject, drawer: Drawer) {
+        val points = listOf(
+            Vector2(4.000000, 2.000000),
+            Vector2(3.000000, 0.000000),
+            Vector2(4.000000, -2.000000),
+            Vector2(1.000000, -4.000000),
+            Vector2(-2.000000, -4.000000),
+            Vector2(-4.000000, -2.000000),
+            Vector2(-4.000000, 2.000000),
+            Vector2(-2.000000, 4.000000),
+            Vector2(0.000000, 2.000000),
+            Vector2(2.000000, 4.000000),
+            Vector2(4.000000, 2.000000),
+        )
+        drawer.scale(30.0, 30.0)
+        drawer.scale(4.0,4.0)
+        drawer.rotate(ship.heading + 30.0)
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.strokeWeight = 8.0/30.0/4.0
+        drawer.lineStrip(points)
+    }
+}
+
 class NullView: FlyerView {
     override fun draw(ship: FlyingObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
