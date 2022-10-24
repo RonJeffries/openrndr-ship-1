@@ -76,7 +76,24 @@ class FlyingObject(
         val center = Vector2(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
-        drawer.rectangle(-killRadius /2.0,-killRadius /2.0, killRadius, killRadius)
+        drawShip(drawer)
+//        drawer.rectangle(-killRadius /2.0,-killRadius /2.0, killRadius, killRadius)
+    }
+
+    fun drawShip(drawer: Drawer) {
+        val points = listOf(
+            Vector2(-3.0, -2.0),
+            Vector2(-3.0, 2.0),
+            Vector2(-5.0, 4.0),
+            Vector2(7.0, 0.0),
+            Vector2(-5.0, -4.0),
+            Vector2(-3.0, -2.0)
+        )
+        drawer.scale(30.0, 30.0)
+        drawer.rotate(30.0)
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.strokeWeight = 8.0/30.0
+        drawer.lineStrip(points)
     }
 
     private fun move(deltaTime: Double) {

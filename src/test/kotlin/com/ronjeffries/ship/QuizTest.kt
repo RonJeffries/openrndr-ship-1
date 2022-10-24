@@ -2,6 +2,7 @@ package com.ronjeffries.ship
 
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.openrndr.math.Vector2
 import java.lang.Math.random
 
 class QuizTest {
@@ -35,5 +36,18 @@ class QuizTest {
             tot += 1
         }
         assertThat(win/tot).isEqualTo(0.33, within (0.1))
+    }
+
+    @Test
+    fun `lines scale`() {
+        val lines = listOf(
+            Vector2(-3.0, -2.0),
+            Vector2(-3.0, 2.0),
+            Vector2(-5.0, 4.0),
+            Vector2(7.0, 0.0),
+            Vector2(-5.0, -4.0),
+            Vector2(-3.0, -2.0)
+        )
+        lines.forEach {println(it*20.0)}
     }
 }
