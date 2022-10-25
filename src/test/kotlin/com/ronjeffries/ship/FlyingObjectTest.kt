@@ -116,15 +116,16 @@ class FlyingObjectTest {
 
     @Test
     fun `collision ideas`() {
+        var x = 0
         val objects = listOf(1,2,3)
-        for (first in objects) for (second in objects) {}
-        for (i in 1..objects.size) for (j in i..objects.size) {}
+        for (first in objects) for (second in objects) {x++}
+        for (i in 1..objects.size) for (j in i..objects.size) {x++}
     }
 
     @Test
     fun `collision INDEXING test`() {
         val p1 = Vector2(100.0,100.0)
-        val p2 = Vector2(500.0, 500.0)
+        val p2 = Vector2(755.0, 500.0)
         val v = Vector2.ZERO
         val a0 = FlyingObject.asteroid(p1,v) // yes
         val m1 = FlyingObject(p1, v, 10.0) // yes
@@ -153,7 +154,7 @@ class FlyingObjectTest {
     @Test
     fun `collision PLAIN LOOP test better`() {
         val p1 = Vector2(100.0,100.0)
-        val p2 = Vector2(500.0, 500.0)
+        val p2 = Vector2(750.0, 500.0)
         val v = Vector2.ZERO
         val a0 = FlyingObject.asteroid(p1,v) // yes
         val m1 = FlyingObject(p1, v, 10.0) // yes

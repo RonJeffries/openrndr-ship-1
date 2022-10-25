@@ -30,14 +30,14 @@ class FlyersTest {
     @Test
     fun `stringent colliders`() {
         val p1 = Vector2(100.0,100.0)
-        val p2 = Vector2(500.0, 500.0)
+        val p2 = Vector2(750.0, 100.0)
         val game = Game()
         val v = Vector2.ZERO
         val a0 = FlyingObject.asteroid(p1,v) // yes
         game.add(a0)
         val m1 = FlyingObject(p1, v, 10.0, ) // yes
         game.add(m1)
-        val s2 = FlyingObject.ship(p1) // yes
+        val s2 = FlyingObject.ship(p1) // yes kr=150
         game.add(s2)
         val a3 = FlyingObject.asteroid(p2,v) // no
         game.add(a3)
