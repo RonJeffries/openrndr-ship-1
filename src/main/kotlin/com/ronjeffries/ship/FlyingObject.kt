@@ -68,7 +68,7 @@ class FlyingObject(
         }
     }
 
-    private fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         val center = Vector2(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
