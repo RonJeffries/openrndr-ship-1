@@ -100,7 +100,7 @@ class FlyingObject(
     }
 
     companion object {
-        fun asteroid(pos:Vector2, vel: Vector2, killRad: Double = 400.0, splitCt: Int = 2): FlyingObject {
+        fun asteroid(pos:Vector2, vel: Vector2, killRad: Double = 500.0, splitCt: Int = 2): FlyingObject {
             return FlyingObject(
                 position = pos,
                 velocity = vel,
@@ -115,7 +115,7 @@ class FlyingObject(
             return FlyingObject(
                 position = pos,
                 velocity = Vector2.ZERO,
-                killRadius = 100.0,
+                killRadius = 150.0,
                 splitCount = 0,
                 ignoreCollisions = false,
                 view = ShipView(),

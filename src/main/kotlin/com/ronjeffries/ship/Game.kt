@@ -14,9 +14,8 @@ class Game {
     fun colliders() = flyers.pairsSatisfying { f1, f2 -> f1.collides(f2) }
 
     fun createContents() {
-        val ship = FlyingObject.ship(Vector2(5000.0, 5000.0) )
-        add(ship)
-        for (i in 0..3) {
+        newShip()
+        for (i in 0..7) {
             val pos = Vector2(random(0.0, 10000.0), random(0.0,10000.0))
             val vel = Vector2(1000.0, 0.0).rotate(random(0.0,360.0))
             val asteroid = FlyingObject.asteroid(pos,vel )
@@ -24,10 +23,16 @@ class Game {
         }
     }
 
+    private fun newShip() {
+        val ship = FlyingObject.ship(Vector2(5000.0, 5000.0))
+        add(ship)
+    }
+
     fun cycle(drawer: Drawer, seconds: Double) {
         val deltaTime = seconds - lastTime
         lastTime = seconds
         update(deltaTime)
+        processCollisions()
         draw(drawer)
     }
 
@@ -40,6 +45,7 @@ class Game {
             val splitOnes = collider.split()
             flyers.addAll(splitOnes)
         }
+        newShip()
     }
 
     fun update(deltaTime: Double) = flyers.forEach { it.update(deltaTime)}
