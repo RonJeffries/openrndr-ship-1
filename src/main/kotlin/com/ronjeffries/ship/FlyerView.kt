@@ -27,8 +27,20 @@ class ShipView : FlyerView {
 }
 
 class AsteroidView: FlyerView {
-    override fun draw(ship: FlyingObject, drawer: Drawer) {
-        val points = listOf(
+    private val rock = defineRocks().random()
+
+    override fun draw(asteroid: FlyingObject, drawer: Drawer) {
+        drawer.scale(30.0, 30.0)
+        drawer.scale(4.0,4.0)
+        drawer.rotate(asteroid.heading)
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.strokeWeight = 8.0/30.0/4.0
+        drawer.scale(1.0, -1.0)
+        drawer.lineStrip(rock)
+    }
+
+    private fun defineRocks(): List<List<Vector2>> {
+        val rock0 = listOf(
             Vector2(4.000000, 2.000000),
             Vector2(3.000000, 0.000000),
             Vector2(4.000000, -2.000000),
@@ -41,12 +53,52 @@ class AsteroidView: FlyerView {
             Vector2(2.000000, 4.000000),
             Vector2(4.000000, 2.000000),
         )
-        drawer.scale(30.0, 30.0)
-        drawer.scale(4.0,4.0)
-        drawer.rotate(ship.heading + 30.0)
-        drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 8.0/30.0/4.0
-        drawer.lineStrip(points)
+        val rock1 = listOf(
+            Vector2(2.000000, 1.000000),
+            Vector2(4.000000, 2.000000),
+            Vector2(2.000000, 4.000000),
+            Vector2(0.000000, 3.000000),
+            Vector2(-2.000000, 4.000000),
+            Vector2(-4.000000, 2.000000),
+            Vector2(-3.000000, 0.000000),
+            Vector2(-4.000000, -2.000000),
+            Vector2(-2.000000, -4.000000),
+            Vector2(-1.000000, -3.000000),
+            Vector2(2.000000, -4.000000),
+            Vector2(4.000000, -1.000000),
+            Vector2(2.000000, 1.000000)
+        )
+        val rock2 = listOf(
+            Vector2(-2.000000, 0.000000),
+            Vector2(-4.000000, -1.000000),
+            Vector2(-2.000000, -4.000000),
+            Vector2(0.000000, -1.000000),
+            Vector2(0.000000, -4.000000),
+            Vector2(2.000000, -4.000000),
+            Vector2(4.000000, -1.000000),
+            Vector2(4.000000, 1.000000),
+            Vector2(2.000000, 4.000000),
+            Vector2(-1.000000, 4.000000),
+            Vector2(-4.000000, 1.000000),
+            Vector2(-2.000000, 0.000000)
+        )
+
+        val rock3 = listOf(
+            Vector2(1.000000, 0.000000),
+            Vector2(4.000000, 1.000000),
+            Vector2(4.000000, 2.000000),
+            Vector2(1.000000, 4.000000),
+            Vector2(-2.000000, 4.000000),
+            Vector2(-1.000000, 2.000000),
+            Vector2(-4.000000, 2.000000),
+            Vector2(-4.000000, -1.000000),
+            Vector2(-2.000000, -4.000000),
+            Vector2(1.000000, -3.000000),
+            Vector2(2.000000, -4.000000),
+            Vector2(4.000000, -2.000000),
+            Vector2(1.000000, 0.000000)
+        )
+        return listOf(rock0,rock1,rock2,rock3)
     }
 }
 

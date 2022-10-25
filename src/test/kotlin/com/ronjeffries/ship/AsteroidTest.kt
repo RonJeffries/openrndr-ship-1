@@ -53,4 +53,11 @@ class AsteroidTest {
             assertThat(halfV).isNotEqualTo(startingV)
         }
     }
+
+    @Test
+    fun `ships cannot split`() {
+        val ship = FlyingObject.ship(Vector2(100.0,100.0))
+        val shipSplit = ship.split()
+        assertThat(shipSplit).isEmpty()
+    }
 }

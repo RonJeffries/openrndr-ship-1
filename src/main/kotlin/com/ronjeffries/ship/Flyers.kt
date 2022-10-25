@@ -1,11 +1,17 @@
 package com.ronjeffries.ship
 
 class Flyers {
-    private val flyers = mutableListOf<FlyingObject>()
+    val flyers = mutableListOf<FlyingObject>()
 
     fun add(flyer: FlyingObject) {
         flyers.add(flyer)
     }
+    
+    fun addAll(newbies: Iterable<FlyingObject>){
+        flyers.addAll(newbies)
+    }
+
+    fun forEach(f: (FlyingObject)->Unit) = flyers.forEach(f)
 
     private fun pairsToCheck(): List<Pair<FlyingObject, FlyingObject>> {
         val pairs = mutableListOf<Pair<FlyingObject, FlyingObject>>()
@@ -28,7 +34,9 @@ class Flyers {
         return pairs
     }
 
-    fun forEach(f: (FlyingObject)->Unit) = flyers.forEach(f)
+    fun removeAll(moribund: Iterable<FlyingObject>){
+        flyers.removeAll(moribund.toSet())
+    }
 
     val size get() = flyers.size
 }

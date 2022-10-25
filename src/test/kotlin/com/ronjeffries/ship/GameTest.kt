@@ -20,4 +20,18 @@ class GameTest {
         assertThat(y).isEqualTo(100.0+12*50.0, within(0.1))
         assertThat(game.colliders().size).isEqualTo(2)
     }
+
+    @Test
+    fun `colliding ship and asteroid splits asteroid, loses ship`() {
+        val game = Game()
+        val asteroid = FlyingObject.asteroid(Vector2(1000.0, 1000.0), Vector2(50.0, 50.0))
+        val ship = FlyingObject.ship(Vector2(1000.0, 1000.0))
+        game.add(asteroid)
+        game.add(ship)
+        assertThat(game.flyers.size).isEqualTo(2)
+        assertThat(ship).isIn(game.flyers.flyers)
+        game.processCollisions()
+        assertThat(game.flyers.size).isEqualTo(2)
+        assertThat(ship).isNotIn(game.flyers.flyers)
+    }
 }
