@@ -45,7 +45,7 @@ class Game {
             val splitOnes = collider.split()
             flyers.addAll(splitOnes)
         }
-//        newShip() // breaks a test. How should we do this?
+        newShip() // breaks a test. How should we do this?
     }
 
     fun update(deltaTime: Double) = flyers.forEach { it.update(deltaTime)}
