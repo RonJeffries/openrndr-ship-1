@@ -31,7 +31,7 @@ class GameTest {
         assertThat(game.flyers.size).isEqualTo(2)
         assertThat(ship).isIn(game.flyers.flyers)
         game.processCollisions()
-        assertThat(game.flyers.size).isEqualTo(2)
+        assertThat(game.flyers.size).isEqualTo(3) // because ship spanws automatically˚
         assertThat(ship).isNotIn(game.flyers.flyers)
     }
 }
