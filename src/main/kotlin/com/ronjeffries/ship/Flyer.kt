@@ -24,22 +24,35 @@ fun Double.cap(): Double {
     return (this + UNIVERSE_SIZE) % UNIVERSE_SIZE
 }
 
-class FlyingObject(
-    var position: Vector2,
+interface IFlyer {
+    abstract val killRadius: Double
+    abstract val position: Vector2
+    abstract val ignoreCollisions: Boolean
+    abstract val canCollide: Boolean
+    fun collides(other: IFlyer): Boolean
+    fun draw(drawer: Drawer)
+    fun move(deltaTime: Double)
+    fun split(): List<IFlyer>
+    fun update(deltaTime: Double): List<IFlyer>
+}
+
+class Flyer(
+    override var position: Vector2,
     var velocity: Vector2,
-    var killRadius: Double,
+    override var killRadius: Double,
     var splitCount: Int = 0,
-    val ignoreCollisions: Boolean = false,
+    override val ignoreCollisions: Boolean = false,
     val view: FlyerView = NullView(),
     val controls: Controls = Controls()
-) {
+) : IFlyer {
+    override val canCollide = true
     var heading: Double = 0.0
 
     fun accelerate(deltaV: Vector2) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    private fun asSplit(): FlyingObject {
+    private fun asSplit(): Flyer {
         splitCount -= 1
         killRadius /= 2.0
         velocity = velocity.rotate(random() * 360.0)
@@ -53,33 +66,27 @@ class FlyingObject(
         splitCt = splitCount
     )
 
-    fun collides(other: FlyingObject):Boolean {
+    override fun collides(other: IFlyer):Boolean {
         if ( this === other) return false
+        if (!this.canCollide || !other.canCollide) return false
         if ( this.ignoreCollisions && other.ignoreCollisions) return false
         val dist = position.distanceTo(other.position)
         val allowed = killRadius + other.killRadius
         return dist < allowed
     }
 
-    fun cycle(drawer: Drawer, seconds: Double, deltaTime: Double) {
-        drawer.isolated {
-            update(deltaTime)
-            draw(drawer)
-        }
-    }
-
-    fun draw(drawer: Drawer) {
+    override fun draw(drawer: Drawer) {
         val center = Vector2(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
     }
 
-    private fun move(deltaTime: Double) {
+    override fun move(deltaTime: Double) {
         position = (position + velocity * deltaTime).cap()
     }
 
-    fun split(): List<FlyingObject> {
+    override fun split(): List<Flyer> {
         if (splitCount < 1) return listOf()
         val meSplit = asSplit()
         val newGuy = meSplit.asTwin()
@@ -90,8 +97,8 @@ class FlyingObject(
         heading += degrees
     }
 
-    fun update(deltaTime: Double): List<FlyingObject> {
-        val result: MutableList<FlyingObject> = mutableListOf()
+    override fun update(deltaTime: Double): List<Flyer> {
+        val result: MutableList<Flyer> = mutableListOf()
         val additions = controls.control(this, deltaTime)
         result.addAll(additions)
         move(deltaTime)
@@ -100,8 +107,8 @@ class FlyingObject(
     }
 
     companion object {
-        fun asteroid(pos:Vector2, vel: Vector2, killRad: Double = 500.0, splitCt: Int = 2): FlyingObject {
-            return FlyingObject(
+        fun asteroid(pos:Vector2, vel: Vector2, killRad: Double = 500.0, splitCt: Int = 2): Flyer {
+            return Flyer(
                 position = pos,
                 velocity = vel,
                 killRadius = killRad,
@@ -111,8 +118,8 @@ class FlyingObject(
             )
         }
 
-        fun ship(pos:Vector2, control:Controls= Controls()): FlyingObject {
-            return FlyingObject(
+        fun ship(pos:Vector2, control:Controls= Controls()): Flyer {
+            return Flyer(
                 position = pos,
                 velocity = Vector2.ZERO,
                 killRadius = 150.0,

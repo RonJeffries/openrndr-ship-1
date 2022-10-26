@@ -12,36 +12,36 @@ class Controls {
     val acceleration = Vector2(60.0, 0.0)
     val rotationSpeed = 360.0
 
-    fun control(obj:FlyingObject, deltaTime: Double): List<FlyingObject> {
+    fun control(obj:Flyer, deltaTime: Double): List<Flyer> {
         turn(obj,deltaTime)
         accelerate(obj,deltaTime)
         return fire(obj)
     }
 
-    private fun accelerate(obj:FlyingObject, deltaTime: Double) {
+    private fun accelerate(obj:Flyer, deltaTime: Double) {
         if (accelerate) {
             val deltaV = acceleration.rotate(obj.heading) * deltaTime
             obj.accelerate(deltaV)
         }
     }
 
-    private fun fire(obj: FlyingObject): List<FlyingObject> {
+    private fun fire(obj: Flyer): List<Flyer> {
         // too tricky? deponent denieth accusation.
-        val result: MutableList<FlyingObject> = mutableListOf()
+        val result: MutableList<Flyer> = mutableListOf()
         if (fire && !holdFire ) result.add(createMissile(obj))
         holdFire = fire
         return result
     }
 
-    private fun createMissile(obj: FlyingObject): FlyingObject {
+    private fun createMissile(obj: Flyer): Flyer {
         val missileKillRadius = 10.0
         val missileOwnVelocity = Vector2(SPEED_OF_LIGHT / 100.0, 0.0)
         val missilePos = obj.position + Vector2(2.0 * missileKillRadius, 0.0).rotate(obj.heading)
         val missileVel = obj.velocity + missileOwnVelocity
-        return FlyingObject(missilePos, missileVel, missileKillRadius, 0, false, ShipView(),)
+        return Flyer(missilePos, missileVel, missileKillRadius, 0, false, ShipView(),)
     }
 
-    private fun turn(obj: FlyingObject, deltaTime: Double) {
+    private fun turn(obj: Flyer, deltaTime: Double) {
         if (left) obj.turnBy(rotationSpeed*deltaTime)
         if (right) obj.turnBy(-rotationSpeed*deltaTime)
     }

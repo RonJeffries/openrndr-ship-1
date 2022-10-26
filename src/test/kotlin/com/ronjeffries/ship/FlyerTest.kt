@@ -6,11 +6,11 @@ import org.openrndr.math.Vector2
 import java.lang.Math.*
 
 
-class FlyingObjectTest {
+class FlyerTest {
     private val tick = 1.0/60.0
     @Test
     fun `Ship Happens`() {
-        val ship = FlyingObject.ship(Vector2.ZERO)
+        val ship = Flyer.ship(Vector2.ZERO)
         ship.velocity = Vector2(120.0,120.0)
         ship.update(tick)
         assertThat(ship.position).isEqualTo(Vector2(2.0,2.0))
@@ -18,7 +18,7 @@ class FlyingObjectTest {
 
     @Test
     fun `capping works high`() {
-        val ship = FlyingObject.ship(Vector2(9999.0, 5000.0))
+        val ship = Flyer.ship(Vector2(9999.0, 5000.0))
         ship.velocity = Vector2(120.0,120.0)
         ship.update(tick)
         assertThat(ship.position.x).isEqualTo(1.0)
@@ -27,7 +27,7 @@ class FlyingObjectTest {
 
     @Test
     fun `capping works low`() {
-        val ship = FlyingObject.ship( Vector2(1.0, 5000.0))
+        val ship = Flyer.ship( Vector2(1.0, 5000.0))
         ship.velocity = Vector2(-120.0, -120.0)
         ship.update(tick)
         assertThat(ship.position.x).isEqualTo(9999.0)
@@ -37,7 +37,7 @@ class FlyingObjectTest {
     @Test
     fun `acceleration works`() {
         val control = Controls()
-        val ship = FlyingObject.ship(Vector2.ZERO, control)
+        val ship = Flyer.ship(Vector2.ZERO, control)
         assertThat(ship.position).isEqualTo(Vector2.ZERO)
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
         ship.update(tick)
@@ -52,7 +52,7 @@ class FlyingObjectTest {
     @Test
     fun `ship can turn left`() {
         val control = Controls()
-        val ship = FlyingObject.ship(Vector2.ZERO, control)
+        val ship = Flyer.ship(Vector2.ZERO, control)
         control.left = true
         ship.update(tick*15)
         assertThat(ship.heading).isEqualTo(90.0, within(0.01))
@@ -65,7 +65,7 @@ class FlyingObjectTest {
     @Test
     fun `ship can turn right`() {
         val control = Controls()
-        val ship = FlyingObject.ship(Vector2.ZERO, control)
+        val ship = Flyer.ship(Vector2.ZERO, control)
         control.right = true
         ship.update(tick*10)
         assertThat(ship.heading).isEqualTo(-60.0, within(0.01))
@@ -74,7 +74,7 @@ class FlyingObjectTest {
     @Test
     fun `speed of light`() {
         val control = Controls()
-        val ship = FlyingObject.ship(Vector2.ZERO, control)
+        val ship = Flyer.ship(Vector2.ZERO, control)
         control.left = true
         ship.update(tick*10) // 60 degrees north east ish
         control.left = false
@@ -91,7 +91,7 @@ class FlyingObjectTest {
     @Test
     fun `ship can fire missile`() {
         val controls = Controls()
-        val ship = FlyingObject.ship(Vector2.ZERO, controls)
+        val ship = Flyer.ship(Vector2.ZERO, controls)
         controls.fire = true
         val flyers = ship.update(tick)
         assertThat(flyers.size).isEqualTo(2)
@@ -100,7 +100,7 @@ class FlyingObjectTest {
     @Test
     fun `can only fire once per press`() {
         val controls = Controls()
-        val ship = FlyingObject.ship(Vector2.ZERO, controls)
+        val ship = Flyer.ship(Vector2.ZERO, controls)
         controls.fire = true
         var flyers = ship.update(tick)
         assertThat(flyers.size).isEqualTo(2)
@@ -127,13 +127,13 @@ class FlyingObjectTest {
         val p1 = Vector2(100.0,100.0)
         val p2 = Vector2(755.0, 500.0)
         val v = Vector2.ZERO
-        val a0 = FlyingObject.asteroid(p1,v) // yes
-        val m1 = FlyingObject(p1, v, 10.0) // yes
-        val s2 = FlyingObject.ship(p1) // yes
-        val a3 = FlyingObject.asteroid(p2,v) // no
-        val a4 = FlyingObject.asteroid(p2,v) // no
-        val objects = mutableListOf<FlyingObject>(a0,m1,s2, a3,a4)
-        val shouldDie = mutableSetOf<FlyingObject>()
+        val a0 = Flyer.asteroid(p1,v) // yes
+        val m1 = Flyer(p1, v, 10.0) // yes
+        val s2 = Flyer.ship(p1) // yes
+        val a3 = Flyer.asteroid(p2,v) // no
+        val a4 = Flyer.asteroid(p2,v) // no
+        val objects = mutableListOf<Flyer>(a0,m1,s2, a3,a4)
+        val shouldDie = mutableSetOf<Flyer>()
         var ct = 0
         for (i in 0 until objects.size-1) {
             for (j in i+1 until objects.size) {
@@ -156,13 +156,13 @@ class FlyingObjectTest {
         val p1 = Vector2(100.0,100.0)
         val p2 = Vector2(750.0, 500.0)
         val v = Vector2.ZERO
-        val a0 = FlyingObject.asteroid(p1,v) // yes
-        val m1 = FlyingObject(p1, v, 10.0) // yes
-        val s2 = FlyingObject.ship(p1) // yes
-        val a3 = FlyingObject.asteroid(p2,v) // no
-        val a4 = FlyingObject.asteroid(p2,v) // no
-        val objects = mutableListOf<FlyingObject>(a0,m1,s2, a3,a4)
-        val shouldDie = mutableSetOf<FlyingObject>()
+        val a0 = Flyer.asteroid(p1,v) // yes
+        val m1 = Flyer(p1, v, 10.0) // yes
+        val s2 = Flyer.ship(p1) // yes
+        val a3 = Flyer.asteroid(p2,v) // no
+        val a4 = Flyer.asteroid(p2,v) // no
+        val objects = mutableListOf<Flyer>(a0,m1,s2, a3,a4)
+        val shouldDie = mutableSetOf<Flyer>()
         var ct = 0
         for (oi in objects) {
             for (oj in objects) {

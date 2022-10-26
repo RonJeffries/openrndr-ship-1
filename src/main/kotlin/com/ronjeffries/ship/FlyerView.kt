@@ -6,11 +6,11 @@ import org.openrndr.math.Vector2
 import kotlin.math.pow
 
 interface FlyerView {
-    fun draw(ship: FlyingObject, drawer: Drawer)
+    fun draw(ship: Flyer, drawer: Drawer)
 }
 
 class ShipView : FlyerView {
-    override fun draw(ship: FlyingObject, drawer: Drawer) {
+    override fun draw(ship: Flyer, drawer: Drawer) {
         val points = listOf(
             Vector2(-3.0, -2.0),
             Vector2(-3.0, 2.0),
@@ -34,7 +34,7 @@ class ShipView : FlyerView {
 class AsteroidView: FlyerView {
     private val rock = defineRocks().random()
 
-    override fun draw(asteroid: FlyingObject, drawer: Drawer) {
+    override fun draw(asteroid: Flyer, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
@@ -114,7 +114,7 @@ class AsteroidView: FlyerView {
 }
 
 class NullView: FlyerView {
-    override fun draw(ship: FlyingObject, drawer: Drawer) {
+    override fun draw(ship: Flyer, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.text("???")
     }

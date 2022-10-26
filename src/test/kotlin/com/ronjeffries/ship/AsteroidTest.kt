@@ -9,7 +9,7 @@ class AsteroidTest {
 
     @Test
     fun `Asteroids Exist and Move`() {
-        val asteroid = FlyingObject.asteroid(
+        val asteroid = Flyer.asteroid(
             pos = Vector2.ZERO,
             vel = Vector2(15.0,30.0)
         )
@@ -19,12 +19,12 @@ class AsteroidTest {
 
     @Test
     fun `asteroid can split`() {
-        val full = FlyingObject.asteroid(
+        val full = Flyer.asteroid(
             pos = Vector2.ZERO,
             vel = Vector2.ZERO
         )
         val radius = full.killRadius
-        val halfSize: List<FlyingObject> = full.split()
+        val halfSize: List<Flyer> = full.split()
         assertThat(halfSize.size).isEqualTo(2)
         val half = halfSize.last() // <---
         assertThat(half.killRadius).isEqualTo(radius/2.0)
@@ -39,14 +39,14 @@ class AsteroidTest {
     @Test
     fun `asteroids get new direction on split`() {
         val startingV = Vector2(100.0,0.0)
-        val full = FlyingObject.asteroid(
+        val full = Flyer.asteroid(
             pos = Vector2.ZERO,
             vel = startingV
         )
         var fullV = full.velocity
         assertThat(fullV.length).isEqualTo(100.0, within(1.0))
         assertThat(fullV).isEqualTo(startingV)
-        val halfSize: List<FlyingObject> = full.split()
+        val halfSize: List<Flyer> = full.split()
         halfSize.forEach {
             val halfV = it.velocity
             assertThat(halfV.length).isEqualTo(100.0, within(1.0))
@@ -56,7 +56,7 @@ class AsteroidTest {
 
     @Test
     fun `ships cannot split`() {
-        val ship = FlyingObject.ship(Vector2(100.0,100.0))
+        val ship = Flyer.ship(Vector2(100.0,100.0))
         val shipSplit = ship.split()
         assertThat(shipSplit).isEmpty()
     }

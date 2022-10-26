@@ -9,7 +9,7 @@ class Game {
     val flyers = Flyers()
     var lastTime = 0.0
 
-    fun add(fo: FlyingObject) = flyers.add(fo)
+    fun add(fo: IFlyer) = flyers.add(fo)
 
     fun colliders() = flyers.pairsSatisfying { f1, f2 -> f1.collides(f2) }
 
@@ -18,13 +18,13 @@ class Game {
         for (i in 0..7) {
             val pos = Vector2(random(0.0, 10000.0), random(0.0,10000.0))
             val vel = Vector2(1000.0, 0.0).rotate(random(0.0,360.0))
-            val asteroid = FlyingObject.asteroid(pos,vel )
+            val asteroid = Flyer.asteroid(pos,vel )
             add(asteroid)
         }
     }
 
     private fun newShip() {
-        val ship = FlyingObject.ship(Vector2(5000.0, 5000.0))
+        val ship = Flyer.ship(Vector2(5000.0, 5000.0))
         add(ship)
     }
 
