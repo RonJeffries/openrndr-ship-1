@@ -2,7 +2,6 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.draw.isolated
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import org.openrndr.math.Vector2
 import java.lang.Math.random
@@ -28,8 +27,8 @@ interface IFlyer {
     abstract val killRadius: Double
     abstract val position: Vector2
     abstract val ignoreCollisions: Boolean
-    abstract val canCollide: Boolean
-    fun collides(other: IFlyer): Boolean
+    fun collidesWith(other: IFlyer): Boolean
+    fun collidesWithOther(other: IFlyer): Boolean
     fun draw(drawer: Drawer)
     fun move(deltaTime: Double)
     fun split(): List<IFlyer>
@@ -45,7 +44,6 @@ class Flyer(
     val view: FlyerView = NullView(),
     val controls: Controls = Controls()
 ) : IFlyer {
-    override val canCollide = true
     var heading: Double = 0.0
 
     fun accelerate(deltaV: Vector2) {
@@ -66,9 +64,12 @@ class Flyer(
         splitCt = splitCount
     )
 
-    override fun collides(other: IFlyer):Boolean {
+    override fun collidesWith(other: IFlyer): Boolean {
+        return other.collidesWithOther(this)
+    }
+
+    override fun collidesWithOther(other: IFlyer):Boolean {
         if ( this === other) return false
-        if (!this.canCollide || !other.canCollide) return false
         if ( this.ignoreCollisions && other.ignoreCollisions) return false
         val dist = position.distanceTo(other.position)
         val allowed = killRadius + other.killRadius

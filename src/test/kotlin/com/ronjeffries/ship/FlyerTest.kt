@@ -140,7 +140,7 @@ class FlyerTest {
                 ct = ct + 1
                 val oi = objects[i]
                 val oj = objects[j]
-                if (oi.collides(oj)) {
+                if (oi.collidesWith(oj)) {
                     shouldDie.add(objects[i])
                     shouldDie.add(objects[j])
                 }
@@ -167,7 +167,7 @@ class FlyerTest {
         for (oi in objects) {
             for (oj in objects) {
                 ct += 1
-                if (oi.collides(oj)) {
+                if (oi.collidesWith(oj)) {
                     shouldDie.add(oi)
                     shouldDie.add(oj)
                 }

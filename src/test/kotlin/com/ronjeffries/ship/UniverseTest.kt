@@ -19,14 +19,14 @@ class UniverseTest {
             velocity = Vector2.ZERO,
             killRadius = 1000.0
         )
-        assertThat(ship.collides(asteroid)).describedAs("on top").isEqualTo(true)
+        assertThat(ship.collidesWith(asteroid)).describedAs("on top").isEqualTo(true)
         val tooFar = Vector2(ship.killRadius + asteroid.killRadius + 1, 0.0)
         var rotated = tooFar.rotate(37.0)
         ship.position = rotated
-        assertThat(ship.collides(asteroid)).describedAs("too far").isEqualTo(false)
+        assertThat(ship.collidesWith(asteroid)).describedAs("too far").isEqualTo(false)
         val closeEnough = Vector2(ship.killRadius + asteroid.killRadius - 1, 0.0)
         rotated = closeEnough.rotate(37.0)
         ship.position = rotated
-        assertThat(ship.collides(asteroid)).describedAs("too close").isEqualTo(true)
+        assertThat(ship.collidesWith(asteroid)).describedAs("too close").isEqualTo(true)
     }
 }

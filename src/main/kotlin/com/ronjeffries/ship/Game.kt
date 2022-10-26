@@ -11,7 +11,7 @@ class Game {
 
     fun add(fo: IFlyer) = flyers.add(fo)
 
-    fun colliders() = flyers.pairsSatisfying { f1, f2 -> f1.collides(f2) }
+    fun colliders() = flyers.pairsSatisfying { f1, f2 -> f1.collidesWith(f2) }
 
     fun createContents() {
         newShip()
@@ -45,7 +45,6 @@ class Game {
             val splitOnes = collider.split()
             flyers.addAll(splitOnes)
         }
-        newShip() // breaks a test. How should we do this?
     }
 
     fun update(deltaTime: Double) = flyers.forEach { it.update(deltaTime)}

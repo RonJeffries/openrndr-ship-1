@@ -3,13 +3,25 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 import org.openrndr.math.Vector2
 
-class ShipMonitor(ship: Flyer) : IFlyer {
-    override val canCollide = false
-    override val ignoreCollisions = false
-    override val killRadius: Double = Double.MIN_VALUE
-    override val position: Vector2 = Vector2.ZERO
+enum class ShipMonitorState {
+    HaveSeenShip, LookingForShip, Active
+}
 
-    override fun collides(other: IFlyer): Boolean = false
+class ShipMonitor(val ship: Flyer) : IFlyer {
+    override val ignoreCollisions = false
+    override val killRadius: Double = -Double.MAX_VALUE
+    override val position: Vector2 = Vector2.ZERO
+    var state: ShipMonitorState = ShipMonitorState.HaveSeenShip
+
+    override fun collidesWith(other: IFlyer): Boolean {
+        if (state == ShipMonitorState.Active) return true
+        if (other === ship) state = ShipMonitorState.HaveSeenShip
+        return false
+    }
+
+    override fun collidesWithOther(other: IFlyer): Boolean {
+        return collidesWith(other)
+    }
 
     override fun draw(drawer: Drawer) {
     }
@@ -18,10 +30,14 @@ class ShipMonitor(ship: Flyer) : IFlyer {
     }
 
     override fun split(): List<IFlyer> {
-        TODO("Not yet implemented")
+        return emptyList()
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {
-        TODO("Not yet implemented")
+        state = when (state) {
+            ShipMonitorState.LookingForShip -> ShipMonitorState.Active
+            else -> ShipMonitorState.LookingForShip
+        }
+        return emptyList()
     }
 }
