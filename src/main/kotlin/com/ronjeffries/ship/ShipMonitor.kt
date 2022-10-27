@@ -13,14 +13,14 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     override val position: Vector2 = Vector2.ZERO
     var state: ShipMonitorState = ShipMonitorState.HaveSeenShip
 
-    override fun collidesWith(other: IFlyer): List<IFlyer> {
+    override fun collisionDamageWith(other: IFlyer): List<IFlyer> {
         if (state == ShipMonitorState.Active) return listOf(this)
         if (other === ship) state = ShipMonitorState.HaveSeenShip
         return emptyList()
     }
 
-    override fun collidesWithOther(other: IFlyer): List<IFlyer> {
-        return collidesWith(other)
+    override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
+        return collisionDamageWith(other)
     }
 
     override fun draw(drawer: Drawer) {

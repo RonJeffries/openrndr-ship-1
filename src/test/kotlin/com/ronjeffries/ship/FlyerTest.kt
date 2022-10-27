@@ -140,7 +140,7 @@ class FlyerTest {
                 ct = ct + 1
                 val oi = objects[i]
                 val oj = objects[j]
-                shouldDie.addAll(oi.collidesWith(oj))
+                shouldDie.addAll(oi.collisionDamageWith(oj))
             }
         }
         val n = objects.size
@@ -164,7 +164,7 @@ class FlyerTest {
         for (oi in objects) {
             for (oj in objects) {
                 ct += 1
-                shouldDie.addAll(oi.collidesWith(oj))
+                shouldDie.addAll(oi.collisionDamageWith(oj))
             }
         }
         val n = objects.size

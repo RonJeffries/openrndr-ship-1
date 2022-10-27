@@ -11,7 +11,7 @@ class Game {
 
     fun add(fo: IFlyer) = flyers.add(fo)
 
-    fun colliders() = flyers.pairsSatisfying { f1, f2 -> f1.collidesWith(f2) }
+    fun colliders() = flyers.collectFromPairs { f1, f2 -> f1.collisionDamageWith(f2) }
 
     fun createContents() {
         val ship = newShip()

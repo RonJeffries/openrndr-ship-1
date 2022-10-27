@@ -39,9 +39,9 @@ class ShipMonitorTest {
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
         monitor.update(sixtieth)
         assertThat(monitor.state).describedAs("looks for ship after update").isEqualTo(ShipMonitorState.LookingForShip)
-        monitor.collidesWith(asteroid)
+        monitor.collisionDamageWith(asteroid)
         assertThat(monitor.state).describedAs("stays looking after most collisions").isEqualTo(ShipMonitorState.LookingForShip)
-        monitor.collidesWith(ship)
+        monitor.collisionDamageWith(ship)
         assertThat(monitor.state).describedAs("goes back to seen if it sees a ship").isEqualTo(ShipMonitorState.HaveSeenShip)
     }
 
@@ -54,9 +54,9 @@ class ShipMonitorTest {
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
         monitor.update(sixtieth)
         assertThat(monitor.state).describedAs("looks for ship after update").isEqualTo(ShipMonitorState.LookingForShip)
-        asteroid.collidesWith(monitor)
+        asteroid.collisionDamageWith(monitor)
         assertThat(monitor.state).describedAs("stays looking after most collisions").isEqualTo(ShipMonitorState.LookingForShip)
-        ship.collidesWith(monitor)
+        ship.collisionDamageWith(monitor)
         assertThat(monitor.state).describedAs("goes back to seen if it sees a ship").isEqualTo(ShipMonitorState.HaveSeenShip)
     }
 
