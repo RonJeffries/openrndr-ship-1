@@ -23,13 +23,9 @@ class Flyers {
         return pairs
     }
 
-    fun pairsSatisfying(pairCondition: (IFlyer, IFlyer) -> Boolean): MutableSet<IFlyer> {
+    fun pairsSatisfying(pairCondition: (IFlyer, IFlyer) -> List<IFlyer>): MutableSet<IFlyer> {
         val pairs = mutableSetOf<IFlyer>()
-        pairsToCheck().forEach { p ->
-            if (pairCondition(p.first, p.second)) {
-                pairs.add(p.first)
-                pairs.add(p.second)
-            }
+        pairsToCheck().forEach { p -> pairs.addAll(pairCondition(p.first, p.second))
         }
         return pairs
     }

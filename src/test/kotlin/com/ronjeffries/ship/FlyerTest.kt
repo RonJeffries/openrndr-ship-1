@@ -133,17 +133,14 @@ class FlyerTest {
         val a3 = Flyer.asteroid(p2,v) // no
         val a4 = Flyer.asteroid(p2,v) // no
         val objects = mutableListOf<Flyer>(a0,m1,s2, a3,a4)
-        val shouldDie = mutableSetOf<Flyer>()
+        val shouldDie = mutableSetOf<IFlyer>()
         var ct = 0
         for (i in 0 until objects.size-1) {
             for (j in i+1 until objects.size) {
                 ct = ct + 1
                 val oi = objects[i]
                 val oj = objects[j]
-                if (oi.collidesWith(oj)) {
-                    shouldDie.add(objects[i])
-                    shouldDie.add(objects[j])
-                }
+                shouldDie.addAll(oi.collidesWith(oj))
             }
         }
         val n = objects.size
@@ -162,15 +159,12 @@ class FlyerTest {
         val a3 = Flyer.asteroid(p2,v) // no
         val a4 = Flyer.asteroid(p2,v) // no
         val objects = mutableListOf<Flyer>(a0,m1,s2, a3,a4)
-        val shouldDie = mutableSetOf<Flyer>()
+        val shouldDie = mutableSetOf<IFlyer>()
         var ct = 0
         for (oi in objects) {
             for (oj in objects) {
                 ct += 1
-                if (oi.collidesWith(oj)) {
-                    shouldDie.add(oi)
-                    shouldDie.add(oj)
-                }
+                shouldDie.addAll(oi.collidesWith(oj))
             }
         }
         val n = objects.size

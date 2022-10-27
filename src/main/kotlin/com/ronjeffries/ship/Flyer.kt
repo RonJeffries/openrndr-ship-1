@@ -27,8 +27,8 @@ interface IFlyer {
     abstract val killRadius: Double
     abstract val position: Vector2
     abstract val ignoreCollisions: Boolean
-    fun collidesWith(other: IFlyer): Boolean
-    fun collidesWithOther(other: IFlyer): Boolean
+    fun collidesWith(other: IFlyer): List<IFlyer>
+    fun collidesWithOther(other: IFlyer): List<IFlyer>
     fun draw(drawer: Drawer)
     fun move(deltaTime: Double)
     fun split(): List<IFlyer>
@@ -64,16 +64,16 @@ class Flyer(
         splitCt = splitCount
     )
 
-    override fun collidesWith(other: IFlyer): Boolean {
+    override fun collidesWith(other: IFlyer): List<IFlyer> {
         return other.collidesWithOther(this)
     }
 
-    override fun collidesWithOther(other: IFlyer):Boolean {
-        if ( this === other) return false
-        if ( this.ignoreCollisions && other.ignoreCollisions) return false
+    override fun collidesWithOther(other: IFlyer): List<IFlyer> {
+        if ( this === other) return emptyList()
+        if ( this.ignoreCollisions && other.ignoreCollisions) return emptyList()
         val dist = position.distanceTo(other.position)
         val allowed = killRadius + other.killRadius
-        return dist < allowed
+        return if (dist < allowed) listOf(this,other) else emptyList()
     }
 
     override fun draw(drawer: Drawer) {
