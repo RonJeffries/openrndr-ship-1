@@ -30,7 +30,8 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     }
 
     override fun split(): List<IFlyer> {
-        return emptyList()
+        state = ShipMonitorState.HaveSeenShip
+        return listOf(this,ship)
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {

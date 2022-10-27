@@ -14,7 +14,9 @@ class Game {
     fun colliders() = flyers.pairsSatisfying { f1, f2 -> f1.collidesWith(f2) }
 
     fun createContents() {
-        newShip()
+        val ship = newShip()
+        add(ship)
+        add(ShipMonitor(ship))
         for (i in 0..7) {
             val pos = Vector2(random(0.0, 10000.0), random(0.0,10000.0))
             val vel = Vector2(1000.0, 0.0).rotate(random(0.0,360.0))
@@ -23,9 +25,8 @@ class Game {
         }
     }
 
-    private fun newShip() {
-        val ship = Flyer.ship(Vector2(5000.0, 5000.0))
-        add(ship)
+    private fun newShip(): Flyer {
+        return  Flyer.ship(Vector2(5000.0, 5000.0))
     }
 
     fun cycle(drawer: Drawer, seconds: Double) {
