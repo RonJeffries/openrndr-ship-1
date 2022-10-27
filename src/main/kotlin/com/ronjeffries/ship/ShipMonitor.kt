@@ -4,7 +4,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.math.Vector2
 
 enum class ShipMonitorState {
-    HaveSeenShip, LookingForShip, Active
+    HaveSeenShip, LookingForShip, Active, DoneReporting
 }
 
 class ShipMonitor(val ship: Flyer) : IFlyer {
@@ -14,9 +14,18 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     var state: ShipMonitorState = ShipMonitorState.HaveSeenShip
 
     override fun collisionDamageWith(other: IFlyer): List<IFlyer> {
-        if (state == ShipMonitorState.Active) return listOf(this)
-        if (other === ship) state = ShipMonitorState.HaveSeenShip
-        return emptyList()
+        var result:List<IFlyer> = emptyList()
+        state = when {
+            state == ShipMonitorState.Active -> {
+                result = listOf(this)
+                ShipMonitorState.DoneReporting
+            }
+            state == ShipMonitorState.LookingForShip && other === ship -> {
+                ShipMonitorState.HaveSeenShip
+            }
+            else -> state
+        }
+        return result
     }
 
     override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
