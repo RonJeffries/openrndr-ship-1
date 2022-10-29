@@ -29,9 +29,9 @@ interface IFlyer {
     abstract val ignoreCollisions: Boolean
     fun collisionDamageWith(other: IFlyer): List<IFlyer>
     fun collisionDamageWithOther(other: IFlyer): List<IFlyer>
-    fun draw(drawer: Drawer)
-    fun move(deltaTime: Double)
-    fun finalize(): List<IFlyer>
+    fun draw(drawer: Drawer) {}
+    fun move(deltaTime: Double) {}
+    fun finalize(): List<IFlyer> { return emptyList() }
     fun update(deltaTime: Double): List<IFlyer>
 }
 

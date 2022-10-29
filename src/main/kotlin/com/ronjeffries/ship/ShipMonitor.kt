@@ -10,29 +10,16 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     override val position: Vector2 = Vector2.ZERO
     var state: ShipMonitorState = HaveSeenShip
 
-    private val noDamagedObjects = mutableListOf<IFlyer>()
-
     override fun collisionDamageWith(other: IFlyer): List<IFlyer> {
         if (state == LookingForShip) {
             if (other == ship)
                 state = HaveSeenShip
         }
-        return noDamagedObjects
+        return emptyList() // no damage done here
     }
 
     override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
         return collisionDamageWith(other)
-    }
-
-    override fun draw(drawer: Drawer) {
-    }
-
-    override fun move(deltaTime: Double) {
-    }
-
-    override fun finalize(): List<IFlyer> {
-        val neverCalled: List<IFlyer> = emptyList()
-        return neverCalled
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {
