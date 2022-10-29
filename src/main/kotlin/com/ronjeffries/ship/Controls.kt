@@ -29,7 +29,10 @@ class Controls {
     private fun fire(obj: Flyer): List<Flyer> {
         // too tricky? deponent denieth accusation.
         val result: MutableList<Flyer> = mutableListOf()
-        if (fire && !holdFire ) result.add(createMissile(obj))
+        if (fire && !holdFire ) {
+            val missile = createMissile(obj)
+            result.add(missile)
+        }
         holdFire = fire
         return result
     }

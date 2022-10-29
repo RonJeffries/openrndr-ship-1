@@ -38,7 +38,7 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     override fun move(deltaTime: Double) {
     }
 
-    override fun split(): List<IFlyer> {
+    override fun finalize(): List<IFlyer> {
         state = ShipMonitorState.HaveSeenShip
         return listOf(this,ship)
     }

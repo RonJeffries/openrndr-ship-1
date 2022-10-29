@@ -76,7 +76,7 @@ class ShipMonitorTest {
 
         // nothing colliding
         game.update(sixtieth)
-        game.processCollisions()
+        game.processInteractions()
         assertThat(game.flyers.size).isEqualTo(3)
         assertThat(game.flyers.flyers).contains(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
@@ -84,14 +84,14 @@ class ShipMonitorTest {
         // ship colliding, make two asteroids and lose ship
         ship.position = Vector2.ZERO
         game.update(sixtieth)
-        game.processCollisions()
+        game.processInteractions()
         assertThat(game.flyers.size).isEqualTo(3)
         assertThat(game.flyers.flyers).doesNotContain(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
 
         // now we discover the missing ship
         game.update(sixtieth)
-        game.processCollisions()
+        game.processInteractions()
         assertThat(game.flyers.size).isEqualTo(3)
         assertThat(game.flyers.flyers).doesNotContain(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.LookingForShip)
@@ -100,7 +100,7 @@ class ShipMonitorTest {
         // thus adding in ship and monitor.
         game.update(sixtieth)
         assertThat(monitor.state).describedAs("just switched").isEqualTo(ShipMonitorState.Active)
-        game.processCollisions()
+        game.processInteractions()
         assertThat(game.flyers.flyers).contains(ship)
         assertThat(game.flyers.flyers).contains(monitor)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)

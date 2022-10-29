@@ -33,26 +33,24 @@ class Game {
         val deltaTime = seconds - lastTime
         lastTime = seconds
         update(deltaTime)
-        processCollisions()
+        processInteractions()
         draw(drawer)
     }
 
     fun draw(drawer: Drawer) = flyers.forEach {drawer.isolated { it.draw(drawer) } }
 
-    fun processCollisions() {
-        val colliding = colliders()
-        flyers.removeAll(colliding)
-        for (collider in colliding) {
-            val splitOnes = collider.split()
-            flyers.addAll(splitOnes)
+    fun processInteractions() {
+        val toBeRemoved = colliders()
+        flyers.removeAll(toBeRemoved)
+        for (removedObject in toBeRemoved) {
+            val addedByFinalize = removedObject.finalize()
+            flyers.addAll(addedByFinalize)
         }
     }
 
     fun update(deltaTime: Double) {
         val adds = mutableListOf<IFlyer>()
-        flyers.forEach {
-            adds.addAll(it.update(deltaTime))
-        }
+        flyers.forEach { adds.addAll(it.update(deltaTime)) }
         flyers.addAll(adds)
     }
 }

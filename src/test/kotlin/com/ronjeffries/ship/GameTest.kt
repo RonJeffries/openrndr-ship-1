@@ -30,7 +30,7 @@ class GameTest {
         game.add(ship)
         assertThat(game.flyers.size).isEqualTo(2)
         assertThat(ship).isIn(game.flyers.flyers)
-        game.processCollisions()
+        game.processInteractions()
         assertThat(game.flyers.size).isEqualTo(2) // because ship spawns automatically˚
         assertThat(ship).isNotIn(game.flyers.flyers) // but a new one is
     }

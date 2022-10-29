@@ -45,8 +45,9 @@ class FlyerTest {
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
         control.accelerate = true
         ship.update(tick)
-        checkVector(ship.velocity, Vector2.UNIT_X, "velocity")
-        checkVector(ship.position, Vector2(1.0/60.0, 0.0), "position")
+        val deltaXPerSecond = Controls().acceleration.x
+        checkVector(ship.velocity, Vector2.UNIT_X*deltaXPerSecond/60.0, "velocity")
+        checkVector(ship.position, Vector2(deltaXPerSecond/60.0/60.0, 0.0), "position")
     }
 
     @Test
@@ -54,12 +55,12 @@ class FlyerTest {
         val control = Controls()
         val ship = Flyer.ship(Vector2.ZERO, control)
         control.left = true
-        ship.update(tick*15)
-        assertThat(ship.heading).isEqualTo(90.0, within(0.01))
+        ship.update(tick*30)
+        assertThat(ship.heading).isEqualTo(-90.0, within(0.01))
         control.left = false
         control.accelerate  = true
         ship.update(tick*60)
-        checkVector(ship.velocity, Vector2(0.0,60.0), "rotated velocity")
+        checkVector(ship.velocity, Vector2(0.0,-1000.0), "rotated velocity")
     }
 
     @Test
@@ -68,7 +69,7 @@ class FlyerTest {
         val ship = Flyer.ship(Vector2.ZERO, control)
         control.right = true
         ship.update(tick*10)
-        assertThat(ship.heading).isEqualTo(-60.0, within(0.01))
+        assertThat(ship.heading).isEqualTo(30.0, within(0.01))
     }
 
     @Test
@@ -76,7 +77,7 @@ class FlyerTest {
         val control = Controls()
         val ship = Flyer.ship(Vector2.ZERO, control)
         control.left = true
-        ship.update(tick*10) // 60 degrees north east ish
+        ship.update(tick*20) // 60 degrees north east ish
         control.left = false
         control.accelerate = true
         ship.update(100.0) // long time
@@ -84,7 +85,7 @@ class FlyerTest {
         val speed = v.length
         assertThat(speed).isEqualTo(5000.0, within(1.0))
         val radians60 = toRadians(60.0)
-        val expected = Vector2(cos(radians60), sin(radians60))*5000.0
+        val expected = Vector2(cos(radians60), -sin(radians60))*5000.0
         checkVector(v, expected, "velocity", 1.0)
     }
 
@@ -93,8 +94,8 @@ class FlyerTest {
         val controls = Controls()
         val ship = Flyer.ship(Vector2.ZERO, controls)
         controls.fire = true
-        val flyers = ship.update(tick)
-        assertThat(flyers.size).isEqualTo(2)
+        val newMissiles = ship.update(tick)
+        assertThat(newMissiles.size).isEqualTo(1) // does not return itself
     }
 
     @Test
@@ -102,16 +103,16 @@ class FlyerTest {
         val controls = Controls()
         val ship = Flyer.ship(Vector2.ZERO, controls)
         controls.fire = true
-        var flyers = ship.update(tick)
-        assertThat(flyers.size).isEqualTo(2)
-        flyers = ship.update(tick)
-        assertThat(flyers.size).isEqualTo(1)
+        var newMissiles = ship.update(tick)
+        assertThat(newMissiles.size).isEqualTo(1)
+        newMissiles = ship.update(tick)
+        assertThat(newMissiles.size).isEqualTo(0) // no firing
         controls.fire = false
-        flyers = ship.update(tick)
-        assertThat(flyers.size).isEqualTo(1)
+        newMissiles = ship.update(tick)
+        assertThat(newMissiles.size).isEqualTo(0)
         controls.fire = true
-        flyers = ship.update(tick)
-        assertThat(flyers.size).isEqualTo(2)
+        newMissiles = ship.update(tick)
+        assertThat(newMissiles.size).isEqualTo(1)
     }
 
     @Test

@@ -31,7 +31,7 @@ interface IFlyer {
     fun collisionDamageWithOther(other: IFlyer): List<IFlyer>
     fun draw(drawer: Drawer)
     fun move(deltaTime: Double)
-    fun split(): List<IFlyer>
+    fun finalize(): List<IFlyer>
     fun update(deltaTime: Double): List<IFlyer>
 }
 
@@ -87,11 +87,15 @@ class Flyer(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun split(): List<Flyer> {
+    override fun finalize(): List<Flyer> {
         if (splitCount < 1) return listOf()
         val meSplit = asSplit()
         val newGuy = meSplit.asTwin()
         return listOf(meSplit, newGuy)
+    }
+
+    override fun toString(): String {
+        return "Flyer $position ($killRadius)"
     }
 
     fun turnBy(degrees:Double) {
