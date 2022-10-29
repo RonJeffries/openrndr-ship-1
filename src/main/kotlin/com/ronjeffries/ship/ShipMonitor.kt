@@ -14,18 +14,14 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     var state: ShipMonitorState = ShipMonitorState.HaveSeenShip
 
     override fun collisionDamageWith(other: IFlyer): List<IFlyer> {
-        var result:List<IFlyer> = emptyList()
         state = when {
-            state == ShipMonitorState.Active -> {
-                result = listOf(this)
-                ShipMonitorState.DoneReporting
-            }
             state == ShipMonitorState.LookingForShip && other === ship -> {
                 ShipMonitorState.HaveSeenShip
             }
             else -> state
         }
-        return result
+        var noOneDamaged:List<IFlyer> = emptyList()
+        return noOneDamaged
     }
 
     override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
@@ -39,15 +35,19 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     }
 
     override fun finalize(): List<IFlyer> {
-        state = ShipMonitorState.HaveSeenShip
-        return listOf(this,ship)
+        val neverCalled: List<IFlyer> = emptyList()
+        return neverCalled
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {
+        var toBeCreated: List<IFlyer> = emptyList()
         state = when (state) {
-            ShipMonitorState.LookingForShip -> ShipMonitorState.Active
+            ShipMonitorState.LookingForShip -> {
+                toBeCreated = listOf(ship)
+                ShipMonitorState.HaveSeenShip
+            }
             else -> ShipMonitorState.LookingForShip
         }
-        return emptyList()
+        return toBeCreated
     }
 }
