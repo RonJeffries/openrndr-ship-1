@@ -103,7 +103,7 @@ class Flyer(
         val additions = controls.control(this, deltaTime)
         result.addAll(additions)
         move(deltaTime)
-        result.add(this)
+//        result.add(this)
         return result
     }
 

@@ -13,8 +13,8 @@ class Game {
 
     fun colliders() = flyers.collectFromPairs { f1, f2 -> f1.collisionDamageWith(f2) }
 
-    fun createContents() {
-        val ship = newShip()
+    fun createContents(controls: Controls) {
+        val ship = newShip(controls)
         add(ship)
         add(ShipMonitor(ship))
         for (i in 0..7) {
@@ -25,8 +25,8 @@ class Game {
         }
     }
 
-    private fun newShip(): Flyer {
-        return  Flyer.ship(Vector2(5000.0, 5000.0))
+    private fun newShip(controls: Controls): Flyer {
+        return  Flyer.ship(Vector2(5000.0, 5000.0), controls)
     }
 
     fun cycle(drawer: Drawer, seconds: Double) {
@@ -48,5 +48,11 @@ class Game {
         }
     }
 
-    fun update(deltaTime: Double) = flyers.forEach { it.update(deltaTime)}
+    fun update(deltaTime: Double) {
+        val adds = mutableListOf<IFlyer>()
+        flyers.forEach {
+            adds.addAll(it.update(deltaTime))
+        }
+        flyers.addAll(adds)
+    }
 }

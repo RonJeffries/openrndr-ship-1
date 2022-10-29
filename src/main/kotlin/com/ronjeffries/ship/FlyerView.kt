@@ -9,6 +9,15 @@ interface FlyerView {
     fun draw(ship: Flyer, drawer: Drawer)
 }
 
+class MissileView: FlyerView {
+    override fun draw(missile: Flyer, drawer: Drawer) {
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.fill = ColorRGBa.WHITE
+        drawer.scale(3.0,3.0)
+        drawer.circle(Vector2.ZERO, missile.killRadius)
+    }
+}
+
 class ShipView : FlyerView {
     override fun draw(ship: Flyer, drawer: Drawer) {
         val points = listOf(
