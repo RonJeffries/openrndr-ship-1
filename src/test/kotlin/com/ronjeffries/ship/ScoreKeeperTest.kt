@@ -18,10 +18,20 @@ class ScoreKeeperTest {
     }
 
     @Test
-    fun `scorekeeper captures this vs other`() {
+    fun `scorekeeper captures keeper vs other`() {
         val score = Score(20)
         val keeper = ScoreKeeper()
         val discards = keeper.collisionDamageWith(score)
+        assertThat(discards.size).isEqualTo(1)
+        assertThat(discards).contains(score)
+        assertThat(keeper.formatted()).isEqualTo("00020")
+    }
+
+    @Test
+    fun `scorekeeper captures other vs keeper`() {
+        val score = Score(20)
+        val keeper = ScoreKeeper()
+        val discards = score.collisionDamageWith(keeper)
         assertThat(discards.size).isEqualTo(1)
         assertThat(discards).contains(score)
         assertThat(keeper.formatted()).isEqualTo("00020")

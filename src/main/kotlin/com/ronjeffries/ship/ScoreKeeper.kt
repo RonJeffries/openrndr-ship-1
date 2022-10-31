@@ -16,7 +16,7 @@ class ScoreKeeper: IFlyer {
     }
 
     override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
-        TODO("Not yet implemented")
+        return this.collisionDamageWith(other)
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {
