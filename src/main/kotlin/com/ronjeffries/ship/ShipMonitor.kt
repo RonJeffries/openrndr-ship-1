@@ -7,7 +7,6 @@ import com.ronjeffries.ship.ShipMonitorState.*
 class ShipMonitor(val ship: Flyer) : IFlyer {
     override val ignoreCollisions = false
     override val killRadius: Double = -Double.MAX_VALUE
-    override val position: Vector2 = Vector2.ZERO
     var state: ShipMonitorState = HaveSeenShip
 
     override fun collisionDamageWith(other: IFlyer): List<IFlyer> {

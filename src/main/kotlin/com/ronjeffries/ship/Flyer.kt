@@ -25,13 +25,15 @@ fun Double.cap(): Double {
 
 interface IFlyer {
     val killRadius: Double
-        get() = 20000.0
+        get() = -Double.MAX_VALUE
     val position: Vector2
-        get() = Vector2.ZERO
+        get() = Vector2(-666.0, -666.0)
     val ignoreCollisions: Boolean
         get() = true
     val score: Int
         get() = 0
+    val velocity
+        get() = Vector2(0.0, 100.0)
     fun collisionDamageWith(other: IFlyer): List<IFlyer>
     fun collisionDamageWithOther(other: IFlyer): List<IFlyer>
     fun draw(drawer: Drawer) {}
@@ -42,7 +44,7 @@ interface IFlyer {
 
 class Flyer(
     override var position: Vector2,
-    var velocity: Vector2,
+    override var velocity: Vector2,
     override var killRadius: Double,
     var splitCount: Int = 0,
     override val ignoreCollisions: Boolean = false,
@@ -92,11 +94,26 @@ class Flyer(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun finalize(): List<Flyer> {
-        if (splitCount < 1) return listOf()
-        val meSplit = asSplit()
-        val newGuy = meSplit.asTwin()
-        return listOf(meSplit, newGuy)
+    override fun finalize(): List<IFlyer> {
+        val result: MutableList<IFlyer> = mutableListOf()
+        val score = getScore()
+        if (score.score > 0 ) result.add(score)
+        if (splitCount >= 1) {
+            val meSplit = asSplit()
+            result.add(meSplit.asTwin())
+            result.add(meSplit)
+        }
+        return result
+    }
+
+    private fun getScore(): Score {
+        val score = when (killRadius) {
+            500.0 -> 20
+            250.0 -> 50
+            125.0 -> 100
+            else -> 0
+        }
+        return Score(score)
     }
 
     override fun toString(): String {

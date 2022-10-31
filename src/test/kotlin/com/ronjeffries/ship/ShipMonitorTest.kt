@@ -32,7 +32,7 @@ class ShipMonitorTest {
 
     @Test
     fun `ShipMonitor collisions`() {
-        val sixtieth = 1.0/60/0
+        val sixtieth = 1.0/60.0
         val ship = Flyer.ship(Vector2.ZERO)
         val asteroid = Flyer.asteroid(Vector2.ZERO, Vector2.ZERO)
         val monitor = ShipMonitor(ship)
@@ -64,7 +64,7 @@ class ShipMonitorTest {
     fun `ship monitor correctly adds a new ship`() {
         val sixtieth = 1.0/60.0
         val ship = Flyer.ship(Vector2(1000.0, 1000.0))
-        val asteroid = Flyer.asteroid(Vector2.ZERO, Vector2(1.0,0.0)*1000.0)
+        val asteroid = Flyer.asteroid(Vector2.ZERO, Vector2(1000.0,0.0))
         val monitor = ShipMonitor(ship)
         val game = Game()
         game.add(ship)
@@ -85,7 +85,7 @@ class ShipMonitorTest {
         ship.position = Vector2.ZERO
         game.update(sixtieth)
         game.processInteractions()
-        assertThat(game.flyers.size).isEqualTo(3)
+        assertThat(game.flyers.size).isEqualTo(4) // two asteroids, one score, one monitor
         assertThat(game.flyers.flyers).doesNotContain(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
 
@@ -95,7 +95,7 @@ class ShipMonitorTest {
         // now we discover the missing ship
         game.update(sixtieth)
         game.processInteractions()
-        assertThat(game.flyers.size).isEqualTo(3)
+        assertThat(game.flyers.size).isEqualTo(4) // still two asteroids, one score, one mon?
         assertThat(game.flyers.flyers).doesNotContain(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.LookingForShip)
 
@@ -103,9 +103,13 @@ class ShipMonitorTest {
         // thus adding in ship and monitor.
         game.update(sixtieth)
         assertThat(game.flyers.flyers).contains(ship)
-        assertThat(monitor.state).describedAs("just switched").isEqualTo(ShipMonitorState.HaveSeenShip)
+        assertThat(monitor.state)
+            .describedAs("just switched")
+            .isEqualTo(ShipMonitorState.HaveSeenShip)
         game.processInteractions()
-        assertThat(game.flyers.flyers).describedAs("after interactions after adding").contains(ship)
+        assertThat(game.flyers.flyers)
+            .describedAs("after interactions after adding")
+            .contains(ship)
         assertThat(game.flyers.flyers).contains(monitor)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
     }

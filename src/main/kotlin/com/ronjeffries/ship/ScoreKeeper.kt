@@ -1,5 +1,9 @@
 package com.ronjeffries.ship
 
+import org.openrndr.color.ColorRGBa
+import org.openrndr.draw.Drawer
+import org.openrndr.math.Vector2
+
 class ScoreKeeper: IFlyer {
     var totalScore = 0
 
@@ -19,7 +23,14 @@ class ScoreKeeper: IFlyer {
         return this.collisionDamageWith(other)
     }
 
+    override fun draw(drawer: Drawer) {
+        drawer.translate(100.0, 500.0)
+        drawer.stroke = ColorRGBa.GREEN
+        drawer.fill = ColorRGBa.GREEN
+        drawer.text(formatted(), Vector2(0.0, 0.0))
+    }
+
     override fun update(deltaTime: Double): List<IFlyer> {
-        TODO("Not yet implemented")
+        return emptyList()
     }
 }
