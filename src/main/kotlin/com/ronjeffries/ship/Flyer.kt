@@ -24,9 +24,14 @@ fun Double.cap(): Double {
 }
 
 interface IFlyer {
-    abstract val killRadius: Double
-    abstract val position: Vector2
-    abstract val ignoreCollisions: Boolean
+    val killRadius: Double
+        get() = 20000.0
+    val position: Vector2
+        get() = Vector2.ZERO
+    val ignoreCollisions: Boolean
+        get() = true
+    val score: Int
+        get() = 0
     fun collisionDamageWith(other: IFlyer): List<IFlyer>
     fun collisionDamageWithOther(other: IFlyer): List<IFlyer>
     fun draw(drawer: Drawer) {}
