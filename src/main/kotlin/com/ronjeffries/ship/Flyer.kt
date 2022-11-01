@@ -36,6 +36,8 @@ interface IFlyer {
         get() = Vector2(0.0, 100.0)
     val elapsedTime
         get() = 0.0
+    val lifetime
+        get() = Double.MAX_VALUE
     fun collisionDamageWith(other: IFlyer): List<IFlyer>
     fun collisionDamageWithOther(other: IFlyer): List<IFlyer>
     fun draw(drawer: Drawer) {}
@@ -55,6 +57,7 @@ class Flyer(
 ) : IFlyer {
     var heading: Double = 0.0
     override var elapsedTime = 0.0
+    override var lifetime = Double.MAX_VALUE
 
     fun accelerate(deltaV: Vector2) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
