@@ -181,6 +181,33 @@ class FlyerTest {
         assertThat(ship.elapsedTime).isEqualTo(5.0)
         ship.update(3.0)
     }
+
+    @Test
+    fun `missile starts ahead of ship`() {
+        val sixtieth = 1.0/60.0
+        val controls = Controls()
+        val ship = Flyer.ship(Vector2(1000.0, 1000.0), controls)
+        ship.heading = 0.0
+        controls.fire = true
+        val missileOffset = Vector2(2*150.0+2*10.0, 0.0)
+        var expectedPosition  = ship.position + missileOffset.rotate(ship.heading)
+        var additions = ship.update(sixtieth)
+        assertThat(additions).isNotEmpty
+        var missile = additions.first()
+        print(missile.position)
+        assertThat(missile.position).isEqualTo(expectedPosition)
+        controls.fire = false
+        additions = ship.update(sixtieth)
+        assertThat(additions).isEmpty()
+        ship.heading = 90.0
+        controls.fire = true
+        expectedPosition  = ship.position + missileOffset.rotate(ship.heading)
+        additions = ship.update(sixtieth)
+        assertThat(additions).isNotEmpty
+        missile = additions.first()
+        print(missile.position)
+        assertThat(missile.position).isEqualTo(expectedPosition)
+    }
 }
 
 fun checkVector(actual:Vector2, should: Vector2, description: String, delta: Double = 0.0001) {

@@ -37,12 +37,8 @@ class Controls {
         return result
     }
 
-    private fun createMissile(obj: Flyer): Flyer {
-        val missileKillRadius = 10.0
-        val missileOwnVelocity = Vector2(SPEED_OF_LIGHT / 3.0, 0.0).rotate(obj.heading)
-        val missilePos = obj.position + Vector2(obj.killRadius + 2 * missileKillRadius, 0.0).rotate(obj.heading)
-        val missileVel = obj.velocity + missileOwnVelocity
-        return Flyer(missilePos, missileVel, missileKillRadius, 0, false, MissileView())
+    private fun createMissile(ship: Flyer): Flyer {
+        return Flyer.missile(ship)
     }
 
     private fun turn(obj: Flyer, deltaTime: Double) {

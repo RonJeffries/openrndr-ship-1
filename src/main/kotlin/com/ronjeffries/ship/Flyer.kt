@@ -166,5 +166,15 @@ class Flyer(
                 controls = control,
             )
         }
+
+        fun missile(ship: Flyer): Flyer {
+            val missileKillRadius = 10.0
+            val missileOwnVelocity = Vector2(SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
+            val missilePos = ship.position + Vector2(2*ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
+            val missileVel = ship.velocity + missileOwnVelocity
+            val flyer =  Flyer(missilePos, missileVel, missileKillRadius, 0, false, MissileView())
+            flyer.lifetime = 3.0
+            return flyer
+        }
     }
 }

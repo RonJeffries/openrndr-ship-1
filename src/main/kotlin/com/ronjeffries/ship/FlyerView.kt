@@ -31,7 +31,7 @@ class ShipView : FlyerView {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
-//        drawer.circle(Vector2.ZERO, ship.killRadius)
+        drawer.circle(Vector2.ZERO, ship.killRadius)
         drawer.scale(30.0, 30.0)
         drawer.rotate(ship.heading )
         drawer.stroke = ColorRGBa.WHITE

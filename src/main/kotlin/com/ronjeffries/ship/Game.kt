@@ -18,6 +18,7 @@ class Game {
         add(ship)
         add(ShipMonitor(ship))
         add(ScoreKeeper())
+        add(LifetimeClock())
         for (i in 0..7) {
             val pos = Vector2(random(0.0, 10000.0), random(0.0,10000.0))
             val vel = Vector2(1000.0, 0.0).rotate(random(0.0,360.0))
