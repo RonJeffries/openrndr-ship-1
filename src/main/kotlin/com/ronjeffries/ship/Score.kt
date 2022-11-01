@@ -6,8 +6,7 @@ class Score(public override val score: Int): IFlyer {
     }
 
     override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
-        // cannot occur
-        return emptyList() // satisfy the rules
+        return emptyList() // we don't really partake
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {

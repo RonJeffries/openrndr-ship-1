@@ -34,4 +34,15 @@ class GameTest {
         assertThat(game.flyers.size).isEqualTo(3) // new ship (hack) and a Score
         assertThat(ship).isNotIn(game.flyers.flyers) // but a new one is
     }
+
+    @Test
+    fun `count interactions`() {
+        val game = Game()
+        val n = 12
+        for (i in 1..n) {
+            game.add(Flyer.ship(Vector2.ZERO))
+        }
+        val pairs = game.flyers.pairsToCheck()
+        assertThat(pairs.size).isEqualTo(n*(n-1)/2)
+    }
 }

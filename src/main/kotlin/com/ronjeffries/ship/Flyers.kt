@@ -13,7 +13,7 @@ class Flyers {
 
     fun forEach(f: (IFlyer)->Unit) = flyers.forEach(f)
 
-    private fun pairsToCheck(): List<Pair<IFlyer, IFlyer>> {
+    fun pairsToCheck(): List<Pair<IFlyer, IFlyer>> {
         val pairs = mutableListOf<Pair<IFlyer, IFlyer>>()
         flyers.indices.forEach() { i ->
             flyers.indices.minus(0..i).forEach() { j ->

@@ -34,6 +34,8 @@ interface IFlyer {
         get() = 0
     val velocity
         get() = Vector2(0.0, 100.0)
+    val elapsedTime
+        get() = 0.0
     fun collisionDamageWith(other: IFlyer): List<IFlyer>
     fun collisionDamageWithOther(other: IFlyer): List<IFlyer>
     fun draw(drawer: Drawer) {}
@@ -52,6 +54,7 @@ class Flyer(
     val controls: Controls = Controls()
 ) : IFlyer {
     var heading: Double = 0.0
+    override var elapsedTime = 0.0
 
     fun accelerate(deltaV: Vector2) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
@@ -116,6 +119,10 @@ class Flyer(
         return Score(score)
     }
 
+    fun tick(deltaTime: Double) {
+        elapsedTime += deltaTime
+    }
+
     override fun toString(): String {
         return "Flyer $position ($killRadius)"
     }
@@ -125,11 +132,11 @@ class Flyer(
     }
 
     override fun update(deltaTime: Double): List<Flyer> {
+        tick(deltaTime)
         val result: MutableList<Flyer> = mutableListOf()
         val additions = controls.control(this, deltaTime)
         result.addAll(additions)
         move(deltaTime)
-//        result.add(this)
         return result
     }
 

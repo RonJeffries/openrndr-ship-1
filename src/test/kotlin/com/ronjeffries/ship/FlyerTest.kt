@@ -172,6 +172,15 @@ class FlyerTest {
         assertThat(ct).isEqualTo(n*n)
         assertThat(shouldDie.size).isEqualTo(3)
     }
+
+    @Test
+    fun `Flyer clock ticks on update`() {
+        val ship = Flyer.ship(Vector2.ZERO)
+        assertThat(ship.elapsedTime).isEqualTo(0.0)
+        ship.update(5.0)
+        assertThat(ship.elapsedTime).isEqualTo(5.0)
+        ship.update(3.0)
+    }
 }
 
 fun checkVector(actual:Vector2, should: Vector2, description: String, delta: Double = 0.0001) {
