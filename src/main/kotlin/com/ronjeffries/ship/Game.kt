@@ -3,7 +3,6 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 import org.openrndr.extra.noise.random
-import org.openrndr.math.Vector2
 
 class Game {
     val flyers = Flyers()
@@ -11,7 +10,7 @@ class Game {
 
     fun add(fo: IFlyer) = flyers.add(fo)
 
-    fun colliders() = flyers.collectFromPairs { f1, f2 -> f1.collisionDamageWith(f2) }
+    fun colliders() = flyers.collectFromPairs { f1, f2 -> f1.interactWith(f2) }
 
     fun createContents(controls: Controls) {
         val ship = newShip(controls)

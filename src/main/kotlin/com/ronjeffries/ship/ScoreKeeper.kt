@@ -2,7 +2,6 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.math.Vector2
 
 class ScoreKeeper: IFlyer {
     var totalScore = 0
@@ -11,7 +10,7 @@ class ScoreKeeper: IFlyer {
         return ("00000" + totalScore.toShort()).takeLast(5)
     }
 
-    override fun collisionDamageWith(other: IFlyer): List<IFlyer> {
+    override fun interactWith(other: IFlyer): List<IFlyer> {
         if (other.score > 0) {
             totalScore += other.score
             return listOf(other)
@@ -19,8 +18,8 @@ class ScoreKeeper: IFlyer {
         return emptyList()
     }
 
-    override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
-        return this.collisionDamageWith(other)
+    override fun interactWithOther(other: IFlyer): List<IFlyer> {
+        return this.interactWith(other)
     }
 
     override fun draw(drawer: Drawer) {

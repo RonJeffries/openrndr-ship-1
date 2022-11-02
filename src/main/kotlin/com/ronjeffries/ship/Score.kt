@@ -1,11 +1,11 @@
 package com.ronjeffries.ship
 
 class Score(public override val score: Int): IFlyer {
-    override fun collisionDamageWith(other: IFlyer): List<IFlyer> {
-        return other.collisionDamageWithOther(this)
+    override fun interactWith(other: IFlyer): List<IFlyer> {
+        return other.interactWithOther(this)
     }
 
-    override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
+    override fun interactWithOther(other: IFlyer): List<IFlyer> {
         return emptyList() // we don't really partake
     }
 

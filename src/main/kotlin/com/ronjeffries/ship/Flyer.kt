@@ -4,7 +4,6 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import org.openrndr.math.Vector2
-import java.lang.Math.random
 
 const val SPEED_OF_LIGHT = 5000.0
 const val UNIVERSE_SIZE = 10000.0
@@ -32,7 +31,7 @@ interface IFlyer {
         get() = -Double.MAX_VALUE
     val position: Point
         get() = Point(-666.0, -666.0)
-    val ignoreCollisions: Boolean
+    val mutuallyInvulnerable: Boolean
         get() = true
     val score: Int
         get() = 0
@@ -42,9 +41,9 @@ interface IFlyer {
         get() = 0.0
     val lifetime
         get() = Double.MAX_VALUE
-    fun collisionDamageWith(other: IFlyer): List<IFlyer>
-    fun collisionDamageWithOther(other: IFlyer): List<IFlyer>
     fun draw(drawer: Drawer) {}
+    fun interactWith(other: IFlyer): List<IFlyer>
+    fun interactWithOther(other: IFlyer): List<IFlyer>
     fun move(deltaTime: Double) {}
     fun finalize(): List<IFlyer> { return emptyList() }
     fun update(deltaTime: Double): List<IFlyer>
@@ -55,7 +54,7 @@ class Flyer(
     override var velocity: Velocity,
     override var killRadius: Double,
     var splitCount: Int = 0,
-    override val ignoreCollisions: Boolean = false,
+    override val mutuallyInvulnerable: Boolean = false,
     val view: FlyerView = NullView(),
     val controls: Controls = Controls()
 ) : IFlyer {
@@ -68,24 +67,30 @@ class Flyer(
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    override fun collisionDamageWith(other: IFlyer): List<IFlyer> {
-        return other.collisionDamageWithOther(this)
-    }
-
-    override fun collisionDamageWithOther(other: IFlyer): List<IFlyer> {
-        if ( this === other) return emptyList()
-        if ( this.ignoreCollisions && other.ignoreCollisions) return emptyList()
-        val dist = position.distanceTo(other.position)
-        val allowed = killRadius + other.killRadius
-        return if (dist < allowed) listOf(this,other) else emptyList()
-    }
-
     override fun draw(drawer: Drawer) {
         val center = Point(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
     }
+
+    override fun interactWith(other: IFlyer): List<IFlyer> {
+        return other.interactWithOther(this)
+    }
+
+    override fun interactWithOther(other: IFlyer): List<IFlyer> {
+        return when {
+            weAreCollidingWith(other) -> listOf(this, other)
+            else -> emptyList()
+        }
+    }
+
+    private fun weAreCollidingWith(other: IFlyer) = weCanCollideWith(other) && weAreInrange(other)
+
+    private fun weCanCollideWith(other: IFlyer) = !this.mutuallyInvulnerable || !other.mutuallyInvulnerable
+
+    private fun weAreInrange(other: IFlyer) =
+        position.distanceTo(other.position) < killRadius + other.killRadius
 
     override fun finalize(): List<IFlyer> {
         return finalizer.finalize(this)
@@ -123,7 +128,7 @@ class Flyer(
                 velocity = vel,
                 killRadius = killRad,
                 splitCount = splitCt,
-                ignoreCollisions = true,
+                mutuallyInvulnerable = true,
                 view = AsteroidView()
             ).also { it.finalizer = AsteroidFinalizer()}
         }
@@ -134,7 +139,7 @@ class Flyer(
                 velocity = Velocity.ZERO,
                 killRadius = 150.0,
                 splitCount = 0,
-                ignoreCollisions = false,
+                mutuallyInvulnerable = false,
                 view = ShipView(),
                 controls = control,
             )
