@@ -60,26 +60,13 @@ class Flyer(
     val controls: Controls = Controls()
 ) : IFlyer {
     var heading: Double = 0.0
+    var finalizer: IFinalizer = DefaultFinalizer()
     override var elapsedTime = 0.0
     override var lifetime = Double.MAX_VALUE
 
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
-
-    private fun asSplit(): Flyer {
-        splitCount -= 1
-        killRadius /= 2.0
-        velocity = velocity.rotate(random() * 360.0)
-        return this
-    }
-
-    private fun asTwin() = asteroid(
-        pos = position,
-        vel = velocity.rotate(random() * 360.0),
-        killRad = killRadius,
-        splitCt = splitCount
-    )
 
     override fun collisionDamageWith(other: IFlyer): List<IFlyer> {
         return other.collisionDamageWithOther(this)
@@ -101,25 +88,7 @@ class Flyer(
     }
 
     override fun finalize(): List<IFlyer> {
-        val objectsToAdd: MutableList<IFlyer> = mutableListOf()
-        val score = getScore()
-        if (score.score > 0 ) objectsToAdd.add(score)
-        if (splitCount >= 1) { // type check by any other name
-            val meSplit = asSplit()
-            objectsToAdd.add(meSplit.asTwin())
-            objectsToAdd.add(meSplit)
-        }
-        return objectsToAdd
-    }
-
-    private fun getScore(): Score {
-        val score = when (killRadius) {
-            500.0 -> 20
-            250.0 -> 50
-            125.0 -> 100
-            else -> 0
-        }
-        return Score(score)
+        return finalizer.finalize(this)
     }
 
     override fun move(deltaTime: Double) {
@@ -156,7 +125,7 @@ class Flyer(
                 splitCount = splitCt,
                 ignoreCollisions = true,
                 view = AsteroidView()
-            )
+            ).also { it.finalizer = AsteroidFinalizer()}
         }
 
         fun ship(pos:Point, control:Controls= Controls()): Flyer {
