@@ -9,11 +9,11 @@ import java.lang.Math.random
 const val SPEED_OF_LIGHT = 5000.0
 const val UNIVERSE_SIZE = 10000.0
 
-fun Vector2.cap(): Vector2 {
+fun Point.cap(): Point {
     return Vector2(this.x.cap(), this.y.cap())
 }
 
-fun Vector2.limitedToLightSpeed(): Vector2 {
+fun Velocity.limitedToLightSpeed(): Velocity {
     val speed = this.length
     return if (speed < SPEED_OF_LIGHT) this
     else this*(SPEED_OF_LIGHT/speed)
@@ -26,14 +26,14 @@ fun Double.cap(): Double {
 interface IFlyer {
     val killRadius: Double
         get() = -Double.MAX_VALUE
-    val position: Vector2
-        get() = Vector2(-666.0, -666.0)
+    val position: Point
+        get() = Point(-666.0, -666.0)
     val ignoreCollisions: Boolean
         get() = true
     val score: Int
         get() = 0
     val velocity
-        get() = Vector2(0.0, 100.0)
+        get() = Velocity(0.0, 100.0)
     val elapsedTime
         get() = 0.0
     val lifetime
@@ -47,8 +47,8 @@ interface IFlyer {
 }
 
 class Flyer(
-    override var position: Vector2,
-    override var velocity: Vector2,
+    override var position: Point,
+    override var velocity: Velocity,
     override var killRadius: Double,
     var splitCount: Int = 0,
     override val ignoreCollisions: Boolean = false,
@@ -59,7 +59,7 @@ class Flyer(
     override var elapsedTime = 0.0
     override var lifetime = Double.MAX_VALUE
 
-    fun accelerate(deltaV: Vector2) {
+    fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
@@ -90,7 +90,7 @@ class Flyer(
     }
 
     override fun draw(drawer: Drawer) {
-        val center = Vector2(drawer.width/2.0, drawer.height/2.0)
+        val center = Point(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
@@ -101,15 +101,15 @@ class Flyer(
     }
 
     override fun finalize(): List<IFlyer> {
-        val result: MutableList<IFlyer> = mutableListOf()
+        val objectsToAdd: MutableList<IFlyer> = mutableListOf()
         val score = getScore()
-        if (score.score > 0 ) result.add(score)
-        if (splitCount >= 1) {
+        if (score.score > 0 ) objectsToAdd.add(score)
+        if (splitCount >= 1) { // type check by any other name
             val meSplit = asSplit()
-            result.add(meSplit.asTwin())
-            result.add(meSplit)
+            objectsToAdd.add(meSplit.asTwin())
+            objectsToAdd.add(meSplit)
         }
-        return result
+        return objectsToAdd
     }
 
     private fun getScore(): Score {
@@ -144,7 +144,7 @@ class Flyer(
     }
 
     companion object {
-        fun asteroid(pos:Vector2, vel: Vector2, killRad: Double = 500.0, splitCt: Int = 2): Flyer {
+        fun asteroid(pos:Point, vel: Velocity, killRad: Double = 500.0, splitCt: Int = 2): Flyer {
             return Flyer(
                 position = pos,
                 velocity = vel,
@@ -155,10 +155,10 @@ class Flyer(
             )
         }
 
-        fun ship(pos:Vector2, control:Controls= Controls()): Flyer {
+        fun ship(pos:Point, control:Controls= Controls()): Flyer {
             return Flyer(
                 position = pos,
-                velocity = Vector2.ZERO,
+                velocity = Velocity.ZERO,
                 killRadius = 150.0,
                 splitCount = 0,
                 ignoreCollisions = false,
@@ -169,9 +169,9 @@ class Flyer(
 
         fun missile(ship: Flyer): Flyer {
             val missileKillRadius = 10.0
-            val missileOwnVelocity = Vector2(SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
-            val missilePos = ship.position + Vector2(2*ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
-            val missileVel = ship.velocity + missileOwnVelocity
+            val missileOwnVelocity = Velocity(SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
+            val missilePos: Point = ship.position + Vector2(2*ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
+            val missileVel: Velocity = ship.velocity + missileOwnVelocity
             val flyer =  Flyer(missilePos, missileVel, missileKillRadius, 0, false, MissileView())
             flyer.lifetime = 3.0
             return flyer

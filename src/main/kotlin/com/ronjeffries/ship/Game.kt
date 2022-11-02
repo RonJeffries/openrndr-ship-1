@@ -5,6 +5,10 @@ import org.openrndr.draw.isolated
 import org.openrndr.extra.noise.random
 import org.openrndr.math.Vector2
 
+typealias Point = Vector2
+typealias Velocity = Vector2
+typealias Acceleration = Vector2
+
 class Game {
     val flyers = Flyers()
     var lastTime = 0.0
