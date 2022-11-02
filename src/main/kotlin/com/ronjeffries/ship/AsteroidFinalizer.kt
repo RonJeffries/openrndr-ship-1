@@ -21,7 +21,7 @@ class AsteroidFinalizer: IFinalizer {
 
     override fun finalize(asteroid: Flyer): List<IFlyer> {
         val objectsToAdd: MutableList<IFlyer> = mutableListOf()
-        val score = getScore(asteroid)
+        val score = asteroid.getScore()
         if (score.score > 0 ) objectsToAdd.add(score)
         if (asteroid.splitCount >= 1) { // type check by any other name
             val meSplit = asteroid.asSplit()
@@ -31,8 +31,8 @@ class AsteroidFinalizer: IFinalizer {
         return objectsToAdd
     }
 
-    private fun getScore(asteroid: Flyer): Score {
-        val score = when (asteroid.killRadius) {
+    private fun Flyer.getScore(): Score {
+        val score = when (killRadius) {
             500.0 -> 20
             250.0 -> 50
             125.0 -> 100
