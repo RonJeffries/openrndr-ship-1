@@ -27,7 +27,7 @@ class ScoreKeeper: IFlyer {
         drawer.translate(100.0, 500.0)
         drawer.stroke = ColorRGBa.GREEN
         drawer.fill = ColorRGBa.GREEN
-        drawer.text(formatted(), Vector2(0.0, 0.0))
+        drawer.text(formatted(), Point(0.0, 0.0))
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {

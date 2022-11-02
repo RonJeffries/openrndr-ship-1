@@ -14,24 +14,24 @@ class MissileView: FlyerView {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
         drawer.scale(3.0,3.0)
-        drawer.circle(Vector2.ZERO, missile.killRadius)
+        drawer.circle(Point.ZERO, missile.killRadius)
     }
 }
 
 class ShipView : FlyerView {
     override fun draw(ship: Flyer, drawer: Drawer) {
         val points = listOf(
-            Vector2(-3.0, -2.0),
-            Vector2(-3.0, 2.0),
-            Vector2(-5.0, 4.0),
-            Vector2(7.0, 0.0),
-            Vector2(-5.0, -4.0),
-            Vector2(-3.0, -2.0)
+            Point(-3.0, -2.0),
+            Point(-3.0, 2.0),
+            Point(-5.0, 4.0),
+            Point(7.0, 0.0),
+            Point(-5.0, -4.0),
+            Point(-3.0, -2.0)
         )
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
-        drawer.circle(Vector2.ZERO, ship.killRadius)
+        drawer.circle(Point.ZERO, ship.killRadius)
         drawer.scale(30.0, 30.0)
         drawer.rotate(ship.heading )
         drawer.stroke = ColorRGBa.WHITE
@@ -48,7 +48,7 @@ class AsteroidView: FlyerView {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
-//        drawer.circle(Vector2.ZERO, asteroid.killRadius)
+//        drawer.circle(Point.ZERO, asteroid.killRadius)
         val sizer = 30.0
         drawer.scale(sizer, sizer)
         val sc = 2.0.pow(asteroid.splitCount)
@@ -60,7 +60,7 @@ class AsteroidView: FlyerView {
         drawer.lineStrip(rock)
     }
 
-    private fun defineRocks(): List<List<Vector2>> {
+    private fun defineRocks(): List<List<Point>> {
         val rock0 = listOf(
             Point(4.0, 2.0),
             Point(3.0, 0.0),

@@ -10,7 +10,7 @@ const val SPEED_OF_LIGHT = 5000.0
 const val UNIVERSE_SIZE = 10000.0
 
 fun Point.cap(): Point {
-    return Vector2(this.x.cap(), this.y.cap())
+    return Point(this.x.cap(), this.y.cap())
 }
 
 fun Velocity.limitedToLightSpeed(): Velocity {
@@ -170,7 +170,7 @@ class Flyer(
         fun missile(ship: Flyer): Flyer {
             val missileKillRadius = 10.0
             val missileOwnVelocity = Velocity(SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
-            val missilePos: Point = ship.position + Vector2(2*ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
+            val missilePos: Point = ship.position + Velocity(2*ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
             val missileVel: Velocity = ship.velocity + missileOwnVelocity
             val flyer =  Flyer(missilePos, missileVel, missileKillRadius, 0, false, MissileView())
             flyer.lifetime = 3.0

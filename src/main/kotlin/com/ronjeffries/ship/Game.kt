@@ -24,15 +24,15 @@ class Game {
         add(ScoreKeeper())
         add(LifetimeClock())
         for (i in 0..7) {
-            val pos = Vector2(random(0.0, 10000.0), random(0.0,10000.0))
-            val vel = Vector2(1000.0, 0.0).rotate(random(0.0,360.0))
+            val pos = Point(random(0.0, 10000.0), random(0.0,10000.0))
+            val vel = Velocity(1000.0, 0.0).rotate(random(0.0,360.0))
             val asteroid = Flyer.asteroid(pos,vel )
             add(asteroid)
         }
     }
 
     private fun newShip(controls: Controls): Flyer {
-        return  Flyer.ship(Vector2(5000.0, 5000.0), controls)
+        return  Flyer.ship(Point(5000.0, 5000.0), controls)
     }
 
     fun cycle(drawer: Drawer, seconds: Double) {

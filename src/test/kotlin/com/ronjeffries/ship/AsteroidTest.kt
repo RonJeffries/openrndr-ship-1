@@ -10,18 +10,18 @@ class AsteroidTest {
     @Test
     fun `Asteroids Exist and Move`() {
         val asteroid = Flyer.asteroid(
-            pos = Vector2.ZERO,
-            vel = Vector2(15.0,30.0)
+            pos = Point.ZERO,
+            vel = Velocity(15.0,30.0)
         )
         asteroid.update(tick*60)
-        checkVector(asteroid.position, Vector2(15.0, 30.0),"asteroid position")
+        checkVector(asteroid.position, Point(15.0, 30.0),"asteroid position")
     }
 
     @Test
     fun `asteroid splits on finalize`() {
         val full = Flyer.asteroid(
-            pos = Vector2.ZERO,
-            vel = Vector2.ZERO
+            pos = Point.ZERO,
+            vel = Velocity.ZERO
         )
         val radius = full.killRadius
         val halfSize= full.finalize()

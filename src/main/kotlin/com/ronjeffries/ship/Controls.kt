@@ -9,7 +9,7 @@ class Controls {
     var fire = false
     var holdFire = false
 
-    val acceleration = Vector2(1000.0, 0.0)
+    val acceleration = Acceleration(1000.0, 0.0)
     val rotationSpeed = 180.0
 
     fun control(obj:Flyer, deltaTime: Double): List<Flyer> {

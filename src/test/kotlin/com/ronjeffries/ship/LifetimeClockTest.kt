@@ -8,8 +8,8 @@ class LifetimeClockTest {
     @Test
     fun `lifeetime clock removes oldbies`() {
         val missileKillRadius = 10.0
-        val missilePos = Vector2.ZERO
-        val missileVel = Vector2.ZERO
+        val missilePos = Point.ZERO
+        val missileVel = Velocity.ZERO
         val missile =  Flyer(missilePos, missileVel, missileKillRadius, 0, false, MissileView())
         missile.lifetime = 3.0
         val clock = LifetimeClock()
