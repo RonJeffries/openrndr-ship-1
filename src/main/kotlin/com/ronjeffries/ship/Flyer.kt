@@ -96,10 +96,6 @@ class Flyer(
         view.draw(this, drawer)
     }
 
-    override fun move(deltaTime: Double) {
-        position = (position + velocity * deltaTime).cap()
-    }
-
     override fun finalize(): List<IFlyer> {
         val objectsToAdd: MutableList<IFlyer> = mutableListOf()
         val score = getScore()
@@ -110,6 +106,10 @@ class Flyer(
             objectsToAdd.add(meSplit)
         }
         return objectsToAdd
+    }
+
+    override fun move(deltaTime: Double) {
+        position = (position + velocity * deltaTime).cap()
     }
 
     private fun getScore(): Score {
