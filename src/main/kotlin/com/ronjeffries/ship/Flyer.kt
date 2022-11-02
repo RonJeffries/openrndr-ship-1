@@ -108,10 +108,6 @@ class Flyer(
         return objectsToAdd
     }
 
-    override fun move(deltaTime: Double) {
-        position = (position + velocity * deltaTime).cap()
-    }
-
     private fun getScore(): Score {
         val score = when (killRadius) {
             500.0 -> 20
@@ -120,6 +116,10 @@ class Flyer(
             else -> 0
         }
         return Score(score)
+    }
+
+    override fun move(deltaTime: Double) {
+        position = (position + velocity * deltaTime).cap()
     }
 
     fun tick(deltaTime: Double) {
