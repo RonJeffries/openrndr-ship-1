@@ -9,6 +9,10 @@ import java.lang.Math.random
 const val SPEED_OF_LIGHT = 5000.0
 const val UNIVERSE_SIZE = 10000.0
 
+typealias Point = Vector2
+typealias Velocity = Vector2
+typealias Acceleration = Vector2
+
 fun Point.cap(): Point {
     return Point(this.x.cap(), this.y.cap())
 }
