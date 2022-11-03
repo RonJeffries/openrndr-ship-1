@@ -60,4 +60,12 @@ class AsteroidTest {
         val didShipSplit = ship.finalize()
         assertThat(didShipSplit).isEmpty()
     }
+
+    @Test
+    fun `missile demise creates a splat`() {
+        val ship = Flyer.ship(Vector2(100.0,100.0))
+        val missile = Flyer.missile(ship)
+        val splatList = missile.finalize()
+        assertThat(splatList.size).isEqualTo(1)
+    }
 }

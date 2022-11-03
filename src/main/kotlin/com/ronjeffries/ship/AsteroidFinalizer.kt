@@ -42,6 +42,12 @@ class AsteroidFinalizer: IFinalizer {
     }
 }
 
+class MissileFinalizer(): IFinalizer {
+    override fun finalize(missile: Flyer): List<IFlyer> {
+        return listOf(Flyer.splat(missile))
+    }
+}
+
 class DefaultFinalizer() : IFinalizer {
     override fun finalize(flyer: Flyer): List<IFlyer> {
         return emptyList()

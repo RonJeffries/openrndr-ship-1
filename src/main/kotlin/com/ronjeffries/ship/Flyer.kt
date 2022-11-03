@@ -112,13 +112,11 @@ class Flyer(
         heading += degrees
     }
 
-    override fun update(deltaTime: Double): List<Flyer> {
+    override fun update(deltaTime: Double): List<IFlyer> {
         tick(deltaTime)
-        val result: MutableList<Flyer> = mutableListOf()
-        val additions = controls.control(this, deltaTime)
-        result.addAll(additions)
+        val objectsToAdd = controls.control(this, deltaTime)
         move(deltaTime)
-        return result
+        return objectsToAdd
     }
 
     companion object {
@@ -152,7 +150,14 @@ class Flyer(
             val missileVel: Velocity = ship.velocity + missileOwnVelocity
             val flyer =  Flyer(missilePos, missileVel, missileKillRadius, 0, false, MissileView())
             flyer.lifetime = 3.0
+            flyer.finalizer = MissileFinalizer()
             return flyer
+        }
+
+        fun splat(missile: Flyer): Flyer {
+            val splat = Flyer(missile.position, Velocity.ZERO, -Double.MAX_VALUE, 0, true, SplatView())
+            splat.lifetime = 2.0
+            return splat
         }
     }
 }

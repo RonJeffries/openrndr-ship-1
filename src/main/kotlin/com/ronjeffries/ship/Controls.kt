@@ -1,7 +1,5 @@
 package com.ronjeffries.ship
 
-import org.openrndr.math.Vector2
-
 class Controls {
     var accelerate = false
     var left = false
@@ -12,11 +10,10 @@ class Controls {
     val acceleration = Acceleration(1000.0, 0.0)
     val rotationSpeed = 180.0
 
-    fun control(obj:Flyer, deltaTime: Double): List<Flyer> {
-        turn(obj,deltaTime)
-        accelerate(obj,deltaTime)
-        val result =  fire(obj)
-        return result
+    fun control(obj: Flyer, deltaTime: Double): List<IFlyer> {
+        turn(obj, deltaTime)
+        accelerate(obj, deltaTime)
+        return fire(obj)
     }
 
     private fun accelerate(obj:Flyer, deltaTime: Double) {
@@ -26,19 +23,16 @@ class Controls {
         }
     }
 
-    private fun fire(obj: Flyer): List<Flyer> {
-        // too tricky? deponent denieth accusation.
-        val result: MutableList<Flyer> = mutableListOf()
-        if (fire && !holdFire ) {
-            val missile = createMissile(obj)
-            result.add(missile)
-        }
-        holdFire = fire
-        return result
+    private fun fire(obj: Flyer): List<IFlyer> {
+        return missilesToFire(obj).also { holdFire = fire }
     }
 
-    private fun createMissile(ship: Flyer): Flyer {
-        return Flyer.missile(ship)
+    private fun missilesToFire(obj: Flyer): List<IFlyer> {
+        return if (fire && !holdFire) {
+            listOf(Flyer.missile(obj))
+        } else {
+            emptyList()
+        }
     }
 
     private fun turn(obj: Flyer, deltaTime: Double) {
