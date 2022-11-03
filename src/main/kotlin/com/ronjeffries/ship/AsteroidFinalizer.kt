@@ -1,12 +1,13 @@
 package com.ronjeffries.ship
 
+import kotlin.math.pow
+
 interface IFinalizer {
     fun finalize(flyer: Flyer): List<IFlyer>
-    val splitCount:Int
-        get() = 0
+    fun scale(): Double = 1.0
 }
 
-class AsteroidFinalizer(override val splitCount:Int = 2): IFinalizer {
+class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
     private fun asSplit(asteroid: Flyer): Flyer {
         val newKr = asteroid.killRadius / 2.0
         val newVel = asteroid.velocity.rotate(Math.random() * 360.0)
@@ -18,7 +19,7 @@ class AsteroidFinalizer(override val splitCount:Int = 2): IFinalizer {
     override fun finalize(asteroid: Flyer): List<IFlyer> {
         val objectsToAdd: MutableList<IFlyer> = mutableListOf()
         val score = getScore()
-        if (score.score > 0 ) objectsToAdd.add(score)
+        objectsToAdd.add(score)
         if (splitCount >= 1) {
             objectsToAdd.add(asSplit(asteroid))
             objectsToAdd.add(asSplit(asteroid))
@@ -34,6 +35,10 @@ class AsteroidFinalizer(override val splitCount:Int = 2): IFinalizer {
             else -> 0
         }
         return Score(score)
+    }
+
+    override fun scale(): Double {
+        return 2.0.pow(splitCount)
     }
 }
 

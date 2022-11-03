@@ -66,7 +66,7 @@ class Flyer(
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    fun splitCount() = finalizer.splitCount
+    fun scale() = finalizer.scale()
 
     override fun draw(drawer: Drawer) {
         val center = Point(drawer.width/2.0, drawer.height/2.0)

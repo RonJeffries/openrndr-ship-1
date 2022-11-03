@@ -51,7 +51,7 @@ class AsteroidView: FlyerView {
 //        drawer.circle(Point.ZERO, asteroid.killRadius)
         val sizer = 30.0
         drawer.scale(sizer, sizer)
-        val sc = 2.0.pow(asteroid.splitCount())
+        val sc = asteroid.scale()
         drawer.scale(sc,sc)
         drawer.rotate(asteroid.heading)
         drawer.stroke = ColorRGBa.WHITE
