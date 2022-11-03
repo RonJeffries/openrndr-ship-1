@@ -53,7 +53,6 @@ class Flyer(
     override var position: Point,
     override var velocity: Velocity,
     override var killRadius: Double,
-    var splitCount: Int = 0,
     override val mutuallyInvulnerable: Boolean = false,
     val view: FlyerView = NullView(),
     val controls: Controls = Controls()
@@ -66,6 +65,8 @@ class Flyer(
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
+
+    fun splitCount() = finalizer.splitCount
 
     override fun draw(drawer: Drawer) {
         val center = Point(drawer.width/2.0, drawer.height/2.0)
@@ -125,7 +126,6 @@ class Flyer(
                 position = pos,
                 velocity = vel,
                 killRadius = killRad,
-                splitCount = splitCt,
                 mutuallyInvulnerable = true,
                 view = AsteroidView()
             ).also { it.finalizer = AsteroidFinalizer()}
@@ -136,7 +136,6 @@ class Flyer(
                 position = pos,
                 velocity = Velocity.ZERO,
                 killRadius = 150.0,
-                splitCount = 0,
                 mutuallyInvulnerable = false,
                 view = ShipView(),
                 controls = control,
@@ -148,14 +147,14 @@ class Flyer(
             val missileOwnVelocity = Velocity(SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
             val missilePos: Point = ship.position + Velocity(2*ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
             val missileVel: Velocity = ship.velocity + missileOwnVelocity
-            val flyer =  Flyer(missilePos, missileVel, missileKillRadius, 0, false, MissileView())
+            val flyer =  Flyer(missilePos, missileVel, missileKillRadius, false, MissileView())
             flyer.lifetime = 3.0
             flyer.finalizer = MissileFinalizer()
             return flyer
         }
 
         fun splat(missile: Flyer): Flyer {
-            val splat = Flyer(missile.position, Velocity.ZERO, -Double.MAX_VALUE, 0, true, SplatView())
+            val splat = Flyer(missile.position, Velocity.ZERO, -Double.MAX_VALUE, true, SplatView())
             splat.lifetime = 2.0
             return splat
         }

@@ -9,7 +9,7 @@ class LifetimeClockTest {
         val missileKillRadius = 10.0
         val missilePos = Point.ZERO
         val missileVel = Velocity.ZERO
-        val missile =  Flyer(missilePos, missileVel, missileKillRadius, 0, false, MissileView())
+        val missile =  Flyer(missilePos, missileVel, missileKillRadius, false, MissileView())
         missile.lifetime = 3.0
         val clock = LifetimeClock()
         var discards = missile.interactWith(clock)

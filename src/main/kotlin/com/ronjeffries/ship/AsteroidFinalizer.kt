@@ -2,31 +2,26 @@ package com.ronjeffries.ship
 
 interface IFinalizer {
     fun finalize(flyer: Flyer): List<IFlyer>
+    val splitCount:Int
+        get() = 0
 }
 
-class AsteroidFinalizer: IFinalizer {
-    private fun Flyer.asSplit(): Flyer {
-        splitCount -= 1
-        killRadius /= 2.0
-        velocity = velocity.rotate(Math.random() * 360.0)
-        return this
+class AsteroidFinalizer(override val splitCount:Int = 2): IFinalizer {
+    private fun asSplit(asteroid: Flyer): Flyer {
+        val newKr = asteroid.killRadius / 2.0
+        val newVel = asteroid.velocity.rotate(Math.random() * 360.0)
+        val flyer =  Flyer.asteroid(asteroid.position, newVel, newKr)
+        flyer.finalizer = AsteroidFinalizer(splitCount - 1)
+        return flyer
     }
-
-    private fun Flyer.asTwin() = Flyer.asteroid(
-        pos = position,
-        vel = velocity.rotate(Math.random() * 360.0),
-        killRad = killRadius,
-        splitCt = splitCount
-    )
 
     override fun finalize(asteroid: Flyer): List<IFlyer> {
         val objectsToAdd: MutableList<IFlyer> = mutableListOf()
         val score = asteroid.getScore()
         if (score.score > 0 ) objectsToAdd.add(score)
-        if (asteroid.splitCount >= 1) { // type check by any other name
-            val meSplit = asteroid.asSplit()
-            objectsToAdd.add(meSplit.asTwin())
-            objectsToAdd.add(meSplit)
+        if (splitCount >= 1) {
+            objectsToAdd.add(asSplit(asteroid))
+            objectsToAdd.add(asSplit(asteroid))
         }
         return objectsToAdd
     }
