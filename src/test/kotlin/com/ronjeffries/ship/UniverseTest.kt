@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
 
 class UniverseTest {
-    private val tick = 1.0/60.0
 
     @Test
     fun `collision calculation`() {

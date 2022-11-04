@@ -19,13 +19,13 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
         )
     }
 
-    override fun finalize(asteroid: Flyer): List<IFlyer> {
+    override fun finalize(flyer: Flyer): List<IFlyer> {
         val objectsToAdd: MutableList<IFlyer> = mutableListOf()
         val score = getScore()
         objectsToAdd.add(score)
         if (splitCount >= 1) {
-            objectsToAdd.add(asSplit(asteroid))
-            objectsToAdd.add(asSplit(asteroid))
+            objectsToAdd.add(asSplit(flyer))
+            objectsToAdd.add(asSplit(flyer))
         }
         return objectsToAdd
     }
@@ -45,13 +45,13 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
     }
 }
 
-class MissileFinalizer(): IFinalizer {
-    override fun finalize(missile: Flyer): List<IFlyer> {
-        return listOf(Flyer.splat(missile))
+class MissileFinalizer : IFinalizer {
+    override fun finalize(flyer: Flyer): List<IFlyer> {
+        return listOf(Flyer.splat(flyer))
     }
 }
 
-class DefaultFinalizer() : IFinalizer {
+class DefaultFinalizer : IFinalizer {
     override fun finalize(flyer: Flyer): List<IFlyer> {
         return emptyList()
     }

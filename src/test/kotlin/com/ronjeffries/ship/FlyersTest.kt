@@ -35,7 +35,7 @@ class FlyersTest {
         val v = Vector2.ZERO
         val a0 = Flyer.asteroid(p1,v) // yes
         game.add(a0)
-        val m1 = Flyer(p1, v, 10.0, ) // yes
+        val m1 = Flyer(p1, v, 10.0 ) // yes
         game.add(m1)
         val s2 = Flyer.ship(p1) // yes kr=150
         game.add(s2)

@@ -6,7 +6,7 @@ import org.openrndr.extra.noise.random
 
 class Game {
     val flyers = Flyers()
-    var lastTime = 0.0
+    private var lastTime = 0.0
 
     fun add(fo: IFlyer) = flyers.add(fo)
 
@@ -38,7 +38,7 @@ class Game {
         draw(drawer)
     }
 
-    fun draw(drawer: Drawer) = flyers.forEach {drawer.isolated { it.draw(drawer) } }
+    private fun draw(drawer: Drawer) = flyers.forEach {drawer.isolated { it.draw(drawer) } }
 
     fun processInteractions() {
         val toBeRemoved = colliders()

@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class Score(public override val score: Int): IFlyer {
+class Score(override val score: Int): IFlyer {
     override fun interactWith(other: IFlyer): List<IFlyer> {
         return other.interactWithOther(this)
     }

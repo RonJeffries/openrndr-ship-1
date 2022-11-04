@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class LifetimeClockTest {
     @Test
-    fun `lifeetime clock removes oldbies`() {
+    fun `lifetime clock removes old objects`() {
         val missileKillRadius = 10.0
         val missilePos = Point.ZERO
         val missileVel = Velocity.ZERO

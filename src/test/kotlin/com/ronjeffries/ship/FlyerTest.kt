@@ -77,7 +77,7 @@ class FlyerTest {
         val control = Controls()
         val ship = Flyer.ship(Vector2.ZERO, control)
         control.left = true
-        ship.update(tick*20) // 60 degrees north east ish
+        ship.update(tick*20) // 60 degrees northeast ish
         control.left = false
         control.accelerate = true
         ship.update(100.0) // long time
@@ -133,12 +133,12 @@ class FlyerTest {
         val s2 = Flyer.ship(p1) // yes
         val a3 = Flyer.asteroid(p2,v) // no
         val a4 = Flyer.asteroid(p2,v) // no
-        val objects = mutableListOf<Flyer>(a0,m1,s2, a3,a4)
+        val objects = mutableListOf(a0,m1,s2, a3,a4)
         val shouldDie = mutableSetOf<IFlyer>()
         var ct = 0
         for (i in 0 until objects.size-1) {
             for (j in i+1 until objects.size) {
-                ct = ct + 1
+                ct += 1
                 val oi = objects[i]
                 val oj = objects[j]
                 shouldDie.addAll(oi.interactWith(oj))
@@ -159,7 +159,7 @@ class FlyerTest {
         val s2 = Flyer.ship(p1) // yes
         val a3 = Flyer.asteroid(p2,v) // no
         val a4 = Flyer.asteroid(p2,v) // no
-        val objects = mutableListOf<Flyer>(a0,m1,s2, a3,a4)
+        val objects = mutableListOf(a0,m1,s2, a3,a4)
         val shouldDie = mutableSetOf<IFlyer>()
         var ct = 0
         for (oi in objects) {

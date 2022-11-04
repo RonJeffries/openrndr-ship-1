@@ -28,7 +28,7 @@ fun Double.cap(): Double {
 
 interface IFlyer {
     val position: Point
-        // default position is off screen
+        // default position is off-screen
         get() = Point(-666.0, -666.0)
     val velocity
         // something magical about this number
@@ -76,7 +76,6 @@ class Flyer(
     fun scale() = finalizer.scale()
 
     override fun draw(drawer: Drawer) {
-        val center = Point(drawer.width/2.0, drawer.height/2.0)
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
@@ -93,11 +92,11 @@ class Flyer(
         }
     }
 
-    private fun weAreCollidingWith(other: IFlyer) = weCanCollideWith(other) && weAreInrange(other)
+    private fun weAreCollidingWith(other: IFlyer) = weCanCollideWith(other) && weAreInRange(other)
 
     private fun weCanCollideWith(other: IFlyer) = !this.mutuallyInvulnerable || !other.mutuallyInvulnerable
 
-    private fun weAreInrange(other: IFlyer) =
+    private fun weAreInRange(other: IFlyer) =
         position.distanceTo(other.position) < killRadius + other.killRadius
 
     override fun finalize(): List<IFlyer> {
@@ -108,7 +107,7 @@ class Flyer(
         position = (position + velocity * deltaTime).cap()
     }
 
-    fun tick(deltaTime: Double) {
+    private fun tick(deltaTime: Double) {
         elapsedTime += deltaTime
     }
 

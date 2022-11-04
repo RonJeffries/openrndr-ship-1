@@ -5,10 +5,10 @@ class Controls {
     var left = false
     var right = false
     var fire = false
-    var holdFire = false
+    private var holdFire = false
 
     val acceleration = Acceleration(1000.0, 0.0)
-    val rotationSpeed = 180.0
+    private val rotationSpeed = 180.0
 
     fun control(obj: Flyer, deltaTime: Double): List<IFlyer> {
         turn(obj, deltaTime)

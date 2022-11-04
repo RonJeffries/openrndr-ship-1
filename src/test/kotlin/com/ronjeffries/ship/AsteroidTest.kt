@@ -43,7 +43,7 @@ class AsteroidTest {
             pos = Vector2.ZERO,
             vel = startingV
         )
-        var fullV = full.velocity
+        val fullV = full.velocity
         assertThat(fullV.length).isEqualTo(100.0, within(1.0))
         assertThat(fullV).isEqualTo(startingV)
         val halfSize = full.finalize()
