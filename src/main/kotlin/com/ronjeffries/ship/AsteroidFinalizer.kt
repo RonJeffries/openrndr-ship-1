@@ -15,7 +15,7 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
             pos = asteroid.position,
             vel = newVel,
             killRad = newKr,
-            splitCt = splitCount - 1
+            splitCount = splitCount - 1
         )
     }
 

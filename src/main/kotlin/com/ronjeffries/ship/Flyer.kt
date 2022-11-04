@@ -58,8 +58,8 @@ interface IFlyer {
 class Flyer(
     override var position: Point,
     override var velocity: Velocity,
-    override var killRadius: Double,
 
+    override var killRadius: Double = -Double.MAX_VALUE,
     override val mutuallyInvulnerable: Boolean = false,
     override val lifetime: Double = Double.MAX_VALUE,
     val view: FlyerView = NullView(),
@@ -128,14 +128,14 @@ class Flyer(
     }
 
     companion object {
-        fun asteroid(pos:Point, vel: Velocity, killRad: Double = 500.0, splitCt: Int = 2): Flyer {
+        fun asteroid(pos:Point, vel: Velocity, killRad: Double = 500.0, splitCount: Int = 2): Flyer {
             return Flyer(
                 position = pos,
                 velocity = vel,
                 killRadius = killRad,
                 mutuallyInvulnerable = true,
                 view = AsteroidView(),
-                finalizer = AsteroidFinalizer(splitCt)
+                finalizer = AsteroidFinalizer(splitCount)
             )
         }
 
@@ -144,7 +144,6 @@ class Flyer(
                 position = pos,
                 velocity = Velocity.ZERO,
                 killRadius = 150.0,
-                mutuallyInvulnerable = false,
                 view = ShipView(),
                 controls = control,
             )
@@ -153,14 +152,14 @@ class Flyer(
         fun missile(ship: Flyer): Flyer {
             val missileKillRadius = 10.0
             val missileOwnVelocity = Velocity(SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
-            val missilePos: Point =
-                ship.position + Velocity(2 * ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
+            val standardOffset = Point(2 * (ship.killRadius + missileKillRadius), 0.0)
+            val rotatedOffset = standardOffset.rotate(ship.heading)
+            val missilePos: Point = ship.position + rotatedOffset
             val missileVel: Velocity = ship.velocity + missileOwnVelocity
             return Flyer(
                 position = missilePos,
                 velocity = missileVel,
                 killRadius = missileKillRadius,
-                mutuallyInvulnerable = false,
                 lifetime = 3.0,
                 view = MissileView(),
                 finalizer = MissileFinalizer()
@@ -171,9 +170,8 @@ class Flyer(
             return Flyer(
                 position = missile.position,
                 velocity = Velocity.ZERO,
-                killRadius = -Double.MAX_VALUE,
                 lifetime = 2.0,
-                mutuallyInvulnerable = true, view = SplatView()
+                view = SplatView()
             )
         }
     }
