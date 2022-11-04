@@ -59,14 +59,15 @@ class Flyer(
     override var position: Point,
     override var velocity: Velocity,
     override var killRadius: Double,
+
     override val mutuallyInvulnerable: Boolean = false,
+    override val lifetime: Double = Double.MAX_VALUE,
     val view: FlyerView = NullView(),
     val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
 ) : IFlyer {
     var heading: Double = 0.0
     override var elapsedTime = 0.0
-    override var lifetime = Double.MAX_VALUE
 
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
@@ -152,24 +153,28 @@ class Flyer(
         fun missile(ship: Flyer): Flyer {
             val missileKillRadius = 10.0
             val missileOwnVelocity = Velocity(SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
-            val missilePos: Point = ship.position + Velocity(2*ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
+            val missilePos: Point =
+                ship.position + Velocity(2 * ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
             val missileVel: Velocity = ship.velocity + missileOwnVelocity
-            val flyer =  Flyer(
+            return Flyer(
                 position = missilePos,
                 velocity = missileVel,
                 killRadius = missileKillRadius,
                 mutuallyInvulnerable = false,
+                lifetime = 3.0,
                 view = MissileView(),
                 finalizer = MissileFinalizer()
             )
-            flyer.lifetime = 3.0
-            return flyer
         }
 
         fun splat(missile: Flyer): Flyer {
-            val splat = Flyer(missile.position, Velocity.ZERO, -Double.MAX_VALUE, true, SplatView())
-            splat.lifetime = 2.0
-            return splat
+            return Flyer(
+                position = missile.position,
+                velocity = Velocity.ZERO,
+                killRadius = -Double.MAX_VALUE,
+                lifetime = 2.0,
+                mutuallyInvulnerable = true, view = SplatView()
+            )
         }
     }
 }
