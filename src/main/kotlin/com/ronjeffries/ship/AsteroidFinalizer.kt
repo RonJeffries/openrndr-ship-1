@@ -11,9 +11,12 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
     private fun asSplit(asteroid: Flyer): Flyer {
         val newKr = asteroid.killRadius / 2.0
         val newVel = asteroid.velocity.rotate(Math.random() * 360.0)
-        val flyer =  Flyer.asteroid(asteroid.position, newVel, newKr)
-        flyer.finalizer = AsteroidFinalizer(splitCount - 1)
-        return flyer
+        return Flyer.asteroid(
+            pos = asteroid.position,
+            vel = newVel,
+            killRad = newKr,
+            splitCt = splitCount - 1
+        )
     }
 
     override fun finalize(asteroid: Flyer): List<IFlyer> {

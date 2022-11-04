@@ -33,7 +33,7 @@ class AsteroidTest {
         val quarter = quarterSize.last()
         assertThat(quarter.killRadius).describedAs("quarter").isEqualTo(radius/4.0)
         val eighthSize = quarter.finalize()
-        assertThat(eighthSize.size).isEqualTo(1)
+        assertThat(eighthSize.size).describedAs("should not split third time").isEqualTo(1)
     }
 
     @Test

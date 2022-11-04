@@ -61,10 +61,10 @@ class Flyer(
     override var killRadius: Double,
     override val mutuallyInvulnerable: Boolean = false,
     val view: FlyerView = NullView(),
-    val controls: Controls = Controls()
+    val controls: Controls = Controls(),
+    val finalizer: IFinalizer = DefaultFinalizer()
 ) : IFlyer {
     var heading: Double = 0.0
-    var finalizer: IFinalizer = DefaultFinalizer()
     override var elapsedTime = 0.0
     override var lifetime = Double.MAX_VALUE
 
@@ -133,8 +133,9 @@ class Flyer(
                 velocity = vel,
                 killRadius = killRad,
                 mutuallyInvulnerable = true,
-                view = AsteroidView()
-            ).also { it.finalizer = AsteroidFinalizer()}
+                view = AsteroidView(),
+                finalizer = AsteroidFinalizer(splitCt)
+            )
         }
 
         fun ship(pos:Point, control:Controls= Controls()): Flyer {
@@ -153,9 +154,15 @@ class Flyer(
             val missileOwnVelocity = Velocity(SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
             val missilePos: Point = ship.position + Velocity(2*ship.killRadius + 2 * missileKillRadius, 0.0).rotate(ship.heading)
             val missileVel: Velocity = ship.velocity + missileOwnVelocity
-            val flyer =  Flyer(missilePos, missileVel, missileKillRadius, false, MissileView())
+            val flyer =  Flyer(
+                position = missilePos,
+                velocity = missileVel,
+                killRadius = missileKillRadius,
+                mutuallyInvulnerable = false,
+                view = MissileView(),
+                finalizer = MissileFinalizer()
+            )
             flyer.lifetime = 3.0
-            flyer.finalizer = MissileFinalizer()
             return flyer
         }
 
