@@ -123,10 +123,8 @@ class AsteroidView: FlyerView {
 
 class SplatView: FlyerView {
     private val rot = random(0.0, 359.0)
-    private var size = 20.0
-    private var radius = 30.0
-    private val sizeStep = (100.0-size)/60.0
-    private val radiusStep = (5.0-radius)/60.0
+    private var sizeTween = Tween(20.0,100.0, 2.0)
+    private var radiusTween = Tween(30.0, 5.0, 2.0)
     private val points = listOf(
         Point(-2.0,0.0), Point(-2.0,-2.0), Point(2.0,-2.0), Point(3.0,1.0), Point(2.0,-1.0), Point(0.0,2.0), Point(1.0,3.0), Point(-1.0,3.0), Point(-4.0,-1.0), Point(-3.0,1.0)
     )
@@ -136,10 +134,10 @@ class SplatView: FlyerView {
         drawer.fill = ColorRGBa.WHITE
         drawer.rotate(rot)
         for (point in points) {
+            val size = sizeTween.value(flyer.elapsedTime)
+            val radius = radiusTween.value(flyer.elapsedTime)
             drawer.circle(size*point.x, size*point.y, radius)
         }
-        radius += radiusStep/flyer.lifetime
-        size += sizeStep/flyer.lifetime
     }
 }
 
