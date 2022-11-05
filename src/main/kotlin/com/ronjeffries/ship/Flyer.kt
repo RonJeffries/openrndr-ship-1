@@ -166,11 +166,12 @@ class Flyer(
         }
 
         fun splat(missile: Flyer): Flyer {
+            val lifetime = 2.0
             return Flyer(
                 position = missile.position,
                 velocity = Velocity.ZERO,
-                lifetime = 2.0,
-                view = SplatView()
+                lifetime = lifetime,
+                view = SplatView(lifetime)
             )
         }
     }

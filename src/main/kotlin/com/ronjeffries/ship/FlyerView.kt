@@ -121,10 +121,10 @@ class AsteroidView: FlyerView {
     }
 }
 
-class SplatView: FlyerView {
+class SplatView(lifetime: Double): FlyerView {
     private val rot = random(0.0, 359.0)
-    private var sizeTween = Tween(20.0,100.0, 2.0)
-    private var radiusTween = Tween(30.0, 5.0, 2.0)
+    private var sizeTween = Tween(20.0,100.0, lifetime)
+    private var radiusTween = Tween(30.0, 5.0, lifetime)
     private val points = listOf(
         Point(-2.0,0.0), Point(-2.0,-2.0), Point(2.0,-2.0), Point(3.0,1.0), Point(2.0,-1.0), Point(0.0,2.0), Point(1.0,3.0), Point(-1.0,3.0), Point(-4.0,-1.0), Point(-3.0,1.0)
     )
