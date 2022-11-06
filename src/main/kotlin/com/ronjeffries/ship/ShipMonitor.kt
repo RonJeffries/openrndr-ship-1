@@ -31,13 +31,17 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
             }
             WaitingToCreate -> {
                 if (elapsedTime >= 3.0) {
-                    ship.position = Point(5000.0, 5000.0)
-                    ship.velocity = Velocity.ZERO
-                    toBeCreated = listOf(ship)
+                    toBeCreated = listOf(shipReset())
                     HaveSeenShip
                 } else WaitingToCreate
             }
         }
         return toBeCreated
+    }
+
+    private fun shipReset(): IFlyer {
+        ship.position = Point(5000.0, 5000.0)
+        ship.velocity = Velocity.ZERO
+        return ship
     }
 }
