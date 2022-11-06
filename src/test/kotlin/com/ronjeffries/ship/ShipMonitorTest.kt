@@ -132,5 +132,6 @@ class ShipMonitorTest {
         assertThat(mon.state).describedAs("on time").isEqualTo(ShipMonitorState.HaveSeenShip)
         assertThat(created).describedAs("on time").contains(ship)
         assertThat(ship.position).isEqualTo(Point(5000.0, 5000.0))
+        assertThat(ship.velocity).isEqualTo(Velocity.ZERO)
     }
 }

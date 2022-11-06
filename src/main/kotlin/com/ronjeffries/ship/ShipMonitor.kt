@@ -32,6 +32,7 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
             WaitingToCreate -> {
                 if (elapsedTime >= 3.0) {
                     ship.position = Point(5000.0, 5000.0)
+                    ship.velocity = Velocity.ZERO
                     toBeCreated = listOf(ship)
                     HaveSeenShip
                 } else WaitingToCreate
