@@ -12,10 +12,8 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     var safeToEmerge: Boolean = false
     private val safeShipDistance = 1000.0
 
-    private fun checkSafety(other:IFlyer) {
-        if (Point(5000.0, 5000.0).distanceTo(other.position) < safeShipDistance) {
-            safeToEmerge = false
-        }
+    private fun tooClose(other:IFlyer): Boolean {
+        return (Point(5000.0, 5000.0).distanceTo(other.position) < safeShipDistance)
     }
 //
 //    override fun draw(drawer: Drawer) {
@@ -30,17 +28,13 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
             if (other == ship)
                 state = HaveSeenShip
         } else {
-            checkSafety(other)
+            if (tooClose(other)) safeToEmerge = false
         }
         return emptyList() // no damage done here
     }
 
     override fun interactWithOther(other: IFlyer): List<IFlyer> {
         return interactWith(other)
-    }
-
-    fun unsafe() {
-        safeToEmerge = false
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {
@@ -53,20 +47,22 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
                 WaitingToCreate
             }
             WaitingToCreate -> {
-                if (elapsedTime < 3.0) {
-                    WaitingToCreate
-                }else if (elapsedTime >= 3.0) {
+                if (elapsedTime >= 3.0) {
                     if (safeToEmerge) {
                         toBeCreated = listOf(shipReset())
                         HaveSeenShip
                     } else {
-                        safeToEmerge = true
+                        startCheckingForSafeEmergence()
                         WaitingToCreate
                     }
                 } else WaitingToCreate
             }
         }
         return toBeCreated
+    }
+
+    private fun startCheckingForSafeEmergence() {
+        safeToEmerge = true
     }
 
     private fun shipReset(): IFlyer {
