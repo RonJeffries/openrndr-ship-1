@@ -56,15 +56,17 @@ class ShipMonitorTest {
         assertThat(mon.state).isEqualTo(ShipMonitorState.LookingForShip)
         assertThat(created).isEmpty()
         created = mon.update(1.0/60.0)
-        assertThat(mon.state).isEqualTo(ShipMonitorState.WaitingToCreate)
+        assertThat(mon.state).isEqualTo(ShipMonitorState.WaitingForTime)
         assertThat(created).isEmpty()
         created = mon.update(1.0)
-        assertThat(mon.state).describedAs("too soon").isEqualTo(ShipMonitorState.WaitingToCreate)
+        assertThat(mon.state).describedAs("too soon").isEqualTo(ShipMonitorState.WaitingForTime)
         assertThat(created).describedAs("too soon").isEmpty()
-        mon.safeToEmerge = true
         created = mon.update(2.1)
-        assertThat(mon.state).describedAs("on time").isEqualTo(ShipMonitorState.HaveSeenShip)
-        assertThat(created).describedAs("on time").contains(ship)
+        assertThat(mon.state).describedAs("time OK").isEqualTo(ShipMonitorState.WaitingForSafety)
+        assertThat(created).describedAs("not yet").isEmpty()
+        mon.safeToEmerge = true
+        created = mon.update(0.01)
+        assertThat(created).describedAs("safe").contains(ship)
         assertThat(ship.position).isEqualTo(Point(5000.0, 5000.0))
         assertThat(ship.velocity).isEqualTo(Velocity.ZERO)
     }
