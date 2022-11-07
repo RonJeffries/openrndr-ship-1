@@ -61,6 +61,7 @@ class ShipMonitorTest {
         created = mon.update(1.0)
         assertThat(mon.state).describedAs("too soon").isEqualTo(ShipMonitorState.WaitingToCreate)
         assertThat(created).describedAs("too soon").isEmpty()
+        mon.safeToEmerge = true
         created = mon.update(2.1)
         assertThat(mon.state).describedAs("on time").isEqualTo(ShipMonitorState.HaveSeenShip)
         assertThat(created).describedAs("on time").contains(ship)
