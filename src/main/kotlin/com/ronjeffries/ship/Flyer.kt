@@ -53,6 +53,7 @@ interface IFlyer {
     fun move(deltaTime: Double) {}
     fun finalize(): List<IFlyer> { return emptyList() }
     fun update(deltaTime: Double): List<IFlyer>
+    fun deathDueToCollision(): Boolean { return true }
 }
 
 class Flyer(
@@ -74,6 +75,10 @@ class Flyer(
     }
 
     fun scale() = finalizer.scale()
+
+    override fun deathDueToCollision(): Boolean {
+        return !controls.hyperspace
+    }
 
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
@@ -145,6 +150,7 @@ class Flyer(
                 killRadius = 150.0,
                 view = ShipView(),
                 controls = control,
+                finalizer = ShipFinalizer()
             )
         }
 

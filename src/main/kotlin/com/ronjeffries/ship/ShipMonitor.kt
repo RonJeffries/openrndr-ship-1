@@ -35,7 +35,6 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     }
 
     private fun shipReset(): IFlyer {
-        ship.position = Point(5000.0, 5000.0)
         ship.velocity = Velocity.ZERO
         return ship
     }

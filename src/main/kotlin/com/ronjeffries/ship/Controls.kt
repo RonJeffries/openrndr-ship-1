@@ -1,16 +1,28 @@
 package com.ronjeffries.ship
 
+import org.openrndr.extra.noise.random
+
 class Controls {
     var accelerate = false
     var left = false
     var right = false
     var fire = false
+    var hyperspace = false
     private var holdFire = false
 
     val acceleration = Acceleration(1000.0, 0.0)
     private val rotationSpeed = 180.0
 
     fun control(obj: Flyer, deltaTime: Double): List<IFlyer> {
+        if (hyperspace) {
+            val vel = Velocity(1000.0, 0.0).rotate(random(0.0,360.0))
+            val destroyer = Flyer(
+                killRadius = 100.0,
+                position = obj.position,
+                velocity = Velocity.ZERO
+            )
+            return listOf(destroyer)
+        }
         turn(obj, deltaTime)
         accelerate(obj, deltaTime)
         return fire(obj)

@@ -19,6 +19,7 @@ fun main() = application {
                 "f" -> {controls.right = true}
                 "j" -> {controls.accelerate = true}
                 "k" -> {controls.fire = true}
+                "space" -> {controls.hyperspace = true}
             }
         }
         keyboard.keyUp.listen {
@@ -27,6 +28,7 @@ fun main() = application {
                 "f" -> {controls.right = false}
                 "j" -> {controls.accelerate = false}
                 "k" -> {controls.fire = false}
+                "space" -> controls.hyperspace = false
             }
         }
 

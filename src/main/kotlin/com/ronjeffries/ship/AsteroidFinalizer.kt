@@ -1,5 +1,6 @@
 package com.ronjeffries.ship
 
+import org.openrndr.extra.noise.random
 import kotlin.math.pow
 
 interface IFinalizer {
@@ -48,6 +49,16 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
 class MissileFinalizer : IFinalizer {
     override fun finalize(flyer: Flyer): List<IFlyer> {
         return listOf(Flyer.splat(flyer))
+    }
+}
+
+class ShipFinalizer : IFinalizer {
+    override fun finalize(flyer: Flyer): List<IFlyer> {
+        if ( flyer.deathDueToCollision())
+            flyer.position = Point(5000.0,5000.0)
+        else
+            flyer.position = Point(random(0.0,10000.0), random(0.0, 10000.0))
+        return emptyList()
     }
 }
 
