@@ -67,7 +67,8 @@ class ShipMonitorTest {
         mon.safeToEmerge = true
         created = mon.update(0.01)
         assertThat(created).describedAs("safe").contains(ship)
-        assertThat(ship.position).isEqualTo(Point(5000.0, 5000.0))
+//        monitor no longer sets position
+//        assertThat(ship.position).isEqualTo(Point(5000.0, 5000.0))
         assertThat(ship.velocity).isEqualTo(Velocity.ZERO)
     }
 }
