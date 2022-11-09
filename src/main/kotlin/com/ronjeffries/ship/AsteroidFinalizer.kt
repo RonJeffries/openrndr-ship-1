@@ -55,9 +55,9 @@ class MissileFinalizer : IFinalizer {
 class ShipFinalizer : IFinalizer {
     override fun finalize(flyer: Flyer): List<IFlyer> {
         if ( flyer.deathDueToCollision())
-            flyer.position = Point(5000.0,5000.0)
+            flyer.position = U.CENTER_OF_UNIVERSE
         else
-            flyer.position = Point(random(0.0,10000.0), random(0.0, 10000.0))
+            flyer.position = U.randomPoint()
         return emptyList()
     }
 }
