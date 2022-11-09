@@ -14,6 +14,7 @@ interface ISpaceObject {
     fun interactWithOther(other: ISpaceObject): List<ISpaceObject>
     fun update(deltaTime: Double): List<ISpaceObject>
 
+    // defaulted, sometimes overridden
     fun draw(drawer: Drawer) {}
     fun finalize(): List<ISpaceObject> { return emptyList() }
     fun move(deltaTime: Double) {}
