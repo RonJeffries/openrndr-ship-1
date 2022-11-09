@@ -40,7 +40,7 @@ interface ISpaceObject {
         // something magical about this number
         get() = Velocity(0.0, 100.0)
     val killRadius: Double
-        // no one can hit me
+        // no one can hit me by default
         get() = -Double.MAX_VALUE
     val mutuallyInvulnerable: Boolean
         // specials and asteroids are safe from each other
