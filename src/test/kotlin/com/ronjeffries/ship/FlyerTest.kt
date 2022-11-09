@@ -18,20 +18,20 @@ class FlyerTest {
 
     @Test
     fun `capping works high`() {
-        val ship = Flyer.ship(Vector2(9999.0, 5000.0))
+        val ship = Flyer.ship(Vector2(U.UNIVERSE_SIZE-1, U.UNIVERSE_SIZE/2))
         ship.velocity = Vector2(120.0,120.0)
         ship.update(tick)
         assertThat(ship.position.x).isEqualTo(1.0)
-        assertThat(ship.position.y).isEqualTo(5002.0)
+        assertThat(ship.position.y).isEqualTo(U.UNIVERSE_SIZE/2+2)
     }
 
     @Test
     fun `capping works low`() {
-        val ship = Flyer.ship( Vector2(1.0, 5000.0))
+        val ship = Flyer.ship( Vector2(1.0, U.UNIVERSE_SIZE/2))
         ship.velocity = Vector2(-120.0, -120.0)
         ship.update(tick)
-        assertThat(ship.position.x).isEqualTo(9999.0)
-        assertThat(ship.position.y).isEqualTo(4998.0)
+        assertThat(ship.position.x).isEqualTo(U.UNIVERSE_SIZE-1)
+        assertThat(ship.position.y).isEqualTo(U.UNIVERSE_SIZE/2 - 2)
     }
 
     @Test
