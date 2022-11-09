@@ -9,8 +9,8 @@ class ShipMonitorTest {
     @Test
     fun `test ShipMonitor collisions`() {
         val sixtieth = 1.0/60.0
-        val ship = Flyer.ship(Vector2.ZERO)
-        val asteroid = Flyer.asteroid(Vector2.ZERO, Vector2.ZERO)
+        val ship = SolidObject.ship(Vector2.ZERO)
+        val asteroid = SolidObject.asteroid(Vector2.ZERO, Vector2.ZERO)
         val monitor = ShipMonitor(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
         monitor.update(sixtieth)
@@ -24,8 +24,8 @@ class ShipMonitorTest {
     @Test
     fun ` test ShipMonitor collisions other way around`() {
         val sixtieth = 1.0/60.0
-        val ship = Flyer.ship(Vector2.ZERO)
-        val asteroid = Flyer.asteroid(Vector2.ZERO, Vector2.ZERO)
+        val ship = SolidObject.ship(Vector2.ZERO)
+        val asteroid = SolidObject.asteroid(Vector2.ZERO, Vector2.ZERO)
         val monitor = ShipMonitor(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
         monitor.update(sixtieth)
@@ -39,7 +39,7 @@ class ShipMonitorTest {
     @Test
     fun `correctly detect ship`() {
         val sixtieth = 1.0/60.0
-        val ship = Flyer.ship(Point(10.0, 10.0))
+        val ship = SolidObject.ship(Point(10.0, 10.0))
         val mon = ShipMonitor(ship)
         mon.update(sixtieth)
         assertThat(mon.state).isEqualTo(ShipMonitorState.LookingForShip)
@@ -49,7 +49,7 @@ class ShipMonitorTest {
 
     @Test
     fun `delayed creation of ship`() {
-        val ship = Flyer.ship(Point(10.0, 10.0))
+        val ship = SolidObject.ship(Point(10.0, 10.0))
         val mon = ShipMonitor(ship)
         assertThat(mon.state).isEqualTo(ShipMonitorState.HaveSeenShip)
         var created = mon.update(1.0/60.0)

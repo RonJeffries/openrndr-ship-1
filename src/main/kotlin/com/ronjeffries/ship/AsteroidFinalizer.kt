@@ -3,15 +3,15 @@ package com.ronjeffries.ship
 import kotlin.math.pow
 
 interface IFinalizer {
-    fun finalize(flyer: Flyer): List<ISpaceObject>
+    fun finalize(solidObject: SolidObject): List<ISpaceObject>
     fun scale(): Double = 1.0
 }
 
 class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
-    private fun asSplit(asteroid: Flyer): Flyer {
+    private fun asSplit(asteroid: SolidObject): SolidObject {
         val newKr = asteroid.killRadius / 2.0
         val newVel = asteroid.velocity.rotate(Math.random() * 360.0)
-        return Flyer.asteroid(
+        return SolidObject.asteroid(
             pos = asteroid.position,
             vel = newVel,
             killRad = newKr,
@@ -19,13 +19,13 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
         )
     }
 
-    override fun finalize(flyer: Flyer): List<ISpaceObject> {
+    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
         val objectsToAdd: MutableList<ISpaceObject> = mutableListOf()
         val score = getScore()
         objectsToAdd.add(score)
         if (splitCount >= 1) {
-            objectsToAdd.add(asSplit(flyer))
-            objectsToAdd.add(asSplit(flyer))
+            objectsToAdd.add(asSplit(solidObject))
+            objectsToAdd.add(asSplit(solidObject))
         }
         return objectsToAdd
     }
@@ -46,23 +46,23 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
 }
 
 class MissileFinalizer : IFinalizer {
-    override fun finalize(flyer: Flyer): List<ISpaceObject> {
-        return listOf(Flyer.splat(flyer))
+    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
+        return listOf(SolidObject.splat(solidObject))
     }
 }
 
 class ShipFinalizer : IFinalizer {
-    override fun finalize(flyer: Flyer): List<ISpaceObject> {
-        if ( flyer.deathDueToCollision())
-            flyer.position = U.CENTER_OF_UNIVERSE
+    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
+        if ( solidObject.deathDueToCollision())
+            solidObject.position = U.CENTER_OF_UNIVERSE
         else
-            flyer.position = U.randomPoint()
+            solidObject.position = U.randomPoint()
         return emptyList()
     }
 }
 
 class DefaultFinalizer : IFinalizer {
-    override fun finalize(flyer: Flyer): List<ISpaceObject> {
+    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
         return emptyList()
     }
 }

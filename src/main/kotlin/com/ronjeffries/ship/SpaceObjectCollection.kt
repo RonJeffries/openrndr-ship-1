@@ -1,23 +1,23 @@
 package com.ronjeffries.ship
 
-class Flyers {
-    val flyers = mutableListOf<ISpaceObject>()
+class SpaceObjectCollection {
+    val spaceObjects = mutableListOf<ISpaceObject>()
 
-    fun add(flyer: ISpaceObject) {
-        flyers.add(flyer)
+    fun add(spaceObject: ISpaceObject) {
+        spaceObjects.add(spaceObject)
     }
     
     fun addAll(newbies: List<ISpaceObject>){
-        flyers.addAll(newbies)
+        spaceObjects.addAll(newbies)
     }
 
-    fun forEach(f: (ISpaceObject)->Unit) = flyers.forEach(f)
+    fun forEach(spaceObject: (ISpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
 
     fun pairsToCheck(): List<Pair<ISpaceObject, ISpaceObject>> {
         val pairs = mutableListOf<Pair<ISpaceObject, ISpaceObject>>()
-        flyers.indices.forEach { i ->
-            flyers.indices.minus(0..i).forEach { j ->
-                pairs.add(flyers[i] to flyers[j])
+        spaceObjects.indices.forEach { i ->
+            spaceObjects.indices.minus(0..i).forEach { j ->
+                pairs.add(spaceObjects[i] to spaceObjects[j])
             }
         }
         return pairs
@@ -31,8 +31,8 @@ class Flyers {
     }
 
     fun removeAll(moribund: MutableSet<ISpaceObject>){
-        flyers.removeAll(moribund.toSet())
+        spaceObjects.removeAll(moribund.toSet())
     }
 
-    val size get() = flyers.size
+    val size get() = spaceObjects.size
 }
