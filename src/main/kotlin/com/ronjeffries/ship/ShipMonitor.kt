@@ -1,8 +1,7 @@
 package com.ronjeffries.ship
 
 import com.ronjeffries.ship.ShipMonitorState.*
-import org.openrndr.color.ColorRGBa
-import org.openrndr.draw.Drawer
+import org.openrndr.extra.noise.random
 
 class ShipMonitor(val ship: Flyer) : IFlyer {
     override val mutuallyInvulnerable = false
@@ -10,14 +9,13 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     override var elapsedTime: Double = 0.0
     var state: ShipMonitorState = HaveSeenShip
     var safeToEmerge: Boolean = false
-    private val safeShipDistance = 1000.0
 
 //
 //    override fun draw(drawer: Drawer) {
 //        drawer.stroke = ColorRGBa.RED
 //        drawer.strokeWeight = 20.0
 //        drawer.fill = null
-//        drawer.circle(5000.0, 5000.0, safeShipDistance)
+//        drawer.circle(U.UNIVERSE_SIZE/2, U.UNIVERSE_SIZE/2, U.SAFE_SHIP_DISTANCE)
 //    }
 
     override fun interactWith(other: IFlyer): List<IFlyer> {
@@ -45,7 +43,7 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     }
 
     private fun tooClose(other:IFlyer): Boolean {
-        return (Point(5000.0, 5000.0).distanceTo(other.position) < safeShipDistance)
+        return (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
 
     override fun update(deltaTime: Double): List<IFlyer> {
