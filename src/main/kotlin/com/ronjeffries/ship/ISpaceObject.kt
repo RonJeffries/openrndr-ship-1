@@ -3,7 +3,6 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 
 interface ISpaceObject {
-
     // fake values for interactions
     val elapsedTime
         get() = 0.0
