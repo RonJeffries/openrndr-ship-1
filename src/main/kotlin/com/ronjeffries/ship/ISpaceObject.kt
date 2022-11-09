@@ -6,9 +6,6 @@ interface ISpaceObject {
     val position: Point
         // default position is off-screen
         get() = Point(-666.0, -666.0)
-    val killRadius: Double
-        // no one can hit me by default.
-        get() = -Double.MAX_VALUE
 
     // fake values for interactions
     val elapsedTime

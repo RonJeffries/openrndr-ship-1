@@ -3,7 +3,6 @@ package com.ronjeffries.ship
 import com.ronjeffries.ship.ShipMonitorState.*
 
 class ShipMonitor(val ship: SolidObject) : ISpaceObject {
-    override val killRadius: Double = -Double.MAX_VALUE
     override var elapsedTime: Double = 0.0
     var state: ShipMonitorState = HaveSeenShip
     var safeToEmerge: Boolean = false
