@@ -13,19 +13,19 @@ class Controls {
     val acceleration = Acceleration(1000.0, 0.0)
     private val rotationSpeed = 180.0
 
-    fun control(obj: Flyer, deltaTime: Double): List<IFlyer> {
+    fun control(ship: Flyer, deltaTime: Double): List<IFlyer> {
         if (hyperspace) {
             val vel = Velocity(1000.0, 0.0).rotate(random(0.0,360.0))
             val destroyer = Flyer(
                 killRadius = 100.0,
-                position = obj.position,
+                position = ship.position,
                 velocity = Velocity.ZERO
             )
             return listOf(destroyer)
         }
-        turn(obj, deltaTime)
-        accelerate(obj, deltaTime)
-        return fire(obj)
+        turn(ship, deltaTime)
+        accelerate(ship, deltaTime)
+        return fire(ship)
     }
 
     private fun accelerate(obj:Flyer, deltaTime: Double) {
