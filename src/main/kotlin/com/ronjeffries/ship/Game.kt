@@ -19,7 +19,7 @@ class Game {
         add(ScoreKeeper())
         add(LifetimeClock())
         for (i in 0..7) {
-            val pos = Point(random(0.0, 10000.0), random(0.0,10000.0))
+            val pos = U.randomPoint()
             val vel = Velocity(1000.0, 0.0).rotate(random(0.0,360.0))
             val asteroid = Flyer.asteroid(pos,vel )
             add(asteroid)
@@ -27,7 +27,7 @@ class Game {
     }
 
     private fun newShip(controls: Controls): Flyer {
-        return  Flyer.ship(Point(5000.0, 5000.0), controls)
+        return  Flyer.ship(U.CENTER_OF_UNIVERSE, controls)
     }
 
     fun cycle(drawer: Drawer, seconds: Double) {
