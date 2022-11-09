@@ -40,7 +40,8 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
     }
 
     private fun tooClose(other:ISpaceObject): Boolean {
-        return (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
+        return if (other !is SolidObject) false
+        else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
 
     override fun update(deltaTime: Double): List<ISpaceObject> {

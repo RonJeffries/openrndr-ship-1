@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class SolidObject(
-    override var position: Point,
+    var position: Point,
     var velocity: Velocity,
 
     var killRadius: Double = -Double.MAX_VALUE,

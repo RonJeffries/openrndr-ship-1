@@ -3,9 +3,6 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 
 interface ISpaceObject {
-    val position: Point
-        // default position is off-screen
-        get() = Point(-666.0, -666.0)
 
     // fake values for interactions
     val elapsedTime

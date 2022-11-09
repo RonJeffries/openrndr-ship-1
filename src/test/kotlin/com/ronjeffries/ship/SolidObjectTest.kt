@@ -193,7 +193,7 @@ class SolidObjectTest {
         var expectedPosition  = ship.position + missileOffset.rotate(ship.heading)
         var additions = ship.update(sixtieth)
         assertThat(additions).isNotEmpty
-        var missile = additions.first()
+        var missile = additions.first() as SolidObject
         print(missile.position)
         assertThat(missile.position).isEqualTo(expectedPosition)
         controls.fire = false
@@ -204,7 +204,7 @@ class SolidObjectTest {
         expectedPosition  = ship.position + missileOffset.rotate(ship.heading)
         additions = ship.update(sixtieth)
         assertThat(additions).isNotEmpty
-        missile = additions.first()
+        missile = additions.first() as SolidObject
         print(missile.position)
         assertThat(missile.position).isEqualTo(expectedPosition)
     }
