@@ -9,9 +9,9 @@ interface ISpaceObject {
     val killRadius: Double
         // no one can hit me by default.
         get() = -Double.MAX_VALUE
-    val mutuallyInvulnerable: Boolean
-        // specials and asteroids are safe from each other
-        get() = true
+//    val mutuallyInvulnerable: Boolean
+//        // specials and asteroids are safe from each other
+//        get() = true
 
     // fake values for interactions
     val elapsedTime

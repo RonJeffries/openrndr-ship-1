@@ -9,7 +9,7 @@ class SolidObject(
     var velocity: Velocity,
 
     override var killRadius: Double = -Double.MAX_VALUE,
-    override val mutuallyInvulnerable: Boolean = false,
+    val mutuallyInvulnerable: Boolean = false,
     override val lifetime: Double = Double.MAX_VALUE,
     val view: FlyerView = NullView(),
     val controls: Controls = Controls(),
@@ -47,7 +47,12 @@ class SolidObject(
 
     private fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
-    private fun weCanCollideWith(other: ISpaceObject) = !this.mutuallyInvulnerable || !other.mutuallyInvulnerable
+//    private fun weCanCollideWith(other: ISpaceObject) = !this.mutuallyInvulnerable || !other.mutuallyInvulnerable
+
+    private fun weCanCollideWith(other: ISpaceObject): Boolean {
+        return if ( other !is SolidObject) false
+        else !(this.mutuallyInvulnerable && other.mutuallyInvulnerable)
+    }
 
     private fun weAreInRange(other: ISpaceObject) =
         position.distanceTo(other.position) < killRadius + other.killRadius
