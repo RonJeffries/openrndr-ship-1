@@ -8,7 +8,7 @@ class Game {
     val knownObjects = Flyers()
     private var lastTime = 0.0
 
-    fun add(newObject: IFlyer) = knownObjects.add(newObject)
+    fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
 
     fun colliders() = knownObjects.collectFromPairs { f1, f2 -> f1.interactWith(f2) }
 
@@ -50,7 +50,7 @@ class Game {
     }
 
     fun update(deltaTime: Double) {
-        val adds = mutableListOf<IFlyer>()
+        val adds = mutableListOf<ISpaceObject>()
         knownObjects.forEach { adds.addAll(it.update(deltaTime)) }
         knownObjects.addAll(adds)
     }

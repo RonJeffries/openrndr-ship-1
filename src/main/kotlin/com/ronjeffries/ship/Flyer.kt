@@ -32,7 +32,7 @@ fun Double.cap(): Double {
     return (this + U.UNIVERSE_SIZE) % U.UNIVERSE_SIZE
 }
 
-interface IFlyer {
+interface ISpaceObject {
     val position: Point
         // default position is off-screen
         get() = Point(-666.0, -666.0)
@@ -53,12 +53,12 @@ interface IFlyer {
         get() = Double.MAX_VALUE
     val score: Int
         get() = 0
-    fun interactWith(other: IFlyer): List<IFlyer>
-    fun interactWithOther(other: IFlyer): List<IFlyer>
-    fun update(deltaTime: Double): List<IFlyer>
+    fun interactWith(other: ISpaceObject): List<ISpaceObject>
+    fun interactWithOther(other: ISpaceObject): List<ISpaceObject>
+    fun update(deltaTime: Double): List<ISpaceObject>
 
     fun draw(drawer: Drawer) {}
-    fun finalize(): List<IFlyer> { return emptyList() }
+    fun finalize(): List<ISpaceObject> { return emptyList() }
     fun move(deltaTime: Double) {}
 }
 
@@ -72,7 +72,7 @@ class Flyer(
     val view: FlyerView = NullView(),
     val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
-) : IFlyer {
+) : ISpaceObject {
     var heading: Double = 0.0
     override var elapsedTime = 0.0
 
@@ -92,25 +92,25 @@ class Flyer(
         view.draw(this, drawer)
     }
 
-    override fun interactWith(other: IFlyer): List<IFlyer> {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         return other.interactWithOther(this)
     }
 
-    override fun interactWithOther(other: IFlyer): List<IFlyer> {
+    override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> {
         return when {
             weAreCollidingWith(other) -> listOf(this, other)
             else -> emptyList()
         }
     }
 
-    private fun weAreCollidingWith(other: IFlyer) = weCanCollideWith(other) && weAreInRange(other)
+    private fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
-    private fun weCanCollideWith(other: IFlyer) = !this.mutuallyInvulnerable || !other.mutuallyInvulnerable
+    private fun weCanCollideWith(other: ISpaceObject) = !this.mutuallyInvulnerable || !other.mutuallyInvulnerable
 
-    private fun weAreInRange(other: IFlyer) =
+    private fun weAreInRange(other: ISpaceObject) =
         position.distanceTo(other.position) < killRadius + other.killRadius
 
-    override fun finalize(): List<IFlyer> {
+    override fun finalize(): List<ISpaceObject> {
         return finalizer.finalize(this)
     }
 
@@ -130,7 +130,7 @@ class Flyer(
         heading += degrees
     }
 
-    override fun update(deltaTime: Double): List<IFlyer> {
+    override fun update(deltaTime: Double): List<ISpaceObject> {
         tick(deltaTime)
         val objectsToAdd = controls.control(this, deltaTime)
         move(deltaTime)

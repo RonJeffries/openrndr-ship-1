@@ -1,20 +1,20 @@
 package com.ronjeffries.ship
 
 class Flyers {
-    val flyers = mutableListOf<IFlyer>()
+    val flyers = mutableListOf<ISpaceObject>()
 
-    fun add(flyer: IFlyer) {
+    fun add(flyer: ISpaceObject) {
         flyers.add(flyer)
     }
     
-    fun addAll(newbies: List<IFlyer>){
+    fun addAll(newbies: List<ISpaceObject>){
         flyers.addAll(newbies)
     }
 
-    fun forEach(f: (IFlyer)->Unit) = flyers.forEach(f)
+    fun forEach(f: (ISpaceObject)->Unit) = flyers.forEach(f)
 
-    fun pairsToCheck(): List<Pair<IFlyer, IFlyer>> {
-        val pairs = mutableListOf<Pair<IFlyer, IFlyer>>()
+    fun pairsToCheck(): List<Pair<ISpaceObject, ISpaceObject>> {
+        val pairs = mutableListOf<Pair<ISpaceObject, ISpaceObject>>()
         flyers.indices.forEach { i ->
             flyers.indices.minus(0..i).forEach { j ->
                 pairs.add(flyers[i] to flyers[j])
@@ -23,14 +23,14 @@ class Flyers {
         return pairs
     }
 
-    fun collectFromPairs(pairCondition: (IFlyer, IFlyer) -> List<IFlyer>): MutableSet<IFlyer> {
-        val pairs = mutableSetOf<IFlyer>()
+    fun collectFromPairs(pairCondition: (ISpaceObject, ISpaceObject) -> List<ISpaceObject>): MutableSet<ISpaceObject> {
+        val pairs = mutableSetOf<ISpaceObject>()
         pairsToCheck().forEach { p -> pairs.addAll(pairCondition(p.first, p.second))
         }
         return pairs
     }
 
-    fun removeAll(moribund: MutableSet<IFlyer>){
+    fun removeAll(moribund: MutableSet<ISpaceObject>){
         flyers.removeAll(moribund.toSet())
     }
 

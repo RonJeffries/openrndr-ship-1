@@ -1,10 +1,9 @@
 package com.ronjeffries.ship
 
-import org.openrndr.extra.noise.random
 import kotlin.math.pow
 
 interface IFinalizer {
-    fun finalize(flyer: Flyer): List<IFlyer>
+    fun finalize(flyer: Flyer): List<ISpaceObject>
     fun scale(): Double = 1.0
 }
 
@@ -20,8 +19,8 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
         )
     }
 
-    override fun finalize(flyer: Flyer): List<IFlyer> {
-        val objectsToAdd: MutableList<IFlyer> = mutableListOf()
+    override fun finalize(flyer: Flyer): List<ISpaceObject> {
+        val objectsToAdd: MutableList<ISpaceObject> = mutableListOf()
         val score = getScore()
         objectsToAdd.add(score)
         if (splitCount >= 1) {
@@ -47,13 +46,13 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
 }
 
 class MissileFinalizer : IFinalizer {
-    override fun finalize(flyer: Flyer): List<IFlyer> {
+    override fun finalize(flyer: Flyer): List<ISpaceObject> {
         return listOf(Flyer.splat(flyer))
     }
 }
 
 class ShipFinalizer : IFinalizer {
-    override fun finalize(flyer: Flyer): List<IFlyer> {
+    override fun finalize(flyer: Flyer): List<ISpaceObject> {
         if ( flyer.deathDueToCollision())
             flyer.position = U.CENTER_OF_UNIVERSE
         else
@@ -63,7 +62,7 @@ class ShipFinalizer : IFinalizer {
 }
 
 class DefaultFinalizer : IFinalizer {
-    override fun finalize(flyer: Flyer): List<IFlyer> {
+    override fun finalize(flyer: Flyer): List<ISpaceObject> {
         return emptyList()
     }
 }

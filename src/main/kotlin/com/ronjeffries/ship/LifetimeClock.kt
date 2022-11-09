@@ -1,18 +1,18 @@
 package com.ronjeffries.ship
 
-class LifetimeClock : IFlyer {
-    override fun interactWith(other: IFlyer): List<IFlyer> {
+class LifetimeClock : ISpaceObject {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         return if (other.elapsedTime > other.lifetime) {
             listOf(other)
         } else
             emptyList()
     }
 
-    override fun interactWithOther(other: IFlyer): List<IFlyer> {
+    override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> {
         return interactWith(other)
     }
 
-    override fun update(deltaTime: Double): List<IFlyer> {
+    override fun update(deltaTime: Double): List<ISpaceObject> {
         return emptyList()
     }
 

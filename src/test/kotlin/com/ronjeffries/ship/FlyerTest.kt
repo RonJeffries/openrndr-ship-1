@@ -134,7 +134,7 @@ class FlyerTest {
         val a3 = Flyer.asteroid(p2,v) // no
         val a4 = Flyer.asteroid(p2,v) // no
         val objects = mutableListOf(a0,m1,s2, a3,a4)
-        val shouldDie = mutableSetOf<IFlyer>()
+        val shouldDie = mutableSetOf<ISpaceObject>()
         var ct = 0
         for (i in 0 until objects.size-1) {
             for (j in i+1 until objects.size) {
@@ -160,7 +160,7 @@ class FlyerTest {
         val a3 = Flyer.asteroid(p2,v) // no
         val a4 = Flyer.asteroid(p2,v) // no
         val objects = mutableListOf(a0,m1,s2, a3,a4)
-        val shouldDie = mutableSetOf<IFlyer>()
+        val shouldDie = mutableSetOf<ISpaceObject>()
         var ct = 0
         for (oi in objects) {
             for (oj in objects) {

@@ -3,14 +3,14 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 
-class ScoreKeeper: IFlyer {
+class ScoreKeeper: ISpaceObject {
     var totalScore = 0
 
     fun formatted(): String {
         return ("00000" + totalScore.toShort()).takeLast(5)
     }
 
-    override fun interactWith(other: IFlyer): List<IFlyer> {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if (other.score > 0) {
             totalScore += other.score
             return listOf(other)
@@ -18,7 +18,7 @@ class ScoreKeeper: IFlyer {
         return emptyList()
     }
 
-    override fun interactWithOther(other: IFlyer): List<IFlyer> {
+    override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> {
         return this.interactWith(other)
     }
 
@@ -29,7 +29,7 @@ class ScoreKeeper: IFlyer {
         drawer.text(formatted(), Point(0.0, 0.0))
     }
 
-    override fun update(deltaTime: Double): List<IFlyer> {
+    override fun update(deltaTime: Double): List<ISpaceObject> {
         return emptyList()
     }
 }

@@ -1,9 +1,8 @@
 package com.ronjeffries.ship
 
 import com.ronjeffries.ship.ShipMonitorState.*
-import org.openrndr.extra.noise.random
 
-class ShipMonitor(val ship: Flyer) : IFlyer {
+class ShipMonitor(val ship: Flyer) : ISpaceObject {
     override val mutuallyInvulnerable = false
     override val killRadius: Double = -Double.MAX_VALUE
     override var elapsedTime: Double = 0.0
@@ -18,7 +17,7 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
 //        drawer.circle(U.UNIVERSE_SIZE/2, U.UNIVERSE_SIZE/2, U.SAFE_SHIP_DISTANCE)
 //    }
 
-    override fun interactWith(other: IFlyer): List<IFlyer> {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if (state == LookingForShip) {
             if (other == ship)
                 state = HaveSeenShip
@@ -28,11 +27,11 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
         return emptyList() // no damage done here
     }
 
-    override fun interactWithOther(other: IFlyer): List<IFlyer> {
+    override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> {
         return this.interactWith(other)
     }
 
-    private fun shipReset(): IFlyer {
+    private fun shipReset(): ISpaceObject {
         ship.velocity = Velocity.ZERO
         return ship
     }
@@ -42,13 +41,13 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
         safeToEmerge = true
     }
 
-    private fun tooClose(other:IFlyer): Boolean {
+    private fun tooClose(other:ISpaceObject): Boolean {
         return (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
 
-    override fun update(deltaTime: Double): List<IFlyer> {
+    override fun update(deltaTime: Double): List<ISpaceObject> {
         elapsedTime += deltaTime
-        var toBeCreated: List<IFlyer> = emptyList()
+        var toBeCreated: List<ISpaceObject> = emptyList()
         state = when (state) {
             HaveSeenShip -> LookingForShip
             LookingForShip -> {
