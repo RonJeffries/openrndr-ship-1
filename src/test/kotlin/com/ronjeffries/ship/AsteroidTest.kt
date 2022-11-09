@@ -47,11 +47,16 @@ class AsteroidTest {
         assertThat(fullV.length).isEqualTo(100.0, within(1.0))
         assertThat(fullV).isEqualTo(startingV)
         val halfSize = full.finalize()
+        var countSplits = 0
         halfSize.forEach {
-            val halfV = it.velocity
-            assertThat(halfV.length).isEqualTo(100.0, within(1.0))
-            assertThat(halfV).isNotEqualTo(startingV)
+            if ( it is SolidObject) {
+                countSplits += 1
+                val halfV = it.velocity
+                assertThat(halfV.length).isEqualTo(100.0, within(1.0))
+                assertThat(halfV).isNotEqualTo(startingV)
+            }
         }
+        assertThat(countSplits).describedAs("always two there are").isEqualTo(2)
     }
 
     @Test
