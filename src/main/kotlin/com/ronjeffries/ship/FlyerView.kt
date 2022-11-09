@@ -5,20 +5,20 @@ import org.openrndr.draw.Drawer
 import org.openrndr.extra.noise.random
 
 interface FlyerView {
-    fun draw(flyer: Flyer, drawer: Drawer)
+    fun draw(solidObject: SolidObject, drawer: Drawer)
 }
 
 class MissileView: FlyerView {
-    override fun draw(flyer: Flyer, drawer: Drawer) {
+    override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
 //        drawer.scale(3.0,3.0) 3 moved to the draw?
-        drawer.circle(Point.ZERO, flyer.killRadius*3.0)
+        drawer.circle(Point.ZERO, solidObject.killRadius*3.0)
     }
 }
 
 class ShipView : FlyerView {
-    override fun draw(flyer: Flyer, drawer: Drawer) {
+    override fun draw(solidObject: SolidObject, drawer: Drawer) {
         val points = listOf(
             Point(-3.0, -2.0),
             Point(-3.0, 2.0),
@@ -30,9 +30,9 @@ class ShipView : FlyerView {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
-        drawer.circle(Point.ZERO, flyer.killRadius)
+        drawer.circle(Point.ZERO, solidObject.killRadius)
         drawer.scale(30.0, 30.0)
-        drawer.rotate(flyer.heading )
+        drawer.rotate(solidObject.heading )
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 8.0/30.0
         drawer.lineStrip(points)
@@ -42,16 +42,16 @@ class ShipView : FlyerView {
 class AsteroidView: FlyerView {
     private val rock = defineRocks().random()
 
-    override fun draw(flyer: Flyer, drawer: Drawer) {
+    override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
 //        drawer.circle(Point.ZERO, asteroid.killRadius)
         val sizer = 30.0
         drawer.scale(sizer, sizer)
-        val sc = flyer.scale()
+        val sc = solidObject.scale()
         drawer.scale(sc,sc)
-        drawer.rotate(flyer.heading)
+        drawer.rotate(solidObject.heading)
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 8.0/30.0/sc
         drawer.scale(1.0, -1.0)
@@ -129,20 +129,20 @@ class SplatView(lifetime: Double): FlyerView {
         Point(-2.0,0.0), Point(-2.0,-2.0), Point(2.0,-2.0), Point(3.0,1.0), Point(2.0,-1.0), Point(0.0,2.0), Point(1.0,3.0), Point(-1.0,3.0), Point(-4.0,-1.0), Point(-3.0,1.0)
     )
 
-    override fun draw(flyer: Flyer, drawer: Drawer) {
+    override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
         drawer.rotate(rot)
         for (point in points) {
-            val size = sizeTween.value(flyer.elapsedTime)
-            val radius = radiusTween.value(flyer.elapsedTime)
+            val size = sizeTween.value(solidObject.elapsedTime)
+            val radius = radiusTween.value(solidObject.elapsedTime)
             drawer.circle(size*point.x, size*point.y, radius)
         }
     }
 }
 
 class NullView: FlyerView {
-    override fun draw(flyer: Flyer, drawer: Drawer) {
+    override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.text("???")
     }

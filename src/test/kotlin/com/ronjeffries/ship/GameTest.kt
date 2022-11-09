@@ -8,8 +8,8 @@ class GameTest {
     @Test
     fun `create game`() {
         val game = Game()
-        val asteroid = Flyer.asteroid(Vector2(100.0, 100.0), Vector2(50.0, 50.0))
-        val ship = Flyer.ship(Vector2(1000.0, 1000.0))
+        val asteroid = SolidObject.asteroid(Vector2(100.0, 100.0), Vector2(50.0, 50.0))
+        val ship = SolidObject.ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)
         assertThat(game.colliders().size).isEqualTo(0)
@@ -24,15 +24,15 @@ class GameTest {
     @Test
     fun `colliding ship and asteroid splits asteroid, loses ship`() {
         val game = Game()
-        val asteroid = Flyer.asteroid(Vector2(1000.0, 1000.0), Vector2(50.0, 50.0))
-        val ship = Flyer.ship(Vector2(1000.0, 1000.0))
+        val asteroid = SolidObject.asteroid(Vector2(1000.0, 1000.0), Vector2(50.0, 50.0))
+        val ship = SolidObject.ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)
         assertThat(game.knownObjects.size).isEqualTo(2)
-        assertThat(ship).isIn(game.knownObjects.flyers)
+        assertThat(ship).isIn(game.knownObjects.spaceObjects)
         game.processInteractions()
         assertThat(game.knownObjects.size).isEqualTo(3) // new ship (hack) and a Score
-        assertThat(ship).isNotIn(game.knownObjects.flyers) // but a new one is
+        assertThat(ship).isNotIn(game.knownObjects.spaceObjects) // but a new one is
     }
 
     @Test
@@ -40,7 +40,7 @@ class GameTest {
         val game = Game()
         val n = 12
         for (i in 1..n) {
-            game.add(Flyer.ship(Vector2.ZERO))
+            game.add(SolidObject.ship(Vector2.ZERO))
         }
         val pairs = game.knownObjects.pairsToCheck()
         assertThat(pairs.size).isEqualTo(n*(n-1)/2)

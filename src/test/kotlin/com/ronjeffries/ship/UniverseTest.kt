@@ -8,12 +8,12 @@ class UniverseTest {
 
     @Test
     fun `collision calculation`() {
-        val ship = Flyer(
+        val ship = SolidObject(
             Vector2.ZERO,
             Vector2.ZERO,
             100.0
         )
-        val asteroid = Flyer(
+        val asteroid = SolidObject(
             position = Vector2.ZERO,
             velocity = Vector2.ZERO,
             killRadius = 1000.0

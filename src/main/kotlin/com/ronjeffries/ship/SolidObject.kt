@@ -62,7 +62,7 @@ interface ISpaceObject {
     fun move(deltaTime: Double) {}
 }
 
-class Flyer(
+class SolidObject(
     override var position: Point,
     override var velocity: Velocity,
 
@@ -138,8 +138,8 @@ class Flyer(
     }
 
     companion object {
-        fun asteroid(pos:Point, vel: Velocity, killRad: Double = 500.0, splitCount: Int = 2): Flyer {
-            return Flyer(
+        fun asteroid(pos:Point, vel: Velocity, killRad: Double = 500.0, splitCount: Int = 2): SolidObject {
+            return SolidObject(
                 position = pos,
                 velocity = vel,
                 killRadius = killRad,
@@ -149,8 +149,8 @@ class Flyer(
             )
         }
 
-        fun ship(pos:Point, control:Controls= Controls()): Flyer {
-            return Flyer(
+        fun ship(pos:Point, control:Controls= Controls()): SolidObject {
+            return SolidObject(
                 position = pos,
                 velocity = Velocity.ZERO,
                 killRadius = 150.0,
@@ -160,14 +160,14 @@ class Flyer(
             )
         }
 
-        fun missile(ship: Flyer): Flyer {
+        fun missile(ship: SolidObject): SolidObject {
             val missileKillRadius = 10.0
             val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
             val standardOffset = Point(2 * (ship.killRadius + missileKillRadius), 0.0)
             val rotatedOffset = standardOffset.rotate(ship.heading)
             val missilePos: Point = ship.position + rotatedOffset
             val missileVel: Velocity = ship.velocity + missileOwnVelocity
-            return Flyer(
+            return SolidObject(
                 position = missilePos,
                 velocity = missileVel,
                 killRadius = missileKillRadius,
@@ -177,9 +177,9 @@ class Flyer(
             )
         }
 
-        fun splat(missile: Flyer): Flyer {
+        fun splat(missile: SolidObject): SolidObject {
             val lifetime = 2.0
-            return Flyer(
+            return SolidObject(
                 position = missile.position,
                 velocity = Velocity.ZERO,
                 lifetime = lifetime,

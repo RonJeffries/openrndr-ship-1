@@ -7,7 +7,7 @@ class FinalizerTest {
     @Test
     fun `asteroid finalizer`() {
         val fin = AsteroidFinalizer()
-        val asteroid = Flyer.asteroid(Point.ZERO, Velocity.ZERO)
+        val asteroid = SolidObject.asteroid(Point.ZERO, Velocity.ZERO)
         val splits = fin.finalize(asteroid)
         assertThat(splits.size).isEqualTo(3) // split guys and a score
     }

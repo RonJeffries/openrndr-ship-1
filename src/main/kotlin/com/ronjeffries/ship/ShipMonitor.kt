@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import com.ronjeffries.ship.ShipMonitorState.*
 
-class ShipMonitor(val ship: Flyer) : ISpaceObject {
+class ShipMonitor(val ship: SolidObject) : ISpaceObject {
     override val mutuallyInvulnerable = false
     override val killRadius: Double = -Double.MAX_VALUE
     override var elapsedTime: Double = 0.0

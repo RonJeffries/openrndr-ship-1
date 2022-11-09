@@ -6,11 +6,11 @@ import org.openrndr.math.Vector2
 import java.lang.Math.*
 
 
-class FlyerTest {
+class SolidObjectTest {
     private val tick = 1.0/60.0
     @Test
     fun `Ship Happens`() {
-        val ship = Flyer.ship(Vector2.ZERO)
+        val ship = SolidObject.ship(Vector2.ZERO)
         ship.velocity = Vector2(120.0,120.0)
         ship.update(tick)
         assertThat(ship.position).isEqualTo(Vector2(2.0,2.0))
@@ -18,7 +18,7 @@ class FlyerTest {
 
     @Test
     fun `capping works high`() {
-        val ship = Flyer.ship(Vector2(U.UNIVERSE_SIZE-1, U.UNIVERSE_SIZE/2))
+        val ship = SolidObject.ship(Vector2(U.UNIVERSE_SIZE-1, U.UNIVERSE_SIZE/2))
         ship.velocity = Vector2(120.0,120.0)
         ship.update(tick)
         assertThat(ship.position.x).isEqualTo(1.0)
@@ -27,7 +27,7 @@ class FlyerTest {
 
     @Test
     fun `capping works low`() {
-        val ship = Flyer.ship( Vector2(1.0, U.UNIVERSE_SIZE/2))
+        val ship = SolidObject.ship( Vector2(1.0, U.UNIVERSE_SIZE/2))
         ship.velocity = Vector2(-120.0, -120.0)
         ship.update(tick)
         assertThat(ship.position.x).isEqualTo(U.UNIVERSE_SIZE-1)
@@ -37,7 +37,7 @@ class FlyerTest {
     @Test
     fun `acceleration works`() {
         val control = Controls()
-        val ship = Flyer.ship(Vector2.ZERO, control)
+        val ship = SolidObject.ship(Vector2.ZERO, control)
         assertThat(ship.position).isEqualTo(Vector2.ZERO)
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
         ship.update(tick)
@@ -53,7 +53,7 @@ class FlyerTest {
     @Test
     fun `ship can turn left`() {
         val control = Controls()
-        val ship = Flyer.ship(Vector2.ZERO, control)
+        val ship = SolidObject.ship(Vector2.ZERO, control)
         control.left = true
         ship.update(tick*30)
         assertThat(ship.heading).isEqualTo(-90.0, within(0.01))
@@ -66,7 +66,7 @@ class FlyerTest {
     @Test
     fun `ship can turn right`() {
         val control = Controls()
-        val ship = Flyer.ship(Vector2.ZERO, control)
+        val ship = SolidObject.ship(Vector2.ZERO, control)
         control.right = true
         ship.update(tick*10)
         assertThat(ship.heading).isEqualTo(30.0, within(0.01))
@@ -75,7 +75,7 @@ class FlyerTest {
     @Test
     fun `speed of light`() {
         val control = Controls()
-        val ship = Flyer.ship(Vector2.ZERO, control)
+        val ship = SolidObject.ship(Vector2.ZERO, control)
         control.left = true
         ship.update(tick*20) // 60 degrees northeast ish
         control.left = false
@@ -92,7 +92,7 @@ class FlyerTest {
     @Test
     fun `ship can fire missile`() {
         val controls = Controls()
-        val ship = Flyer.ship(Vector2.ZERO, controls)
+        val ship = SolidObject.ship(Vector2.ZERO, controls)
         controls.fire = true
         val newMissiles = ship.update(tick)
         assertThat(newMissiles.size).isEqualTo(1) // does not return itself
@@ -101,7 +101,7 @@ class FlyerTest {
     @Test
     fun `can only fire once per press`() {
         val controls = Controls()
-        val ship = Flyer.ship(Vector2.ZERO, controls)
+        val ship = SolidObject.ship(Vector2.ZERO, controls)
         controls.fire = true
         var newMissiles = ship.update(tick)
         assertThat(newMissiles.size).isEqualTo(1)
@@ -128,11 +128,11 @@ class FlyerTest {
         val p1 = Vector2(100.0,100.0)
         val p2 = Vector2(755.0, 500.0)
         val v = Vector2.ZERO
-        val a0 = Flyer.asteroid(p1,v) // yes
-        val m1 = Flyer(p1, v, 10.0) // yes
-        val s2 = Flyer.ship(p1) // yes
-        val a3 = Flyer.asteroid(p2,v) // no
-        val a4 = Flyer.asteroid(p2,v) // no
+        val a0 = SolidObject.asteroid(p1,v) // yes
+        val m1 = SolidObject(p1, v, 10.0) // yes
+        val s2 = SolidObject.ship(p1) // yes
+        val a3 = SolidObject.asteroid(p2,v) // no
+        val a4 = SolidObject.asteroid(p2,v) // no
         val objects = mutableListOf(a0,m1,s2, a3,a4)
         val shouldDie = mutableSetOf<ISpaceObject>()
         var ct = 0
@@ -154,11 +154,11 @@ class FlyerTest {
         val p1 = Vector2(100.0,100.0)
         val p2 = Vector2(750.0, 500.0)
         val v = Vector2.ZERO
-        val a0 = Flyer.asteroid(p1,v) // yes
-        val m1 = Flyer(p1, v, 10.0) // yes
-        val s2 = Flyer.ship(p1) // yes
-        val a3 = Flyer.asteroid(p2,v) // no
-        val a4 = Flyer.asteroid(p2,v) // no
+        val a0 = SolidObject.asteroid(p1,v) // yes
+        val m1 = SolidObject(p1, v, 10.0) // yes
+        val s2 = SolidObject.ship(p1) // yes
+        val a3 = SolidObject.asteroid(p2,v) // no
+        val a4 = SolidObject.asteroid(p2,v) // no
         val objects = mutableListOf(a0,m1,s2, a3,a4)
         val shouldDie = mutableSetOf<ISpaceObject>()
         var ct = 0
@@ -175,7 +175,7 @@ class FlyerTest {
 
     @Test
     fun `Flyer clock ticks on update`() {
-        val ship = Flyer.ship(Vector2.ZERO)
+        val ship = SolidObject.ship(Vector2.ZERO)
         assertThat(ship.elapsedTime).isEqualTo(0.0)
         ship.update(5.0)
         assertThat(ship.elapsedTime).isEqualTo(5.0)
@@ -186,7 +186,7 @@ class FlyerTest {
     fun `missile starts ahead of ship`() {
         val sixtieth = 1.0/60.0
         val controls = Controls()
-        val ship = Flyer.ship(Vector2(1000.0, 1000.0), controls)
+        val ship = SolidObject.ship(Vector2(1000.0, 1000.0), controls)
         ship.heading = 0.0
         controls.fire = true
         val missileOffset = Vector2(2*150.0+2*10.0, 0.0)

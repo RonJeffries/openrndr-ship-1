@@ -5,7 +5,7 @@ import org.openrndr.draw.isolated
 import org.openrndr.extra.noise.random
 
 class Game {
-    val knownObjects = Flyers()
+    val knownObjects = SpaceObjectCollection()
     private var lastTime = 0.0
 
     fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
@@ -21,13 +21,13 @@ class Game {
         for (i in 0..7) {
             val pos = U.randomPoint()
             val vel = Velocity(1000.0, 0.0).rotate(random(0.0,360.0))
-            val asteroid = Flyer.asteroid(pos,vel )
+            val asteroid = SolidObject.asteroid(pos,vel )
             add(asteroid)
         }
     }
 
-    private fun newShip(controls: Controls): Flyer {
-        return  Flyer.ship(U.CENTER_OF_UNIVERSE, controls)
+    private fun newShip(controls: Controls): SolidObject {
+        return  SolidObject.ship(U.CENTER_OF_UNIVERSE, controls)
     }
 
     fun cycle(drawer: Drawer, seconds: Double) {

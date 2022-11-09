@@ -9,7 +9,7 @@ class AsteroidTest {
 
     @Test
     fun `Asteroids Exist and Move`() {
-        val asteroid = Flyer.asteroid(
+        val asteroid = SolidObject.asteroid(
             pos = Point.ZERO,
             vel = Velocity(15.0,30.0)
         )
@@ -19,7 +19,7 @@ class AsteroidTest {
 
     @Test
     fun `asteroid splits on finalize`() {
-        val full = Flyer.asteroid(
+        val full = SolidObject.asteroid(
             pos = Point.ZERO,
             vel = Velocity.ZERO
         )
@@ -39,7 +39,7 @@ class AsteroidTest {
     @Test
     fun `new split asteroids get new directions`() {
         val startingV = Vector2(100.0,0.0)
-        val full = Flyer.asteroid(
+        val full = SolidObject.asteroid(
             pos = Vector2.ZERO,
             vel = startingV
         )
@@ -56,15 +56,15 @@ class AsteroidTest {
 
     @Test
     fun `ships do not split on finalize`() {
-        val ship = Flyer.ship(Vector2(100.0,100.0))
+        val ship = SolidObject.ship(Vector2(100.0,100.0))
         val didShipSplit = ship.finalize()
         assertThat(didShipSplit).isEmpty()
     }
 
     @Test
     fun `missile demise creates a splat`() {
-        val ship = Flyer.ship(Vector2(100.0,100.0))
-        val missile = Flyer.missile(ship)
+        val ship = SolidObject.ship(Vector2(100.0,100.0))
+        val missile = SolidObject.missile(ship)
         val splatList = missile.finalize()
         assertThat(splatList.size).isEqualTo(1)
     }
