@@ -53,13 +53,14 @@ interface IFlyer {
         get() = Double.MAX_VALUE
     val score: Int
         get() = 0
-    fun draw(drawer: Drawer) {}
     fun interactWith(other: IFlyer): List<IFlyer>
     fun interactWithOther(other: IFlyer): List<IFlyer>
-    fun move(deltaTime: Double) {}
-    fun finalize(): List<IFlyer> { return emptyList() }
     fun update(deltaTime: Double): List<IFlyer>
+
     fun deathDueToCollision(): Boolean { return true }
+    fun draw(drawer: Drawer) {}
+    fun finalize(): List<IFlyer> { return emptyList() }
+    fun move(deltaTime: Double) {}
 }
 
 class Flyer(

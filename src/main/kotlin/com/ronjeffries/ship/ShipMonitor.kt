@@ -29,7 +29,7 @@ class ShipMonitor(val ship: Flyer) : IFlyer {
     }
 
     override fun interactWithOther(other: IFlyer): List<IFlyer> {
-        return interactWith(other)
+        return this.interactWith(other)
     }
 
     private fun shipReset(): IFlyer {
