@@ -57,7 +57,6 @@ interface IFlyer {
     fun interactWithOther(other: IFlyer): List<IFlyer>
     fun update(deltaTime: Double): List<IFlyer>
 
-    fun deathDueToCollision(): Boolean { return true }
     fun draw(drawer: Drawer) {}
     fun finalize(): List<IFlyer> { return emptyList() }
     fun move(deltaTime: Double) {}
@@ -83,7 +82,7 @@ class Flyer(
 
     fun scale() = finalizer.scale()
 
-    override fun deathDueToCollision(): Boolean {
+    fun deathDueToCollision(): Boolean {
         return !controls.hyperspace
     }
 
