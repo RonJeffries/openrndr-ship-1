@@ -22,7 +22,7 @@ class FlyersTest {
         game.add(a)
         val s = Flyer.ship(Vector2(100.0, 150.0))
         game.add(s)
-        assertThat(game.flyers.size).isEqualTo(2)
+        assertThat(game.knownObjects.size).isEqualTo(2)
         val colliders = game.colliders()
         assertThat(colliders.size).isEqualTo(2)
     }

@@ -28,11 +28,11 @@ class GameTest {
         val ship = Flyer.ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)
-        assertThat(game.flyers.size).isEqualTo(2)
-        assertThat(ship).isIn(game.flyers.flyers)
+        assertThat(game.knownObjects.size).isEqualTo(2)
+        assertThat(ship).isIn(game.knownObjects.flyers)
         game.processInteractions()
-        assertThat(game.flyers.size).isEqualTo(3) // new ship (hack) and a Score
-        assertThat(ship).isNotIn(game.flyers.flyers) // but a new one is
+        assertThat(game.knownObjects.size).isEqualTo(3) // new ship (hack) and a Score
+        assertThat(ship).isNotIn(game.knownObjects.flyers) // but a new one is
     }
 
     @Test
@@ -42,7 +42,7 @@ class GameTest {
         for (i in 1..n) {
             game.add(Flyer.ship(Vector2.ZERO))
         }
-        val pairs = game.flyers.pairsToCheck()
+        val pairs = game.knownObjects.pairsToCheck()
         assertThat(pairs.size).isEqualTo(n*(n-1)/2)
     }
 }

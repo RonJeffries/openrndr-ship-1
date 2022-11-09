@@ -5,12 +5,12 @@ import org.openrndr.draw.isolated
 import org.openrndr.extra.noise.random
 
 class Game {
-    val flyers = Flyers()
+    val knownObjects = Flyers()
     private var lastTime = 0.0
 
-    fun add(fo: IFlyer) = flyers.add(fo)
+    fun add(newObject: IFlyer) = knownObjects.add(newObject)
 
-    fun colliders() = flyers.collectFromPairs { f1, f2 -> f1.interactWith(f2) }
+    fun colliders() = knownObjects.collectFromPairs { f1, f2 -> f1.interactWith(f2) }
 
     fun createContents(controls: Controls) {
         val ship = newShip(controls)
@@ -38,20 +38,20 @@ class Game {
         draw(drawer)
     }
 
-    private fun draw(drawer: Drawer) = flyers.forEach {drawer.isolated { it.draw(drawer) } }
+    private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }
 
     fun processInteractions() {
         val toBeRemoved = colliders()
-        flyers.removeAll(toBeRemoved)
+        knownObjects.removeAll(toBeRemoved)
         for (removedObject in toBeRemoved) {
             val addedByFinalize = removedObject.finalize()
-            flyers.addAll(addedByFinalize)
+            knownObjects.addAll(addedByFinalize)
         }
     }
 
     fun update(deltaTime: Double) {
         val adds = mutableListOf<IFlyer>()
-        flyers.forEach { adds.addAll(it.update(deltaTime)) }
-        flyers.addAll(adds)
+        knownObjects.forEach { adds.addAll(it.update(deltaTime)) }
+        knownObjects.addAll(adds)
     }
 }
