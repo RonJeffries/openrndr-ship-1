@@ -47,8 +47,6 @@ class SolidObject(
 
     private fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
-//    private fun weCanCollideWith(other: ISpaceObject) = !this.mutuallyInvulnerable || !other.mutuallyInvulnerable
-
     private fun weCanCollideWith(other: ISpaceObject): Boolean {
         return if ( other !is SolidObject) false
         else !(this.mutuallyInvulnerable && other.mutuallyInvulnerable)
