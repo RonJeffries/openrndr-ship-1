@@ -8,6 +8,7 @@ typealias Velocity = Vector2
 typealias Acceleration = Vector2
 
 object U {
+    const val HYPERSPACE_DEATH_PROBABILITY = 0.1
     const val SPEED_OF_LIGHT = 5000.0
     const val UNIVERSE_SIZE = 10000.0
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)

@@ -71,4 +71,18 @@ class ShipMonitorTest {
 //        assertThat(ship.position).isEqualTo(Point(5000.0, 5000.0))
         assertThat(ship.velocity).isEqualTo(Velocity.ZERO)
     }
+
+    @Test
+    fun `hyperspace emergence`() {
+        val tick = 0.01
+        val controls = Controls()
+        val ship = SolidObject.ship(Point(10.0, 10.0), controls)
+        val mon = ShipMonitor(ship)
+        controls.hyperspace = true
+        mon.nextHyperspaceFatal = true
+        mon.safeToEmerge = true
+        mon.state = ShipMonitorState.WaitingForSafety
+        val created = mon.update(tick)
+        assertThat(created.size).isEqualTo(3)
+    }
 }

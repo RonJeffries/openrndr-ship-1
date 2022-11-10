@@ -1,19 +1,13 @@
 package com.ronjeffries.ship
 
 import com.ronjeffries.ship.ShipMonitorState.*
+import org.openrndr.extra.noise.random
 
 class ShipMonitor(val ship: SolidObject) : ISpaceObject {
     override var elapsedTime: Double = 0.0
-    var state: ShipMonitorState = HaveSeenShip
-    var safeToEmerge: Boolean = false
-
-//
-//    override fun draw(drawer: Drawer) {
-//        drawer.stroke = ColorRGBa.RED
-//        drawer.strokeWeight = 20.0
-//        drawer.fill = null
-//        drawer.circle(U.UNIVERSE_SIZE/2, U.UNIVERSE_SIZE/2, U.SAFE_SHIP_DISTANCE)
-//    }
+    var state = HaveSeenShip
+    var safeToEmerge = false
+    var nextHyperspaceFatal = false
 
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if (state == LookingForShip) {
@@ -63,7 +57,8 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
             }
             WaitingForSafety -> {
                 if (safeToEmerge) {
-                    toBeCreated = listOf(shipReset())
+                    toBeCreated = makeEmergenceObjects()
+                    nextHyperspaceFatal = random(0.0, 1.0) < U.HYPERSPACE_DEATH_PROBABILITY
                     HaveSeenShip
                 } else {
                     startCheckingForSafeEmergence()
@@ -72,5 +67,18 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
             }
         }
         return toBeCreated
+    }
+
+    private fun makeEmergenceObjects(): List<ISpaceObject> {
+        return when ((ship.position == U.CENTER_OF_UNIVERSE) or !nextHyperspaceFatal) {
+            true -> {
+                listOf(shipReset())
+            }
+            false -> {
+                val splat = SolidObject.splat(ship)
+                val destroyer = SolidObject.shipDestroyer(ship)
+                listOf(splat, destroyer, shipReset())
+            }
+        }
     }
 }

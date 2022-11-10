@@ -15,13 +15,7 @@ class Controls {
 
     fun control(ship: SolidObject, deltaTime: Double): List<ISpaceObject> {
         if (hyperspace) {
-            val vel = Velocity(1000.0, 0.0).rotate(random(0.0,360.0))
-            val destroyer = SolidObject(
-                killRadius = 100.0,
-                position = ship.position,
-                velocity = Velocity.ZERO
-            )
-            return listOf(destroyer)
+            return listOf(SolidObject.shipDestroyer(ship))
         }
         turn(ship, deltaTime)
         accelerate(ship, deltaTime)

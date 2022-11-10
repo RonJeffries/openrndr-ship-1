@@ -27,10 +27,10 @@ class ShipView : FlyerView {
             Point(-5.0, -4.0),
             Point(-3.0, -2.0)
         )
-        drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 16.0
-        drawer.fill = null
-        drawer.circle(Point.ZERO, solidObject.killRadius)
+//        drawer.stroke = ColorRGBa.WHITE
+//        drawer.strokeWeight = 16.0
+//        drawer.fill = null
+//        drawer.circle(Point.ZERO, solidObject.killRadius)
         drawer.scale(30.0, 30.0)
         drawer.rotate(solidObject.heading )
         drawer.stroke = ColorRGBa.WHITE

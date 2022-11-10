@@ -98,14 +98,11 @@ class SolidObject(
             )
         }
 
-        fun ship(pos:Point, control:Controls= Controls()): SolidObject {
+        fun shipDestroyer(ship: SolidObject): SolidObject {
             return SolidObject(
-                position = pos,
-                velocity = Velocity.ZERO,
-                killRadius = 150.0,
-                view = ShipView(),
-                controls = control,
-                finalizer = ShipFinalizer()
+                killRadius = 100.0,
+                position = ship.position,
+                velocity = Velocity.ZERO
             )
         }
 
@@ -123,6 +120,17 @@ class SolidObject(
                 lifetime = 3.0,
                 view = MissileView(),
                 finalizer = MissileFinalizer()
+            )
+        }
+
+        fun ship(pos:Point, control:Controls= Controls()): SolidObject {
+            return SolidObject(
+                position = pos,
+                velocity = Velocity.ZERO,
+                killRadius = 150.0,
+                view = ShipView(),
+                controls = control,
+                finalizer = ShipFinalizer()
             )
         }
 
