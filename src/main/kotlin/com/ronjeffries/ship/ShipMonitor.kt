@@ -9,8 +9,9 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
     var safeToEmerge = false
     var asteroidTally = 0
 
-    fun hyperspaceFailure(random0thru62: Int, tally: Int): Boolean {
-        return random0thru62 >= (tally + 44)
+    fun hyperspaceFailure(random0thru62: Int, asteroidCount: Int): Boolean {
+        // allegedly the original arcade rule
+        return random0thru62 >= (asteroidCount + 44)
     }
 
     fun hyperspaceWorks(): Boolean {
