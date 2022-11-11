@@ -1,9 +1,8 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
-import kotlin.random.Random
 
 class ShipMonitorTest {
 
@@ -75,7 +74,6 @@ class ShipMonitorTest {
 
     @Test
     fun `can tally asteroids`() {
-        val tick = 0.01
         val controls = Controls()
         val ship = SolidObject.ship(Point(10.0, 10.0), controls)
         val mon = ShipMonitor(ship)
