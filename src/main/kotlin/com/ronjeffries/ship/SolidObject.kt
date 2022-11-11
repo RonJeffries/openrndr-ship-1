@@ -9,7 +9,7 @@ class SolidObject(
     var velocity: Velocity,
 
     var killRadius: Double = -Double.MAX_VALUE,
-    val mutuallyInvulnerable: Boolean = false,
+    val isAsteroid: Boolean = false,
     override val lifetime: Double = Double.MAX_VALUE,
     val view: FlyerView = NullView(),
     val controls: Controls = Controls(),
@@ -49,7 +49,7 @@ class SolidObject(
 
     private fun weCanCollideWith(other: ISpaceObject): Boolean {
         return if ( other !is SolidObject) false
-        else !(this.mutuallyInvulnerable && other.mutuallyInvulnerable)
+        else !(this.isAsteroid && other.isAsteroid)
     }
 
     private fun weAreInRange(other: ISpaceObject): Boolean {
@@ -90,17 +90,9 @@ class SolidObject(
                 position = pos,
                 velocity = vel,
                 killRadius = killRad,
-                mutuallyInvulnerable = true,
+                isAsteroid = true,
                 view = AsteroidView(),
                 finalizer = AsteroidFinalizer(splitCount)
-            )
-        }
-
-        fun shipDestroyer(ship: SolidObject): SolidObject {
-            return SolidObject(
-                killRadius = 100.0,
-                position = ship.position,
-                velocity = Velocity.ZERO
             )
         }
 
@@ -129,6 +121,14 @@ class SolidObject(
                 view = ShipView(),
                 controls = control,
                 finalizer = ShipFinalizer()
+            )
+        }
+
+        fun shipDestroyer(ship: SolidObject): SolidObject {
+            return SolidObject(
+                position = ship.position,
+                velocity = Velocity.ZERO,
+                killRadius = 100.0,
             )
         }
 
