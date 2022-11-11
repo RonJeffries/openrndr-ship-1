@@ -14,7 +14,7 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
         return random0thru62 >= (asteroidCount + 44)
     }
 
-    fun hyperspaceWorks(): Boolean {
+    private fun hyperspaceWorks(): Boolean {
         val ran = Random.nextInt(0,63)
         return !hyperspaceFailure(ran, asteroidTally)
     }
