@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
+import kotlin.random.Random
 
 class ShipMonitorTest {
 
@@ -73,16 +74,34 @@ class ShipMonitorTest {
     }
 
     @Test
-    fun `hyperspace emergence`() {
+    fun `can tally asteroids`() {
         val tick = 0.01
         val controls = Controls()
         val ship = SolidObject.ship(Point(10.0, 10.0), controls)
         val mon = ShipMonitor(ship)
-        controls.hyperspace = true
-        mon.nextHyperspaceFatal = true
-        mon.safeToEmerge = true
         mon.state = ShipMonitorState.WaitingForSafety
-        val created = mon.update(tick)
-        assertThat(created.size).isEqualTo(3)
+        mon.startCheckingForSafeEmergence()
+        val a = SolidObject.asteroid(Point(100.0, 100.0), Velocity.ZERO)
+        val m = SolidObject.missile(ship)
+        val s = ScoreKeeper()
+        mon.interactWith(a)
+        mon.interactWith(a)
+        mon.interactWith(m)
+        mon.interactWith(s)
+        assertThat(mon.asteroidTally).isEqualTo(2)
+        // rule is random(0-62) >= asteroidTally + 44
+        assertThat(mon.hyperspaceFailure(45, 2)).isEqualTo(false)
+        assertThat(mon.hyperspaceFailure(46, 2)).isEqualTo(true)
+    }
+
+    @Test
+    fun `hyperspace failure checks`() {
+        val ship = SolidObject.ship(Point(10.0, 10.0))
+        val mon = ShipMonitor(ship)
+        assertThat(mon.hyperspaceFailure(62, 19)).describedAs("roll 62 19 asteroids").isEqualTo(false)
+        assertThat(mon.hyperspaceFailure(62, 18)).describedAs("roll 62 18 asteroids").isEqualTo(true)
+        assertThat(mon.hyperspaceFailure(45, 0)).describedAs("roll 45 0 asteroids").isEqualTo(true)
+        assertThat(mon.hyperspaceFailure(44, 0)).describedAs("roll 44 0 asteroids").isEqualTo(true)
+        assertThat(mon.hyperspaceFailure(43, 0)).describedAs("roll 43 0 asteroids").isEqualTo(false)
     }
 }

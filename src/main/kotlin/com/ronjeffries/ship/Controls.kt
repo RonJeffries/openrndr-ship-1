@@ -1,7 +1,5 @@
 package com.ronjeffries.ship
 
-import org.openrndr.extra.noise.random
-
 class Controls {
     var accelerate = false
     var left = false

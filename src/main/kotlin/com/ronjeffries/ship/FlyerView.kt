@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.extra.noise.random
+import kotlin.random.Random
 
 interface FlyerView {
     fun draw(solidObject: SolidObject, drawer: Drawer)
@@ -122,7 +122,7 @@ class AsteroidView: FlyerView {
 }
 
 class SplatView(lifetime: Double): FlyerView {
-    private val rot = random(0.0, 359.0)
+    private val rot = Random.nextDouble(0.0, 360.0)
     private var sizeTween = Tween(20.0,100.0, lifetime)
     private var radiusTween = Tween(30.0, 5.0, lifetime)
     private val points = listOf(

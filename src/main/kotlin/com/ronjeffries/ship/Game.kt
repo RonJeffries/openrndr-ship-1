@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
-import org.openrndr.extra.noise.random
+import kotlin.random.Random
 
 class Game {
     val knownObjects = SpaceObjectCollection()
@@ -20,7 +20,7 @@ class Game {
         add(LifetimeClock())
         for (i in 0..7) {
             val pos = U.randomPoint()
-            val vel = Velocity(1000.0, 0.0).rotate(random(0.0,360.0))
+            val vel = Velocity(1000.0, 0.0).rotate(Random.nextDouble(0.0,360.0))
             val asteroid = SolidObject.asteroid(pos,vel )
             add(asteroid)
         }

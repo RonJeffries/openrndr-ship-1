@@ -1,19 +1,31 @@
 package com.ronjeffries.ship
 
 import com.ronjeffries.ship.ShipMonitorState.*
-import org.openrndr.extra.noise.random
+import kotlin.random.Random
 
 class ShipMonitor(val ship: SolidObject) : ISpaceObject {
     override var elapsedTime: Double = 0.0
     var state = HaveSeenShip
     var safeToEmerge = false
-    var nextHyperspaceFatal = false
+    var asteroidTally = 0
+
+    fun hyperspaceFailure(random0thru62: Int, tally: Int): Boolean {
+        return random0thru62 >= (tally + 44)
+    }
+
+    fun hyperspaceWorks(): Boolean {
+        val ran = Random.nextInt(0,63)
+        return !hyperspaceFailure(ran, asteroidTally)
+    }
 
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if (state == LookingForShip) {
             if (other == ship)
                 state = HaveSeenShip
         } else if (state == WaitingForSafety){
+            if (other is SolidObject && other.isAsteroid) {
+                asteroidTally += 1
+            }
             if (tooClose(other)) safeToEmerge = false
         }
         return emptyList() // no damage done here
@@ -28,9 +40,10 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
         return ship
     }
 
-    private fun startCheckingForSafeEmergence() {
+    fun startCheckingForSafeEmergence() {
         // assume we're OK. interactWith may tell us otherwise.
         safeToEmerge = true
+        asteroidTally = 0
     }
 
     private fun tooClose(other:ISpaceObject): Boolean {
@@ -58,7 +71,6 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
             WaitingForSafety -> {
                 if (safeToEmerge) {
                     toBeCreated = makeEmergenceObjects()
-                    nextHyperspaceFatal = random(0.0, 1.0) < U.HYPERSPACE_DEATH_PROBABILITY
                     HaveSeenShip
                 } else {
                     startCheckingForSafeEmergence()
@@ -70,7 +82,7 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
     }
 
     private fun makeEmergenceObjects(): List<ISpaceObject> {
-        return when ((ship.position == U.CENTER_OF_UNIVERSE) or !nextHyperspaceFatal) {
+        return when (emergenceIsOK()) {
             true -> {
                 listOf(shipReset())
             }
@@ -81,4 +93,8 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
             }
         }
     }
+
+    private fun emergenceIsOK() = notInHyperspace() or hyperspaceWorks()
+
+    private fun notInHyperspace() = (ship.position == U.CENTER_OF_UNIVERSE)
 }

@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.openrndr.extra.noise.random
+import kotlin.random.Random
 import org.openrndr.math.Vector2
 
 typealias Point = Vector2
@@ -13,7 +13,7 @@ object U {
     const val UNIVERSE_SIZE = 10000.0
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
     const val SAFE_SHIP_DISTANCE = UNIVERSE_SIZE/10.0
-    fun randomPoint() = Point(random(0.0, UNIVERSE_SIZE), random(0.0, UNIVERSE_SIZE))
+    fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))
 }
 
 fun Point.cap(): Point {
