@@ -3,7 +3,9 @@ package com.ronjeffries.ship
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
-import java.lang.Math.*
+import org.openrndr.math.asRadians
+import kotlin.math.cos
+import kotlin.math.sin
 
 
 class SolidObjectTest {
@@ -84,7 +86,7 @@ class SolidObjectTest {
         val v = ship.velocity
         val speed = v.length
         assertThat(speed).isEqualTo(5000.0, within(1.0))
-        val radians60 = toRadians(60.0)
+        val radians60 = 60.0.asRadians
         val expected = Vector2(cos(radians60), -sin(radians60))*5000.0
         checkVector(v, expected, "velocity", 1.0)
     }
