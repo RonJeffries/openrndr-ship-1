@@ -6,6 +6,7 @@ import kotlin.random.Random
 
 class Game {
     val knownObjects = SpaceObjectCollection()
+    val addsFromUpdates = mutableListOf<ISpaceObject>()
     private var lastTime = 0.0
 
     fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
@@ -18,16 +19,7 @@ class Game {
         add(ShipMonitor(ship))
         add(ScoreKeeper())
         add(LifetimeClock())
-        add(WaveMaker(4))
-    }
-
-    private fun createEdgeAsteroids(n: Int) {
-        for (i in 0..n) {
-            val pos = U.randomEdgePoint()
-            val vel = Velocity(1000.0, 0.0).rotate(Random.nextDouble(0.0, 360.0))
-            val asteroid = SolidObject.asteroid(pos, vel)
-            add(asteroid)
-        }
+        add(WaveChecker())
     }
 
     private fun newShip(controls: Controls): SolidObject {
@@ -54,8 +46,8 @@ class Game {
     }
 
     fun update(deltaTime: Double) {
-        val adds = mutableListOf<ISpaceObject>()
-        knownObjects.forEach { adds.addAll(it.update(deltaTime)) }
-        knownObjects.addAll(adds)
+        knownObjects.addAll(addsFromUpdates)
+        addsFromUpdates.clear()
+        knownObjects.forEach { addsFromUpdates.addAll(it.update(deltaTime)) }
     }
 }
