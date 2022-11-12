@@ -18,7 +18,7 @@ class Game {
         add(ShipMonitor(ship))
         add(ScoreKeeper())
         add(LifetimeClock())
-        createEdgeAsteroids(4)
+        add(WaveMaker(4))
     }
 
     private fun createEdgeAsteroids(n: Int) {

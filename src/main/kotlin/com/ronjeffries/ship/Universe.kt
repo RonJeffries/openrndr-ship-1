@@ -16,6 +16,8 @@ object U {
     fun randomEdgePoint(): Point =
         if (Random.nextBoolean()) Point(0.0, Random.nextDouble(UNIVERSE_SIZE))
         else Point(Random.nextDouble(UNIVERSE_SIZE), 0.0)
+
+    fun randomWelocity(speed: Double): Velocity = Velocity(speed,0.0).rotate(Random.nextDouble(360.0))
 }
 
 fun Point.cap(): Point {
