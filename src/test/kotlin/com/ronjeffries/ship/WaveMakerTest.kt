@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 class WaveMakerTest {
     @Test
     fun `creates wave on update, removes self on interaction`() {
-        val a = SolidObject.asteroid(U.randomPoint(), U.randomWelocity(1000.0))
         val wm = WaveMaker(7)
         val toCreate = wm.update(3.01)
         assertThat(toCreate.size).isEqualTo(7)
