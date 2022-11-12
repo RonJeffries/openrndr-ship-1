@@ -4,6 +4,7 @@ class WaveChecker: ISpaceObject {
     var firstTime = true
     var lookingForAsteroid = false
     override var elapsedTime = 0.0
+
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if ( lookingForAsteroid  && other is SolidObject && other.isAsteroid)
             lookingForAsteroid = false
