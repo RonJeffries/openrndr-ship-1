@@ -13,7 +13,8 @@ class Controls {
 
     fun control(ship: SolidObject, deltaTime: Double): List<ISpaceObject> {
         if (hyperspace) {
-            return listOf(SolidObject.shipDestroyer(ship))
+            hyperspace = false
+            return listOf(SolidObject.shipDestroyer(ship,99.0))
         }
         turn(ship, deltaTime)
         accelerate(ship, deltaTime)
