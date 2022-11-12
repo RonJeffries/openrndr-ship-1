@@ -18,7 +18,7 @@ class Game {
         add(ShipMonitor(ship))
         add(ScoreKeeper())
         add(LifetimeClock())
-        for (i in 0..7) {
+        for (i in 0..4) {
             val pos = U.randomPoint()
             val vel = Velocity(1000.0, 0.0).rotate(Random.nextDouble(0.0,360.0))
             val asteroid = SolidObject.asteroid(pos,vel )
