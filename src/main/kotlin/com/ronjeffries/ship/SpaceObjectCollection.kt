@@ -30,8 +30,8 @@ class SpaceObjectCollection {
         return pairs
     }
 
-    fun removeAll(moribund: MutableSet<ISpaceObject>){
-        spaceObjects.removeAll(moribund.toSet())
+    fun removeAll(moribund: MutableSet<ISpaceObject>): Boolean{
+        return spaceObjects.removeAll(moribund.toSet())
     }
 
     val size get() = spaceObjects.size
