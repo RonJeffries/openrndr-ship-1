@@ -2,7 +2,6 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
-import kotlin.random.Random
 
 class Game {
     val knownObjects = SpaceObjectCollection()
@@ -38,7 +37,9 @@ class Game {
 
     fun processInteractions() {
         val toBeRemoved = colliders()
-        knownObjects.removeAll(toBeRemoved)
+        if ( toBeRemoved.size > 0 ) {
+            knownObjects.removeAll(toBeRemoved)
+        }
         for (removedObject in toBeRemoved) {
             val addedByFinalize = removedObject.finalize()
             knownObjects.addAll(addedByFinalize)
