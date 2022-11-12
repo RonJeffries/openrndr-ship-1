@@ -13,6 +13,9 @@ object U {
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
     const val SAFE_SHIP_DISTANCE = UNIVERSE_SIZE/10.0
     fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))
+    fun randomEdgePoint(): Point =
+        if (Random.nextBoolean()) Point(0.0, Random.nextDouble(UNIVERSE_SIZE))
+        else Point(Random.nextDouble(UNIVERSE_SIZE), 0.0)
 }
 
 fun Point.cap(): Point {

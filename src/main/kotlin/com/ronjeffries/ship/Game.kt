@@ -18,10 +18,14 @@ class Game {
         add(ShipMonitor(ship))
         add(ScoreKeeper())
         add(LifetimeClock())
-        for (i in 0..4) {
-            val pos = U.randomPoint()
-            val vel = Velocity(1000.0, 0.0).rotate(Random.nextDouble(0.0,360.0))
-            val asteroid = SolidObject.asteroid(pos,vel )
+        createEdgeAsteroids(4)
+    }
+
+    private fun createEdgeAsteroids(n: Int) {
+        for (i in 0..n) {
+            val pos = U.randomEdgePoint()
+            val vel = Velocity(1000.0, 0.0).rotate(Random.nextDouble(0.0, 360.0))
+            val asteroid = SolidObject.asteroid(pos, vel)
             add(asteroid)
         }
     }
