@@ -23,7 +23,7 @@ class WaveChecker: ISpaceObject {
             elapsedTime = 0.0
             if (!sawAsteroid) {
                 elapsedTime = -5.0
-                return Pair(listOf(WaveMaker(1)), emptySet())
+                return Pair(listOf(WaveMaker(4)), emptySet())
             }
         }
         return Pair(emptyList(), emptySet())
