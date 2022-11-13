@@ -30,7 +30,7 @@ class SpaceObjectCollection {
         return pairs
     }
 
-    fun removeAll(moribund: MutableSet<ISpaceObject>): Boolean{
+    fun removeAll(moribund: Set<ISpaceObject>): Boolean{
         return spaceObjects.removeAll(moribund.toSet())
     }
 

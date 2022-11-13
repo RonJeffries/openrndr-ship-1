@@ -40,6 +40,11 @@ class Game {
     }
 
     private fun finishInteractions() {
+        knownObjects.forEach {
+            val result: Pair<List<ISpaceObject>,Set<ISpaceObject>> = it.finishInteraction()
+            knownObjects.addAll(result.first)
+            knownObjects.removeAll(result.second)
+        }
     }
 
     private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }

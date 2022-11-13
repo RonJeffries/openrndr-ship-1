@@ -18,5 +18,8 @@ interface ISpaceObject {
     fun beginInteraction() {}
     fun draw(drawer: Drawer) {}
     fun finalize(): List<ISpaceObject> { return emptyList() }
+    fun finishInteraction(): Pair<List<ISpaceObject>, Set<ISpaceObject>> {
+        return Pair(emptyList(), emptySet())
+    }
     fun move(deltaTime: Double) {}
 }
