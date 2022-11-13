@@ -29,8 +29,17 @@ class Game {
         val deltaTime = seconds - lastTime
         lastTime = seconds
         update(deltaTime)
+        beginInteractions()
         processInteractions()
+        finishInteractions()
         draw(drawer)
+    }
+
+    private fun beginInteractions() {
+        knownObjects.forEach { it.beginInteraction() }
+    }
+
+    private fun finishInteractions() {
     }
 
     private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }
