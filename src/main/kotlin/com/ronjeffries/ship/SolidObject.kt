@@ -39,6 +39,7 @@ class SolidObject(
     }
 
     override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> {
+        // other guaranteed to be a SolidObject?
         return when {
             weAreCollidingWith(other) -> listOf(this, other)
             else -> emptyList()
