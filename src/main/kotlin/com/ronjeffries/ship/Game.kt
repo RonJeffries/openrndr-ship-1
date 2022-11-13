@@ -40,11 +40,15 @@ class Game {
     }
 
     private fun finishInteractions() {
+        val bufferAdds = mutableListOf<ISpaceObject>()
+        val bufferRemoves = mutableSetOf<ISpaceObject>()
         knownObjects.forEach {
             val result: Pair<List<ISpaceObject>,Set<ISpaceObject>> = it.finishInteraction()
-            knownObjects.addAll(result.first)
-            knownObjects.removeAll(result.second)
+            bufferAdds.addAll(result.first)
+            bufferRemoves.removeAll(result.second)
         }
+        knownObjects.addAll(bufferAdds)
+        knownObjects.removeAll(bufferRemoves)
     }
 
     private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }
