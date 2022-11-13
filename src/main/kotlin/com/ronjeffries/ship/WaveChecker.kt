@@ -1,13 +1,16 @@
 package com.ronjeffries.ship
 
 class WaveChecker: ISpaceObject {
-    var firstTime = true
-    var lookingForAsteroid = false
+    var sawAsteroid = false
     override var elapsedTime = 0.0
 
+    override fun beginInteraction() {
+        sawAsteroid = false
+    }
+
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        if ( lookingForAsteroid  && other is SolidObject && other.isAsteroid)
-            lookingForAsteroid = false
+        if (other is SolidObject && other.isAsteroid)
+            sawAsteroid = true
         return emptyList()
     }
 
@@ -15,22 +18,19 @@ class WaveChecker: ISpaceObject {
         return this.interactWith(other)
     }
 
-    override fun update(deltaTime: Double): List<ISpaceObject> {
-        val result = mutableListOf<ISpaceObject>()
-        elapsedTime += deltaTime
-        if (elapsedTime > 1.0) {
-            if (firstTime) {
-                lookingForAsteroid = true
-                firstTime = false
-            }else if (lookingForAsteroid) {
+    override fun finishInteraction(): Pair<List<ISpaceObject>, Set<ISpaceObject>> {
+        if ( elapsedTime > 1.0  ) {
+            elapsedTime = 0.0
+            if (!sawAsteroid) {
                 elapsedTime = -5.0
-                firstTime = true
-                lookingForAsteroid = false
-                result.add(WaveMaker(4))
-            } else {
-                elapsedTime = 0.0
-                firstTime=true }
+                return Pair(listOf(WaveMaker(1)), emptySet())
+            }
         }
-        return result
+        return Pair(emptyList(), emptySet())
+    }
+
+    override fun update(deltaTime: Double): List<ISpaceObject> {
+        elapsedTime += deltaTime
+        return emptyList()
     }
 }
