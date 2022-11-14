@@ -27,12 +27,12 @@ fun Point.cap(): Point {
     return Point(this.x.cap(), this.y.cap())
 }
 
+fun Double.cap(): Double {
+    return (this + U.UNIVERSE_SIZE) % U.UNIVERSE_SIZE
+}
+
 fun Velocity.limitedToLightSpeed(): Velocity {
     val speed = this.length
     return if (speed < U.SPEED_OF_LIGHT) this
     else this*(U.SPEED_OF_LIGHT/speed)
-}
-
-fun Double.cap(): Double {
-    return (this + U.UNIVERSE_SIZE) % U.UNIVERSE_SIZE
 }
