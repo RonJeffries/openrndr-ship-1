@@ -47,7 +47,7 @@ class SolidObjectTest {
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
         control.accelerate = true
         ship.update(tick)
-        val deltaXPerSecond = Controls().acceleration.x
+        val deltaXPerSecond = U.SHIP_ACCELERATION.x
         checkVector(ship.velocity, Vector2.UNIT_X*deltaXPerSecond/60.0, "velocity")
         checkVector(ship.position, Vector2(deltaXPerSecond/60.0/60.0, 0.0), "position")
     }

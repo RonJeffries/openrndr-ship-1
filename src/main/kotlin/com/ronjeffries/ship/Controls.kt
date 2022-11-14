@@ -6,9 +6,7 @@ class Controls {
     var right = false
     var fire = false
     var hyperspace = false
-    private var holdFire = false
 
-    val acceleration = Acceleration(1000.0, 0.0)
     private val rotationSpeed = 180.0
 
     fun control(ship: SolidObject, deltaTime: Double): List<ISpaceObject> {
@@ -23,17 +21,17 @@ class Controls {
 
     private fun accelerate(obj:SolidObject, deltaTime: Double) {
         if (accelerate) {
-            val deltaV = acceleration.rotate(obj.heading) * deltaTime
+            val deltaV = U.SHIP_ACCELERATION.rotate(obj.heading) * deltaTime
             obj.accelerate(deltaV)
         }
     }
 
     private fun fire(obj: SolidObject): List<ISpaceObject> {
-        return missilesToFire(obj).also { holdFire = fire }
+        return missilesToFire(obj).also { fire = false }
     }
 
     private fun missilesToFire(obj: SolidObject): List<ISpaceObject> {
-        return if (fire && !holdFire) {
+        return if (fire) {
             listOf(SolidObject.missile(obj))
         } else {
             emptyList()
