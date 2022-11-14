@@ -23,7 +23,7 @@ class WaveCheckerTest {
         ck.update(1.1)
         ck.beginInteraction()
         val trans = ck.finishInteraction()
-//        assertThat(trans.adds[0]).isInstanceOf(WaveMaker::class.java)
+        assertThat(trans.adds.toList()[0]).isInstanceOf(WaveMaker::class.java)
         assertThat(ck.elapsedTime).isEqualTo(-5.0)
     }
 
