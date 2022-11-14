@@ -9,15 +9,6 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
     var safeToEmerge = false
     var asteroidTally = 0
 
-    fun hyperspaceFailure(random0thru62: Int, asteroidCount: Int): Boolean {
-        // allegedly the original arcade rule
-        return random0thru62 >= (asteroidCount + 44)
-    }
-
-    private fun hyperspaceWorks(): Boolean {
-        val ran = Random.nextInt(0,63)
-        return !hyperspaceFailure(ran, asteroidTally)
-    }
 
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if (state == LookingForShip) {
@@ -97,5 +88,12 @@ class ShipMonitor(val ship: SolidObject) : ISpaceObject {
 
     private fun emergenceIsOK() = notInHyperspace() or hyperspaceWorks()
 
-    private fun notInHyperspace() = (ship.position == U.CENTER_OF_UNIVERSE)
+    private fun notInHyperspace() = ship.position == U.CENTER_OF_UNIVERSE
+
+    private fun hyperspaceWorks(): Boolean
+        = !hyperspaceFailure(Random.nextInt(0, 63), asteroidTally)
+
+    // allegedly the original arcade rule
+    fun hyperspaceFailure(random0thru62: Int, asteroidCount: Int): Boolean
+        = random0thru62 >= (asteroidCount + 44)
 }

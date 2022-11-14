@@ -22,7 +22,7 @@ class WaveChecker: ISpaceObject {
         if ( elapsedTime > 1.0  ) {
             elapsedTime = 0.0
             if (!sawAsteroid) {
-                elapsedTime = -5.0
+                elapsedTime = -5.0 // judicious delay to allow time for creation
                 val t = Transaction()
                 t.add(WaveMaker(4))
                 return t
