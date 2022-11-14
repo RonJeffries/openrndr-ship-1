@@ -12,7 +12,6 @@ class MissileView: FlyerView {
     override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
-//        drawer.scale(3.0,3.0) 3 moved to the draw?
         drawer.circle(Point.ZERO, solidObject.killRadius*3.0)
     }
 }
@@ -27,10 +26,6 @@ class ShipView : FlyerView {
             Point(-5.0, -4.0),
             Point(-3.0, -2.0)
         )
-//        drawer.stroke = ColorRGBa.WHITE
-//        drawer.strokeWeight = 16.0
-//        drawer.fill = null
-//        drawer.circle(Point.ZERO, solidObject.killRadius)
         drawer.scale(30.0, 30.0)
         drawer.rotate(solidObject.heading )
         drawer.stroke = ColorRGBa.WHITE
@@ -46,7 +41,6 @@ class AsteroidView: FlyerView {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
-//        drawer.circle(Point.ZERO, asteroid.killRadius)
         val sizer = 30.0
         drawer.scale(sizer, sizer)
         val sc = solidObject.scale()
