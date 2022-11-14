@@ -7,7 +7,7 @@ class SpaceObjectCollection {
         spaceObjects.add(spaceObject)
     }
     
-    fun addAll(newbies: List<ISpaceObject>){
+    fun addAll(newbies: Collection<ISpaceObject>){
         spaceObjects.addAll(newbies)
     }
 
@@ -32,6 +32,10 @@ class SpaceObjectCollection {
 
     fun removeAll(moribund: Set<ISpaceObject>): Boolean{
         return spaceObjects.removeAll(moribund.toSet())
+    }
+
+    fun transact(t: Transaction) {
+        t.transact(this)
     }
 
     val size get() = spaceObjects.size
