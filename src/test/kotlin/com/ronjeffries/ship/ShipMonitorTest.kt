@@ -10,7 +10,7 @@ class ShipMonitorTest {
     fun `test ShipMonitor collisions`() {
         val sixtieth = 1.0/60.0
         val ship = SolidObject.ship(Vector2.ZERO)
-        val asteroid = SolidObject.asteroid(Vector2.ZERO, Vector2.ZERO)
+        val asteroid = SolidObject.asteroid(Vector2.ZERO)
         val monitor = ShipMonitor(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
         monitor.update(sixtieth)
@@ -25,7 +25,7 @@ class ShipMonitorTest {
     fun ` test ShipMonitor collisions other way around`() {
         val sixtieth = 1.0/60.0
         val ship = SolidObject.ship(Vector2.ZERO)
-        val asteroid = SolidObject.asteroid(Vector2.ZERO, Vector2.ZERO)
+        val asteroid = SolidObject.asteroid(Vector2.ZERO)
         val monitor = ShipMonitor(ship)
         assertThat(monitor.state).isEqualTo(ShipMonitorState.HaveSeenShip)
         monitor.update(sixtieth)
@@ -79,7 +79,7 @@ class ShipMonitorTest {
         val mon = ShipMonitor(ship)
         mon.state = ShipMonitorState.WaitingForSafety
         mon.startCheckingForSafeEmergence()
-        val a = SolidObject.asteroid(Point(100.0, 100.0), Velocity.ZERO)
+        val a = SolidObject.asteroid(Point(100.0, 100.0))
         val m = SolidObject.missile(ship)
         val s = ScoreKeeper()
         mon.interactWith(a)

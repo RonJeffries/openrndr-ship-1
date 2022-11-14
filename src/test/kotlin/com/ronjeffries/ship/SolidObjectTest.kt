@@ -130,12 +130,11 @@ class SolidObjectTest {
     fun `collision INDEXING test`() {
         val p1 = Vector2(100.0,100.0)
         val p2 = Vector2(755.0, 500.0)
-        val v = Vector2.ZERO
-        val a0 = SolidObject.asteroid(p1,v) // yes
-        val m1 = SolidObject(p1, v, 10.0) // yes
+        val a0 = SolidObject.asteroid(p1) // yes
+        val m1 = SolidObject(p1, Velocity.ZERO, 10.0) // yes
         val s2 = SolidObject.ship(p1) // yes
-        val a3 = SolidObject.asteroid(p2,v) // no
-        val a4 = SolidObject.asteroid(p2,v) // no
+        val a3 = SolidObject.asteroid(p2) // no
+        val a4 = SolidObject.asteroid(p2) // no
         val objects = mutableListOf(a0,m1,s2, a3,a4)
         val shouldDie = mutableSetOf<ISpaceObject>()
         var ct = 0

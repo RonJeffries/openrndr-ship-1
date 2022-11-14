@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class TransactionTest {
     fun newAsteroid(): SolidObject {
-        return SolidObject.asteroid(U.randomPoint(), U.randomVelocity(1000.0))
+        return SolidObject.asteroid(U.randomPoint(), U.randomVelocity(U.ASTEROID_SPEED))
     }
 
     @Test

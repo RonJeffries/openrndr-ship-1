@@ -86,7 +86,7 @@ class SolidObject(
     }
 
     companion object {
-        fun asteroid(pos:Point, vel: Velocity, killRad: Double = 500.0, splitCount: Int = 2): SolidObject {
+        fun asteroid(pos:Point, vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED), killRad: Double = 500.0, splitCount: Int = 2): SolidObject {
             return SolidObject(
                 position = pos,
                 velocity = vel,

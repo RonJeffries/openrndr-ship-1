@@ -1,7 +1,5 @@
 package com.ronjeffries.ship
 
-import kotlin.random.Random
-
 class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
     override var elapsedTime = 0.0
     var done = false
@@ -20,8 +18,7 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
 
         val list = mutableListOf<ISpaceObject>()
         for (i in 1..numberToCreate) {
-            val vel = Velocity(1000.0, 0.0).rotate(Random.nextDouble(0.0, 360.0))
-            val a = SolidObject.asteroid((U.randomEdgePoint()), vel)
+            val a = SolidObject.asteroid((U.randomEdgePoint()))
             list.add(a)
         }
         done = true

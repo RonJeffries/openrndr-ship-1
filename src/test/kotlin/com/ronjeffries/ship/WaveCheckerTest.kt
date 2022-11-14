@@ -29,7 +29,7 @@ class WaveCheckerTest {
 
     @Test
     fun `returns empty when elapsed gt 1 and an asteroid IS scanned`() {
-        val a = SolidObject.asteroid(U.randomPoint(), U.randomVelocity(1000.0))
+        val a = SolidObject.asteroid(U.randomPoint(), U.randomVelocity(U.ASTEROID_SPEED))
         val ck = WaveChecker()
         ck.update(1.1)
         ck.beginInteraction()
