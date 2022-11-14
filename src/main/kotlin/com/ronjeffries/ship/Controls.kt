@@ -7,8 +7,6 @@ class Controls {
     var fire = false
     var hyperspace = false
 
-    private val rotationSpeed = 180.0
-
     fun control(ship: SolidObject, deltaTime: Double): List<ISpaceObject> {
         if (hyperspace) {
             hyperspace = false
@@ -39,7 +37,7 @@ class Controls {
     }
 
     private fun turn(obj: SolidObject, deltaTime: Double) {
-        if (left) obj.turnBy(-rotationSpeed*deltaTime)
-        if (right) obj.turnBy(rotationSpeed*deltaTime)
+        if (left) obj.turnBy(-U.SHIP_ROTATION_SPEED*deltaTime)
+        if (right) obj.turnBy(U.SHIP_ROTATION_SPEED*deltaTime)
     }
 }

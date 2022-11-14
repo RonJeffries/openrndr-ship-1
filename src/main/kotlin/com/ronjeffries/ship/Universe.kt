@@ -11,6 +11,7 @@ object U {
     const val SPEED_OF_LIGHT = 5000.0
     const val UNIVERSE_SIZE = 10000.0
     val SHIP_ACCELERATION = Velocity(1000.0, 0.0)
+    val SHIP_ROTATION_SPEED = 180.0 // degrees per second
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
     const val SAFE_SHIP_DISTANCE = UNIVERSE_SIZE/10.0
     fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))

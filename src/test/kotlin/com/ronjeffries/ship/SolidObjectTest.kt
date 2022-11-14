@@ -58,11 +58,13 @@ class SolidObjectTest {
         val ship = SolidObject.ship(Vector2.ZERO, control)
         control.left = true
         ship.update(tick*30)
-        assertThat(ship.heading).isEqualTo(-90.0, within(0.01))
+        val expected = U.SHIP_ROTATION_SPEED*30.0/60.0
+        assertThat(ship.heading).isEqualTo(-expected, within(0.01))
         control.left = false
         control.accelerate  = true
+        val expectedVelocity = U.SHIP_ACCELERATION.rotate(-expected)
         ship.update(tick*60)
-        checkVector(ship.velocity, Vector2(0.0,-1000.0), "rotated velocity")
+        checkVector(ship.velocity, expectedVelocity, "rotated velocity")
     }
 
     @Test
@@ -71,16 +73,15 @@ class SolidObjectTest {
         val ship = SolidObject.ship(Vector2.ZERO, control)
         control.right = true
         ship.update(tick*10)
-        assertThat(ship.heading).isEqualTo(30.0, within(0.01))
+        val expected = U.SHIP_ROTATION_SPEED*10.0/60.0
+        assertThat(ship.heading).isEqualTo(expected, within(0.01))
     }
 
     @Test
     fun `speed of light`() {
         val control = Controls()
         val ship = SolidObject.ship(Vector2.ZERO, control)
-        control.left = true
-        ship.update(tick*20) // 60 degrees northeast ish
-        control.left = false
+        ship.heading = -60.0 // northeast ish
         control.accelerate = true
         ship.update(100.0) // long time
         val v = ship.velocity
