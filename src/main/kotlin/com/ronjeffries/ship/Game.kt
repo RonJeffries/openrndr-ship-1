@@ -45,7 +45,7 @@ class Game {
             val result: Transaction = it.finishInteraction()
             buffer.accumulate(result)
         }
-        knownObjects.transact(buffer)
+        knownObjects.applyChanges(buffer)
     }
 
     private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }

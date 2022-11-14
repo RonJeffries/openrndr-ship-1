@@ -11,6 +11,17 @@ class SpaceObjectCollection {
         spaceObjects.addAll(newbies)
     }
 
+    fun applyChanges(t: Transaction) {
+        t.applyChanges(this)
+    }
+
+    fun collectFromPairs(pairCondition: (ISpaceObject, ISpaceObject) -> List<ISpaceObject>): MutableSet<ISpaceObject> {
+        val pairs = mutableSetOf<ISpaceObject>()
+        pairsToCheck().forEach { p -> pairs.addAll(pairCondition(p.first, p.second))
+        }
+        return pairs
+    }
+
     fun forEach(spaceObject: (ISpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
 
     fun pairsToCheck(): List<Pair<ISpaceObject, ISpaceObject>> {
@@ -23,19 +34,8 @@ class SpaceObjectCollection {
         return pairs
     }
 
-    fun collectFromPairs(pairCondition: (ISpaceObject, ISpaceObject) -> List<ISpaceObject>): MutableSet<ISpaceObject> {
-        val pairs = mutableSetOf<ISpaceObject>()
-        pairsToCheck().forEach { p -> pairs.addAll(pairCondition(p.first, p.second))
-        }
-        return pairs
-    }
-
     fun removeAll(moribund: Set<ISpaceObject>): Boolean{
         return spaceObjects.removeAll(moribund.toSet())
-    }
-
-    fun transact(t: Transaction) {
-        t.transact(this)
     }
 
     val size get() = spaceObjects.size

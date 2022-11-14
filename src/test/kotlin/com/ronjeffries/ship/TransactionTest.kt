@@ -17,7 +17,7 @@ class TransactionTest {
         val aTwo = newAsteroid()
         t.add(aTwo)
         t.remove(aOne)
-        coll.transact(t)
+        coll.applyChanges(t)
         assertThat(coll.spaceObjects).contains(aTwo)
         assertThat(coll.spaceObjects).doesNotContain(aOne)
         assertThat(coll.size).isEqualTo(1)

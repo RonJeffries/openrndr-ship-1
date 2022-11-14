@@ -13,13 +13,13 @@ class Transaction {
         adds.add(spaceObject)
     }
 
-    fun remove(spaceObject: ISpaceObject) {
-        removes.add(spaceObject)
-    }
-
-    fun transact(spaceObjectCollection: SpaceObjectCollection) {
+    fun applyChanges(spaceObjectCollection: SpaceObjectCollection) {
         spaceObjectCollection.removeAll(removes)
         spaceObjectCollection.addAll(adds)
+    }
+
+    fun remove(spaceObject: ISpaceObject) {
+        removes.add(spaceObject)
     }
 
     // testing
