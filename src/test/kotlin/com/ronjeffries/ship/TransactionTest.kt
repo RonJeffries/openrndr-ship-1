@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class TransactionTest {
-    fun newAsteroid(): SolidObject {
+    private fun newAsteroid(): SolidObject {
         return SolidObject.asteroid(U.randomPoint(), U.randomVelocity(U.ASTEROID_SPEED))
     }
 
