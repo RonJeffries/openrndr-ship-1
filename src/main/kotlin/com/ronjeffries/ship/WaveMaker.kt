@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
     override var elapsedTime = 0.0
     var done = false
+
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         return if ( done ) listOf(this)
         else emptyList()
