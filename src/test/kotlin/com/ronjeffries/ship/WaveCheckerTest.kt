@@ -9,9 +9,9 @@ class WaveCheckerTest {
         val ck = WaveChecker()
         ck.update(0.5)
         ck.beginInteraction()
-        val resultPair = ck.finishInteraction()
-        assertThat(resultPair.first).isEmpty()
-        assertThat(resultPair.second).isEmpty()
+        val trans = ck.finishInteraction()
+        assertThat(trans.adds).isEmpty()
+        assertThat(trans.removes).isEmpty()
         assertThat(ck.elapsedTime).isEqualTo(0.5)
         val toCreate = ck.update(0.1)
         assertThat(toCreate).isEmpty() // always is, don't check again
@@ -22,8 +22,8 @@ class WaveCheckerTest {
         val ck = WaveChecker()
         ck.update(1.1)
         ck.beginInteraction()
-        val resultPair = ck.finishInteraction()
-        assertThat(resultPair.first[0]).isInstanceOf(WaveMaker::class.java)
+        val trans = ck.finishInteraction()
+//        assertThat(trans.adds[0]).isInstanceOf(WaveMaker::class.java)
         assertThat(ck.elapsedTime).isEqualTo(-5.0)
     }
 
@@ -34,9 +34,9 @@ class WaveCheckerTest {
         ck.update(1.1)
         ck.beginInteraction()
         ck.interactWith(a)
-        val resultPair = ck.finishInteraction()
-        assertThat(resultPair.first).isEmpty()
-        assertThat(resultPair.second).isEmpty()
+        val trans = ck.finishInteraction()
+        assertThat(trans.adds).isEmpty()
+        assertThat(trans.removes).isEmpty()
         assertThat(ck.elapsedTime).isEqualTo(0.0)
     }
 }

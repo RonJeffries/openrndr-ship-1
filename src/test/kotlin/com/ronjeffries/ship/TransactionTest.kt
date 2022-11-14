@@ -22,4 +22,17 @@ class TransactionTest {
         assertThat(coll.spaceObjects).doesNotContain(aOne)
         assertThat(coll.size).isEqualTo(1)
     }
+
+    @Test
+    fun `accumulate transactions`() {
+        val toFill = Transaction()
+        val filler = Transaction()
+        val toAdd = newAsteroid()
+        val toRemove = newAsteroid()
+        filler.add(toAdd)
+        filler.remove(toRemove)
+        toFill.accumulate(filler)
+        assertThat(filler.hasAdd(toAdd)).isEqualTo(true)
+        assertThat(filler.hasRemove(toRemove)).isEqualTo(true)
+    }
 }

@@ -18,15 +18,17 @@ class WaveChecker: ISpaceObject {
         return this.interactWith(other)
     }
 
-    override fun finishInteraction(): Pair<List<ISpaceObject>, Set<ISpaceObject>> {
+    override fun finishInteraction(): Transaction {
         if ( elapsedTime > 1.0  ) {
             elapsedTime = 0.0
             if (!sawAsteroid) {
                 elapsedTime = -5.0
-                return Pair(listOf(WaveMaker(4)), emptySet())
+                val t = Transaction()
+                t.add(WaveMaker(4))
+                return t
             }
         }
-        return Pair(emptyList(), emptySet())
+        return Transaction()
     }
 
     override fun update(deltaTime: Double): List<ISpaceObject> {
