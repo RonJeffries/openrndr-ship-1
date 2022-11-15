@@ -20,43 +20,43 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject {
         return emptyList()
     }
 
-    override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> {
-        return interactWith(other)
-    }
-
-    override fun finishInteraction(): Transaction {
-        val trans = Transaction()
-        if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
-            buildShipReplacementTransaction(trans)
-        }
-        return trans
-    }
-
-    private fun buildShipReplacementTransaction(trans: Transaction) {
-        trans.add(ship)
-        trans.add(ShipChecker(ship))
-        trans.remove(this)
-        if (emergenceFails()) {
-            destroyNewlyCreatedShip(trans)
-        }
-    }
-
-    private fun destroyNewlyCreatedShip(trans: Transaction) {
-        trans.add(SolidObject.shipDestroyer(ship))
-        trans.add(SolidObject.splat(ship))
-    }
-
-    private fun emergenceFails(): Boolean {
-        if (notInHyperspace()) return false
-        return hyperspaceFails()
-    }
-
-    private fun notInHyperspace() = ship.position == U.CENTER_OF_UNIVERSE
+    override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> = interactWith(other)
 
     private fun tooClose(other:ISpaceObject): Boolean {
         return if (other !is SolidObject) false
         else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
+
+    override fun finishInteraction(): Transaction {
+        return if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
+            replaceTheShip()
+        } else {
+            Transaction()
+        }
+    }
+
+    private fun replaceTheShip(): Transaction {
+        return Transaction().also {
+            it.add(ship)
+            it.add(ShipChecker(ship))
+            it.remove(this)
+            it.accumulate(possibleHyperspaceFailure())
+        }
+    }
+
+    private fun possibleHyperspaceFailure(): Transaction {
+        return if (hyperspaceFails()) destroyTheShip()
+        else Transaction()
+    }
+
+    private fun destroyTheShip(): Transaction {
+        return Transaction().also {
+            it.add(SolidObject.shipDestroyer(ship))
+            it.add(SolidObject.splat(ship))
+        }
+    }
+
+    private fun inHyperspace() = ship.position != U.CENTER_OF_UNIVERSE
 
     override fun update(deltaTime: Double): List<ISpaceObject> {
         elapsedTime += deltaTime
@@ -64,7 +64,7 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject {
     }
 
     private fun hyperspaceFails(): Boolean
-            = hyperspaceFailure(Random.nextInt(0, 63), asteroidTally)
+            = inHyperspace() && hyperspaceFailure(Random.nextInt(0, 63), asteroidTally)
 
     // allegedly the original arcade rule
     fun hyperspaceFailure(random0thru62: Int, asteroidCount: Int): Boolean
