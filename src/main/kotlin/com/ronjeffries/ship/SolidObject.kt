@@ -25,7 +25,7 @@ class SolidObject(
     fun scale() = finalizer.scale()
 
     fun deathDueToCollision(): Boolean {
-        return !controls.hyperspace
+        return !controls.recentHyperspace
     }
 
     override fun draw(drawer: Drawer) {

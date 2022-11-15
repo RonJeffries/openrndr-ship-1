@@ -6,10 +6,12 @@ class Controls {
     var right = false
     var fire = false
     var hyperspace = false
+    var recentHyperspace = false
 
     fun control(ship: SolidObject, deltaTime: Double): List<ISpaceObject> {
         if (hyperspace) {
             hyperspace = false
+            recentHyperspace = true
             return listOf(SolidObject.shipDestroyer(ship))
         }
         turn(ship, deltaTime)

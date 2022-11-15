@@ -28,7 +28,10 @@ fun main() = application {
                 "f" -> {controls.right = false}
                 "j" -> {controls.accelerate = false}
                 "k" -> {controls.fire = false}
-                "space" -> controls.hyperspace = false
+                "space" -> {
+                    controls.hyperspace = false
+                    controls.recentHyperspace = false
+                }
             }
         }
 

@@ -18,6 +18,14 @@ class Transaction {
         spaceObjectCollection.addAll(adds)
     }
 
+    fun firstAdd(): ISpaceObject {
+        return adds.toList()[0]
+    }
+
+    fun firstRemove(): ISpaceObject {
+        return removes.toList()[0]
+    }
+
     fun remove(spaceObject: ISpaceObject) {
         removes.add(spaceObject)
     }
