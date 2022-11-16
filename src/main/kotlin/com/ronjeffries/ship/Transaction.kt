@@ -18,6 +18,12 @@ class Transaction {
         spaceObjectCollection.addAll(adds)
     }
 
+    fun remove(spaceObject: ISpaceObject) {
+        removes.add(spaceObject)
+    }
+
+    // testing
+
     fun firstAdd(): ISpaceObject {
         return adds.toList()[0]
     }
@@ -25,12 +31,6 @@ class Transaction {
     fun firstRemove(): ISpaceObject {
         return removes.toList()[0]
     }
-
-    fun remove(spaceObject: ISpaceObject) {
-        removes.add(spaceObject)
-    }
-
-    // testing
 
     fun hasAdd(so:ISpaceObject): Boolean {
         return adds.contains(so)
