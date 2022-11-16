@@ -105,6 +105,7 @@ class ShipCheckerAndMakerTest {
         maker.update(U.MAKER_DELAY + 0.01)
         maker.beginInteraction()
         // no obstacles
+        maker.asteroidTally = 60 // no possible hyperspace failure
         val trans = maker.finishInteraction()
         assertThat(trans.adds.size).isEqualTo(2)
         assertThat(trans.adds).contains(ship)
@@ -127,11 +128,11 @@ class ShipCheckerAndMakerTest {
     @Test
     fun `hyperspace failure checks`() {
         val ship = SolidObject.ship(Point(10.0, 10.0))
-        val maker = ShipMaker(ship)
-        assertThat(maker.hyperspaceFailure(62, 19)).describedAs("roll 62 19 asteroids").isEqualTo(false)
-        assertThat(maker.hyperspaceFailure(62, 18)).describedAs("roll 62 18 asteroids").isEqualTo(true)
-        assertThat(maker.hyperspaceFailure(45, 0)).describedAs("roll 45 0 asteroids").isEqualTo(true)
-        assertThat(maker.hyperspaceFailure(44, 0)).describedAs("roll 44 0 asteroids").isEqualTo(true)
-        assertThat(maker.hyperspaceFailure(43, 0)).describedAs("roll 43 0 asteroids").isEqualTo(false)
+        val hyper = HyperspaceOperation(ship, 0)
+        assertThat(hyper.hyperspaceFailure(62, 19)).describedAs("roll 62 19 asteroids").isEqualTo(false)
+        assertThat(hyper.hyperspaceFailure(62, 18)).describedAs("roll 62 18 asteroids").isEqualTo(true)
+        assertThat(hyper.hyperspaceFailure(45, 0)).describedAs("roll 45 0 asteroids").isEqualTo(true)
+        assertThat(hyper.hyperspaceFailure(44, 0)).describedAs("roll 44 0 asteroids").isEqualTo(true)
+        assertThat(hyper.hyperspaceFailure(43, 0)).describedAs("roll 43 0 asteroids").isEqualTo(false)
     }
 }
