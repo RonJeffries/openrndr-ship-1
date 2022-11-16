@@ -4,6 +4,11 @@ class WaveChecker: ISpaceObject {
     var sawAsteroid = false
     override var elapsedTime = 0.0
 
+    override fun update(deltaTime: Double): List<ISpaceObject> {
+        elapsedTime += deltaTime
+        return emptyList()
+    }
+
     override fun beginInteraction() {
         sawAsteroid = false
     }
@@ -23,16 +28,9 @@ class WaveChecker: ISpaceObject {
             elapsedTime = 0.0
             if (!sawAsteroid) {
                 elapsedTime = -5.0 // judicious delay to allow time for creation
-                val t = Transaction()
-                t.add(WaveMaker(4))
-                return t
+                return Transaction().also {it.add(WaveMaker(4))}
             }
         }
         return Transaction()
-    }
-
-    override fun update(deltaTime: Double): List<ISpaceObject> {
-        elapsedTime += deltaTime
-        return emptyList()
     }
 }
