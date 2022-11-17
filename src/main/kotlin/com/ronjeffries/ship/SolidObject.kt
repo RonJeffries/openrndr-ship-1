@@ -30,7 +30,7 @@ class SolidObject(
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
-        view.draw(this, drawer)
+        view.draw(drawer, heading, elapsedTime, finalizer.scale())
     }
 
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
