@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class ShipChecker(val ship: SolidObject) : SpaceObject() {
+class ShipChecker(val ship: SolidObject) : BaseObject() {
     private var missingShip = true
 
     override fun beginInteraction() {

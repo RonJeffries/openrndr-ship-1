@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class ShipMaker(val ship: SolidObject) : SpaceObject() {
+class ShipMaker(val ship: SolidObject) : BaseObject() {
     var safeToEmerge = true
     var asteroidTally = 0
 

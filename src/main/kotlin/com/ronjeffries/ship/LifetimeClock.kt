@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class LifetimeClock : SpaceObject() {
+class LifetimeClock : BaseObject() {
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
         return if (other.elapsedTime > other.lifetime) {
             listOf(other)

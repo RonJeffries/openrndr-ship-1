@@ -15,7 +15,7 @@ class SolidObject(
     val view: FlyerView,
     val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
-) : SpaceObject() {
+) : BaseObject() {
     var heading: Double = 0.0
 
     fun accelerate(deltaV: Acceleration) {

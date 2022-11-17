@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class WaveChecker: SpaceObject() {
+class WaveChecker: BaseObject() {
     var sawAsteroid = false
 
     override fun beginInteraction() {

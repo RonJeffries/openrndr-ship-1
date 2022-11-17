@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
+class WaveMaker(val numberToCreate: Int = 8): BaseObject() {
     var done = false
 
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
