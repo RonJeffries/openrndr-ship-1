@@ -11,8 +11,8 @@ class SpaceObjectCollection {
         spaceObjects.addAll(newbies)
     }
 
-    fun applyChanges(t: Transaction) {
-        t.applyChanges(this)
+    fun applyChanges(transaction: Transaction) {
+        transaction.applyChanges(this)
     }
 
     fun collectFromPairs(pairCondition: (SpaceObject, SpaceObject) -> List<SpaceObject>): MutableSet<SpaceObject> {

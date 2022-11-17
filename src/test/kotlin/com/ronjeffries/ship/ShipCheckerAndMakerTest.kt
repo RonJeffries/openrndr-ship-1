@@ -15,7 +15,8 @@ class ShipCheckerAndMakerTest {
         assertThat(emptyTransaction.adds).isEmpty()
         assertThat(emptyTransaction.removes).isEmpty()
         val alsoNothing = checker.tick(0.01)
-        assertThat(alsoNothing).isEmpty()
+        assertThat(alsoNothing.adds).isEmpty()
+        assertThat(alsoNothing.removes).isEmpty()
     }
 
     @Test
@@ -29,7 +30,8 @@ class ShipCheckerAndMakerTest {
         assertThat(emptyTransaction.adds).isEmpty()
         assertThat(emptyTransaction.removes).isEmpty()
         val alsoNothing = checker.tick(0.01)
-        assertThat(alsoNothing).isEmpty()
+        assertThat(alsoNothing.adds).isEmpty()
+        assertThat(alsoNothing.removes).isEmpty()
     }
 
     @Test

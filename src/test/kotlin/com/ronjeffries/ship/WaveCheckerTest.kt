@@ -14,7 +14,7 @@ class WaveCheckerTest {
         assertThat(trans.removes).isEmpty()
         assertThat(ck.elapsedTime).isEqualTo(0.5)
         val toCreate = ck.tick(0.1)
-        assertThat(toCreate).isEmpty() // always is, don't check again
+        assertThat(toCreate.adds).isEmpty() // always is, don't check again
     }
 
     @Test

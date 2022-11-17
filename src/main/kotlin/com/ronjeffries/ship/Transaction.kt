@@ -13,10 +13,20 @@ class Transaction {
         adds.add(spaceObject)
     }
 
+    fun addAll(adds: List<SpaceObject>) {
+        adds.forEach { add(it) }
+    }
+
     fun applyChanges(spaceObjectCollection: SpaceObjectCollection) {
         spaceObjectCollection.removeAndFinalizeAll(removes)
         spaceObjectCollection.addAll(adds)
     }
+
+    fun clear() {
+        adds.clear()
+        removes.clear()
+    }
+
 
     fun remove(spaceObject: SpaceObject) {
         removes.add(spaceObject)

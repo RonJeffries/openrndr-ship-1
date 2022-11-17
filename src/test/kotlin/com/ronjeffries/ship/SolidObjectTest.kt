@@ -98,7 +98,7 @@ class SolidObjectTest {
         val ship = SolidObject.ship(Vector2.ZERO, controls)
         controls.fire = true
         val newMissiles = ship.tick(tick)
-        assertThat(newMissiles.size).isEqualTo(1) // does not return itself
+        assertThat(newMissiles.adds.size).isEqualTo(1) // does not return itself
     }
 
     @Test
@@ -107,15 +107,15 @@ class SolidObjectTest {
         val ship = SolidObject.ship(Vector2.ZERO, controls)
         controls.fire = true
         var newMissiles = ship.tick(tick)
-        assertThat(newMissiles.size).isEqualTo(1)
+        assertThat(newMissiles.adds.size).isEqualTo(1)
         newMissiles = ship.tick(tick)
-        assertThat(newMissiles.size).isEqualTo(0) // no firing
+        assertThat(newMissiles.adds.size).isEqualTo(0) // no firing
         controls.fire = false
         newMissiles = ship.tick(tick)
-        assertThat(newMissiles.size).isEqualTo(0)
+        assertThat(newMissiles.adds.size).isEqualTo(0)
         controls.fire = true
         newMissiles = ship.tick(tick)
-        assertThat(newMissiles.size).isEqualTo(1)
+        assertThat(newMissiles.adds.size).isEqualTo(1)
     }
 
     @Test
@@ -185,19 +185,19 @@ class SolidObjectTest {
         val missileOffset = Vector2(2*150.0+2*10.0, 0.0)
         var expectedPosition  = ship.position + missileOffset.rotate(ship.heading)
         var additions = ship.tick(sixtieth)
-        assertThat(additions).isNotEmpty
-        var missile = additions.first() as SolidObject
+        assertThat(additions.adds).isNotEmpty
+        var missile = additions.adds.first() as SolidObject
         print(missile.position)
         assertThat(missile.position).isEqualTo(expectedPosition)
         controls.fire = false
         additions = ship.tick(sixtieth)
-        assertThat(additions).isEmpty()
+        assertThat(additions.adds).isEmpty()
         ship.heading = 90.0
         controls.fire = true
         expectedPosition  = ship.position + missileOffset.rotate(ship.heading)
         additions = ship.tick(sixtieth)
-        assertThat(additions).isNotEmpty
-        missile = additions.first() as SolidObject
+        assertThat(additions.adds).isNotEmpty
+        missile = additions.adds.first() as SolidObject
         print(missile.position)
         assertThat(missile.position).isEqualTo(expectedPosition)
     }

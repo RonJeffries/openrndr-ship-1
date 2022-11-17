@@ -9,13 +9,13 @@ abstract class SpaceObject {
     open val score: Int
         get() = 0
 
-    fun tick(deltaTime: Double): List<SpaceObject> {
+    fun tick(deltaTime: Double): Transaction {
         elapsedTime += deltaTime
         return update(deltaTime)
     }
 
     // defaulted, sometimes overridden
-    open fun update(deltaTime: Double): List<SpaceObject> { return emptyList() }
+    open fun update(deltaTime: Double): Transaction { return Transaction() }
 
     open fun beginInteraction() {}
     open fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }

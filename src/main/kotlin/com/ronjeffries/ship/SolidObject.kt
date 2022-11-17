@@ -74,7 +74,7 @@ class SolidObject(
         heading += degrees
     }
 
-    override fun update(deltaTime: Double): List<SpaceObject> {
+    override fun update(deltaTime: Double): Transaction {
         return controls.control(this, deltaTime).also { move(deltaTime) }
     }
 

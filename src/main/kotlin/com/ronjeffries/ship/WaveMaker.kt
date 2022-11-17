@@ -12,15 +12,15 @@ class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
         return this.interactWith(other)
     }
 
-    override fun update(deltaTime: Double): List<SpaceObject> {
-        if (elapsedTime < 3.0) return emptyList()
+    override fun update(deltaTime: Double): Transaction {
+        if (elapsedTime < 3.0) return Transaction()
 
-        val list = mutableListOf<SpaceObject>()
+        val toAdd = mutableListOf<SpaceObject>()
         for (i in 1..numberToCreate) {
             val a = SolidObject.asteroid((U.randomEdgePoint()))
-            list.add(a)
+            toAdd.add(a)
         }
         done = true
-        return list
+        return Transaction().also { it.addAll(toAdd) }
     }
 }
