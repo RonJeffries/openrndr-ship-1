@@ -101,7 +101,7 @@ class SolidObject(
                 velocity = missileVel,
                 killRadius = missileKillRadius,
                 lifetime = 3.0,
-                view = MissileView(),
+                view = MissileView(missileKillRadius),
                 finalizer = MissileFinalizer()
             )
         }

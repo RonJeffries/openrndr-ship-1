@@ -8,11 +8,11 @@ interface FlyerView {
     fun draw(solidObject: SolidObject, drawer: Drawer)
 }
 
-class MissileView: FlyerView {
+class MissileView(private val killRadius: Double) : FlyerView {
     override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
-        drawer.circle(Point.ZERO, solidObject.killRadius*3.0)
+        drawer.circle(Point.ZERO, killRadius*3.0)
     }
 }
 

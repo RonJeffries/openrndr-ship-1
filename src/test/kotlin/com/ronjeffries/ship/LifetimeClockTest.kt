@@ -14,7 +14,8 @@ class LifetimeClockTest {
             velocity = missileVel,
             killRadius = missileKillRadius,
             lifetime = 3.0,
-            isAsteroid = false, view = MissileView())
+            isAsteroid = false, view = MissileView(missileKillRadius)
+        )
         val clock = LifetimeClock()
         var discards = missile.interactWith(clock)
         assertThat(discards).isEmpty()
