@@ -58,7 +58,6 @@ class SolidObject(
     }
 
     override fun finalize(): List<SpaceObject> {
-        println("finalize SolidObject $this")
         return finalizer.finalize(this)
     }
 
