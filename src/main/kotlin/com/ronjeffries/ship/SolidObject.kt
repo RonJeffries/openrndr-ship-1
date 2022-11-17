@@ -8,10 +8,10 @@ class SolidObject(
     var position: Point,
     var velocity: Velocity,
 
-    var killRadius: Double = -Double.MAX_VALUE,
+    val killRadius: Double = -Double.MAX_VALUE,
     val isAsteroid: Boolean = false,
     override val lifetime: Double = Double.MAX_VALUE,
-    val view: FlyerView = NullView(),
+    val view: FlyerView,
     val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
 ) : SpaceObject() {
@@ -122,6 +122,7 @@ class SolidObject(
                 position = ship.position,
                 velocity = Velocity.ZERO,
                 killRadius = 100.0,
+                view = NullView()
             )
         }
 
