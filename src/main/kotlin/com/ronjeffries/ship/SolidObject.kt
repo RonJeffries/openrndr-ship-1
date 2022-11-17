@@ -30,7 +30,7 @@ class SolidObject(
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
-        view.draw(drawer, heading, elapsedTime, finalizer.scale())
+        view.draw(drawer, heading, elapsedTime)
     }
 
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
@@ -79,13 +79,14 @@ class SolidObject(
 
     companion object {
         fun asteroid(pos:Point, vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED), killRad: Double = 500.0, splitCount: Int = 2): SolidObject {
+            val finalizer = AsteroidFinalizer(splitCount)
             return SolidObject(
                 position = pos,
                 velocity = vel,
                 killRadius = killRad,
                 isAsteroid = true,
-                view = AsteroidView(),
-                finalizer = AsteroidFinalizer(splitCount)
+                view = AsteroidView(finalizer.scale()),
+                finalizer = finalizer
             )
         }
 

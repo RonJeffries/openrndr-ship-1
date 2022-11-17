@@ -5,11 +5,11 @@ import org.openrndr.draw.Drawer
 import kotlin.random.Random
 
 interface FlyerView {
-    fun draw(drawer: Drawer, heading: Double, elapsedTime: Double, scale: Double)
+    fun draw(drawer: Drawer, heading: Double, elapsedTime: Double)
 }
 
 class MissileView(private val killRadius: Double) : FlyerView {
-    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double, scale: Double) {
+    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
         drawer.circle(Point.ZERO, killRadius*3.0)
@@ -17,7 +17,7 @@ class MissileView(private val killRadius: Double) : FlyerView {
 }
 
 class ShipView : FlyerView {
-    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double, scale: Double) {
+    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double) {
         val points = listOf(
             Point(-3.0, -2.0),
             Point(-3.0, 2.0),
@@ -34,10 +34,10 @@ class ShipView : FlyerView {
     }
 }
 
-class AsteroidView: FlyerView {
+class AsteroidView(val scale: Double) : FlyerView {
     private val rock = defineRocks().random()
 
-    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double, scale: Double) {
+    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
@@ -123,7 +123,7 @@ class SplatView(lifetime: Double): FlyerView {
         Point(-2.0,0.0), Point(-2.0,-2.0), Point(2.0,-2.0), Point(3.0,1.0), Point(2.0,-1.0), Point(0.0,2.0), Point(1.0,3.0), Point(-1.0,3.0), Point(-4.0,-1.0), Point(-3.0,1.0)
     )
 
-    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double, scale: Double) {
+    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
         drawer.rotate(rot)
@@ -136,7 +136,7 @@ class SplatView(lifetime: Double): FlyerView {
 }
 
 class NullView: FlyerView {
-    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double, scale: Double) {
+    override fun draw(drawer: Drawer, heading: Double, elapsedTime: Double) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.text("???")
     }
