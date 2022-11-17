@@ -5,10 +5,10 @@ import org.openrndr.draw.isolated
 
 class Game {
     val knownObjects = SpaceObjectCollection()
-    val addsFromUpdates = mutableListOf<ISpaceObject>()
+    val addsFromUpdates = mutableListOf<SpaceObject>()
     private var lastTime = 0.0
 
-    fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
+    fun add(newObject: SpaceObject) = knownObjects.add(newObject)
 
     fun colliders() = knownObjects.collectFromPairs { f1, f2 -> f1.interactWith(f2) }
 

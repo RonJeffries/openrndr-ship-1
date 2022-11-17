@@ -8,7 +8,7 @@ class Controls {
     var hyperspace = false
     var recentHyperspace = false
 
-    fun control(ship: SolidObject, deltaTime: Double): List<ISpaceObject> {
+    fun control(ship: SolidObject, deltaTime: Double): List<SpaceObject> {
         if (hyperspace) {
             hyperspace = false
             recentHyperspace = true
@@ -26,11 +26,11 @@ class Controls {
         }
     }
 
-    private fun fire(obj: SolidObject): List<ISpaceObject> {
+    private fun fire(obj: SolidObject): List<SpaceObject> {
         return missilesToFire(obj).also { fire = false }
     }
 
-    private fun missilesToFire(obj: SolidObject): List<ISpaceObject> {
+    private fun missilesToFire(obj: SolidObject): List<SpaceObject> {
         return if (fire) {
             listOf(SolidObject.missile(obj))
         } else {

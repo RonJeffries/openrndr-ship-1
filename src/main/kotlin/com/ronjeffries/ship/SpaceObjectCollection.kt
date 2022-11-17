@@ -1,13 +1,13 @@
 package com.ronjeffries.ship
 
 class SpaceObjectCollection {
-    val spaceObjects = mutableListOf<ISpaceObject>()
+    val spaceObjects = mutableListOf<SpaceObject>()
 
-    fun add(spaceObject: ISpaceObject) {
+    fun add(spaceObject: SpaceObject) {
         spaceObjects.add(spaceObject)
     }
     
-    fun addAll(newbies: Collection<ISpaceObject>){
+    fun addAll(newbies: Collection<SpaceObject>){
         spaceObjects.addAll(newbies)
     }
 
@@ -15,17 +15,17 @@ class SpaceObjectCollection {
         t.applyChanges(this)
     }
 
-    fun collectFromPairs(pairCondition: (ISpaceObject, ISpaceObject) -> List<ISpaceObject>): MutableSet<ISpaceObject> {
-        val pairs = mutableSetOf<ISpaceObject>()
+    fun collectFromPairs(pairCondition: (SpaceObject, SpaceObject) -> List<SpaceObject>): MutableSet<SpaceObject> {
+        val pairs = mutableSetOf<SpaceObject>()
         pairsToCheck().forEach { p -> pairs.addAll(pairCondition(p.first, p.second))
         }
         return pairs
     }
 
-    fun forEach(spaceObject: (ISpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
+    fun forEach(spaceObject: (SpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
 
-    fun pairsToCheck(): List<Pair<ISpaceObject, ISpaceObject>> {
-        val pairs = mutableListOf<Pair<ISpaceObject, ISpaceObject>>()
+    fun pairsToCheck(): List<Pair<SpaceObject, SpaceObject>> {
+        val pairs = mutableListOf<Pair<SpaceObject, SpaceObject>>()
         spaceObjects.indices.forEach { i ->
             spaceObjects.indices.minus(0..i).forEach { j ->
                 pairs.add(spaceObjects[i] to spaceObjects[j])
@@ -34,7 +34,7 @@ class SpaceObjectCollection {
         return pairs
     }
 
-    fun removeAll(moribund: Set<ISpaceObject>): Boolean{
+    fun removeAll(moribund: Set<SpaceObject>): Boolean{
         return spaceObjects.removeAll(moribund.toSet())
     }
 

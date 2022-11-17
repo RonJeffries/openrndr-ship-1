@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class ShipMaker(val ship: SolidObject) : ISpaceObject() {
+class ShipMaker(val ship: SolidObject) : SpaceObject() {
     var safeToEmerge = true
     var asteroidTally = 0
 
@@ -9,15 +9,15 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject() {
         asteroidTally = 0
     }
 
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
+    override fun interactWith(other: SpaceObject): List<SpaceObject> {
         if (other is SolidObject && other.isAsteroid) asteroidTally += 1
         if (tooClose(other)) safeToEmerge = false
         return emptyList()
     }
 
-    override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> = interactWith(other)
+    override fun interactWithOther(other: SpaceObject): List<SpaceObject> = interactWith(other)
 
-    private fun tooClose(other:ISpaceObject): Boolean {
+    private fun tooClose(other:SpaceObject): Boolean {
         return if (other !is SolidObject) false
         else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }

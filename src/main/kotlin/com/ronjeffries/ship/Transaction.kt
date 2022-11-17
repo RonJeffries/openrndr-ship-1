@@ -1,15 +1,15 @@
 package com.ronjeffries.ship
 
 class Transaction {
-    val adds = mutableSetOf<ISpaceObject>()
-    val removes = mutableSetOf<ISpaceObject>()
+    val adds = mutableSetOf<SpaceObject>()
+    val removes = mutableSetOf<SpaceObject>()
 
     fun accumulate(t: Transaction) {
         t.adds.forEach {add(it)}
         t.removes.forEach {remove(it)}
     }
 
-    fun add(spaceObject: ISpaceObject) {
+    fun add(spaceObject: SpaceObject) {
         adds.add(spaceObject)
     }
 
@@ -18,25 +18,25 @@ class Transaction {
         spaceObjectCollection.addAll(adds)
     }
 
-    fun remove(spaceObject: ISpaceObject) {
+    fun remove(spaceObject: SpaceObject) {
         removes.add(spaceObject)
     }
 
     // testing
 
-    fun firstAdd(): ISpaceObject {
+    fun firstAdd(): SpaceObject {
         return adds.toList()[0]
     }
 
-    fun firstRemove(): ISpaceObject {
+    fun firstRemove(): SpaceObject {
         return removes.toList()[0]
     }
 
-    fun hasAdd(so:ISpaceObject): Boolean {
+    fun hasAdd(so:SpaceObject): Boolean {
         return adds.contains(so)
     }
 
-    fun hasRemove(so:ISpaceObject): Boolean {
+    fun hasRemove(so:SpaceObject): Boolean {
         return removes.contains(so)
     }
 

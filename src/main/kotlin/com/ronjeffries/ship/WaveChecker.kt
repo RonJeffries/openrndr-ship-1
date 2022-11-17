@@ -1,19 +1,19 @@
 package com.ronjeffries.ship
 
-class WaveChecker: ISpaceObject() {
+class WaveChecker: SpaceObject() {
     var sawAsteroid = false
 
     override fun beginInteraction() {
         sawAsteroid = false
     }
 
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
+    override fun interactWith(other: SpaceObject): List<SpaceObject> {
         if (other is SolidObject && other.isAsteroid)
             sawAsteroid = true
         return emptyList()
     }
 
-    override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> {
+    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
         return this.interactWith(other)
     }
 
