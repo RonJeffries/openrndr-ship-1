@@ -58,6 +58,7 @@ class SolidObject(
     }
 
     override fun finalize(): List<SpaceObject> {
+        println("finalize SolidObject $this")
         return finalizer.finalize(this)
     }
 
@@ -78,7 +79,12 @@ class SolidObject(
     }
 
     companion object {
-        fun asteroid(pos:Point, vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED), killRad: Double = 500.0, splitCount: Int = 2): SolidObject {
+        fun asteroid(
+            pos: Point,
+            vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
+            killRad: Double = 500.0,
+            splitCount: Int = 2
+        ): SolidObject {
             return SolidObject(
                 position = pos,
                 velocity = vel,
@@ -121,7 +127,7 @@ class SolidObject(
             return SolidObject(
                 position = ship.position,
                 velocity = Velocity.ZERO,
-                killRadius = 100.0,
+                killRadius = 99.9,
             )
         }
 

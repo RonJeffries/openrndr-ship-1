@@ -14,7 +14,7 @@ class Transaction {
     }
 
     fun applyChanges(spaceObjectCollection: SpaceObjectCollection) {
-        spaceObjectCollection.removeAll(removes)
+        spaceObjectCollection.removeAndFinalizeAll(removes)
         spaceObjectCollection.addAll(adds)
     }
 

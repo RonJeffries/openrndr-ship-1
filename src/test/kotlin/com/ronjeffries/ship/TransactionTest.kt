@@ -4,22 +4,22 @@ import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class TransactionTest {
-    private fun newAsteroid(): SolidObject {
-        return SolidObject.asteroid(U.randomPoint(), U.randomVelocity(U.ASTEROID_SPEED))
+    private fun newShip(): SolidObject {
+        return SolidObject.ship(U.randomPoint())
     }
 
     @Test
     fun `transaction can add and remove`() {
         val coll = SpaceObjectCollection()
-        val aOne = newAsteroid()
-        coll.add(aOne)
+        val shipOne = newShip()
+        coll.add(shipOne)
         val t = Transaction()
-        val aTwo = newAsteroid()
-        t.add(aTwo)
-        t.remove(aOne)
+        val shipTwo = newShip()
+        t.add(shipTwo)
+        t.remove(shipOne)
         coll.applyChanges(t)
-        assertThat(coll.spaceObjects).contains(aTwo)
-        assertThat(coll.spaceObjects).doesNotContain(aOne)
+        assertThat(coll.spaceObjects).contains(shipTwo)
+        assertThat(coll.spaceObjects).doesNotContain(shipOne)
         assertThat(coll.size).isEqualTo(1)
     }
 
@@ -27,8 +27,8 @@ class TransactionTest {
     fun `accumulate transactions`() {
         val toFill = Transaction()
         val filler = Transaction()
-        val toAdd = newAsteroid()
-        val toRemove = newAsteroid()
+        val toAdd = newShip()
+        val toRemove = newShip()
         filler.add(toAdd)
         filler.remove(toRemove)
         toFill.accumulate(filler)

@@ -53,11 +53,7 @@ class Game {
     fun processInteractions() {
         val toBeRemoved = colliders()
         if ( toBeRemoved.size > 0 ) {
-            knownObjects.removeAll(toBeRemoved)
-        }
-        for (removedObject in toBeRemoved) {
-            val addedByFinalize = removedObject.finalize()
-            knownObjects.addAll(addedByFinalize)
+            knownObjects.removeAndFinalizeAll(toBeRemoved)
         }
     }
 
