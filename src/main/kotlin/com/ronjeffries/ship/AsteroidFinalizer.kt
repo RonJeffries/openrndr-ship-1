@@ -1,10 +1,7 @@
 package com.ronjeffries.ship
 
-import kotlin.math.pow
-
 interface IFinalizer {
     fun finalize(solidObject: SolidObject): List<SpaceObject>
-    fun scale(): Double = 1.0
 }
 
 class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
@@ -40,9 +37,6 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
         return Score(score)
     }
 
-    override fun scale(): Double {
-        return 2.0.pow(splitCount)
-    }
 }
 
 class MissileFinalizer : IFinalizer {

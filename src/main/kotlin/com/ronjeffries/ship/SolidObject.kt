@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
+import kotlin.math.pow
 
 class SolidObject(
     var position: Point,
@@ -20,8 +21,6 @@ class SolidObject(
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
-
-    fun scale() = finalizer.scale()
 
     fun deathDueToCollision(): Boolean {
         return !controls.recentHyperspace
@@ -79,14 +78,13 @@ class SolidObject(
 
     companion object {
         fun asteroid(pos:Point, vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED), killRad: Double = 500.0, splitCount: Int = 2): SolidObject {
-            val finalizer = AsteroidFinalizer(splitCount)
             return SolidObject(
                 position = pos,
                 velocity = vel,
                 killRadius = killRad,
                 isAsteroid = true,
-                view = AsteroidView(finalizer.scale()),
-                finalizer = finalizer
+                view = AsteroidView(2.0.pow(splitCount)),
+                finalizer = AsteroidFinalizer(splitCount)
             )
         }
 
