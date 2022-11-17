@@ -131,7 +131,7 @@ class SolidObjectTest {
         val p1 = Vector2(100.0,100.0)
         val p2 = Vector2(755.0, 500.0)
         val a0 = SolidObject.asteroid(p1) // yes
-        val m1 = SolidObject(p1, Velocity.ZERO, 10.0) // yes
+        val m1 = SolidObject(p1, Velocity.ZERO, 10.0, view=NullView()) // yes
         val s2 = SolidObject.ship(p1) // yes
         val a3 = SolidObject.asteroid(p2) // no
         val a4 = SolidObject.asteroid(p2) // no
@@ -157,7 +157,7 @@ class SolidObjectTest {
         val p2 = Vector2(750.0, 500.0)
         val v = Vector2.ZERO
         val a0 = SolidObject.asteroid(p1,v) // yes
-        val m1 = SolidObject(p1, v, 10.0) // yes
+        val m1 = SolidObject(p1, v, 10.0, view=NullView()) // yes
         val s2 = SolidObject.ship(p1) // yes
         val a3 = SolidObject.asteroid(p2,v) // no
         val a4 = SolidObject.asteroid(p2,v) // no
