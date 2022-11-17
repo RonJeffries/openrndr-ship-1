@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class LifetimeClock : ISpaceObject {
+class LifetimeClock : ISpaceObject() {
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         return if (other.elapsedTime > other.lifetime) {
             listOf(other)
@@ -10,10 +10,6 @@ class LifetimeClock : ISpaceObject {
 
     override fun interactWithOther(other: ISpaceObject): List<ISpaceObject> {
         return interactWith(other)
-    }
-
-    override fun update(deltaTime: Double): List<ISpaceObject> {
-        return emptyList()
     }
 
 }

@@ -3,7 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 
-class ScoreKeeper: ISpaceObject {
+class ScoreKeeper: ISpaceObject() {
     var totalScore = 0
 
     fun formatted(): String {
@@ -27,9 +27,5 @@ class ScoreKeeper: ISpaceObject {
         drawer.stroke = ColorRGBa.GREEN
         drawer.fill = ColorRGBa.GREEN
         drawer.text(formatted(), Point(0.0, 0.0))
-    }
-
-    override fun update(deltaTime: Double): List<ISpaceObject> {
-        return emptyList()
     }
 }

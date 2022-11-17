@@ -13,7 +13,7 @@ class GameTest {
         game.add(asteroid)
         game.add(ship)
         assertThat(game.colliders().size).isEqualTo(0)
-        for (i in 1..12*60) game.update(1.0/60.0)
+        for (i in 1..12*60) game.tick(1.0/60.0)
         val x = asteroid.position.x
         val y = asteroid.position.y
         assertThat(x).isEqualTo(100.0+12*50.0, within(0.1))

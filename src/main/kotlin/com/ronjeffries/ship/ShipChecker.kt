@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class ShipChecker(val ship: SolidObject) : ISpaceObject {
+class ShipChecker(val ship: SolidObject) : ISpaceObject() {
     private var missingShip = true
 
     override fun beginInteraction() {
@@ -23,9 +23,5 @@ class ShipChecker(val ship: SolidObject) : ISpaceObject {
             trans.remove(this)
         }
         return trans
-    }
-
-    override fun update(deltaTime: Double): List<ISpaceObject> {
-        return emptyList()
     }
 }

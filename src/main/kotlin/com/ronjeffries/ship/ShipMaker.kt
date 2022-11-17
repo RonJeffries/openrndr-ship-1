@@ -1,14 +1,8 @@
 package com.ronjeffries.ship
 
-class ShipMaker(val ship: SolidObject) : ISpaceObject {
-    override var elapsedTime: Double = 0.0
+class ShipMaker(val ship: SolidObject) : ISpaceObject() {
     var safeToEmerge = true
     var asteroidTally = 0
-
-    override fun update(deltaTime: Double): List<ISpaceObject> {
-        elapsedTime += deltaTime
-        return emptyList()
-    }
 
     override fun beginInteraction() {
         safeToEmerge = true

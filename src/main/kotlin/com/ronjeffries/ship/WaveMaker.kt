@@ -1,7 +1,6 @@
 package com.ronjeffries.ship
 
-class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
-    override var elapsedTime = 0.0
+class WaveMaker(val numberToCreate: Int = 8): ISpaceObject() {
     var done = false
 
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
@@ -14,8 +13,7 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
     }
 
     override fun update(deltaTime: Double): List<ISpaceObject> {
-        elapsedTime += deltaTime
-        if (elapsedTime < 3) return emptyList()
+        if (elapsedTime < 3.0) return emptyList()
 
         val list = mutableListOf<ISpaceObject>()
         for (i in 1..numberToCreate) {

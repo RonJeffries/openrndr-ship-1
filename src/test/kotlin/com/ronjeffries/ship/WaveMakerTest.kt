@@ -7,7 +7,7 @@ class WaveMakerTest {
     @Test
     fun `creates wave on update, removes self on interaction`() {
         val wm = WaveMaker(7)
-        val toCreate = wm.update(3.01)
+        val toCreate = wm.tick(3.01)
         assertThat(toCreate.size).isEqualTo(7)
         var toDestroy = wm.interactWithOther(wm)
         assertThat(toDestroy[0]).isEqualTo(wm)

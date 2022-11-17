@@ -28,7 +28,7 @@ class Game {
     fun cycle(drawer: Drawer, seconds: Double) {
         val deltaTime = seconds - lastTime
         lastTime = seconds
-        update(deltaTime)
+        tick(deltaTime)
         beginInteractions()
         processInteractions()
         finishInteractions()
@@ -61,9 +61,9 @@ class Game {
         }
     }
 
-    fun update(deltaTime: Double) {
+    fun tick(deltaTime: Double) {
         knownObjects.addAll(addsFromUpdates)
         addsFromUpdates.clear()
-        knownObjects.forEach { addsFromUpdates.addAll(it.update(deltaTime)) }
+        knownObjects.forEach { addsFromUpdates.addAll(it.tick(deltaTime)) }
     }
 }

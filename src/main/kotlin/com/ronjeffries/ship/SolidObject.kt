@@ -14,9 +14,8 @@ class SolidObject(
     val view: FlyerView = NullView(),
     val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
-) : ISpaceObject {
+) : ISpaceObject() {
     var heading: Double = 0.0
-    override var elapsedTime = 0.0
 
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
@@ -62,12 +61,8 @@ class SolidObject(
         return finalizer.finalize(this)
     }
 
-    override fun move(deltaTime: Double) {
+    fun move(deltaTime: Double) {
         position = (position + velocity * deltaTime).cap()
-    }
-
-    private fun tick(deltaTime: Double) {
-        elapsedTime += deltaTime
     }
 
     override fun toString(): String {
@@ -79,10 +74,7 @@ class SolidObject(
     }
 
     override fun update(deltaTime: Double): List<ISpaceObject> {
-        tick(deltaTime)
-        val objectsToAdd = controls.control(this, deltaTime)
-        move(deltaTime)
-        return objectsToAdd
+        return controls.control(this, deltaTime).also { move(deltaTime) }
     }
 
     companion object {

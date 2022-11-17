@@ -1,13 +1,7 @@
 package com.ronjeffries.ship
 
-class WaveChecker: ISpaceObject {
+class WaveChecker: ISpaceObject() {
     var sawAsteroid = false
-    override var elapsedTime = 0.0
-
-    override fun update(deltaTime: Double): List<ISpaceObject> {
-        elapsedTime += deltaTime
-        return emptyList()
-    }
 
     override fun beginInteraction() {
         sawAsteroid = false
