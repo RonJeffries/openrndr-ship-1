@@ -83,14 +83,5 @@ open class SolidObject(
             )
         }
 
-        fun splat(missile: SolidObject): SolidObject {
-            val lifetime = 2.0
-            return SolidObject(
-                position = missile.position,
-                velocity = Velocity.ZERO,
-                lifetime = lifetime,
-                view = SplatView(lifetime)
-            )
-        }
     }
 }
