@@ -10,9 +10,9 @@ class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
             val a = SolidObject.asteroid((U.randomEdgePoint()))
             toAdd.add(a)
         }
-        val trans = Transaction()
-        trans.addAll(toAdd)
-        trans.remove(this)
-        return trans
+        return Transaction().also {
+            it.addAll(toAdd)
+            it.remove(this)
+        }
     }
 }
