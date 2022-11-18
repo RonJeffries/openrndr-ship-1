@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ShipCheckerAndMakerTest {
@@ -58,7 +58,7 @@ class ShipCheckerAndMakerTest {
     @Test
     fun `maker makes after U MAKER_DELAY seconds`() {
         val ship = SolidObject.ship(U.CENTER_OF_UNIVERSE)
-        ship.velocity = Velocity(50.0,60.0)
+        ship.velocity = Velocity(50.0, 60.0)
         ship.heading = 90.0
         val maker = ShipMaker(ship)
         maker.tick(U.MAKER_DELAY)
@@ -74,7 +74,9 @@ class ShipCheckerAndMakerTest {
     @Test
     fun `maker makes only when safe`() {
         val ship = SolidObject.ship(U.CENTER_OF_UNIVERSE)
-        val asteroid = SolidObject.asteroid(U.CENTER_OF_UNIVERSE)
+        val asteroid = Asteroid(
+            U.CENTER_OF_UNIVERSE
+        )
         val maker = ShipMaker(ship)
         maker.tick(U.MAKER_DELAY)
         maker.tick(0.01)
@@ -95,8 +97,8 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `makes with ship features unchanged`() {
-        val position = Point(123.0,456.0)
-        val  velocity = Velocity(200.0,300.0)
+        val position = Point(123.0, 456.0)
+        val velocity = Velocity(200.0, 300.0)
         val heading = 37.5
         val ship = SolidObject.ship(position)
         ship.heading = heading
@@ -116,7 +118,9 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `maker counts asteroids`() {
-        val a = SolidObject.asteroid(U.randomPoint())
+        val a = Asteroid(
+            U.randomPoint()
+        )
         val ship = SolidObject.ship(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
         maker.beginInteraction()

@@ -1,10 +1,10 @@
 package com.ronjeffries.ship
 
-class WaveMaker(val numberToCreate: Int = 8): BaseObject() {
+class WaveMaker(val numberToCreate: Int = 8) : BaseObject() {
     var done = false
 
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
-        return if ( done ) listOf(this)
+        return if (done) listOf(this)
         else emptyList()
     }
 
@@ -17,7 +17,9 @@ class WaveMaker(val numberToCreate: Int = 8): BaseObject() {
 
         val list = mutableListOf<SpaceObject>()
         for (i in 1..numberToCreate) {
-            val a = SolidObject.asteroid((U.randomEdgePoint()))
+            val a = Asteroid(
+                (U.randomEdgePoint())
+            )
             list.add(a)
         }
         done = true

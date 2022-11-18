@@ -3,9 +3,8 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
-import kotlin.math.pow
 
-class SolidObject(
+open class SolidObject(
     var position: Point,
     var velocity: Velocity,
 
@@ -47,12 +46,12 @@ class SolidObject(
     private fun weAreCollidingWith(other: SpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
     private fun weCanCollideWith(other: SpaceObject): Boolean {
-        return if ( other !is SolidObject) false
+        return if (other !is SolidObject) false
         else !(this.isAsteroid && other.isAsteroid)
     }
 
     private fun weAreInRange(other: SpaceObject): Boolean {
-        return if ( other !is SolidObject) false
+        return if (other !is SolidObject) false
         else position.distanceTo(other.position) < killRadius + other.killRadius
     }
 
@@ -68,7 +67,7 @@ class SolidObject(
         return "Flyer $position ($killRadius)"
     }
 
-    fun turnBy(degrees:Double) {
+    fun turnBy(degrees: Double) {
         heading += degrees
     }
 
@@ -77,16 +76,6 @@ class SolidObject(
     }
 
     companion object {
-        fun asteroid(pos:Point, vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED), killRad: Double = 500.0, splitCount: Int = 2): SolidObject {
-            return SolidObject(
-                position = pos,
-                velocity = vel,
-                killRadius = killRad,
-                isAsteroid = true,
-                view = AsteroidView(2.0.pow(splitCount)),
-                finalizer = AsteroidFinalizer(splitCount)
-            )
-        }
 
         fun missile(ship: SolidObject): SolidObject {
             val missileKillRadius = 10.0
@@ -105,7 +94,7 @@ class SolidObject(
             )
         }
 
-        fun ship(pos:Point, control:Controls= Controls()): SolidObject {
+        fun ship(pos: Point, control: Controls = Controls()): SolidObject {
             return SolidObject(
                 position = pos,
                 velocity = Velocity.ZERO,
