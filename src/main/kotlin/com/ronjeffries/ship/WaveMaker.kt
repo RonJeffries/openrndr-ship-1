@@ -1,6 +1,7 @@
 package com.ronjeffries.ship
 
 class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
+    // comment
 
     override fun update(deltaTime: Double): Transaction {
         if (elapsedTime < 3.0) return Transaction()
