@@ -12,7 +12,7 @@ class SpaceObjectCollectionTest {
             Vector2(100.0, 100.0)
         )
         spaceObjectCollection.add(a)
-        val s = SolidObject.ship(Vector2(100.0, 150.0))
+        val s = Ship(Vector2(100.0, 150.0))
         spaceObjectCollection.add(s)
         assertThat(spaceObjectCollection.size).isEqualTo(2)
     }
@@ -24,7 +24,7 @@ class SpaceObjectCollectionTest {
             Vector2(100.0, 100.0)
         )
         game.add(a)
-        val s = SolidObject.ship(Vector2(100.0, 150.0))
+        val s = Ship(Vector2(100.0, 150.0))
         game.add(s)
         assertThat(game.knownObjects.size).isEqualTo(2)
         val colliders = game.colliders()
@@ -42,7 +42,7 @@ class SpaceObjectCollectionTest {
         game.add(a0)
         val m1 = SolidObject(p1, Vector2.ZERO, 10.0, view = NullView()) // yes
         game.add(m1)
-        val s2 = SolidObject.ship(p1) // yes kr=150
+        val s2 = Ship(p1) // yes kr=150
         game.add(s2)
         val a3 = Asteroid(
             p2

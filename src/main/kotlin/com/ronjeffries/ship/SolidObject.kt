@@ -94,17 +94,6 @@ open class SolidObject(
             )
         }
 
-        fun ship(pos: Point, control: Controls = Controls()): SolidObject {
-            return SolidObject(
-                position = pos,
-                velocity = Velocity.ZERO,
-                killRadius = 150.0,
-                view = ShipView(),
-                controls = control,
-                finalizer = ShipFinalizer()
-            )
-        }
-
         fun shipDestroyer(ship: SolidObject): SolidObject {
             return SolidObject(
                 position = ship.position,

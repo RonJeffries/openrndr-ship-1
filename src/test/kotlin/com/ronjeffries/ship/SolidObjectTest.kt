@@ -14,7 +14,7 @@ class SolidObjectTest {
 
     @Test
     fun `Ship Happens`() {
-        val ship = SolidObject.ship(Vector2.ZERO)
+        val ship = Ship(Vector2.ZERO)
         ship.velocity = Vector2(120.0, 120.0)
         ship.tick(tick)
         assertThat(ship.position).isEqualTo(Vector2(2.0, 2.0))
@@ -22,7 +22,7 @@ class SolidObjectTest {
 
     @Test
     fun `capping works high`() {
-        val ship = SolidObject.ship(Vector2(U.UNIVERSE_SIZE - 1, U.UNIVERSE_SIZE / 2))
+        val ship = Ship(Vector2(U.UNIVERSE_SIZE - 1, U.UNIVERSE_SIZE / 2))
         ship.velocity = Vector2(120.0, 120.0)
         ship.tick(tick)
         assertThat(ship.position.x).isEqualTo(1.0)
@@ -31,7 +31,7 @@ class SolidObjectTest {
 
     @Test
     fun `capping works low`() {
-        val ship = SolidObject.ship(Vector2(1.0, U.UNIVERSE_SIZE / 2))
+        val ship = Ship(Vector2(1.0, U.UNIVERSE_SIZE / 2))
         ship.velocity = Vector2(-120.0, -120.0)
         ship.tick(tick)
         assertThat(ship.position.x).isEqualTo(U.UNIVERSE_SIZE - 1)
@@ -41,7 +41,7 @@ class SolidObjectTest {
     @Test
     fun `acceleration works`() {
         val control = Controls()
-        val ship = SolidObject.ship(Vector2.ZERO, control)
+        val ship = Ship(Vector2.ZERO, control)
         assertThat(ship.position).isEqualTo(Vector2.ZERO)
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
         ship.tick(tick)
@@ -57,7 +57,7 @@ class SolidObjectTest {
     @Test
     fun `ship can turn left`() {
         val control = Controls()
-        val ship = SolidObject.ship(Vector2.ZERO, control)
+        val ship = Ship(Vector2.ZERO, control)
         control.left = true
         ship.tick(tick * 30)
         val expected = U.SHIP_ROTATION_SPEED * 30.0 / 60.0
@@ -72,7 +72,7 @@ class SolidObjectTest {
     @Test
     fun `ship can turn right`() {
         val control = Controls()
-        val ship = SolidObject.ship(Vector2.ZERO, control)
+        val ship = Ship(Vector2.ZERO, control)
         control.right = true
         ship.tick(tick * 10)
         val expected = U.SHIP_ROTATION_SPEED * 10.0 / 60.0
@@ -82,7 +82,7 @@ class SolidObjectTest {
     @Test
     fun `speed of light`() {
         val control = Controls()
-        val ship = SolidObject.ship(Vector2.ZERO, control)
+        val ship = Ship(Vector2.ZERO, control)
         ship.heading = -60.0 // northeast ish
         control.accelerate = true
         ship.tick(100.0) // long time
@@ -97,7 +97,7 @@ class SolidObjectTest {
     @Test
     fun `ship can fire missile`() {
         val controls = Controls()
-        val ship = SolidObject.ship(Vector2.ZERO, controls)
+        val ship = Ship(Vector2.ZERO, controls)
         controls.fire = true
         val newMissiles = ship.tick(tick)
         assertThat(newMissiles.size).isEqualTo(1) // does not return itself
@@ -106,7 +106,7 @@ class SolidObjectTest {
     @Test
     fun `can only fire once per press`() {
         val controls = Controls()
-        val ship = SolidObject.ship(Vector2.ZERO, controls)
+        val ship = Ship(Vector2.ZERO, controls)
         controls.fire = true
         var newMissiles = ship.tick(tick)
         assertThat(newMissiles.size).isEqualTo(1)
@@ -140,7 +140,7 @@ class SolidObjectTest {
             p1
         ) // yes
         val m1 = SolidObject(p1, Velocity.ZERO, 10.0, view = NullView()) // yes
-        val s2 = SolidObject.ship(p1) // yes
+        val s2 = Ship(p1) // yes
         val a3 = Asteroid(
             p2
         ) // no
@@ -173,7 +173,7 @@ class SolidObjectTest {
             v
         ) // yes
         val m1 = SolidObject(p1, v, 10.0, view = NullView()) // yes
-        val s2 = SolidObject.ship(p1) // yes
+        val s2 = Ship(p1) // yes
         val a3 = Asteroid(
             p2,
             v
@@ -200,7 +200,7 @@ class SolidObjectTest {
     fun `missile starts ahead of ship`() {
         val sixtieth = 1.0 / 60.0
         val controls = Controls()
-        val ship = SolidObject.ship(Vector2(1000.0, 1000.0), controls)
+        val ship = Ship(Vector2(1000.0, 1000.0), controls)
         ship.heading = 0.0
         controls.fire = true
         val missileOffset = Vector2(2 * 150.0 + 2 * 10.0, 0.0)

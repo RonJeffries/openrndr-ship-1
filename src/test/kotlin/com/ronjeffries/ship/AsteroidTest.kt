@@ -62,14 +62,14 @@ class AsteroidTest {
 
     @Test
     fun `ships do not split on finalize`() {
-        val ship = SolidObject.ship(Vector2(100.0, 100.0))
+        val ship = Ship(Vector2(100.0, 100.0))
         val didShipSplit = ship.finalize()
         assertThat(didShipSplit).isEmpty()
     }
 
     @Test
     fun `missile demise creates a splat`() {
-        val ship = SolidObject.ship(Vector2(100.0, 100.0))
+        val ship = Ship(Vector2(100.0, 100.0))
         val missile = SolidObject.missile(ship)
         val splatList = missile.finalize()
         assertThat(splatList.size).isEqualTo(1)

@@ -13,7 +13,7 @@ class GameTest {
             Vector2(100.0, 100.0),
             Vector2(50.0, 50.0)
         )
-        val ship = SolidObject.ship(Vector2(1000.0, 1000.0))
+        val ship = Ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)
         assertThat(game.colliders().size).isEqualTo(0)
@@ -31,7 +31,7 @@ class GameTest {
         val asteroid = Asteroid(
             Vector2(1000.0, 1000.0)
         )
-        val ship = SolidObject.ship(Vector2(1000.0, 1000.0))
+        val ship = Ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)
         assertThat(game.knownObjects.size).isEqualTo(2)
@@ -46,7 +46,7 @@ class GameTest {
         val game = Game()
         val n = 12
         for (i in 1..n) {
-            game.add(SolidObject.ship(Vector2.ZERO))
+            game.add(Ship(Vector2.ZERO))
         }
         val pairs = game.knownObjects.pairsToCheck()
         assertThat(pairs.size).isEqualTo(n * (n - 1) / 2)
