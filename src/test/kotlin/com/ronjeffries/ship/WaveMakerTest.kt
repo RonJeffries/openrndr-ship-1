@@ -5,13 +5,11 @@ import org.junit.jupiter.api.Test
 
 class WaveMakerTest {
     @Test
-    fun `creates wave on update, removes self on interaction`() {
+    fun `creates wave on update, removes self immediately`() {
         val wm = WaveMaker(7)
-        val toCreate = wm.tick(3.01)
-        assertThat(toCreate.adds.size).isEqualTo(7)
-        var toDestroy = wm.interactWithOther(wm)
-        assertThat(toDestroy[0]).isEqualTo(wm)
-        toDestroy = wm.interactWith(wm)
-        assertThat(toDestroy[0]).isEqualTo(wm)
+        val trans = wm.tick(3.01)
+        assertThat(trans.adds.size).isEqualTo(7)
+        assertThat(trans.removes.size).isEqualTo(1)
+        assertThat(trans.firstRemove()).isEqualTo(wm)
     }
 }
