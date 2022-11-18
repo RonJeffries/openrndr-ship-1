@@ -6,7 +6,7 @@ class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
     killRadius = 150.0,
     view = ShipView(),
     controls = control,
-    finalizer = ShipFinalizer()
+    finalizer = ShipFinalizer(control.flags)
 ) {
     override fun update(deltaTime: Double): List<SpaceObject> {
         return controls.control(this, deltaTime).also { move(deltaTime) }

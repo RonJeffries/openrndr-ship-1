@@ -21,10 +21,6 @@ open class SolidObject(
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    fun deathDueToCollision(): Boolean {
-        return !controls.flags.recentHyperspace
-    }
-
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)

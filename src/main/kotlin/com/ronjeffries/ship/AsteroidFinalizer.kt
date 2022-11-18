@@ -45,9 +45,9 @@ class MissileFinalizer : IFinalizer {
     }
 }
 
-class ShipFinalizer : IFinalizer {
+class ShipFinalizer(val controlFlags: ControlFlags) : IFinalizer {
     override fun finalize(solidObject: SolidObject): List<SpaceObject> {
-        if (solidObject.deathDueToCollision()) {
+        if (!controlFlags.recentHyperspace) {
             solidObject.position = U.CENTER_OF_UNIVERSE
             solidObject.velocity = Velocity.ZERO
             solidObject.heading = 0.0
