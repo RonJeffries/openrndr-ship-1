@@ -1,17 +1,11 @@
 package com.ronjeffries.ship
 
-class Controls {
-    var accelerate = false
-    var left = false
-    var right = false
-    var fire = false
-    var hyperspace = false
-    var recentHyperspace = false
+class Controls(val flags: ControlFlags = ControlFlags()) {
 
     fun control(ship: SolidObject, deltaTime: Double): List<SpaceObject> {
-        if (hyperspace) {
-            hyperspace = false
-            recentHyperspace = true
+        if (flags.hyperspace) {
+            flags.hyperspace = false
+            flags.recentHyperspace = true
             return listOf(SolidObject.shipDestroyer(ship))
         }
         turn(ship, deltaTime)
@@ -19,19 +13,19 @@ class Controls {
         return fire(ship)
     }
 
-    private fun accelerate(obj:SolidObject, deltaTime: Double) {
-        if (accelerate) {
+    private fun accelerate(obj: SolidObject, deltaTime: Double) {
+        if (flags.accelerate) {
             val deltaV = U.SHIP_ACCELERATION.rotate(obj.heading) * deltaTime
             obj.accelerate(deltaV)
         }
     }
 
     private fun fire(obj: SolidObject): List<SpaceObject> {
-        return missilesToFire(obj).also { fire = false }
+        return missilesToFire(obj).also { flags.fire = false }
     }
 
     private fun missilesToFire(obj: SolidObject): List<SpaceObject> {
-        return if (fire) {
+        return if (flags.fire) {
             listOf(SolidObject.missile(obj))
         } else {
             emptyList()
@@ -39,7 +33,7 @@ class Controls {
     }
 
     private fun turn(obj: SolidObject, deltaTime: Double) {
-        if (left) obj.turnBy(-U.SHIP_ROTATION_SPEED*deltaTime)
-        if (right) obj.turnBy(U.SHIP_ROTATION_SPEED*deltaTime)
+        if (flags.left) obj.turnBy(-U.SHIP_ROTATION_SPEED * deltaTime)
+        if (flags.right) obj.turnBy(U.SHIP_ROTATION_SPEED * deltaTime)
     }
 }

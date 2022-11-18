@@ -1,7 +1,7 @@
-import com.ronjeffries.ship.Controls
+import com.ronjeffries.ship.ControlFlags
 import com.ronjeffries.ship.Game
 import org.openrndr.application
-import org.openrndr.draw.*
+import org.openrndr.draw.loadFont
 
 fun main() = application {
     configure {
@@ -11,23 +11,41 @@ fun main() = application {
 
     program {
         val font = loadFont("data/fonts/default.otf", 640.0)
-        val controls = Controls()
+        val controls = ControlFlags()
         val game = Game().also { it.createContents(controls) }
         keyboard.keyDown.listen {
             when (it.name) {
-                "d" -> {controls.left = true}
-                "f" -> {controls.right = true}
-                "j" -> {controls.accelerate = true}
-                "k" -> {controls.fire = true}
-                "space" -> {controls.hyperspace = true}
+                "d" -> {
+                    controls.left = true
+                }
+                "f" -> {
+                    controls.right = true
+                }
+                "j" -> {
+                    controls.accelerate = true
+                }
+                "k" -> {
+                    controls.fire = true
+                }
+                "space" -> {
+                    controls.hyperspace = true
+                }
             }
         }
         keyboard.keyUp.listen {
             when (it.name) {
-                "d" -> {controls.left = false}
-                "f" -> {controls.right = false}
-                "j" -> {controls.accelerate = false}
-                "k" -> {controls.fire = false}
+                "d" -> {
+                    controls.left = false
+                }
+                "f" -> {
+                    controls.right = false
+                }
+                "j" -> {
+                    controls.accelerate = false
+                }
+                "k" -> {
+                    controls.fire = false
+                }
                 "space" -> {
                     controls.hyperspace = false
                     controls.recentHyperspace = false
@@ -36,10 +54,10 @@ fun main() = application {
         }
 
         extend {
-            val worldScale = width/10000.0
+            val worldScale = width / 10000.0
             drawer.fontMap = font
             drawer.scale(worldScale, worldScale)
-            game.cycle(drawer,seconds)
+            game.cycle(drawer, seconds)
         }
     }
 }

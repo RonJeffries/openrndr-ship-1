@@ -12,8 +12,8 @@ class Game {
 
     fun colliders() = knownObjects.collectFromPairs { f1, f2 -> f1.interactWith(f2) }
 
-    fun createContents(controls: Controls) {
-        val ship = newShip(controls)
+    fun createContents(controlFlags: ControlFlags) {
+        val ship = newShip(controlFlags)
         add(ship)
         add(ShipChecker(ship))
         add(ScoreKeeper())
@@ -21,7 +21,8 @@ class Game {
         add(WaveChecker())
     }
 
-    private fun newShip(controls: Controls): SolidObject {
+    private fun newShip(controlFlags: ControlFlags): SolidObject {
+        val controls = Controls(controlFlags)
         return Ship(U.CENTER_OF_UNIVERSE, controls)
     }
 
