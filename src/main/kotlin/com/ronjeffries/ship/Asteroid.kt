@@ -18,3 +18,4 @@ class Asteroid(
         Controls(),
         AsteroidFinalizer(splitCount)
     )
+

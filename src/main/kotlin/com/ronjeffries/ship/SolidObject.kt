@@ -72,7 +72,8 @@ open class SolidObject(
     }
 
     override fun update(deltaTime: Double): List<SpaceObject> {
-        return controls.control(this, deltaTime).also { move(deltaTime) }
+        move(deltaTime)
+        return emptyList()
     }
 
     companion object {
