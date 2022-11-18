@@ -70,7 +70,7 @@ class AsteroidTest {
     @Test
     fun `missile demise creates a splat`() {
         val ship = Ship(Vector2(100.0, 100.0))
-        val missile = SolidObject.missile(ship)
+        val missile = Missile(ship)
         val splatList = missile.finalize()
         assertThat(splatList.size).isEqualTo(1)
     }

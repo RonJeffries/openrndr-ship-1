@@ -26,7 +26,7 @@ class Controls(val flags: ControlFlags = ControlFlags()) {
 
     private fun missilesToFire(ship: Ship): List<SpaceObject> {
         return if (flags.fire) {
-            listOf(SolidObject.missile(ship))
+            listOf(Missile(ship))
         } else {
             emptyList()
         }

@@ -74,23 +74,6 @@ open class SolidObject(
 
     companion object {
 
-        fun missile(ship: SolidObject): SolidObject {
-            val missileKillRadius = 10.0
-            val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
-            val standardOffset = Point(2 * (ship.killRadius + missileKillRadius), 0.0)
-            val rotatedOffset = standardOffset.rotate(ship.heading)
-            val missilePos: Point = ship.position + rotatedOffset
-            val missileVel: Velocity = ship.velocity + missileOwnVelocity
-            return SolidObject(
-                position = missilePos,
-                velocity = missileVel,
-                killRadius = missileKillRadius,
-                lifetime = 3.0,
-                view = MissileView(missileKillRadius),
-                finalizer = MissileFinalizer()
-            )
-        }
-
         fun shipDestroyer(ship: SolidObject): SolidObject {
             return SolidObject(
                 position = ship.position,
