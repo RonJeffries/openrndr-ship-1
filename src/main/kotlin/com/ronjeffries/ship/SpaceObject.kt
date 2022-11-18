@@ -7,21 +7,16 @@ interface SpaceObject {
     val lifetime:Double
     val score: Int
 
-    fun tick(deltaTime: Double): List<SpaceObject> {
-        elapsedTime += deltaTime
-        return update(deltaTime)
-    }
+    fun tick(deltaTime: Double): List<SpaceObject>
+    fun update(deltaTime: Double): List<SpaceObject>
 
-    // defaulted, sometimes overridden
-    fun update(deltaTime: Double): List<SpaceObject> { return emptyList() }
+    fun beginInteraction()
+    fun interactWith(other: SpaceObject): List<SpaceObject>
+    fun interactWithOther(other: SpaceObject): List<SpaceObject>
+    fun finishInteraction(): Transaction
 
-    fun beginInteraction() {}
-    fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
-    fun interactWithOther(other: SpaceObject): List<SpaceObject>{ return emptyList() }
-    fun finishInteraction(): Transaction = Transaction()
-
-    fun draw(drawer: Drawer) {}
-    fun finalize(): List<SpaceObject> { return emptyList() }
+    fun draw(drawer: Drawer)
+    fun finalize(): List<SpaceObject>
 }
 
 open class BaseObject: SpaceObject {
