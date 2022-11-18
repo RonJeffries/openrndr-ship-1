@@ -127,6 +127,7 @@ class SolidObject(
                 position = ship.position,
                 velocity = Velocity.ZERO,
                 killRadius = 99.9,
+                view = InvisibleView()
             )
         }
 

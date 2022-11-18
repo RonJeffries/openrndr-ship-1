@@ -135,6 +135,12 @@ class SplatView(lifetime: Double): FlyerView {
     }
 }
 
+class InvisibleView: FlyerView {
+    override fun draw(solidObject: SolidObject, drawer: Drawer) {
+        // no visible view
+    }
+}
+
 class NullView: FlyerView {
     override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
