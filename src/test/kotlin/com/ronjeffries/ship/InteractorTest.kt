@@ -3,15 +3,21 @@ package com.ronjeffries.ship
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
+import kotlin.reflect.full.isSuperclassOf
 
-interface Receiver {
-    fun dispatch(other:ReactiveThing): List<ReactiveThing>
+interface Thing {
+    fun register(dispatcher: Dispatcher)
 }
 
-class TypedReceiver<T : ReactiveThing>(val clazz: KClass<*>, val handler: (announcement: T) -> List<ReactiveThing>) : Receiver {
-    override fun dispatch(other: ReactiveThing): List<ReactiveThing> {
-        if (clazz.isInstance(other) ) {
-            val downcast = other as T
+interface Receiver {
+    fun dispatch(other: Thing): List<Thing>
+}
+
+class TypedReceiver<THING_TYPE : Thing>(val clazz: KClass<*>, val handler: (target: THING_TYPE) -> List<Thing>) :
+    Receiver {
+    override fun dispatch(other: Thing): List<Thing> {
+        if (clazz.isInstance(other) || clazz.isSuperclassOf(other::class)) {
+            val downcast = other as THING_TYPE
             return handler(downcast)
         }
         return emptyList()
@@ -20,24 +26,18 @@ class TypedReceiver<T : ReactiveThing>(val clazz: KClass<*>, val handler: (annou
 
 class Dispatcher {
     val receivers = mutableListOf<Receiver>()
-    fun <T : ReactiveThing> subscribe(clazz: KClass<T>, handler: (other: T) -> List<ReactiveThing>) {
-        receivers += TypedReceiver(clazz,handler)
+    fun <THING_TYPE : Thing> subscribe(clazz: KClass<THING_TYPE>, handler: (other: THING_TYPE) -> List<Thing>) {
+        receivers += TypedReceiver(clazz, handler)
     }
 
-    fun <T:ReactiveThing> interactWith(other:T):List<ReactiveThing> {
-        val result = mutableListOf<ReactiveThing>()
-        receivers.forEach { result+=  it.dispatch(other) }
+    fun <THING_TYPE : Thing> interactWith(other: THING_TYPE): List<Thing> {
+        val result = mutableListOf<Thing>()
+        receivers.forEach { result += it.dispatch(other) }
         return result
     }
 }
 
-interface Thing
-
-interface ReactiveThing : Thing {
-    fun register(dispatcher: Dispatcher)
-}
-
-class Interactor<T:ReactiveThing>(val item:T) {
+class Interactor<THING_TYPE : Thing>(val item: THING_TYPE) {
 
     val dispatcher = Dispatcher()
 
@@ -45,32 +45,31 @@ class Interactor<T:ReactiveThing>(val item:T) {
         item.register(dispatcher)
     }
 
-    fun <T:ReactiveThing> interactWith(other:Interactor<T>):List<ReactiveThing> {
+    fun <THING_TYPE : Thing> interactWith(other: Interactor<THING_TYPE>): List<Thing> {
         return dispatcher.interactWith(other.item)
     }
 }
 
-class ScoreThing(val score:Int) : ReactiveThing {
+class ScoreThing(val score: Int) : Thing {
     override fun register(dispatcher: Dispatcher) {
     }
 }
 
-class ScoreKeeperThing() : ReactiveThing {
+class ScoreKeeperThing() : Thing {
     var total = 0
 
     override fun register(dispatcher: Dispatcher) {
-        dispatcher.subscribe(ScoreThing::class,this::handle)
+        dispatcher.subscribe(ScoreThing::class, this::handle)
     }
 
-    fun handle(score:ScoreThing) : List<ReactiveThing> {
-        total+=score.score
+    fun handle(score: ScoreThing): List<Thing> {
+        total += score.score
         return emptyList()
     }
 }
 
 
 class InteractorTest {
-
     @Test
     fun `Score has no interactions`() {
         val score = Interactor(ScoreThing(0))
@@ -87,5 +86,4 @@ class InteractorTest {
         assertThat(x).isEmpty()
         assertThat(keeper.item.total).isEqualTo(100)
     }
-
 }
