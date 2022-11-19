@@ -4,7 +4,7 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
-open class SolidObject(
+open class SolidObject constructor(
     var position: Point,
     var velocity: Velocity,
 

@@ -3,7 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 
-class ScoreKeeper: BaseObject() {
+class ScoreKeeper : Drawable, BaseObject() {
     var totalScore = 0
 
     fun formatted(): String {

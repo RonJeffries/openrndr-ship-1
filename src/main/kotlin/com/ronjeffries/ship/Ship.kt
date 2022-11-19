@@ -1,6 +1,10 @@
 package com.ronjeffries.ship
 
-class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
+import org.openrndr.color.ColorRGBa
+import org.openrndr.draw.Drawer
+import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
+
+class Ship(pos: Point, control: Controls = Controls()) : Drawable, SolidObject(
     position = pos,
     velocity = Velocity.ZERO,
     killRadius = 150.0,
@@ -11,5 +15,12 @@ class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
     override fun update(deltaTime: Double): List<SpaceObject> {
         return controls.control(this, deltaTime).also { move(deltaTime) }
     }
+
+    override fun draw(drawer: Drawer) {
+        drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
+        drawer.translate(position)
+        view.draw(drawer, heading, elapsedTime)
+    }
+
 }
 
