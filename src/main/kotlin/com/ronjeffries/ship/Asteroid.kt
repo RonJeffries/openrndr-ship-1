@@ -17,7 +17,6 @@ class Asteroid(
         killRad,
         true,
         Double.MAX_VALUE,
-        Controls(),
         AsteroidFinalizer(splitCount)
     ) {
     val view = AsteroidView(2.0.pow(splitCount))

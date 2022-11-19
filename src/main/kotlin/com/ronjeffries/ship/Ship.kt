@@ -4,12 +4,11 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
-class Ship(pos: Point, control: Controls = Controls()) : Drawable, SolidObject(
+class Ship(pos: Point, val controls: Controls = Controls()) : Drawable, SolidObject(
     position = pos,
     velocity = Velocity.ZERO,
     killRadius = 150.0,
-    controls = control,
-    finalizer = ShipFinalizer(control.flags)
+    finalizer = ShipFinalizer(controls.flags)
 ) {
 
     val view = ShipView()

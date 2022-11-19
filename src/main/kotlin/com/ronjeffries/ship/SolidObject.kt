@@ -7,7 +7,6 @@ open class SolidObject(
     val killRadius: Double = -Double.MAX_VALUE,
     val isAsteroid: Boolean = false,
     override val lifetime: Double = Double.MAX_VALUE,
-    val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
 ) : BaseObject() {
     var heading: Double = 0.0
