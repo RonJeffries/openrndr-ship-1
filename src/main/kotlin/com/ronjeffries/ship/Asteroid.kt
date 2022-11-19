@@ -17,10 +17,11 @@ class Asteroid(
         killRad,
         true,
         Double.MAX_VALUE,
-        AsteroidView(2.0.pow(splitCount)),
         Controls(),
         AsteroidFinalizer(splitCount)
     ) {
+    val view = AsteroidView(2.0.pow(splitCount))
+
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)

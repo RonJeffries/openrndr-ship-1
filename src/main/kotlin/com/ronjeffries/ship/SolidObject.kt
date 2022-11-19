@@ -1,13 +1,12 @@
 package com.ronjeffries.ship
 
-open class SolidObject constructor(
+open class SolidObject(
     var position: Point,
     var velocity: Velocity,
 
     val killRadius: Double = -Double.MAX_VALUE,
     val isAsteroid: Boolean = false,
     override val lifetime: Double = Double.MAX_VALUE,
-    val view: FlyerView,
     val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
 ) : BaseObject() {

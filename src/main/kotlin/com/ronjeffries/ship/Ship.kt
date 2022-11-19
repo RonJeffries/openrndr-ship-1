@@ -8,10 +8,11 @@ class Ship(pos: Point, control: Controls = Controls()) : Drawable, SolidObject(
     position = pos,
     velocity = Velocity.ZERO,
     killRadius = 150.0,
-    view = ShipView(),
     controls = control,
     finalizer = ShipFinalizer(control.flags)
 ) {
+
+    val view = ShipView()
     override fun update(deltaTime: Double): List<SpaceObject> {
         return controls.control(this, deltaTime).also { move(deltaTime) }
     }

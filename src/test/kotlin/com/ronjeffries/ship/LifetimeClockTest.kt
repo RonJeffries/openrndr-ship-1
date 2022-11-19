@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class LifetimeClockTest {
@@ -9,12 +9,12 @@ class LifetimeClockTest {
         val missileKillRadius = 10.0
         val missilePos = Point.ZERO
         val missileVel = Velocity.ZERO
-        val missile =  SolidObject(
+        val missile = SolidObject(
             position = missilePos,
             velocity = missileVel,
             killRadius = missileKillRadius,
-            lifetime = 3.0,
-            isAsteroid = false, view = MissileView(missileKillRadius)
+            isAsteroid = false,
+            lifetime = 3.0
         )
         val clock = LifetimeClock()
         var discards = missile.interactWith(clock)

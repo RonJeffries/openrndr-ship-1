@@ -9,9 +9,9 @@ class Missile(ship: Ship) : Drawable, SolidObject(
     velocity = ship.velocity + Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading),
     killRadius = 10.0,
     lifetime = 3.0,
-    view = MissileView(10.0),
     finalizer = MissileFinalizer()
 ) {
+    val view = MissileView(10.0)
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)

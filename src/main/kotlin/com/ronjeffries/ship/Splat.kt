@@ -8,9 +8,10 @@ class Splat(missile: SolidObject) : Drawable,
     SolidObject(
         position = missile.position,
         velocity = Velocity.ZERO,
-        lifetime = 2.0,
-        view = SplatView(2.0)
+        lifetime = 2.0
     ) {
+
+    val view = SplatView(2.0)
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)

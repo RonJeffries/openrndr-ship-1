@@ -40,7 +40,7 @@ class SpaceObjectCollectionTest {
             p1
         ) // yes
         game.add(a0)
-        val m1 = SolidObject(p1, Vector2.ZERO, 10.0, view = NullView()) // yes
+        val m1 = SolidObject(p1, Vector2.ZERO, 10.0) // yes
         game.add(m1)
         val s2 = Ship(p1) // yes kr=150
         game.add(s2)

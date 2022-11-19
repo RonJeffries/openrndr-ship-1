@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
 
@@ -11,13 +11,12 @@ class UniverseTest {
         val ship = SolidObject(
             Vector2.ZERO,
             Vector2.ZERO,
-            100.0, view=NullView()
+            100.0
         )
         val asteroid = SolidObject(
             position = Vector2.ZERO,
             velocity = Vector2.ZERO,
             killRadius = 1000.0
-            , view=NullView()
         )
         assertThat(ship.interactWith(asteroid).size).describedAs("on top").isEqualTo(2)
         val tooFar = Vector2(ship.killRadius + asteroid.killRadius + 1, 0.0)
