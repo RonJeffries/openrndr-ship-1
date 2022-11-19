@@ -15,7 +15,9 @@ class ShipMaker(val ship: SolidObject) : SpaceObject() {
         return emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> = interactWith(other)
+    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
+        return interactWith(other)
+    }
 
     private fun tooClose(other:SpaceObject): Boolean {
         return if (other !is SolidObject) false
