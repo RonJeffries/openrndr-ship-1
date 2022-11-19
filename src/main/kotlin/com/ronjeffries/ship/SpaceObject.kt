@@ -2,7 +2,6 @@ package com.ronjeffries.ship
 
 interface SpaceObject {
     var elapsedTime: Double
-    val lifetime: Double
     val score: Int
 
     fun tick(deltaTime: Double): List<SpaceObject>
@@ -18,8 +17,6 @@ interface SpaceObject {
 
 open class BaseObject : SpaceObject {
     override var elapsedTime = 0.0
-    override val lifetime
-        get() = Double.MAX_VALUE
     override val score: Int
         get() = 0
 

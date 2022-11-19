@@ -7,10 +7,10 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 class Splat(missile: SolidObject) : Drawable,
     SolidObject(
         position = missile.position,
-        velocity = Velocity.ZERO,
-        lifetime = 2.0
+        velocity = Velocity.ZERO
     ) {
 
+    val lifetime = 2.0
     val view = SplatView(2.0)
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
