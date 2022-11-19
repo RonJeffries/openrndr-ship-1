@@ -1,9 +1,5 @@
 package com.ronjeffries.ship
 
-import org.openrndr.color.ColorRGBa
-import org.openrndr.draw.Drawer
-import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
-
 open class SolidObject constructor(
     var position: Point,
     var velocity: Velocity,
@@ -19,12 +15,6 @@ open class SolidObject constructor(
 
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
-    }
-
-    override fun draw(drawer: Drawer) {
-        drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
-        drawer.translate(position)
-        view.draw(drawer, heading, elapsedTime)
     }
 
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
