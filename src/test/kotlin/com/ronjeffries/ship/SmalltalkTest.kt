@@ -76,21 +76,19 @@ class Interactor<THING_TYPE : Thing>(val item: THING_TYPE) {
 class Smalltalk {
 
     val objects = mutableListOf<Interactor<*>>()
-    val thingToInteractor = mutableMapOf<Thing, Interactor<*>>()
 
     fun sendAll(message: Message, accumulator: Accumulator) {
         objects.forEach { it.receive(message, accumulator) }
     }
 
-    fun add(thing: Thing) {
+    fun add(thing: Thing): Interactor<*> {
         val interactor = Interactor(thing)
         objects.add(interactor)
-        thingToInteractor.put(thing, interactor)
+        return interactor
     }
 
-    fun send(thing: Thing, message: Message, accumulator: Accumulator) {
-        val interactor = thingToInteractor.get(thing)
-        interactor?.receive(message, accumulator)
+    fun send(interactor: Interactor<*>, message: Message, accumulator: Accumulator) {
+        interactor.receive(message, accumulator)
     }
 }
 
@@ -135,9 +133,7 @@ class SmalltalkTest {
 
     @Test
     fun `Send a score message just to the scorekeeper`() {
-        val scoreKeeper = ScoreKeeperThing()
-        smalltalk.add(scoreKeeper)
-
+        val scoreKeeper = smalltalk.add(ScoreKeeperThing())
         smalltalk.send(scoreKeeper, ScoreMessage(100), accumulator)
         assertThat(accumulator.texts).containsExactly("ScoreKeeperThing got a score 100.")
     }
