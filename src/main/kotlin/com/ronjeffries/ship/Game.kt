@@ -17,7 +17,6 @@ class Game {
         add(ship)
         add(ShipChecker(ship))
         add(ScoreKeeper())
-        add(LifetimeClock())
         add(WaveChecker())
     }
 
@@ -45,6 +44,10 @@ class Game {
         knownObjects.forEach {
             val result: Transaction = it.finishInteraction()
             buffer.accumulate(result)
+        }
+        for (toRemove in buffer.removes) {
+            val addedByFinalize = toRemove.finalize()
+            buffer.adds.addAll(addedByFinalize)
         }
         knownObjects.applyChanges(buffer)
     }

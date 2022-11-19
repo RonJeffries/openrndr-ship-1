@@ -18,4 +18,11 @@ class Splat(missile: SolidObject) : Drawable,
         view.draw(drawer, heading, elapsedTime)
     }
 
+    override fun finishInteraction(): Transaction {
+        val result = Transaction()
+        if (elapsedTime > lifetime) {
+            result.remove(this)
+        }
+        return result
+    }
 }

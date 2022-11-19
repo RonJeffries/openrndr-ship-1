@@ -23,6 +23,7 @@ class TransactionTest {
         coll.applyChanges(t)
         assertThat(coll.spaceObjects).contains(aTwo)
         assertThat(coll.spaceObjects).doesNotContain(aOne)
+        // finalizing aOne adds
         assertThat(coll.size).isEqualTo(1)
     }
 

@@ -5,8 +5,8 @@ class Transaction {
     val removes = mutableSetOf<SpaceObject>()
 
     fun accumulate(t: Transaction) {
-        t.adds.forEach {add(it)}
-        t.removes.forEach {remove(it)}
+        t.adds.forEach { add(it) }
+        t.removes.forEach { remove(it) }
     }
 
     fun add(spaceObject: SpaceObject) {
@@ -32,17 +32,17 @@ class Transaction {
         return removes.toList()[0]
     }
 
-    fun hasAdd(so:SpaceObject): Boolean {
+    fun hasAdd(so: SpaceObject): Boolean {
         return adds.contains(so)
     }
 
-    fun hasRemove(so:SpaceObject): Boolean {
+    fun hasRemove(so: SpaceObject): Boolean {
         return removes.contains(so)
     }
 
     companion object {
-        fun hyperspaceEmergence(ship: SolidObject, asteroidTally: Int) :Transaction {
-            return HyperspaceOperation(ship,asteroidTally).execute()
+        fun hyperspaceEmergence(ship: SolidObject, asteroidTally: Int): Transaction {
+            return HyperspaceOperation(ship, asteroidTally).execute()
         }
     }
 }
