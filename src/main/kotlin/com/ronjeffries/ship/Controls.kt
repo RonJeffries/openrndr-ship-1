@@ -6,7 +6,7 @@ class Controls(val flags: ControlFlags = ControlFlags()) {
         if (flags.hyperspace) {
             flags.hyperspace = false
             flags.recentHyperspace = true
-            return listOf(SolidObject.shipDestroyer(ship))
+            return listOf(ShipDestroyer(ship))
         }
         turn(ship, deltaTime)
         accelerate(ship, deltaTime)

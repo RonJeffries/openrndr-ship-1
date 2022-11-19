@@ -72,16 +72,4 @@ open class SolidObject(
         return emptyList()
     }
 
-    companion object {
-
-        fun shipDestroyer(ship: SolidObject): SolidObject {
-            return SolidObject(
-                position = ship.position,
-                velocity = Velocity.ZERO,
-                killRadius = 100.0,
-                view = NullView()
-            )
-        }
-
-    }
 }
