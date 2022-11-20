@@ -2,11 +2,9 @@ package com.ronjeffries.ship
 
 class WaveChecker : BaseObject() {
     var sawAsteroid = false
-    override val wantsToInteract: Boolean = true
-    override val interactions: InteractionStrategy = EagerInteractor()
+    override val interactions: InteractionStrategy = EagerInteractor(this::beforeInteractions)
 
-
-    override fun beginInteraction() {
+    fun beforeInteractions() {
         sawAsteroid = false
     }
 

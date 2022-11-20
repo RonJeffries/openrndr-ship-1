@@ -4,12 +4,10 @@ interface SpaceObject {
     var elapsedTime: Double
     val score: Int
     val interactions: InteractionStrategy
-    val wantsToInteract: Boolean
 
     fun tick(deltaTime: Double): List<SpaceObject>
     fun update(deltaTime: Double): List<SpaceObject>
 
-    fun beginInteraction()
     fun interactWith(other: SpaceObject): List<SpaceObject>
     fun finishInteraction(): Transaction
 
@@ -19,8 +17,6 @@ interface SpaceObject {
 abstract class BaseObject : SpaceObject {
     override var elapsedTime = 0.0
     override val score: Int = 0
-    override val wantsToInteract: Boolean = true
-
 
     override fun tick(deltaTime: Double): List<SpaceObject> {
         elapsedTime += deltaTime
@@ -32,7 +28,6 @@ abstract class BaseObject : SpaceObject {
         return emptyList()
     }
 
-    override fun beginInteraction() {}
 
     override fun finishInteraction(): Transaction = Transaction()
 

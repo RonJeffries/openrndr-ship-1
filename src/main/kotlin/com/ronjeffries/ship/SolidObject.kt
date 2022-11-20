@@ -9,7 +9,6 @@ abstract class SolidObject(
     val finalizer: IFinalizer = DefaultFinalizer()
 ) : BaseObject() {
     var heading: Double = 0.0
-    override val wantsToInteract: Boolean = false
 
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()

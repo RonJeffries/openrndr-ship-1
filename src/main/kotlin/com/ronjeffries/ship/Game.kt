@@ -21,7 +21,7 @@ class Game {
     }
 
     private fun forceOneInteraction(first: SpaceObject, second: SpaceObject): List<SpaceObject> {
-        if (first.wantsToInteract) return first.interactWith(second)
+        if (first.interactions.wantsToInteract) return first.interactWith(second)
         else return second.interactWith(first)
     }
 
@@ -49,7 +49,9 @@ class Game {
     }
 
     private fun beginInteractions() {
-        knownObjects.forEach { it.beginInteraction() }
+        knownObjects.forEach {
+            it.interactions.beforeInteractions()
+        }
     }
 
     private fun finishInteractions() {

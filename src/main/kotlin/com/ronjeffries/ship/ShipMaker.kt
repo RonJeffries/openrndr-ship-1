@@ -4,9 +4,9 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
     var safeToEmerge = true
     var asteroidTally = 0
 
-    override val interactions: InteractionStrategy = EagerInteractor()
+    override val interactions: InteractionStrategy = EagerInteractor(this::beforeInteractions)
 
-    override fun beginInteraction() {
+    fun beforeInteractions() {
         safeToEmerge = true
         asteroidTally = 0
     }

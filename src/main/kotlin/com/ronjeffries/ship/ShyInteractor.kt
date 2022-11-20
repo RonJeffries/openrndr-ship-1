@@ -1,5 +1,5 @@
 package com.ronjeffries.ship
 
-class ShyInteractor : InteractionStrategy {
+class ShyInteractor(override val beforeInteractions: () -> Unit = {}) : InteractionStrategy {
     override val wantsToInteract: Boolean = false
 }

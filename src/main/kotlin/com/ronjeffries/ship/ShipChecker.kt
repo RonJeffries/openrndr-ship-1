@@ -2,10 +2,10 @@ package com.ronjeffries.ship
 
 class ShipChecker(val ship: SolidObject) : BaseObject() {
     private var missingShip = true
-    override val interactions: InteractionStrategy = EagerInteractor()
+    override val interactions: InteractionStrategy = EagerInteractor(this::beforeInteractions)
 
 
-    override fun beginInteraction() {
+    fun beforeInteractions() {
         missingShip = true
     }
 
