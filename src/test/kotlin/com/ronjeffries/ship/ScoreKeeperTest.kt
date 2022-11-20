@@ -1,6 +1,7 @@
 package com.ronjeffries.ship
 
 import org.assertj.core.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class ScoreKeeperTest {
@@ -27,6 +28,7 @@ class ScoreKeeperTest {
         assertThat(keeper.formatted()).isEqualTo("00020")
     }
 
+    @Disabled("False case: scorekeepers want interaction, scores don't")
     @Test
     fun `scorekeeper captures other vs keeper`() {
         val score = Score(20)

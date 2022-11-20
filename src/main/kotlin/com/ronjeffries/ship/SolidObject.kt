@@ -9,13 +9,18 @@ open class SolidObject(
     val finalizer: IFinalizer = DefaultFinalizer()
 ) : BaseObject() {
     var heading: Double = 0.0
+    override val wantsToInteract: Boolean = false
 
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
-        return other.interactWithOther(this)
+        // other guaranteed to be a SolidObject?
+        if (other is SolidObject && weAreCollidingWith(other)) {
+            return listOf(this, other)
+        }
+        return emptyList()
     }
 
     override fun interactWithOther(other: SpaceObject): List<SpaceObject> {

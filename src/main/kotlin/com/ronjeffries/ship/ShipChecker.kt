@@ -2,13 +2,14 @@ package com.ronjeffries.ship
 
 class ShipChecker(val ship: SolidObject) : BaseObject() {
     private var missingShip = true
+    override val wantsToInteract = true
 
     override fun beginInteraction() {
         missingShip = true
     }
 
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
-        if ( other == ship ) missingShip = false
+        if (other == ship) missingShip = false
         return emptyList()
     }
 
@@ -18,7 +19,7 @@ class ShipChecker(val ship: SolidObject) : BaseObject() {
 
     override fun finishInteraction(): Transaction {
         val trans = Transaction()
-        if ( missingShip ) {
+        if (missingShip) {
             trans.add(ShipMaker(ship))
             trans.remove(this)
         }

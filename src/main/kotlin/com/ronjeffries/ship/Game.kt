@@ -10,7 +10,21 @@ class Game {
 
     fun add(newObject: SpaceObject) = knownObjects.add(newObject)
 
-    fun colliders() = knownObjects.collectFromPairs { f1, f2 -> f1.interactWith(f2) }
+    fun colliders(): Set<SpaceObject> {
+        val pairs = knownObjects.pairsToCheck()
+        val result = mutableSetOf<SpaceObject>()
+        pairs.forEach {
+            if (it.first == it.second) println("From pairsToCheck")
+            result += forceOneInteraction(it.first, it.second)
+        }
+        return result
+    }
+
+    private fun forceOneInteraction(first: SpaceObject, second: SpaceObject): List<SpaceObject> {
+        if (first == second) println("WTF?")
+        if (first.wantsToInteract) return first.interactWith(second)
+        else return second.interactWith(first)
+    }
 
     fun createContents(controlFlags: ControlFlags) {
         val ship = newShip(controlFlags)

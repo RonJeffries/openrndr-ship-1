@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 interface SpaceObject {
     var elapsedTime: Double
     val score: Int
+    val wantsToInteract: Boolean
 
     fun tick(deltaTime: Double): List<SpaceObject>
     fun update(deltaTime: Double): List<SpaceObject>
@@ -17,8 +18,9 @@ interface SpaceObject {
 
 abstract class BaseObject : SpaceObject {
     override var elapsedTime = 0.0
-    override val score: Int
-        get() = 0
+    override val score: Int = 0
+    override val wantsToInteract: Boolean = true
+
 
     override fun tick(deltaTime: Double): List<SpaceObject> {
         elapsedTime += deltaTime

@@ -1,7 +1,8 @@
 package com.ronjeffries.ship
 
-class WaveChecker: BaseObject() {
+class WaveChecker : BaseObject() {
     var sawAsteroid = false
+    override val wantsToInteract: Boolean = true
 
     override fun beginInteraction() {
         sawAsteroid = false
@@ -18,11 +19,11 @@ class WaveChecker: BaseObject() {
     }
 
     override fun finishInteraction(): Transaction {
-        if ( elapsedTime > 1.0  ) {
+        if (elapsedTime > 1.0) {
             elapsedTime = 0.0
             if (!sawAsteroid) {
                 elapsedTime = -5.0 // judicious delay to allow time for creation
-                return Transaction().also {it.add(WaveMaker(4))}
+                return Transaction().also { it.add(WaveMaker(4)) }
             }
         }
         return Transaction()
