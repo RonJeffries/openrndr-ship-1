@@ -14,7 +14,7 @@ class SolidObjectTest {
     fun `Ship Happens`() {
         val ship = SolidObject.ship(Vector2.ZERO)
         ship.velocity = Vector2(120.0,120.0)
-        ship.tick(tick)
+        ship.tick(tick, Transaction())
         assertThat(ship.position).isEqualTo(Vector2(2.0,2.0))
     }
 
@@ -22,7 +22,7 @@ class SolidObjectTest {
     fun `capping works high`() {
         val ship = SolidObject.ship(Vector2(U.UNIVERSE_SIZE-1, U.UNIVERSE_SIZE/2))
         ship.velocity = Vector2(120.0,120.0)
-        ship.tick(tick)
+        ship.tick(tick, Transaction())
         assertThat(ship.position.x).isEqualTo(1.0)
         assertThat(ship.position.y).isEqualTo(U.UNIVERSE_SIZE/2+2)
     }
@@ -31,7 +31,7 @@ class SolidObjectTest {
     fun `capping works low`() {
         val ship = SolidObject.ship( Vector2(1.0, U.UNIVERSE_SIZE/2))
         ship.velocity = Vector2(-120.0, -120.0)
-        ship.tick(tick)
+        ship.tick(tick, Transaction())
         assertThat(ship.position.x).isEqualTo(U.UNIVERSE_SIZE-1)
         assertThat(ship.position.y).isEqualTo(U.UNIVERSE_SIZE/2 - 2)
     }
@@ -42,11 +42,11 @@ class SolidObjectTest {
         val ship = SolidObject.ship(Vector2.ZERO, control)
         assertThat(ship.position).isEqualTo(Vector2.ZERO)
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
-        ship.tick(tick)
+        ship.tick(tick, Transaction())
         assertThat(ship.position).isEqualTo(Vector2.ZERO)
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
         control.accelerate = true
-        ship.tick(tick)
+        ship.tick(tick, Transaction())
         val deltaXPerSecond = U.SHIP_ACCELERATION.x
         checkVector(ship.velocity, Vector2.UNIT_X*deltaXPerSecond/60.0, "velocity")
         checkVector(ship.position, Vector2(deltaXPerSecond/60.0/60.0, 0.0), "position")
@@ -57,13 +57,13 @@ class SolidObjectTest {
         val control = Controls()
         val ship = SolidObject.ship(Vector2.ZERO, control)
         control.left = true
-        ship.tick(tick*30)
+        ship.tick(tick*30, Transaction())
         val expected = U.SHIP_ROTATION_SPEED*30.0/60.0
         assertThat(ship.heading).isEqualTo(-expected, within(0.01))
         control.left = false
         control.accelerate  = true
         val expectedVelocity = U.SHIP_ACCELERATION.rotate(-expected)
-        ship.tick(tick*60)
+        ship.tick(tick*60, Transaction())
         checkVector(ship.velocity, expectedVelocity, "rotated velocity")
     }
 
@@ -72,7 +72,7 @@ class SolidObjectTest {
         val control = Controls()
         val ship = SolidObject.ship(Vector2.ZERO, control)
         control.right = true
-        ship.tick(tick*10)
+        ship.tick(tick*10, Transaction())
         val expected = U.SHIP_ROTATION_SPEED*10.0/60.0
         assertThat(ship.heading).isEqualTo(expected, within(0.01))
     }
@@ -83,7 +83,7 @@ class SolidObjectTest {
         val ship = SolidObject.ship(Vector2.ZERO, control)
         ship.heading = -60.0 // northeast ish
         control.accelerate = true
-        ship.tick(100.0) // long time
+        ship.tick(100.0, Transaction()) // long time
         val v = ship.velocity
         val speed = v.length
         assertThat(speed).isEqualTo(5000.0, within(1.0))
@@ -97,7 +97,8 @@ class SolidObjectTest {
         val controls = Controls()
         val ship = SolidObject.ship(Vector2.ZERO, controls)
         controls.fire = true
-        val newMissiles = ship.tick(tick)
+        val newMissiles = Transaction()
+        ship.tick(tick, newMissiles)
         assertThat(newMissiles.adds.size).isEqualTo(1) // does not return itself
     }
 
@@ -106,15 +107,18 @@ class SolidObjectTest {
         val controls = Controls()
         val ship = SolidObject.ship(Vector2.ZERO, controls)
         controls.fire = true
-        var newMissiles = ship.tick(tick)
-        assertThat(newMissiles.adds.size).isEqualTo(1)
-        newMissiles = ship.tick(tick)
-        assertThat(newMissiles.adds.size).isEqualTo(0) // no firing
+        val oneMissile = Transaction()
+        ship.tick(tick, oneMissile)
+        assertThat(oneMissile.adds.size).isEqualTo(1)
+        val noMissiles = Transaction()
+        ship.tick(tick, noMissiles)
+        assertThat(noMissiles.adds.size).isEqualTo(0) // no firing
         controls.fire = false
-        newMissiles = ship.tick(tick)
+        val newMissiles = Transaction()
+        ship.tick(tick, newMissiles)
         assertThat(newMissiles.adds.size).isEqualTo(0)
         controls.fire = true
-        newMissiles = ship.tick(tick)
+        ship.tick(tick, newMissiles)
         assertThat(newMissiles.adds.size).isEqualTo(1)
     }
 
@@ -184,18 +188,21 @@ class SolidObjectTest {
         controls.fire = true
         val missileOffset = Vector2(2*150.0+2*10.0, 0.0)
         var expectedPosition  = ship.position + missileOffset.rotate(ship.heading)
-        var additions = ship.tick(sixtieth)
+        var additions = Transaction()
+        ship.tick(sixtieth, additions)
         assertThat(additions.adds).isNotEmpty
         var missile = additions.adds.first() as SolidObject
         print(missile.position)
         assertThat(missile.position).isEqualTo(expectedPosition)
         controls.fire = false
-        additions = ship.tick(sixtieth)
+        additions = Transaction()
+        ship.tick(sixtieth, additions)
         assertThat(additions.adds).isEmpty()
         ship.heading = 90.0
         controls.fire = true
         expectedPosition  = ship.position + missileOffset.rotate(ship.heading)
-        additions = ship.tick(sixtieth)
+        additions = Transaction()
+        ship.tick(sixtieth, additions)
         assertThat(additions.adds).isNotEmpty
         missile = additions.adds.first() as SolidObject
         print(missile.position)

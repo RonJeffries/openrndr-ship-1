@@ -13,7 +13,7 @@ class AsteroidTest {
             pos = Point.ZERO,
             vel = Velocity(15.0,30.0)
         )
-        asteroid.tick(tick*60)
+        asteroid.tick(tick*60, Transaction())
         checkVector(asteroid.position, Point(15.0, 30.0),"asteroid position")
     }
 

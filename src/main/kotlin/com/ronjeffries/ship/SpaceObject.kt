@@ -9,9 +9,9 @@ abstract class SpaceObject {
     open val score: Int
         get() = 0
 
-    fun tick(deltaTime: Double): Transaction {
+    fun tick(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
-        return update(deltaTime)
+        trans.accumulate( update(deltaTime))
     }
 
     // defaulted, sometimes overridden

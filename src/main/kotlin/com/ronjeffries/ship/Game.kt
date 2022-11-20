@@ -5,7 +5,6 @@ import org.openrndr.draw.isolated
 
 class Game {
     val knownObjects = SpaceObjectCollection()
-    private val cumulativeTransactionFromUpdates = Transaction()
     private var lastTime = 0.0
 
     fun add(newObject: SpaceObject) = knownObjects.add(newObject)
@@ -58,8 +57,8 @@ class Game {
     }
 
     fun tick(deltaTime: Double) {
-        knownObjects.applyChanges(cumulativeTransactionFromUpdates)
-        cumulativeTransactionFromUpdates.clear()
-        knownObjects.forEach { cumulativeTransactionFromUpdates.accumulate(it.tick(deltaTime)) }
+        val trans = Transaction()
+        knownObjects.forEach { it.tick(deltaTime, trans) }
+        knownObjects.applyChanges(trans)
     }
 }
