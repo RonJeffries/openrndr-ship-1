@@ -10,7 +10,7 @@ class Splat(missile: SolidObject) : Drawable,
         velocity = Velocity.ZERO
     ) {
 
-    override val interactions: InteractionStrategy = ShyInteractor()
+    override val interactions: InteractionStrategy = ShyInteractor(afterInteractions = this::afterInteractions)
 
     val lifetime = 2.0
     val view = SplatView(2.0)
@@ -20,7 +20,7 @@ class Splat(missile: SolidObject) : Drawable,
         view.draw(drawer, heading, elapsedTime)
     }
 
-    override fun finishInteraction(): Transaction {
+    fun afterInteractions(): Transaction {
         val result = Transaction()
         if (elapsedTime > lifetime) {
             result.remove(this)

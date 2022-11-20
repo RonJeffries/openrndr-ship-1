@@ -4,7 +4,7 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
     var safeToEmerge = true
     var asteroidTally = 0
 
-    override val interactions: InteractionStrategy = EagerInteractor(this::beforeInteractions)
+    override val interactions: InteractionStrategy = EagerInteractor(this::beforeInteractions, this::afterInteractions)
 
     fun beforeInteractions() {
         safeToEmerge = true
@@ -24,7 +24,7 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
         else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
 
-    override fun finishInteraction(): Transaction {
+    fun afterInteractions(): Transaction {
         return if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
             replaceTheShip()
         } else {

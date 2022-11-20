@@ -11,7 +11,7 @@ class Missile(ship: Ship) : Drawable, SolidObject(
     finalizer = MissileFinalizer()
 ) {
 
-    override val interactions: InteractionStrategy = ShyInteractor()
+    override val interactions: InteractionStrategy = ShyInteractor(afterInteractions = this::afterInteractions)
 
     val lifetime = 3.0
     val view = MissileView(10.0)
@@ -21,7 +21,7 @@ class Missile(ship: Ship) : Drawable, SolidObject(
         view.draw(drawer, heading, elapsedTime)
     }
 
-    override fun finishInteraction(): Transaction {
+    fun afterInteractions(): Transaction {
         val result = Transaction()
         if (elapsedTime > lifetime) {
             result.remove(this)

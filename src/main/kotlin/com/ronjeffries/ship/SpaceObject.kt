@@ -9,7 +9,6 @@ interface SpaceObject {
     fun update(deltaTime: Double): List<SpaceObject>
 
     fun interactWith(other: SpaceObject): List<SpaceObject>
-    fun finishInteraction(): Transaction
 
     fun finalize(): List<SpaceObject>
 }
@@ -27,9 +26,6 @@ abstract class BaseObject : SpaceObject {
     override fun update(deltaTime: Double): List<SpaceObject> {
         return emptyList()
     }
-
-
-    override fun finishInteraction(): Transaction = Transaction()
 
     override fun finalize(): List<SpaceObject> {
         return emptyList()

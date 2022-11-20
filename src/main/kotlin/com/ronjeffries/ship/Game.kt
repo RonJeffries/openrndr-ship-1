@@ -57,7 +57,7 @@ class Game {
     private fun finishInteractions() {
         val buffer = Transaction()
         knownObjects.forEach {
-            val result: Transaction = it.finishInteraction()
+            val result: Transaction = it.interactions.afterInteractions()
             buffer.accumulate(result)
         }
         for (toRemove in buffer.removes) {
