@@ -11,11 +11,11 @@ abstract class SpaceObject {
 
     fun tick(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
-        trans.accumulate( update(deltaTime))
+        update(deltaTime,trans)
     }
 
     // defaulted, sometimes overridden
-    open fun update(deltaTime: Double): Transaction { return Transaction() }
+    open fun update(deltaTime: Double, trans: Transaction) { }
 
     open fun beginInteraction() {}
     open fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }

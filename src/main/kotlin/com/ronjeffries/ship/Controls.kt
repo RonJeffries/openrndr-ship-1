@@ -8,15 +8,15 @@ class Controls {
     var hyperspace = false
     var recentHyperspace = false
 
-    fun control(ship: SolidObject, deltaTime: Double): Transaction {
+    fun control(ship: SolidObject, deltaTime: Double, trans: Transaction) {
         if (hyperspace) {
             hyperspace = false
             recentHyperspace = true
-            return Transaction().also{ it.addAll(listOf(SolidObject.shipDestroyer(ship))) }
+            trans.addAll(listOf(SolidObject.shipDestroyer(ship)))
         }
         turn(ship, deltaTime)
         accelerate(ship, deltaTime)
-        return Transaction().also { it.addAll(fire(ship)) }
+        trans.addAll(fire(ship))
     }
 
     private fun accelerate(obj:SolidObject, deltaTime: Double) {

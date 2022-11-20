@@ -73,8 +73,9 @@ class SolidObject(
         heading += degrees
     }
 
-    override fun update(deltaTime: Double): Transaction {
-        return controls.control(this, deltaTime).also { move(deltaTime) }
+    override fun update(deltaTime: Double, trans: Transaction) {
+        controls.control(this, deltaTime, trans)
+        move(deltaTime)
     }
 
     companion object {
