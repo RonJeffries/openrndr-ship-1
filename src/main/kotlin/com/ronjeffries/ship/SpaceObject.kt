@@ -15,7 +15,7 @@ interface SpaceObject {
     fun finalize(): List<SpaceObject>
 }
 
-open class BaseObject : SpaceObject {
+abstract class BaseObject : SpaceObject {
     override var elapsedTime = 0.0
     override val score: Int
         get() = 0
@@ -31,13 +31,13 @@ open class BaseObject : SpaceObject {
     }
 
     override fun beginInteraction() {}
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
-        return emptyList()
-    }
+//    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+//        return emptyList()
+//    }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return emptyList()
-    }
+//    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
+//        return emptyList()
+//    }
 
     override fun finishInteraction(): Transaction = Transaction()
 

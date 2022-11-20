@@ -1,7 +1,11 @@
 package com.ronjeffries.ship
 
-class Score(override val score: Int): BaseObject() {
+class Score(override val score: Int) : BaseObject() {
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
         return other.interactWithOther(this)
+    }
+
+    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
+        return emptyList()
     }
 }
