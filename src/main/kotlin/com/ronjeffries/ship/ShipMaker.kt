@@ -34,6 +34,6 @@ class ShipMaker(val ship: SolidObject) : SpaceObject() {
         trans.add(ship)
         trans.add(ShipChecker(ship))
         trans.remove(this)
-        trans.accumulate(Transaction.hyperspaceEmergence(ship,asteroidTally))
+        HyperspaceOperation(ship, asteroidTally).execute(trans)
     }
 }
