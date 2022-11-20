@@ -5,4 +5,6 @@ class ShipDestroyer(ship: SolidObject) : SolidObject(
     velocity = Velocity.ZERO,
     killRadius = 100.0
 ) {
+
+    override val interactions: InteractionStrategy = ShyInteractor()
 }

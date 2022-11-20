@@ -10,6 +10,8 @@ class Splat(missile: SolidObject) : Drawable,
         velocity = Velocity.ZERO
     ) {
 
+    override val interactions: InteractionStrategy = ShyInteractor()
+
     val lifetime = 2.0
     val view = SplatView(2.0)
     override fun draw(drawer: Drawer) {

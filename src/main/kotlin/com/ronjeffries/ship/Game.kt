@@ -21,7 +21,6 @@ class Game {
     }
 
     private fun forceOneInteraction(first: SpaceObject, second: SpaceObject): List<SpaceObject> {
-        if (first == second) println("WTF?")
         if (first.wantsToInteract) return first.interactWith(second)
         else return second.interactWith(first)
     }

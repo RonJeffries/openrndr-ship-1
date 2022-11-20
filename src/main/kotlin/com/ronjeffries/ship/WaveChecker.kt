@@ -3,6 +3,8 @@ package com.ronjeffries.ship
 class WaveChecker : BaseObject() {
     var sawAsteroid = false
     override val wantsToInteract: Boolean = true
+    override val interactions: InteractionStrategy = EagerInteractor()
+
 
     override fun beginInteraction() {
         sawAsteroid = false

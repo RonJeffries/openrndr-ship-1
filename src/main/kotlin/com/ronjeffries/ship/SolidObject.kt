@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-open class SolidObject(
+abstract class SolidObject(
     var position: Point,
     var velocity: Velocity,
 

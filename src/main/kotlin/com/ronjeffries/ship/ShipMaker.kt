@@ -4,6 +4,8 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
     var safeToEmerge = true
     var asteroidTally = 0
 
+    override val interactions: InteractionStrategy = EagerInteractor()
+
     override fun beginInteraction() {
         safeToEmerge = true
         asteroidTally = 0

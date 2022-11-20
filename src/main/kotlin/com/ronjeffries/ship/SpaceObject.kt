@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 interface SpaceObject {
     var elapsedTime: Double
     val score: Int
+    val interactions: InteractionStrategy
     val wantsToInteract: Boolean
 
     fun tick(deltaTime: Double): List<SpaceObject>

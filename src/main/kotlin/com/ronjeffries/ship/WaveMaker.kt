@@ -3,6 +3,8 @@ package com.ronjeffries.ship
 class WaveMaker(val numberToCreate: Int = 8) : BaseObject() {
     var done = false
 
+    override val interactions: InteractionStrategy = EagerInteractor()
+
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
         return if (done) listOf(this)
         else emptyList()

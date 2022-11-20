@@ -5,6 +5,7 @@ import org.openrndr.draw.Drawer
 
 class ScoreKeeper : Drawable, BaseObject() {
     var totalScore = 0
+    override val interactions: InteractionStrategy = EagerInteractor()
 
     fun formatted(): String {
         return ("00000" + totalScore.toShort()).takeLast(5)

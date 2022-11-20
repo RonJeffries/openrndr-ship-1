@@ -139,7 +139,6 @@ class SolidObjectTest {
         val a0 = Asteroid(
             p1
         ) // yes
-        val m1 = SolidObject(p1, Velocity.ZERO, 10.0) // yes
         val s2 = Ship(p1) // yes
         val a3 = Asteroid(
             p2
@@ -147,7 +146,7 @@ class SolidObjectTest {
         val a4 = Asteroid(
             p2
         ) // no
-        val objects = mutableListOf(a0, m1, s2, a3, a4)
+        val objects = mutableListOf(a0, s2, a3, a4)
         val shouldDie = mutableSetOf<SpaceObject>()
         var ct = 0
         for (i in 0 until objects.size - 1) {
@@ -163,38 +162,38 @@ class SolidObjectTest {
         assertThat(shouldDie.size).isEqualTo(3)
     }
 
-    @Test
-    fun `collision PLAIN LOOP test better`() {
-        val p1 = Vector2(100.0, 100.0)
-        val p2 = Vector2(750.0, 500.0)
-        val v = Vector2.ZERO
-        val a0 = Asteroid(
-            p1,
-            v
-        ) // yes
-        val m1 = SolidObject(p1, v, 10.0) // yes
-        val s2 = Ship(p1) // yes
-        val a3 = Asteroid(
-            p2,
-            v
-        ) // no
-        val a4 = Asteroid(
-            p2,
-            v
-        ) // no
-        val objects = mutableListOf(a0, m1, s2, a3, a4)
-        val shouldDie = mutableSetOf<SpaceObject>()
-        var ct = 0
-        for (oi in objects) {
-            for (oj in objects) {
-                ct += 1
-                shouldDie.addAll(oi.interactWith(oj))
-            }
-        }
-        val n = objects.size
-        assertThat(ct).isEqualTo(n * n)
-        assertThat(shouldDie.size).isEqualTo(3)
-    }
+//    @Test
+//    fun `collision PLAIN LOOP test better`() {
+//        val p1 = Vector2(100.0, 100.0)
+//        val p2 = Vector2(750.0, 500.0)
+//        val v = Vector2.ZERO
+//        val a0 = Asteroid(
+//            p1,
+//            v
+//        ) // yes
+//        val m1 = SolidObject(p1, v, 10.0) // yes
+//        val s2 = Ship(p1) // yes
+//        val a3 = Asteroid(
+//            p2,
+//            v
+//        ) // no
+//        val a4 = Asteroid(
+//            p2,
+//            v
+//        ) // no
+//        val objects = mutableListOf(a0, m1, s2, a3, a4)
+//        val shouldDie = mutableSetOf<SpaceObject>()
+//        var ct = 0
+//        for (oi in objects) {
+//            for (oj in objects) {
+//                ct += 1
+//                shouldDie.addAll(oi.interactWith(oj))
+//            }
+//        }
+//        val n = objects.size
+//        assertThat(ct).isEqualTo(n * n)
+//        assertThat(shouldDie.size).isEqualTo(3)
+//    }
 
     @Test
     fun `missile starts ahead of ship`() {
