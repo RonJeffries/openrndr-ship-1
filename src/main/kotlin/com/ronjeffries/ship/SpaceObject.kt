@@ -20,7 +20,7 @@ abstract class SpaceObject {
     open fun beginInteraction() {}
     open fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
     open fun interactWithOther(other: SpaceObject): List<SpaceObject>{ return emptyList() }
-    open fun finishInteraction(): Transaction = Transaction()
+    open fun finishInteraction(trans: Transaction) {}
 
     open fun draw(drawer: Drawer) {}
     open fun finalize(): List<SpaceObject> { return emptyList() }
