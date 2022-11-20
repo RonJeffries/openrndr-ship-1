@@ -14,7 +14,7 @@ abstract class SolidObject(
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    fun interact(other: SpaceObject): List<SpaceObject> {
         // other guaranteed to be a SolidObject?
         if (other is SolidObject && weAreCollidingWith(other)) {
             return listOf(this, other)
@@ -22,7 +22,7 @@ abstract class SolidObject(
         return emptyList()
     }
 
-    private fun weAreCollidingWith(other: SpaceObject) = weCanCollideWith(other) && weAreInRange(other)
+    fun weAreCollidingWith(other: SpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
     private fun weCanCollideWith(other: SpaceObject): Boolean {
         return if (other !is SolidObject) false

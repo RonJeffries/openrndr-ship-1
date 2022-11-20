@@ -20,7 +20,7 @@ class Asteroid(
     ) {
     val view = AsteroidView(2.0.pow(splitCount))
 
-    override val interactions: InteractionStrategy = ShyInteractor()
+    override val interactions: InteractionStrategy = ShyInteractor(interactWith = this::interact)
 
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE

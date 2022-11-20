@@ -14,15 +14,14 @@ class Game {
         val pairs = knownObjects.pairsToCheck()
         val result = mutableSetOf<SpaceObject>()
         pairs.forEach {
-            if (it.first == it.second) println("From pairsToCheck")
             result += forceOneInteraction(it.first, it.second)
         }
         return result
     }
 
     private fun forceOneInteraction(first: SpaceObject, second: SpaceObject): List<SpaceObject> {
-        if (first.interactions.wantsToInteract) return first.interactWith(second)
-        else return second.interactWith(first)
+        if (first.interactions.wantsToInteract) return first.interactions.interactWith(second)
+        else return second.interactions.interactWith(first)
     }
 
     fun createContents(controlFlags: ControlFlags) {

@@ -11,7 +11,7 @@ class Ship(pos: Point, val controls: Controls = Controls()) : Drawable, SolidObj
     finalizer = ShipFinalizer(controls.flags)
 ) {
 
-    override val interactions: InteractionStrategy = ShyInteractor()
+    override val interactions: InteractionStrategy = ShyInteractor(interactWith = this::interact)
 
     val view = ShipView()
     override fun update(deltaTime: Double): List<SpaceObject> {

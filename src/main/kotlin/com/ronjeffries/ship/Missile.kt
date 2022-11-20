@@ -11,7 +11,10 @@ class Missile(ship: Ship) : Drawable, SolidObject(
     finalizer = MissileFinalizer()
 ) {
 
-    override val interactions: InteractionStrategy = ShyInteractor(afterInteractions = this::afterInteractions)
+    override val interactions: InteractionStrategy = ShyInteractor(
+        afterInteractions = this::afterInteractions,
+        interactWith = this::interact
+    )
 
     val lifetime = 3.0
     val view = MissileView(10.0)

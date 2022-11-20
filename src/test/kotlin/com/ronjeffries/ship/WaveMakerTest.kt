@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class WaveMakerTest {
@@ -11,7 +11,7 @@ class WaveMakerTest {
         assertThat(toCreate.size).isEqualTo(7)
         var toDestroy = wm.interactWithOther(wm)
         assertThat(toDestroy[0]).isEqualTo(wm)
-        toDestroy = wm.interactWith(wm)
+        toDestroy = wm.interactions.interactWith(wm)
         assertThat(toDestroy[0]).isEqualTo(wm)
     }
 }

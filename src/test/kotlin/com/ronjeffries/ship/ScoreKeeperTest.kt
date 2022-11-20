@@ -22,7 +22,7 @@ class ScoreKeeperTest {
     fun `scorekeeper captures keeper vs other`() {
         val score = Score(20)
         val keeper = ScoreKeeper()
-        val discards = keeper.interactWith(score)
+        val discards = keeper.interactions.interactWith(score)
         assertThat(discards.size).isEqualTo(1)
         assertThat(discards).contains(score)
         assertThat(keeper.formatted()).isEqualTo("00020")
@@ -33,7 +33,7 @@ class ScoreKeeperTest {
     fun `scorekeeper captures other vs keeper`() {
         val score = Score(20)
         val keeper = ScoreKeeper()
-        val discards = score.interactWith(keeper)
+        val discards = score.interactions.interactWith(keeper)
         assertThat(discards.size).isEqualTo(1)
         assertThat(discards).contains(score)
         assertThat(keeper.formatted()).isEqualTo("00020")

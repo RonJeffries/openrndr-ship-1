@@ -9,7 +9,7 @@ class ShipCheckerAndMakerTest {
         val ship = Ship(U.randomPoint())
         val checker = ShipChecker(ship)
         checker.interactions.beforeInteractions()
-        val nothing = checker.interactWith(ship)
+        val nothing = checker.interactions.interactWith(ship)
         assertThat(nothing).isEmpty()
         val emptyTransaction = checker.interactions.afterInteractions()
         assertThat(emptyTransaction.adds).isEmpty()
@@ -124,7 +124,7 @@ class ShipCheckerAndMakerTest {
         val ship = Ship(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
         maker.interactions.beforeInteractions()
-        maker.interactWith(a)
+        maker.interactions.interactWith(a)
         maker.interactWithOther(a)
         assertThat(maker.asteroidTally).isEqualTo(2)
     }

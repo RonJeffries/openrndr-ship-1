@@ -5,13 +5,13 @@ import org.openrndr.draw.Drawer
 
 class ScoreKeeper : Drawable, BaseObject() {
     var totalScore = 0
-    override val interactions: InteractionStrategy = EagerInteractor()
+    override val interactions: InteractionStrategy = EagerInteractor(interactWith = this::interact)
 
     fun formatted(): String {
         return ("00000" + totalScore.toShort()).takeLast(5)
     }
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    fun interact(other: SpaceObject): List<SpaceObject> {
         if (other.score > 0) {
             totalScore += other.score
             return listOf(other)

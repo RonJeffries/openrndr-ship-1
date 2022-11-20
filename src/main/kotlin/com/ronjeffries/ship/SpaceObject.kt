@@ -8,8 +8,6 @@ interface SpaceObject {
     fun tick(deltaTime: Double): List<SpaceObject>
     fun update(deltaTime: Double): List<SpaceObject>
 
-    fun interactWith(other: SpaceObject): List<SpaceObject>
-
     fun finalize(): List<SpaceObject>
 }
 

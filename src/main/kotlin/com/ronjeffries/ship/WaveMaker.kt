@@ -3,15 +3,15 @@ package com.ronjeffries.ship
 class WaveMaker(val numberToCreate: Int = 8) : BaseObject() {
     var done = false
 
-    override val interactions: InteractionStrategy = EagerInteractor()
+    override val interactions: InteractionStrategy = EagerInteractor(interactWith = this::interact)
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    fun interact(other: SpaceObject): List<SpaceObject> {
         return if (done) listOf(this)
         else emptyList()
     }
 
     fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return this.interactWith(other)
+        return this.interactions.interactWith(other)
     }
 
     override fun update(deltaTime: Double): List<SpaceObject> {

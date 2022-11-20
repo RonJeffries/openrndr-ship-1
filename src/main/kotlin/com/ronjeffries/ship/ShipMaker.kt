@@ -4,20 +4,24 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
     var safeToEmerge = true
     var asteroidTally = 0
 
-    override val interactions: InteractionStrategy = EagerInteractor(this::beforeInteractions, this::afterInteractions)
+    override val interactions: InteractionStrategy = EagerInteractor(
+        this::beforeInteractions,
+        this::afterInteractions,
+        this::interact
+    )
 
     fun beforeInteractions() {
         safeToEmerge = true
         asteroidTally = 0
     }
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    fun interact(other: SpaceObject): List<SpaceObject> {
         if (other is SolidObject && other.isAsteroid) asteroidTally += 1
         if (tooClose(other)) safeToEmerge = false
         return emptyList()
     }
 
-    fun interactWithOther(other: SpaceObject): List<SpaceObject> = interactWith(other)
+    fun interactWithOther(other: SpaceObject): List<SpaceObject> = interactions.interactWith(other)
 
     private fun tooClose(other: SpaceObject): Boolean {
         return if (other !is SolidObject) false

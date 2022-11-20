@@ -36,7 +36,7 @@ class WaveCheckerTest {
         val ck = WaveChecker()
         ck.tick(1.1)
         ck.interactions.beforeInteractions()
-        ck.interactWith(a)
+        ck.interactions.interactWith(a)
         val trans = ck.finishInteraction()
         assertThat(trans.adds).isEmpty()
         assertThat(trans.removes).isEmpty()

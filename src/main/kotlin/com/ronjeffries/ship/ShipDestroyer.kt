@@ -6,5 +6,5 @@ class ShipDestroyer(ship: SolidObject) : SolidObject(
     killRadius = 100.0
 ) {
 
-    override val interactions: InteractionStrategy = ShyInteractor()
+    override val interactions: InteractionStrategy = ShyInteractor(interactWith = this::interact)
 }
