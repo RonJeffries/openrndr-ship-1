@@ -18,10 +18,6 @@ class ScoreKeeper : Drawable, BaseObject() {
         return emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return this.interactWith(other)
-    }
-
     override fun draw(drawer: Drawer) {
         drawer.translate(100.0, 500.0)
         drawer.stroke = ColorRGBa.GREEN

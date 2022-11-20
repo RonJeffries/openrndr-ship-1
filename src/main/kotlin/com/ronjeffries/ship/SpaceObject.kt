@@ -10,7 +10,6 @@ interface SpaceObject {
 
     fun beginInteraction()
     fun interactWith(other: SpaceObject): List<SpaceObject>
-    fun interactWithOther(other: SpaceObject): List<SpaceObject>
     fun finishInteraction(): Transaction
 
     fun finalize(): List<SpaceObject>
@@ -33,13 +32,6 @@ abstract class BaseObject : SpaceObject {
     }
 
     override fun beginInteraction() {}
-//    override fun interactWith(other: SpaceObject): List<SpaceObject> {
-//        return emptyList()
-//    }
-
-//    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-//        return emptyList()
-//    }
 
     override fun finishInteraction(): Transaction = Transaction()
 

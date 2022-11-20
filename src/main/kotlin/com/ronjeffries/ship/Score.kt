@@ -7,7 +7,4 @@ class Score(override val score: Int) : BaseObject() {
         return emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return emptyList()
-    }
 }

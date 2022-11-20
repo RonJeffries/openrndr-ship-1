@@ -13,7 +13,7 @@ class ShipChecker(val ship: SolidObject) : BaseObject() {
         return emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
+    fun interactWithOther(other: SpaceObject): List<SpaceObject> {
         return interactWith(other)
     }
 

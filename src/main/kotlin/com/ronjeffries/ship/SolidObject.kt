@@ -23,14 +23,6 @@ open class SolidObject(
         return emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        // other guaranteed to be a SolidObject?
-        return when {
-            weAreCollidingWith(other) -> listOf(this, other)
-            else -> emptyList()
-        }
-    }
-
     private fun weAreCollidingWith(other: SpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
     private fun weCanCollideWith(other: SpaceObject): Boolean {

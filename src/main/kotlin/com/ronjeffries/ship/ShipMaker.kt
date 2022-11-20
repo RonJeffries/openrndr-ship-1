@@ -15,9 +15,9 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
         return emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> = interactWith(other)
+    fun interactWithOther(other: SpaceObject): List<SpaceObject> = interactWith(other)
 
-    private fun tooClose(other:SpaceObject): Boolean {
+    private fun tooClose(other: SpaceObject): Boolean {
         return if (other !is SolidObject) false
         else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
@@ -35,7 +35,7 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
             it.add(ship)
             it.add(ShipChecker(ship))
             it.remove(this)
-            it.accumulate(Transaction.hyperspaceEmergence(ship,asteroidTally))
+            it.accumulate(Transaction.hyperspaceEmergence(ship, asteroidTally))
         }
     }
 }
