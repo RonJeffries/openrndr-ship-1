@@ -1,7 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
-import org.junit.jupiter.api.Disabled
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ScoreKeeperTest {
@@ -23,17 +22,6 @@ class ScoreKeeperTest {
         val score = Score(20)
         val keeper = ScoreKeeper()
         val discards = keeper.interactions.interactWith(score)
-        assertThat(discards.size).isEqualTo(1)
-        assertThat(discards).contains(score)
-        assertThat(keeper.formatted()).isEqualTo("00020")
-    }
-
-    @Disabled("False case: scorekeepers want interaction, scores don't")
-    @Test
-    fun `scorekeeper captures other vs keeper`() {
-        val score = Score(20)
-        val keeper = ScoreKeeper()
-        val discards = score.interactions.interactWith(keeper)
         assertThat(discards.size).isEqualTo(1)
         assertThat(discards).contains(score)
         assertThat(keeper.formatted()).isEqualTo("00020")
