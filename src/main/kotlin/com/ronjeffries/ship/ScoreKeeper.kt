@@ -11,15 +11,19 @@ class ScoreKeeper: SpaceObject() {
     }
 
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
+        return getScore(other)
+    }
+
+    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
+        return getScore(other)
+    }
+
+    private fun getScore(other: SpaceObject): List<SpaceObject> {
         if (other.score > 0) {
             totalScore += other.score
             return listOf(other)
         }
         return emptyList()
-    }
-
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return this.interactWith(other)
     }
 
     override fun draw(drawer: Drawer) {
