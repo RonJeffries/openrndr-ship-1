@@ -10,10 +10,6 @@ class WaveMaker(val numberToCreate: Int = 8) : BaseObject() {
         else emptyList()
     }
 
-    fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return this.interactions.interactWith(other)
-    }
-
     override fun update(deltaTime: Double): List<SpaceObject> {
         if (elapsedTime < 3.0) return emptyList()
 
