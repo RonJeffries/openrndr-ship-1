@@ -15,10 +15,6 @@ class ShipChecker(val ship: SolidObject) : BaseObject() {
         return emptyList()
     }
 
-    fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return interactions.interactWith(other)
-    }
-
     fun afterInteractions(): Transaction {
         val trans = Transaction()
         if (missingShip) {
