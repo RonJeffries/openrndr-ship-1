@@ -40,10 +40,6 @@ class SolidObject(
         }
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        TODO("impossible")
-    }
-
     private fun weAreCollidingWith(other: SpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
     private fun weCanCollideWith(other: SpaceObject): Boolean {

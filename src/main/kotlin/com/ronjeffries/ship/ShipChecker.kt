@@ -12,10 +12,6 @@ class ShipChecker(val ship: SolidObject) : SpaceObject() {
         return emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return interactWith(other)
-    }
-
     override fun finishInteraction(trans: Transaction) {
         if ( missingShip ) {
             trans.add(ShipMaker(ship))

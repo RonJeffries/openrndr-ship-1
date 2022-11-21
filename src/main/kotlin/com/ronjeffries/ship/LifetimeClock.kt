@@ -8,8 +8,4 @@ class LifetimeClock : SpaceObject() {
             emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return interactWith(other)
-    }
-
 }

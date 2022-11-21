@@ -28,8 +28,8 @@ class Game {
     fun prioritize(p: Pair<SpaceObject, SpaceObject>): Pair<SpaceObject, SpaceObject> {
         val first = p.first
         val second = p.second
-        if (second is Score) return Pair(first, second)
-        if (first is Score || first is SolidObject) return Pair(second,first)
+        if (second is Score) return Pair(first, second) // could be ScoreKeeper
+        if (first is SolidObject) return Pair(second,first) // others want a chance
         return p
     }
 

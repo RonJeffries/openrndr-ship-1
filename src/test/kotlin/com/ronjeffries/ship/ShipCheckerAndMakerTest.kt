@@ -26,7 +26,7 @@ class ShipCheckerAndMakerTest {
         val ship = SolidObject.ship(U.randomPoint())
         val checker = ShipChecker(ship)
         checker.beginInteraction()
-        val nothing = checker.interactWithOther(ship)
+        val nothing = checker.interactWith(ship)
         assertThat(nothing).isEmpty()
         val emptyTransaction = Transaction()
         checker.finishInteraction(emptyTransaction)
@@ -90,7 +90,7 @@ class ShipCheckerAndMakerTest {
         maker.tick(U.MAKER_DELAY, ignored)
         maker.tick(0.01, ignored)
         maker.beginInteraction()
-        maker.interactWithOther(asteroid)
+        maker.interactWith(asteroid)
         val nothing = Transaction()
         maker.finishInteraction(nothing)
         assertThat(nothing.adds).isEmpty()
@@ -135,7 +135,7 @@ class ShipCheckerAndMakerTest {
         val maker = ShipMaker(ship)
         maker.beginInteraction()
         maker.interactWith(a)
-        maker.interactWithOther(a)
+        maker.interactWith(a)
         assertThat(maker.asteroidTally).isEqualTo(2)
     }
 

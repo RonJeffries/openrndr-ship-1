@@ -13,10 +13,6 @@ class WaveChecker: SpaceObject() {
         return emptyList()
     }
 
-    override fun interactWithOther(other: SpaceObject): List<SpaceObject> {
-        return this.interactWith(other)
-    }
-
     override fun finishInteraction(trans: Transaction) {
         if ( elapsedTime > 1.0  ) {
             elapsedTime = 0.0

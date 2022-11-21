@@ -19,7 +19,6 @@ abstract class SpaceObject {
 
     open fun beginInteraction() {}
     open fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
-    open fun interactWithOther(other: SpaceObject): List<SpaceObject>{ return emptyList() }
     open fun finishInteraction(trans: Transaction) {}
 
     open fun draw(drawer: Drawer) {}
