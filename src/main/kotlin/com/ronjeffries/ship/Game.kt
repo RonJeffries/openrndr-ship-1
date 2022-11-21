@@ -9,13 +9,11 @@ class Game {
 
     fun add(newObject: SpaceObject) = knownObjects.add(newObject)
 
-    private fun collectFromPairs(pairCondition: (SpaceObject, SpaceObject) -> List<SpaceObject>): MutableSet<SpaceObject> {
+    fun removalsDueToInteraction(): MutableSet<SpaceObject> {
         val result = mutableSetOf<SpaceObject>()
-        knownObjects.pairsToCheck().forEach { p -> result.addAll(pairCondition(p.first, p.second)) }
+        knownObjects.pairsToCheck().forEach { p -> result.addAll(p.first.interactWith(p.second)) }
         return result
     }
-
-    fun removalsDueToInteraction() = collectFromPairs { f1, f2 -> f1.interactWith(f2) }
 
     fun createContents(controls: Controls) {
         val ship = newShip(controls)
