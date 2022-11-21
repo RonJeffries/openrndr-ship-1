@@ -21,8 +21,6 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
         return emptyList()
     }
 
-    fun interactWithOther(other: SpaceObject): List<SpaceObject> = interactions.interactWith(other)
-
     private fun tooClose(other: SpaceObject): Boolean {
         return if (other !is SolidObject) false
         else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)

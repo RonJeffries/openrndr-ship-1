@@ -81,7 +81,7 @@ class ShipCheckerAndMakerTest {
         maker.tick(U.MAKER_DELAY)
         maker.tick(0.01)
         maker.interactions.beforeInteractions()
-        maker.interactWithOther(asteroid)
+        maker.interactions.interactWith(asteroid)
         val nothing = maker.interactions.afterInteractions()
         assertThat(nothing.adds).isEmpty()
         assertThat(nothing.removes).isEmpty()
@@ -125,7 +125,7 @@ class ShipCheckerAndMakerTest {
         val maker = ShipMaker(ship)
         maker.interactions.beforeInteractions()
         maker.interactions.interactWith(a)
-        maker.interactWithOther(a)
+        maker.interactions.interactWith(a)
         assertThat(maker.asteroidTally).isEqualTo(2)
     }
 
