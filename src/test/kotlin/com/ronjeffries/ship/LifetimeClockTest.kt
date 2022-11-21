@@ -23,8 +23,6 @@ class LifetimeClockTest {
         missile.tick(4.0, Transaction())
         assertThat(missile.elapsedTime).isEqualTo(4.0)
         assertThat(missile.elapsedTime).isGreaterThan(missile.lifetime)
-        discards = missile.interactWith(clock)
-        assertThat(discards).contains(missile)
         discards = clock.interactWith(missile)
         assertThat(discards).contains(missile)
     }

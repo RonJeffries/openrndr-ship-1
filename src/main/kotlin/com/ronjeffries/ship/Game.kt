@@ -11,8 +11,26 @@ class Game {
 
     fun removalsDueToInteraction(): MutableSet<SpaceObject> {
         val result = mutableSetOf<SpaceObject>()
-        knownObjects.pairsToCheck().forEach { p -> result.addAll(p.first.interactWith(p.second)) }
+        knownObjects.pairsToCheck().forEach {p ->
+            val removes = findRemovals(p)
+            result.addAll(removes)
+        }
         return result
+    }
+
+    private fun findRemovals(p: Pair<SpaceObject, SpaceObject>): List<SpaceObject> {
+        val newP = prioritize(p)
+        val first = newP.first
+        val second = newP.second
+        return first.interactWith(second)
+    }
+
+    fun prioritize(p: Pair<SpaceObject, SpaceObject>): Pair<SpaceObject, SpaceObject> {
+        val first = p.first
+        val second = p.second
+        if (second is Score) return Pair(first, second)
+        if (first is Score || first is SolidObject) return Pair(second,first)
+        return p
     }
 
     fun createContents(controls: Controls) {
