@@ -15,16 +15,11 @@ abstract class SolidObject(
     }
 
     fun interact(other: SpaceObject): List<SpaceObject> {
-        val transaction = Transaction()
-        interact(other, true, transaction)
-        return transaction.removes.toList()
-    }
-
-    fun interact(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
-        if (forced) {
-            if (other is SolidObject && weAreCollidingWith(other)) transaction.removeAll(this, other)
+        // other guaranteed to be a SolidObject?
+        if (other is SolidObject && weAreCollidingWith(other)) {
+            return listOf(this, other)
         }
-        return forced
+        return emptyList()
     }
 
     fun weAreCollidingWith(other: SpaceObject) = weCanCollideWith(other) && weAreInRange(other)

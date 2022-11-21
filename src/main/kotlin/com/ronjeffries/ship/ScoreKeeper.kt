@@ -12,17 +12,11 @@ class ScoreKeeper : Drawable, BaseObject() {
     }
 
     fun interact(other: SpaceObject): List<SpaceObject> {
-        val transaction = Transaction()
-        interact(other, false, transaction)
-        return transaction.removes.toList()
-    }
-
-    fun interact(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
         if (other.score > 0) {
             totalScore += other.score
-            transaction.remove(other)
+            return listOf(other)
         }
-        return true
+        return emptyList()
     }
 
     override fun draw(drawer: Drawer) {

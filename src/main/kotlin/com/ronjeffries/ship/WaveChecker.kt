@@ -11,16 +11,10 @@ class WaveChecker : BaseObject() {
     }
 
     fun interact(other: SpaceObject): List<SpaceObject> {
-        val transaction = Transaction()
-        interact(other, false, transaction)
-        return transaction.removes.toList()
+        if (other is SolidObject && other.isAsteroid)
+            sawAsteroid = true
+        return emptyList()
     }
-
-    fun interact(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
-        if (other is SolidObject && other.isAsteroid) sawAsteroid = true
-        return true
-    }
-
 
     fun finishInteraction(): Transaction {
         if (elapsedTime > 1.0) {

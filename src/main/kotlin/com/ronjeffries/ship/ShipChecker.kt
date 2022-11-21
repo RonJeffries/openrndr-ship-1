@@ -11,14 +11,8 @@ class ShipChecker(val ship: SolidObject) : BaseObject() {
     }
 
     fun interact(other: SpaceObject): List<SpaceObject> {
-        val transaction = Transaction()
-        interact(other, false, transaction)
-        return transaction.removes.toList()
-    }
-
-    fun interact(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
         if (other == ship) missingShip = false
-        return true
+        return emptyList()
     }
 
     fun afterInteractions(): Transaction {
