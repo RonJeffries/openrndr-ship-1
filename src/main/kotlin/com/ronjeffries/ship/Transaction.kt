@@ -22,6 +22,10 @@ class Transaction {
         removes.add(spaceObject)
     }
 
+    fun removeAll(vararg spaceObjects: SpaceObject) {
+        for (spaceObject in spaceObjects) remove(spaceObject)
+    }
+    
     // testing
 
     fun firstAdd(): SpaceObject {

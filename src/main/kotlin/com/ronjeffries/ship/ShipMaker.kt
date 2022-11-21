@@ -16,9 +16,15 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
     }
 
     fun interact(other: SpaceObject): List<SpaceObject> {
+        val transaction = Transaction()
+        interact(other, false, transaction)
+        return transaction.removes.toList()
+    }
+
+    fun interact(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
         if (other is SolidObject && other.isAsteroid) asteroidTally += 1
         if (tooClose(other)) safeToEmerge = false
-        return emptyList()
+        return true
     }
 
     private fun tooClose(other: SpaceObject): Boolean {
