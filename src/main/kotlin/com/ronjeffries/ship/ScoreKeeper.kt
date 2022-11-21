@@ -15,7 +15,7 @@ class ScoreKeeper: SpaceObject() {
     }
 
     private fun getScore(other: SpaceObject): List<SpaceObject> {
-        if (other.score > 0) {
+        if (other is Score) {
             totalScore += other.score
             return listOf(other)
         }

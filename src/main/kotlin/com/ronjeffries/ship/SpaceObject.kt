@@ -6,8 +6,6 @@ abstract class SpaceObject {
     var elapsedTime = 0.0
     open val lifetime
         get() = Double.MAX_VALUE
-    open val score: Int
-        get() = 0
 
     fun tick(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
