@@ -15,13 +15,6 @@ class SpaceObjectCollection {
         transaction.applyChanges(this)
     }
 
-    fun collectFromPairs(pairCondition: (SpaceObject, SpaceObject) -> List<SpaceObject>): MutableSet<SpaceObject> {
-        val pairs = mutableSetOf<SpaceObject>()
-        pairsToCheck().forEach { p -> pairs.addAll(pairCondition(p.first, p.second))
-        }
-        return pairs
-    }
-
     fun forEach(spaceObject: (SpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
 
     fun pairsToCheck(): List<Pair<SpaceObject, SpaceObject>> {

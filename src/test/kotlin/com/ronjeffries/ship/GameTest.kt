@@ -12,13 +12,13 @@ class GameTest {
         val ship = SolidObject.ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)
-        assertThat(game.colliders().size).isEqualTo(0)
+        assertThat(game.removalsDueToInteraction().size).isEqualTo(0)
         for (i in 1..12*60) game.tick(1.0/60.0)
         val x = asteroid.position.x
         val y = asteroid.position.y
         assertThat(x).isEqualTo(100.0+12*50.0, within(0.1))
         assertThat(y).isEqualTo(100.0+12*50.0, within(0.1))
-        assertThat(game.colliders().size).isEqualTo(2)
+        assertThat(game.removalsDueToInteraction().size).isEqualTo(2)
     }
 
     @Test

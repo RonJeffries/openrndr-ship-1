@@ -23,7 +23,7 @@ class SpaceObjectCollectionTest {
         val s = SolidObject.ship(Vector2(100.0, 150.0))
         game.add(s)
         assertThat(game.knownObjects.size).isEqualTo(2)
-        val colliders = game.colliders()
+        val colliders = game.removalsDueToInteraction()
         assertThat(colliders.size).isEqualTo(2)
     }
 
@@ -42,7 +42,7 @@ class SpaceObjectCollectionTest {
         game.add(a3)
         val a4 = SolidObject.asteroid(p2) // no
         game.add(a4)
-        val colliders = game.colliders()
+        val colliders = game.removalsDueToInteraction()
         assertThat(colliders.size).isEqualTo(3)
     }
 }

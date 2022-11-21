@@ -9,7 +9,13 @@ class Game {
 
     fun add(newObject: SpaceObject) = knownObjects.add(newObject)
 
-    fun colliders() = knownObjects.collectFromPairs { f1, f2 -> f1.interactWith(f2) }
+    private fun collectFromPairs(pairCondition: (SpaceObject, SpaceObject) -> List<SpaceObject>): MutableSet<SpaceObject> {
+        val result = mutableSetOf<SpaceObject>()
+        knownObjects.pairsToCheck().forEach { p -> result.addAll(pairCondition(p.first, p.second)) }
+        return result
+    }
+
+    fun removalsDueToInteraction() = collectFromPairs { f1, f2 -> f1.interactWith(f2) }
 
     fun createContents(controls: Controls) {
         val ship = newShip(controls)
@@ -49,7 +55,7 @@ class Game {
     private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }
 
     fun processInteractions() {
-        val toBeRemoved = colliders()
+        val toBeRemoved = removalsDueToInteraction()
         if ( toBeRemoved.size > 0 ) {
             knownObjects.removeAndFinalizeAll(toBeRemoved)
         }
