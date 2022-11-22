@@ -4,6 +4,9 @@ import org.openrndr.draw.Drawer
 
 class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
 
+    override val lifetime
+        get() = Double.MAX_VALUE
+
     override fun finalize(): List<SpaceObject> { return emptyList() }
 
     override fun update(deltaTime: Double, trans: Transaction) {

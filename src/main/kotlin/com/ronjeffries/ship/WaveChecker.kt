@@ -4,6 +4,8 @@ import org.openrndr.draw.Drawer
 
 class WaveChecker: SpaceObject() {
     var sawAsteroid = false
+    override val lifetime
+        get() = Double.MAX_VALUE
 
     override fun beginInteraction() {
         sawAsteroid = false

@@ -18,8 +18,6 @@ interface ISpaceObject {
 
 abstract class SpaceObject : ISpaceObject {
     override var elapsedTime = 0.0
-    override val lifetime
-        get() = Double.MAX_VALUE
 
     override fun tick(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime

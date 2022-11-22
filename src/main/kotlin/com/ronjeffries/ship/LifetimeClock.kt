@@ -3,6 +3,9 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 
 class LifetimeClock : SpaceObject() {
+    override val lifetime
+        get() = Double.MAX_VALUE
+
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
         return if (other.elapsedTime > other.lifetime) {
             listOf(other)
