@@ -3,10 +3,11 @@ package com.ronjeffries.ship
 class WaveMaker(val numberToCreate: Int = 8) : BaseObject() {
     var done = false
 
-    override val interactions: InteractionStrategy = EagerInteractor(
+    override val interactions: InteractionStrategy = InteractionStrategy(
         newInteract = this::newInteract
     )
 
+    @Suppress("UNUSED_PARAMETER")
     fun newInteract(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
         if (done) transaction.remove(this)
         return true

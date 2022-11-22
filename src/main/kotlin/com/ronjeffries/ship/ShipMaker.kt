@@ -4,7 +4,7 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
     var safeToEmerge = true
     var asteroidTally = 0
 
-    override val interactions: InteractionStrategy = EagerInteractor(
+    override val interactions: InteractionStrategy = InteractionStrategy(
         this::beforeInteractions,
         this::afterInteractions,
         this::newInteract
@@ -15,6 +15,7 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
         asteroidTally = 0
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun newInteract(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
         if (other is SolidObject && other.isAsteroid) asteroidTally += 1
         if (tooClose(other)) safeToEmerge = false

@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 class WaveChecker : BaseObject() {
     var sawAsteroid = false
-    override val interactions: InteractionStrategy = EagerInteractor(
+    override val interactions: InteractionStrategy = InteractionStrategy(
         this::beforeInteractions, this::afterInteractions, this::newInteract
     )
 
@@ -10,6 +10,7 @@ class WaveChecker : BaseObject() {
         sawAsteroid = false
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun newInteract(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
         if (other is SolidObject && other.isAsteroid) sawAsteroid = true
         return true

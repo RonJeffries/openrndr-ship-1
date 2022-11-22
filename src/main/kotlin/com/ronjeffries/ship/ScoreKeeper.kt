@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 
 class ScoreKeeper : Drawable, BaseObject() {
     var totalScore = 0
-    override val interactions: InteractionStrategy = EagerInteractor(
+    override val interactions: InteractionStrategy = InteractionStrategy(
         newInteract = this::newInteract
     )
 

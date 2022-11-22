@@ -11,7 +11,7 @@ abstract class SolidObject(
     var heading: Double = 0.0
 
     override val interactions: InteractionStrategy =
-        ShyInteractor(
+        InteractionStrategy(
             newInteract = this::newInteract
         )
 

@@ -11,7 +11,7 @@ class Missile(ship: Ship) : Drawable, SolidObject(
     finalizer = MissileFinalizer()
 ) {
 
-    override val interactions: InteractionStrategy = ShyInteractor(
+    override val interactions: InteractionStrategy = InteractionStrategy(
         afterInteractions = this::afterInteractions,
         newInteract = this::newInteract
     )
