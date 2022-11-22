@@ -31,4 +31,5 @@ class ScoreKeeper: SpaceObject() {
     }
 
     override fun beginInteraction() {}
+    override fun finishInteraction(trans: Transaction) {}
 }

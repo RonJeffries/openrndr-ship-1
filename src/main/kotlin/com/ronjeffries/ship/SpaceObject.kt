@@ -29,7 +29,5 @@ abstract class SpaceObject : ISpaceObject {
     // defaulted, sometimes overridden
     override fun update(deltaTime: Double, trans: Transaction) { }
 
-    override fun finishInteraction(trans: Transaction) {}
-
     override fun draw(drawer: Drawer) {}
 }

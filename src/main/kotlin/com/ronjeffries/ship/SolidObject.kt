@@ -74,6 +74,7 @@ class SolidObject(
     }
 
     override fun beginInteraction() {}
+    override fun finishInteraction(trans: Transaction) {}
 
     companion object {
         fun asteroid(
