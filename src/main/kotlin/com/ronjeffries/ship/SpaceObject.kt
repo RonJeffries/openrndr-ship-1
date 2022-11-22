@@ -29,7 +29,6 @@ abstract class SpaceObject : ISpaceObject {
     // defaulted, sometimes overridden
     override fun update(deltaTime: Double, trans: Transaction) { }
 
-    override fun beginInteraction() {}
     override fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
     override fun finishInteraction(trans: Transaction) {}
 

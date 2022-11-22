@@ -8,5 +8,6 @@ class LifetimeClock : SpaceObject() {
             emptyList()
     }
     override fun finalize(): List<SpaceObject> { return emptyList() }
+    override fun beginInteraction() {}
 
 }

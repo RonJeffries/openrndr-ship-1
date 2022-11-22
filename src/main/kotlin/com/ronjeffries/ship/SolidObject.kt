@@ -73,6 +73,8 @@ class SolidObject(
         move(deltaTime)
     }
 
+    override fun beginInteraction() {}
+
     companion object {
         fun asteroid(
             pos: Point,

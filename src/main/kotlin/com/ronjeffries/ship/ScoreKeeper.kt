@@ -29,4 +29,6 @@ class ScoreKeeper: SpaceObject() {
         drawer.fill = ColorRGBa.GREEN
         drawer.text(formatted(), Point(0.0, 0.0))
     }
+
+    override fun beginInteraction() {}
 }

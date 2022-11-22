@@ -15,4 +15,6 @@ class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
         trans.addAll(toAdd)
         trans.remove(this)
     }
+
+    override fun beginInteraction() {}
 }
