@@ -20,8 +20,11 @@ class Game {
     }
 
     private fun forceOneInteraction(first: SpaceObject, second: SpaceObject): List<SpaceObject> {
-        if (first.interactions.wantsToInteract) return first.interactions.interactWith(second)
-        else return second.interactions.interactWith(first)
+        val transaction = Transaction()
+        if (!first.interactions.newInteract(second, false, transaction)) {
+            second.interactions.newInteract(first, true, transaction)
+        }
+        return transaction.removes.toList()
     }
 
     fun createContents(controlFlags: ControlFlags) {

@@ -9,9 +9,15 @@ class WaveMakerTest {
         val wm = WaveMaker(7)
         val toCreate = wm.tick(3.01)
         assertThat(toCreate.size).isEqualTo(7)
-        var toDestroy = wm.interactions.interactWith(wm)
+        val transaction = Transaction()
+        wm.interactions.newInteract(wm, true, transaction)
+        var toDestroy = transaction.removes.toList()
         assertThat(toDestroy[0]).isEqualTo(wm)
-        toDestroy = wm.interactions.interactWith(wm)
+        toDestroy = run {
+            val transaction1 = Transaction()
+            wm.interactions.newInteract(wm, true, transaction1)
+            transaction1.removes.toList()
+        }
         assertThat(toDestroy[0]).isEqualTo(wm)
     }
 }
