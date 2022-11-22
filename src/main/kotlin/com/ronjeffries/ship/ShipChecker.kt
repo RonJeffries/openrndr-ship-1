@@ -6,18 +6,12 @@ class ShipChecker(val ship: SolidObject) : BaseObject() {
         EagerInteractor(
             this::beforeInteractions,
             this::afterInteractions,
-            this::interact,
             this::newInteract
         )
 
 
     fun beforeInteractions() {
         missingShip = true
-    }
-
-    fun interact(other: SpaceObject): List<SpaceObject> {
-        if (other == ship) missingShip = false
-        return emptyList()
     }
 
     fun newInteract(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {

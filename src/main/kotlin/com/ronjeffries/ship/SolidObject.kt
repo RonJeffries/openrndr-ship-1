@@ -12,20 +12,11 @@ abstract class SolidObject(
 
     override val interactions: InteractionStrategy =
         ShyInteractor(
-            interactWith = this::interact,
             newInteract = this::newInteract
         )
 
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
-    }
-
-    fun interact(other: SpaceObject): List<SpaceObject> {
-        // other guaranteed to be a SolidObject?
-        if (other is SolidObject && weAreCollidingWith(other)) {
-            return listOf(this, other)
-        }
-        return emptyList()
     }
 
     fun newInteract(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {

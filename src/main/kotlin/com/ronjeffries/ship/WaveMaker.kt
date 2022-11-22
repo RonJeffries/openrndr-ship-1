@@ -4,14 +4,8 @@ class WaveMaker(val numberToCreate: Int = 8) : BaseObject() {
     var done = false
 
     override val interactions: InteractionStrategy = EagerInteractor(
-        interactWith = this::interact,
         newInteract = this::newInteract
     )
-
-    fun interact(other: SpaceObject): List<SpaceObject> {
-        return if (done) listOf(this)
-        else emptyList()
-    }
 
     fun newInteract(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
         if (done) transaction.remove(this)
