@@ -61,7 +61,7 @@ class Missile(
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
-        NewMissileView().draw(this, drawer)
+        MissileView().draw(this, drawer)
     }
 
     override fun finalize(): List<ISpaceObject> {

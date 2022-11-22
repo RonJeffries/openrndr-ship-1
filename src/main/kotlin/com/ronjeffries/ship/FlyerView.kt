@@ -8,15 +8,7 @@ interface FlyerView {
     fun draw(solidObject: SolidObject, drawer: Drawer)
 }
 
-class MissileView: FlyerView {
-    override fun draw(solidObject: SolidObject, drawer: Drawer) {
-        drawer.stroke = ColorRGBa.WHITE
-        drawer.fill = ColorRGBa.WHITE
-        drawer.circle(Point.ZERO, solidObject.killRadius*3.0)
-    }
-}
-
-class NewMissileView {
+class MissileView {
     fun draw(missile: Missile, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
