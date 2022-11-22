@@ -24,7 +24,6 @@ class Game {
         add(ship)
         add(ShipChecker(ship))
         add(ScoreKeeper())
-//        add(LifetimeClock())
         add(WaveChecker())
     }
 
