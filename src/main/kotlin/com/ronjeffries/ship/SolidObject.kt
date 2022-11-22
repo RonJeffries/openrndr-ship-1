@@ -4,27 +4,64 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
-class SolidObject(
-    var position: Point,
-    var velocity: Velocity,
+interface ISolidObject : ISpaceObject {
+    var position: Point
+    var velocity: Velocity
+    var killRadius: Double
+    val isAsteroid: Boolean
+    override val lifetime: Double
+    val view: FlyerView
+    val controls: Controls
+    val finalizer: IFinalizer
+    var heading: Double
+    override var elapsedTime: Double
+    fun accelerate(deltaV: Acceleration)
+    fun scale(): Double
+    fun deathDueToCollision(): Boolean
 
-    var killRadius: Double = -Double.MAX_VALUE,
-    val isAsteroid: Boolean = false,
+    override fun draw(drawer: Drawer)
+
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject>
+    fun weAreCollidingWith(other: ISpaceObject): Boolean
+    fun weCanCollideWith(other: ISpaceObject): Boolean
+    fun weAreInRange(other: ISpaceObject): Boolean
+
+    override fun finalize(): List<ISpaceObject>
+    fun move(deltaTime: Double)
+
+    override fun toString(): String
+    fun turnBy(degrees: Double)
+
+    override fun update(deltaTime: Double, trans: Transaction)
+
+    override fun beginInteraction()
+
+    override fun finishInteraction(trans: Transaction)
+
+    override fun tick(deltaTime: Double, trans: Transaction)
+}
+
+open class SolidObject(
+    override var position: Point,
+    override var velocity: Velocity,
+
+    override var killRadius: Double = -Double.MAX_VALUE,
+    override val isAsteroid: Boolean = false,
     override val lifetime: Double = Double.MAX_VALUE,
-    val view: FlyerView = NullView(),
-    val controls: Controls = Controls(),
-    val finalizer: IFinalizer = DefaultFinalizer()
-) : ISpaceObject {
-    var heading: Double = 0.0
+    override val view: FlyerView = NullView(),
+    override val controls: Controls = Controls(),
+    override val finalizer: IFinalizer = DefaultFinalizer()
+) : ISolidObject {
+    override var heading: Double = 0.0
     override var elapsedTime = 0.0
 
-    fun accelerate(deltaV: Acceleration) {
+    override fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    fun scale() = finalizer.scale()
+    override fun scale() = finalizer.scale()
 
-    fun deathDueToCollision(): Boolean {
+    override fun deathDueToCollision(): Boolean {
         return !controls.recentHyperspace
     }
 
@@ -41,14 +78,14 @@ class SolidObject(
         }
     }
 
-    private fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
+    override fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
-    private fun weCanCollideWith(other: ISpaceObject): Boolean {
+    override fun weCanCollideWith(other: ISpaceObject): Boolean {
         return if ( other !is SolidObject) false
         else !(this.isAsteroid && other.isAsteroid)
     }
 
-    private fun weAreInRange(other: ISpaceObject): Boolean {
+    override fun weAreInRange(other: ISpaceObject): Boolean {
         return if ( other !is SolidObject) false
         else position.distanceTo(other.position) < killRadius + other.killRadius
     }
@@ -57,7 +94,7 @@ class SolidObject(
         return finalizer.finalize(this)
     }
 
-    fun move(deltaTime: Double) {
+    override fun move(deltaTime: Double) {
         position = (position + velocity * deltaTime).cap()
     }
 
@@ -65,7 +102,7 @@ class SolidObject(
         return "Flyer $position ($killRadius)"
     }
 
-    fun turnBy(degrees:Double) {
+    override fun turnBy(degrees:Double) {
         heading += degrees
     }
 
