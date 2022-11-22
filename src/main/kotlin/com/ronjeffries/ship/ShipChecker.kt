@@ -2,6 +2,7 @@ package com.ronjeffries.ship
 
 class ShipChecker(val ship: SolidObject) : SpaceObject() {
     private var missingShip = true
+    override fun finalize(): List<SpaceObject> { return emptyList() }
 
     override fun beginInteraction() {
         missingShip = true

@@ -34,5 +34,4 @@ abstract class SpaceObject : ISpaceObject {
     override fun finishInteraction(trans: Transaction) {}
 
     override fun draw(drawer: Drawer) {}
-    override fun finalize(): List<SpaceObject> { return emptyList() }
 }

@@ -7,6 +7,8 @@ class WaveChecker: SpaceObject() {
         sawAsteroid = false
     }
 
+    override fun finalize(): List<SpaceObject> { return emptyList() }
+
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
         if (other is SolidObject && other.isAsteroid)
             sawAsteroid = true

@@ -9,6 +9,8 @@ class ShipMaker(val ship: SolidObject) : SpaceObject() {
         asteroidTally = 0
     }
 
+    override fun finalize(): List<SpaceObject> { return emptyList() }
+
     override fun interactWith(other: SpaceObject): List<SpaceObject> {
         if (other is SolidObject && other.isAsteroid) asteroidTally += 1
         safeToEmerge = safeToEmerge && !tooClose(other)

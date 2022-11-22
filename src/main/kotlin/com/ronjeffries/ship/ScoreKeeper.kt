@@ -5,6 +5,7 @@ import org.openrndr.draw.Drawer
 
 class ScoreKeeper: SpaceObject() {
     var totalScore = 0
+    override fun finalize(): List<SpaceObject> { return emptyList() }
 
     fun formatted(): String {
         return ("00000" + totalScore.toShort()).takeLast(5)

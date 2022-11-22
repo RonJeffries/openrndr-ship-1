@@ -7,5 +7,6 @@ class LifetimeClock : SpaceObject() {
         } else
             emptyList()
     }
+    override fun finalize(): List<SpaceObject> { return emptyList() }
 
 }
