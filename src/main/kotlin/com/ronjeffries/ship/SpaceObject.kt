@@ -2,23 +2,37 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-abstract class SpaceObject {
-    var elapsedTime = 0.0
-    open val lifetime
+interface ISpaceObject {
+    var elapsedTime: Double
+    val lifetime: Double
+    fun tick(deltaTime: Double, trans: Transaction)
+
+    // defaulted, sometimes overridden
+    fun update(deltaTime: Double, trans: Transaction)
+    fun beginInteraction()
+    fun interactWith(other: SpaceObject): List<SpaceObject>
+    fun finishInteraction(trans: Transaction)
+    fun draw(drawer: Drawer)
+    fun finalize(): List<SpaceObject>
+}
+
+abstract class SpaceObject : ISpaceObject {
+    override var elapsedTime = 0.0
+    override val lifetime
         get() = Double.MAX_VALUE
 
-    fun tick(deltaTime: Double, trans: Transaction) {
+    override fun tick(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         update(deltaTime,trans)
     }
 
     // defaulted, sometimes overridden
-    open fun update(deltaTime: Double, trans: Transaction) { }
+    override fun update(deltaTime: Double, trans: Transaction) { }
 
-    open fun beginInteraction() {}
-    open fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
-    open fun finishInteraction(trans: Transaction) {}
+    override fun beginInteraction() {}
+    override fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
+    override fun finishInteraction(trans: Transaction) {}
 
-    open fun draw(drawer: Drawer) {}
-    open fun finalize(): List<SpaceObject> { return emptyList() }
+    override fun draw(drawer: Drawer) {}
+    override fun finalize(): List<SpaceObject> { return emptyList() }
 }
