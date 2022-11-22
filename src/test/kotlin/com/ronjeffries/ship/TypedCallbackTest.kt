@@ -44,17 +44,17 @@ class TypeTwo : Thing {
 }
 
 class OnlyLikesOnes() : Thing {
-    override val dispatch: Dispatch = Dispatch(
-        handleTypeOne = this::handleTypeOne,
+    override val dispatch = Dispatch(
+        handleTypeOne = { thing, accumulator ->
+            outerField += 1 // You have free access to this's fields and functions here.
+            accumulator.add("OnlyLikesOnes:TypeOne")
+        }
     )
+
+    var outerField = 1
 
     override fun callOther(other: Thing, accumulator: Accumulator) =
         other.dispatch.handleOnlyLikesOnes(this, accumulator)
-
-    fun handleTypeOne(thing: TypeOne, accumulator: Accumulator) {
-        accumulator.add("${this::class.simpleName}:${thing::class.simpleName}")
-    }
-
 }
 
 class Accumulator() {
