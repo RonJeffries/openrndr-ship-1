@@ -16,6 +16,14 @@ class MissileView: FlyerView {
     }
 }
 
+class NewMissileView {
+    fun draw(missile: Missile, drawer: Drawer) {
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.fill = ColorRGBa.WHITE
+        drawer.circle(Point.ZERO, missile.killRadius*3.0)
+    }
+}
+
 class ShipView : FlyerView {
     override fun draw(solidObject: SolidObject, drawer: Drawer) {
         val points = listOf(

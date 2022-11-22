@@ -32,7 +32,8 @@ class Controls {
 
     private fun missilesToFire(obj: SolidObject): List<ISpaceObject> {
         return if (fire) {
-            listOf(SolidObject.missile(obj))
+//            listOf(SolidObject.missile(obj))
+            listOf(Missile(obj))
         } else {
             emptyList()
         }

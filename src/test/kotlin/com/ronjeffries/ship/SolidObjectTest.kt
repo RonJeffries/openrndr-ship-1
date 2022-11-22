@@ -191,7 +191,7 @@ class SolidObjectTest {
         var additions = Transaction()
         ship.tick(sixtieth, additions)
         assertThat(additions.adds).isNotEmpty
-        var missile = additions.adds.first() as SolidObject
+        var missile = additions.adds.first() as Missile
         print(missile.position)
         assertThat(missile.position).isEqualTo(expectedPosition)
         controls.fire = false
@@ -204,7 +204,7 @@ class SolidObjectTest {
         additions = Transaction()
         ship.tick(sixtieth, additions)
         assertThat(additions.adds).isNotEmpty
-        missile = additions.adds.first() as SolidObject
+        missile = additions.adds.first() as Missile
         print(missile.position)
         assertThat(missile.position).isEqualTo(expectedPosition)
     }
