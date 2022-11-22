@@ -1,5 +1,7 @@
 package com.ronjeffries.ship
 
+import org.openrndr.draw.Drawer
+
 class ShipChecker(val ship: SolidObject) : SpaceObject() {
     private var missingShip = true
     override fun finalize(): List<SpaceObject> { return emptyList() }
@@ -19,4 +21,6 @@ class ShipChecker(val ship: SolidObject) : SpaceObject() {
             trans.remove(this)
         }
     }
+
+    override fun draw(drawer: Drawer) {}
 }

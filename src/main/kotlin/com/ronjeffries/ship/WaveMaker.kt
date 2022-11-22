@@ -1,5 +1,7 @@
 package com.ronjeffries.ship
 
+import org.openrndr.draw.Drawer
+
 class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
 
     override fun finalize(): List<SpaceObject> { return emptyList() }
@@ -19,4 +21,5 @@ class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
     override fun beginInteraction() {}
     override fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
     override fun finishInteraction(trans: Transaction) {}
+    override fun draw(drawer: Drawer) {}
 }

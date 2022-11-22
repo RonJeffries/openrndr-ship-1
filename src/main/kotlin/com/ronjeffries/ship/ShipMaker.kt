@@ -1,5 +1,7 @@
 package com.ronjeffries.ship
 
+import org.openrndr.draw.Drawer
+
 class ShipMaker(val ship: SolidObject) : SpaceObject() {
     var safeToEmerge = true
     var asteroidTally = 0
@@ -34,4 +36,6 @@ class ShipMaker(val ship: SolidObject) : SpaceObject() {
         trans.remove(this)
         HyperspaceOperation(ship, asteroidTally).execute(trans)
     }
+
+    override fun draw(drawer: Drawer) {}
 }

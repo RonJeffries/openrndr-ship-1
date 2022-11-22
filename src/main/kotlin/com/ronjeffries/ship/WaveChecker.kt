@@ -1,5 +1,7 @@
 package com.ronjeffries.ship
 
+import org.openrndr.draw.Drawer
+
 class WaveChecker: SpaceObject() {
     var sawAsteroid = false
 
@@ -24,4 +26,6 @@ class WaveChecker: SpaceObject() {
             }
         }
     }
+
+    override fun draw(drawer: Drawer) {}
 }
