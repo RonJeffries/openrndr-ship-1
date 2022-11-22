@@ -13,6 +13,14 @@ class Transaction {
         adds.add(spaceObject)
     }
 
+    fun addAll(vararg spaceObjects: SpaceObject) {
+        for (spaceObject in spaceObjects) add(spaceObject)
+    }
+
+    fun addAll(collection: Collection<SpaceObject>) {
+        for (spaceObject in collection) add(spaceObject)
+    }
+
     fun applyChanges(spaceObjectCollection: SpaceObjectCollection) {
         spaceObjectCollection.removeAll(removes)
         spaceObjectCollection.addAll(adds)
@@ -41,6 +49,10 @@ class Transaction {
     }
 
     fun removeAll(vararg spaceObjects: SpaceObject) {
+        for (spaceObject in spaceObjects) remove(spaceObject)
+    }
+
+    fun removeAll(spaceObjects: Collection<SpaceObject>) {
         for (spaceObject in spaceObjects) remove(spaceObject)
     }
 

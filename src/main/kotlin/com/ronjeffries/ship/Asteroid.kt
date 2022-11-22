@@ -6,7 +6,7 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import kotlin.math.pow
 
 class Asteroid(
-    pos: Point,
+    pos: Point = U.randomPoint(),
     vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
     killRad: Double = 500.0,
     splitCount: Int = 2
