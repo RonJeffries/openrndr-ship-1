@@ -7,7 +7,6 @@ interface ISpaceObject {
     val lifetime: Double
     fun tick(deltaTime: Double, trans: Transaction)
 
-    // defaulted, sometimes overridden
     fun update(deltaTime: Double, trans: Transaction)
     fun beginInteraction()
     fun interactWith(other: ISpaceObject): List<ISpaceObject>
