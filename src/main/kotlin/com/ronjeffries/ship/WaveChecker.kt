@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class WaveChecker: SpaceObject() {
+class WaveChecker: ISpaceObject {
     var sawAsteroid = false
     override val lifetime
         get() = Double.MAX_VALUE
@@ -12,9 +12,9 @@ class WaveChecker: SpaceObject() {
         sawAsteroid = false
     }
 
-    override fun finalize(): List<SpaceObject> { return emptyList() }
+    override fun finalize(): List<ISpaceObject> { return emptyList() }
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if (other is SolidObject && other.isAsteroid)
             sawAsteroid = true
         return emptyList()

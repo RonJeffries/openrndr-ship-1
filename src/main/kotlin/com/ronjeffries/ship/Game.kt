@@ -7,10 +7,10 @@ class Game {
     val knownObjects = SpaceObjectCollection()
     private var lastTime = 0.0
 
-    fun add(newObject: SpaceObject) = knownObjects.add(newObject)
+    fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
 
-    fun removalsDueToInteraction(): MutableSet<SpaceObject> {
-        val result = mutableSetOf<SpaceObject>()
+    fun removalsDueToInteraction(): MutableSet<ISpaceObject> {
+        val result = mutableSetOf<ISpaceObject>()
         knownObjects.pairsToCheck().forEach {p ->
             val interactor = Interactor(p)
             val removes = interactor.findRemovals()

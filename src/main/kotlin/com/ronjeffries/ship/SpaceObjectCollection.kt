@@ -1,13 +1,13 @@
 package com.ronjeffries.ship
 
 class SpaceObjectCollection {
-    val spaceObjects = mutableListOf<SpaceObject>()
+    val spaceObjects = mutableListOf<ISpaceObject>()
 
-    fun add(spaceObject: SpaceObject) {
+    fun add(spaceObject: ISpaceObject) {
         spaceObjects.add(spaceObject)
     }
     
-    fun addAll(newbies: Collection<SpaceObject>){
+    fun addAll(newbies: Collection<ISpaceObject>){
         spaceObjects.addAll(newbies)
     }
 
@@ -15,10 +15,10 @@ class SpaceObjectCollection {
         transaction.applyChanges(this)
     }
 
-    fun forEach(spaceObject: (SpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
+    fun forEach(spaceObject: (ISpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
 
-    fun pairsToCheck(): List<Pair<SpaceObject, SpaceObject>> {
-        val pairs = mutableListOf<Pair<SpaceObject, SpaceObject>>()
+    fun pairsToCheck(): List<Pair<ISpaceObject, ISpaceObject>> {
+        val pairs = mutableListOf<Pair<ISpaceObject, ISpaceObject>>()
         spaceObjects.indices.forEach { i ->
             spaceObjects.indices.minus(0..i).forEach { j ->
                 pairs.add(spaceObjects[i] to spaceObjects[j])
@@ -27,7 +27,7 @@ class SpaceObjectCollection {
         return pairs
     }
 
-    fun removeAndFinalizeAll(moribund: Set<SpaceObject>): Boolean{
+    fun removeAndFinalizeAll(moribund: Set<ISpaceObject>): Boolean{
         moribund.forEach { spaceObjects += it.finalize() }
         return spaceObjects.removeAll(moribund)
     }

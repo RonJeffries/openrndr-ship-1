@@ -26,11 +26,11 @@ class Controls {
         }
     }
 
-    private fun fire(obj: SolidObject): List<SpaceObject> {
+    private fun fire(obj: SolidObject): List<ISpaceObject> {
         return missilesToFire(obj).also { fire = false }
     }
 
-    private fun missilesToFire(obj: SolidObject): List<SpaceObject> {
+    private fun missilesToFire(obj: SolidObject): List<ISpaceObject> {
         return if (fire) {
             listOf(SolidObject.missile(obj))
         } else {

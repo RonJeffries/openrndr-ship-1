@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class ShipMaker(val ship: SolidObject) : SpaceObject() {
+class ShipMaker(val ship: SolidObject) : ISpaceObject {
     var safeToEmerge = true
     var asteroidTally = 0
     override val lifetime
@@ -14,15 +14,15 @@ class ShipMaker(val ship: SolidObject) : SpaceObject() {
         asteroidTally = 0
     }
 
-    override fun finalize(): List<SpaceObject> { return emptyList() }
+    override fun finalize(): List<ISpaceObject> { return emptyList() }
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if (other is SolidObject && other.isAsteroid) asteroidTally += 1
         safeToEmerge = safeToEmerge && !tooClose(other)
         return emptyList()
     }
 
-    private fun tooClose(other:SpaceObject): Boolean {
+    private fun tooClose(other:ISpaceObject): Boolean {
         return if (other !is SolidObject) false
         else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }

@@ -10,12 +10,8 @@ interface ISpaceObject {
     // defaulted, sometimes overridden
     fun update(deltaTime: Double, trans: Transaction)
     fun beginInteraction()
-    fun interactWith(other: SpaceObject): List<SpaceObject>
+    fun interactWith(other: ISpaceObject): List<ISpaceObject>
     fun finishInteraction(trans: Transaction)
     fun draw(drawer: Drawer)
-    fun finalize(): List<SpaceObject>
-}
-
-abstract class SpaceObject : ISpaceObject {
-
+    fun finalize(): List<ISpaceObject>
 }

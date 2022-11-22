@@ -2,18 +2,18 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class LifetimeClock : SpaceObject() {
+class LifetimeClock : ISpaceObject {
     override val lifetime
         get() = Double.MAX_VALUE
     override var elapsedTime = 0.0
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         return if (other.elapsedTime > other.lifetime) {
             listOf(other)
         } else
             emptyList()
     }
-    override fun finalize(): List<SpaceObject> { return emptyList() }
+    override fun finalize(): List<ISpaceObject> { return emptyList() }
     override fun beginInteraction() {}
     override fun finishInteraction(trans: Transaction) {}
     override fun draw(drawer: Drawer) {}

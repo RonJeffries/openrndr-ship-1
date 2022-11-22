@@ -3,7 +3,7 @@ package com.ronjeffries.ship
 import kotlin.math.pow
 
 interface IFinalizer {
-    fun finalize(solidObject: SolidObject): List<SpaceObject>
+    fun finalize(solidObject: SolidObject): List<ISpaceObject>
     fun scale(): Double = 1.0
 }
 
@@ -19,8 +19,8 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
         )
     }
 
-    override fun finalize(solidObject: SolidObject): List<SpaceObject> {
-        val objectsToAdd: MutableList<SpaceObject> = mutableListOf()
+    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
+        val objectsToAdd: MutableList<ISpaceObject> = mutableListOf()
         val score = getScore()
         objectsToAdd.add(score)
         if (splitCount >= 1) {
@@ -46,13 +46,13 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
 }
 
 class MissileFinalizer : IFinalizer {
-    override fun finalize(solidObject: SolidObject): List<SpaceObject> {
+    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
         return listOf(SolidObject.splat(solidObject))
     }
 }
 
 class ShipFinalizer : IFinalizer {
-    override fun finalize(solidObject: SolidObject): List<SpaceObject> {
+    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
         if ( solidObject.deathDueToCollision()) {
             solidObject.position = U.CENTER_OF_UNIVERSE
             solidObject.velocity = Velocity.ZERO
@@ -65,7 +65,7 @@ class ShipFinalizer : IFinalizer {
 }
 
 class DefaultFinalizer : IFinalizer {
-    override fun finalize(solidObject: SolidObject): List<SpaceObject> {
+    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
         return emptyList()
     }
 }

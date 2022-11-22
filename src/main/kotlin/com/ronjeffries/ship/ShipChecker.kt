@@ -2,19 +2,19 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class ShipChecker(val ship: SolidObject) : SpaceObject() {
+class ShipChecker(val ship: SolidObject) : ISpaceObject {
     private var missingShip = true
     override val lifetime
         get() = Double.MAX_VALUE
     override var elapsedTime = 0.0
 
-    override fun finalize(): List<SpaceObject> { return emptyList() }
+    override fun finalize(): List<ISpaceObject> { return emptyList() }
 
     override fun beginInteraction() {
         missingShip = true
     }
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         if ( other == ship ) missingShip = false
         return emptyList()
     }

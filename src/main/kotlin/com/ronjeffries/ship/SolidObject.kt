@@ -14,7 +14,7 @@ class SolidObject(
     val view: FlyerView = NullView(),
     val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
-) : SpaceObject() {
+) : ISpaceObject {
     var heading: Double = 0.0
     override var elapsedTime = 0.0
 
@@ -34,26 +34,26 @@ class SolidObject(
         view.draw(this, drawer)
     }
 
-    override fun interactWith(other: SpaceObject): List<SpaceObject> {
+    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         return when {
             weAreCollidingWith(other) -> listOf(this, other)
             else -> emptyList()
         }
     }
 
-    private fun weAreCollidingWith(other: SpaceObject) = weCanCollideWith(other) && weAreInRange(other)
+    private fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
-    private fun weCanCollideWith(other: SpaceObject): Boolean {
+    private fun weCanCollideWith(other: ISpaceObject): Boolean {
         return if ( other !is SolidObject) false
         else !(this.isAsteroid && other.isAsteroid)
     }
 
-    private fun weAreInRange(other: SpaceObject): Boolean {
+    private fun weAreInRange(other: ISpaceObject): Boolean {
         return if ( other !is SolidObject) false
         else position.distanceTo(other.position) < killRadius + other.killRadius
     }
 
-    override fun finalize(): List<SpaceObject> {
+    override fun finalize(): List<ISpaceObject> {
         return finalizer.finalize(this)
     }
 
