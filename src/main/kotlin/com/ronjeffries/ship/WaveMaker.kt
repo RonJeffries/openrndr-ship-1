@@ -17,4 +17,5 @@ class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
     }
 
     override fun beginInteraction() {}
+    override fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
 }
