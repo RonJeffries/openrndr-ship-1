@@ -23,11 +23,7 @@ class Splat(missile: SolidObject) : Drawable,
         view.draw(drawer, heading, elapsedTime)
     }
 
-    fun afterInteractions(): Transaction {
-        val result = Transaction()
-        if (elapsedTime > lifetime) {
-            result.remove(this)
-        }
-        return result
+    fun afterInteractions(transaction: Transaction) {
+        if (elapsedTime > lifetime) transaction.remove(this)
     }
 }

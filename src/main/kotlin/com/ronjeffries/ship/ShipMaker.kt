@@ -27,20 +27,16 @@ class ShipMaker(val ship: SolidObject) : BaseObject() {
         else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
 
-    fun afterInteractions(): Transaction {
-        return if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
-            replaceTheShip()
-        } else {
-            Transaction()
+    fun afterInteractions(transaction: Transaction) {
+        if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
+            replaceTheShip(transaction)
         }
     }
 
-    private fun replaceTheShip(): Transaction {
-        return Transaction().also {
-            it.add(ship)
-            it.add(ShipChecker(ship))
-            it.remove(this)
-            it.accumulate(Transaction.hyperspaceEmergence(ship, asteroidTally))
-        }
+    private fun replaceTheShip(transaction: Transaction) {
+        transaction.add(ship)
+        transaction.add(ShipChecker(ship))
+        transaction.remove(this)
+        transaction.accumulate(Transaction.hyperspaceEmergence(ship, asteroidTally))
     }
 }

@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 class InteractionStrategy(
     val beforeInteractions: () -> Unit = {},
-    val afterInteractions: () -> Transaction = { Transaction() },
+    val afterInteractions: (transaction: Transaction) -> Unit = { },
     val newInteract: (other: SpaceObject, forced: Boolean, transaction: Transaction) -> Boolean = InteractionStrategy.NONE
 ) {
 

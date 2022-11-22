@@ -21,12 +21,10 @@ class ShipChecker(val ship: SolidObject) : BaseObject() {
     }
 
 
-    fun afterInteractions(): Transaction {
-        val trans = Transaction()
+    fun afterInteractions(transaction: Transaction) {
         if (missingShip) {
-            trans.add(ShipMaker(ship))
-            trans.remove(this)
+            transaction.add(ShipMaker(ship))
+            transaction.remove(this)
         }
-        return trans
     }
 }

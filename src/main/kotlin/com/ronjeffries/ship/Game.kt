@@ -59,8 +59,7 @@ class Game {
     private fun finishInteractions() {
         val buffer = Transaction()
         knownObjects.forEach {
-            val result: Transaction = it.interactions.afterInteractions()
-            buffer.accumulate(result)
+            it.interactions.afterInteractions(buffer)
         }
         for (toRemove in buffer.removes) {
             val addedByFinalize = toRemove.finalize()
@@ -88,3 +87,4 @@ class Game {
         knownObjects.forEach { addsFromUpdates.addAll(it.tick(deltaTime)) }
     }
 }
+
