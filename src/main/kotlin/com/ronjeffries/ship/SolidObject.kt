@@ -16,6 +16,7 @@ class SolidObject(
     val finalizer: IFinalizer = DefaultFinalizer()
 ) : SpaceObject() {
     var heading: Double = 0.0
+    override var elapsedTime = 0.0
 
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
@@ -75,6 +76,10 @@ class SolidObject(
 
     override fun beginInteraction() {}
     override fun finishInteraction(trans: Transaction) {}
+    override fun tick(deltaTime: Double, trans: Transaction) {
+        elapsedTime += deltaTime
+        update(deltaTime,trans)
+    }
 
     companion object {
         fun asteroid(

@@ -6,6 +6,7 @@ class ShipChecker(val ship: SolidObject) : SpaceObject() {
     private var missingShip = true
     override val lifetime
         get() = Double.MAX_VALUE
+    override var elapsedTime = 0.0
 
     override fun finalize(): List<SpaceObject> { return emptyList() }
 
@@ -26,4 +27,11 @@ class ShipChecker(val ship: SolidObject) : SpaceObject() {
     }
 
     override fun draw(drawer: Drawer) {}
+    override fun tick(deltaTime: Double, trans: Transaction) {
+        elapsedTime += deltaTime
+        update(deltaTime,trans)
+    }
+
+    // defaulted, sometimes overridden
+    override fun update(deltaTime: Double, trans: Transaction) { }
 }

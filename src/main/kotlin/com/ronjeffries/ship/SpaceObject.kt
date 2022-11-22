@@ -17,14 +17,5 @@ interface ISpaceObject {
 }
 
 abstract class SpaceObject : ISpaceObject {
-    override var elapsedTime = 0.0
-
-    override fun tick(deltaTime: Double, trans: Transaction) {
-        elapsedTime += deltaTime
-        update(deltaTime,trans)
-    }
-
-    // defaulted, sometimes overridden
-    override fun update(deltaTime: Double, trans: Transaction) { }
 
 }

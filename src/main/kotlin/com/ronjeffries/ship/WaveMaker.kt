@@ -6,6 +6,7 @@ class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
 
     override val lifetime
         get() = Double.MAX_VALUE
+    override var elapsedTime = 0.0
 
     override fun finalize(): List<SpaceObject> { return emptyList() }
 
@@ -25,4 +26,8 @@ class WaveMaker(val numberToCreate: Int = 8): SpaceObject() {
     override fun interactWith(other: SpaceObject): List<SpaceObject> { return emptyList() }
     override fun finishInteraction(trans: Transaction) {}
     override fun draw(drawer: Drawer) {}
+    override fun tick(deltaTime: Double, trans: Transaction) {
+        elapsedTime += deltaTime
+        update(deltaTime,trans)
+    }
 }
