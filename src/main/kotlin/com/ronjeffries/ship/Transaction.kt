@@ -56,9 +56,4 @@ class Transaction {
         for (spaceObject in spaceObjects) remove(spaceObject)
     }
 
-    companion object {
-        fun hyperspaceEmergence(ship: SolidObject, asteroidTally: Int): Transaction {
-            return HyperspaceOperation(ship, asteroidTally).execute()
-        }
-    }
 }
