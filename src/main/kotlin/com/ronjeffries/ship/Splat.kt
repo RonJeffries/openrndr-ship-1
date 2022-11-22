@@ -11,8 +11,11 @@ class Splat(missile: SolidObject) : Drawable,
     ) {
 
     override val interactions: InteractionStrategy =
-        ShyInteractor(afterInteractions = this::afterInteractions, interactWith = this::interact)
-
+        ShyInteractor(
+            afterInteractions = this::afterInteractions,
+            interactWith = this::interact,
+            newInteract = this::newInteract
+        )
     val lifetime = 2.0
     val view = SplatView(2.0)
     override fun draw(drawer: Drawer) {

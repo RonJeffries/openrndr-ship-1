@@ -40,6 +40,10 @@ class Transaction {
         return removes.contains(so)
     }
 
+    fun removeAll(vararg spaceObjects: SpaceObject) {
+        for (spaceObject in spaceObjects) remove(spaceObject)
+    }
+
     companion object {
         fun hyperspaceEmergence(ship: SolidObject, asteroidTally: Int): Transaction {
             return HyperspaceOperation(ship, asteroidTally).execute()

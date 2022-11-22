@@ -21,7 +21,9 @@ class ScoreKeeperTest {
     fun `scorekeeper captures keeper vs other`() {
         val score = Score(20)
         val keeper = ScoreKeeper()
-        val discards = keeper.interactions.interactWith(score)
+        val transaction = Transaction()
+        keeper.interactions.newInteract(score, true, transaction)
+        val discards = transaction.removes.toList()
         assertThat(discards.size).isEqualTo(1)
         assertThat(discards).contains(score)
         assertThat(keeper.formatted()).isEqualTo("00020")

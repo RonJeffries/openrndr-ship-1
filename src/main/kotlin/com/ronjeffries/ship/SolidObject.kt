@@ -10,6 +10,12 @@ abstract class SolidObject(
 ) : BaseObject() {
     var heading: Double = 0.0
 
+    override val interactions: InteractionStrategy =
+        ShyInteractor(
+            interactWith = this::interact,
+            newInteract = this::newInteract
+        )
+
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
@@ -20,6 +26,13 @@ abstract class SolidObject(
             return listOf(this, other)
         }
         return emptyList()
+    }
+
+    fun newInteract(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
+        if (forced) {
+            if (other is SolidObject && weAreCollidingWith(other)) transaction.removeAll(this, other)
+        }
+        return forced
     }
 
     fun weAreCollidingWith(other: SpaceObject) = weCanCollideWith(other) && weAreInRange(other)

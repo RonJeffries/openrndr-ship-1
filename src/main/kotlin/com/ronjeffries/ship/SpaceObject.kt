@@ -9,6 +9,12 @@ interface SpaceObject {
     fun update(deltaTime: Double): List<SpaceObject>
 
     fun finalize(): List<SpaceObject>
+
+    fun testInteract(other: SpaceObject): List<SpaceObject> {
+        val transaction = Transaction()
+        this.interactions.newInteract(other, true, transaction)
+        return transaction.removes.toList()
+    }
 }
 
 abstract class BaseObject : SpaceObject {

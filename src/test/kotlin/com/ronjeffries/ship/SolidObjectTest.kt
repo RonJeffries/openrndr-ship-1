@@ -150,7 +150,9 @@ class SolidObjectTest {
                 ct += 1
                 val oi = objects[i]
                 val oj = objects[j]
-                shouldDie.addAll(oi.interactions.interactWith(oj))
+                val transaction = Transaction()
+                oi.interactions.newInteract(oj, true, transaction)
+                shouldDie.addAll(transaction.removes.toList())
             }
         }
         val n = objects.size
@@ -174,7 +176,9 @@ class SolidObjectTest {
         for (oi in objects) {
             for (oj in objects) {
                 ct += 1
-                shouldDie.addAll(oi.interactions.interactWith(oj))
+                val transaction = Transaction()
+                oi.interactions.newInteract(oj, true, transaction)
+                shouldDie.addAll(transaction.removes.toList())
             }
         }
         val n = objects.size

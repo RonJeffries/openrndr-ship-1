@@ -5,7 +5,10 @@ import org.openrndr.draw.Drawer
 
 class ScoreKeeper : Drawable, BaseObject() {
     var totalScore = 0
-    override val interactions: InteractionStrategy = EagerInteractor(interactWith = this::interact)
+    override val interactions: InteractionStrategy = EagerInteractor(
+        interactWith = this::interact,
+        newInteract = this::newInteract
+    )
 
     fun formatted(): String {
         return ("00000" + totalScore.toShort()).takeLast(5)
@@ -17,6 +20,14 @@ class ScoreKeeper : Drawable, BaseObject() {
             return listOf(other)
         }
         return emptyList()
+    }
+
+    fun newInteract(other: SpaceObject, forced: Boolean, transaction: Transaction): Boolean {
+        if (other.score > 0) {
+            totalScore += other.score
+            transaction.remove(other)
+        }
+        return true
     }
 
     override fun draw(drawer: Drawer) {
