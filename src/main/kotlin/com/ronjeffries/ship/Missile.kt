@@ -28,6 +28,9 @@ class Missile(
 
     override fun update(deltaTime: Double, trans: Transaction) {
         position = (position + velocity * deltaTime).cap()
+        if (elapsedTime > lifetime ) {
+            trans.remove(this)
+        }
     }
 
     override fun beginInteraction() {
@@ -62,7 +65,7 @@ class Missile(
     }
 
     override fun finalize(): List<ISpaceObject> {
-        return listOf(SolidObject.splat(this))
+        return listOf(Splat(this))
     }
 
 }

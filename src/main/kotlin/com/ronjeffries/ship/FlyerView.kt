@@ -131,6 +131,17 @@ class SplatView(lifetime: Double): FlyerView {
         Point(-2.0,0.0), Point(-2.0,-2.0), Point(2.0,-2.0), Point(3.0,1.0), Point(2.0,-1.0), Point(0.0,2.0), Point(1.0,3.0), Point(-1.0,3.0), Point(-4.0,-1.0), Point(-3.0,1.0)
     )
 
+    fun draw(splat: Splat, drawer: Drawer) {
+        drawer.stroke = ColorRGBa.RED
+        drawer.fill = ColorRGBa.RED
+        drawer.rotate(rot)
+        for (point in points) {
+            val size = sizeTween.value(splat.elapsedTime)
+            val radius = radiusTween.value(splat.elapsedTime)
+            drawer.circle(size*point.x, size*point.y, radius)
+        }
+    }
+
     override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
