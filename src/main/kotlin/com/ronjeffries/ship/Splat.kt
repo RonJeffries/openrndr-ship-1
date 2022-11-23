@@ -13,11 +13,7 @@ class Splat(missile: Missile): ISpaceObject {
 
     override fun tick(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
-        update(deltaTime, trans)
-    }
-
-    private fun update(deltaTime: Double, trans: Transaction) {
-        if ( elapsedTime > lifetime ) trans.remove(this)
+        if (elapsedTime > lifetime) trans.remove(this)
     }
 
     override fun beginInteraction() {
