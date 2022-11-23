@@ -16,15 +16,13 @@ class Splat(missile: Missile): ISpaceObject {
         if (elapsedTime > lifetime) trans.remove(this)
     }
 
-    override fun beforeInteractions() {
-    }
+    override fun beforeInteractions() {}
 
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
         return emptyList()
     }
 
-    override fun afterInteractions(trans: Transaction) {
-    }
+    override fun afterInteractions(trans: Transaction) {}
 
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
