@@ -3,7 +3,6 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 
 interface ISpaceObject {
-    val lifetime: Double
     fun update(deltaTime: Double, trans: Transaction)
 
     fun beforeInteractions()

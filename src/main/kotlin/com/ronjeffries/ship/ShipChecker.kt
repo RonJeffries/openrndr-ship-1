@@ -4,8 +4,6 @@ import org.openrndr.draw.Drawer
 
 class ShipChecker(val ship: SolidObject) : ISpaceObject {
     private var missingShip = true
-    override val lifetime
-        get() = Double.MAX_VALUE
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 

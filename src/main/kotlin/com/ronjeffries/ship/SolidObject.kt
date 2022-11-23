@@ -9,7 +9,6 @@ interface ISolidObject : ISpaceObject {
     var velocity: Velocity
     var killRadius: Double
     val isAsteroid: Boolean
-    override val lifetime: Double
     val view: FlyerView
     val controls: Controls
     val finalizer: IFinalizer
@@ -44,7 +43,7 @@ open class SolidObject(
 
     override var killRadius: Double = -Double.MAX_VALUE,
     override val isAsteroid: Boolean = false,
-    override val lifetime: Double = Double.MAX_VALUE,
+    val lifetime: Double = Double.MAX_VALUE,
     override val view: FlyerView = NullView(),
     override val controls: Controls = Controls(),
     override val finalizer: IFinalizer = DefaultFinalizer()

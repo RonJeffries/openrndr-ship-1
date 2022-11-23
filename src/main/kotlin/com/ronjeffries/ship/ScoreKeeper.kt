@@ -5,8 +5,6 @@ import org.openrndr.draw.Drawer
 
 class ScoreKeeper: ISpaceObject {
     var totalScore = 0
-    override val lifetime
-        get() = Double.MAX_VALUE
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 

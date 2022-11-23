@@ -4,8 +4,6 @@ import org.openrndr.draw.Drawer
 
 class WaveChecker: ISpaceObject {
     var sawAsteroid = false
-    override val lifetime
-        get() = Double.MAX_VALUE
     var elapsedTime = 0.0
 
     override fun beforeInteractions() {

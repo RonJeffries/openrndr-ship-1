@@ -3,8 +3,6 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 
 class Score(val score: Int): ISpaceObject {
-    override val lifetime
-        get() = Double.MAX_VALUE
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
     override fun beforeInteractions() { }

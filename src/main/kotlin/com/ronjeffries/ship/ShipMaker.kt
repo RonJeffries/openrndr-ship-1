@@ -5,8 +5,6 @@ import org.openrndr.draw.Drawer
 class ShipMaker(val ship: SolidObject) : ISpaceObject {
     var safeToEmerge = true
     var asteroidTally = 0
-    override val lifetime
-        get() = Double.MAX_VALUE
     var elapsedTime = 0.0
 
     override fun beforeInteractions() {

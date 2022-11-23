@@ -7,7 +7,7 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 class Missile(
     ship: SolidObject,
     var elapsedTime: Double = 0.0,
-    override val lifetime: Double = 3.0
+    val lifetime: Double = 3.0
 ): ISpaceObject {
     var position: Point
     val velocity: Velocity

@@ -4,8 +4,6 @@ import org.openrndr.draw.Drawer
 
 class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
 
-    override val lifetime
-        get() = Double.MAX_VALUE
     var elapsedTime = 0.0
 
     override fun finalize(): List<ISpaceObject> {
