@@ -6,23 +6,21 @@ import org.openrndr.draw.Drawer
 class ScoreKeeper: ISpaceObject {
     var totalScore = 0
 
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
+    override fun update(deltaTime: Double, trans: Transaction) {}
 
-    fun formatted(): String {
-        return ("00000" + totalScore.toShort()).takeLast(5)
-    }
+    override fun beforeInteractions() {}
 
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        return getScore(other)
-    }
-
-    private fun getScore(other: ISpaceObject): List<ISpaceObject> {
         if (other is Score) {
             totalScore += other.score
             return listOf(other)
         }
         return emptyList()
     }
+
+    override fun afterInteractions(trans: Transaction) {}
+
+    override fun finalize(): List<ISpaceObject> { return emptyList() }
 
     override fun draw(drawer: Drawer) {
         drawer.translate(100.0, 500.0)
@@ -31,7 +29,8 @@ class ScoreKeeper: ISpaceObject {
         drawer.text(formatted(), Point(0.0, 0.0))
     }
 
-    override fun beforeInteractions() {}
-    override fun afterInteractions(trans: Transaction) {}
-    override fun update(deltaTime: Double, trans: Transaction) {}
+    fun formatted(): String {
+        return ("00000" + totalScore.toShort()).takeLast(5)
+    }
+
 }

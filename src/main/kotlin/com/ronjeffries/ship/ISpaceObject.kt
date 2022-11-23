@@ -8,6 +8,7 @@ interface ISpaceObject {
     fun beforeInteractions()
     fun interactWith(other: ISpaceObject): List<ISpaceObject>
     fun afterInteractions(trans: Transaction)
+
     fun draw(drawer: Drawer)
     fun finalize(): List<ISpaceObject>
 }
