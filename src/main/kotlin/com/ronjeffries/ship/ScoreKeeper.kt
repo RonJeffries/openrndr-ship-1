@@ -42,5 +42,5 @@ class ScoreKeeper: ISpaceObject {
     }
 
     // defaulted, sometimes overridden
-    override fun update(deltaTime: Double, trans: Transaction) { }
+    private fun update(deltaTime: Double, trans: Transaction) { }
 }

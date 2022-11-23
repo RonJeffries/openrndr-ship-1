@@ -36,6 +36,5 @@ class WaveChecker: ISpaceObject {
         update(deltaTime,trans)
     }
 
-    // defaulted, sometimes overridden
-    override fun update(deltaTime: Double, trans: Transaction) { }
+    private fun update(deltaTime: Double, trans: Transaction) { }
 }

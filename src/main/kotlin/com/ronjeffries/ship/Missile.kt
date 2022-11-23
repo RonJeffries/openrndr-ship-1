@@ -26,7 +26,7 @@ class Missile(
         update(deltaTime,trans)
     }
 
-    override fun update(deltaTime: Double, trans: Transaction) {
+    private fun update(deltaTime: Double, trans: Transaction) {
         position = (position + velocity * deltaTime).cap()
         if (elapsedTime > lifetime ) {
             trans.remove(this)

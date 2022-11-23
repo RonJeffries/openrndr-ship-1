@@ -16,7 +16,7 @@ class Splat(missile: Missile): ISpaceObject {
         update(deltaTime, trans)
     }
 
-    override fun update(deltaTime: Double, trans: Transaction) {
+    private fun update(deltaTime: Double, trans: Transaction) {
         if ( elapsedTime > lifetime ) trans.remove(this)
     }
 
