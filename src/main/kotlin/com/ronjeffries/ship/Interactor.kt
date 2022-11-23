@@ -14,7 +14,7 @@ class Interactor(private val p: Pair<ISpaceObject, ISpaceObject>) {
         return first.interactWith(second)
     }
 
-    fun prioritize(p: Pair<ISpaceObject, ISpaceObject>): Pair<ISpaceObject, ISpaceObject> {
+    private fun prioritize(p: Pair<ISpaceObject, ISpaceObject>): Pair<ISpaceObject, ISpaceObject> {
         val first = p.first
         val second = p.second
         if (first is Score) return Pair(second,first) // could be ScoreKeeper

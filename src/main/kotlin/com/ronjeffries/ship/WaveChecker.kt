@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class WaveChecker: ISpaceObject {
+class WaveChecker: ISpaceObject, InteractingSpaceObject {
     var sawAsteroid = false
     var elapsedTime = 0.0
 
@@ -31,5 +31,17 @@ class WaveChecker: ISpaceObject {
     override fun draw(drawer: Drawer) {}
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
+    }
+
+    override val interactions: Interactions = Interactions(
+        interactWithSolidObject = { solid, _ ->
+            if (solid.isAsteroid) {
+                sawAsteroid = true
+            }
+        }
+    )
+
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+        // no op
     }
 }

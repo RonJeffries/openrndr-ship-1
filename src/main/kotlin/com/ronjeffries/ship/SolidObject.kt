@@ -47,7 +47,7 @@ open class SolidObject(
     override val view: FlyerView = NullView(),
     override val controls: Controls = Controls(),
     override val finalizer: IFinalizer = DefaultFinalizer()
-) : ISolidObject {
+) : ISolidObject, InteractingSpaceObject {
     override var heading: Double = 0.0
 
     override fun update(deltaTime: Double, trans: Transaction) {
@@ -96,6 +96,19 @@ open class SolidObject(
 
     override fun move(deltaTime: Double) {
         position = (position + velocity * deltaTime).cap()
+    }
+
+    override val interactions: Interactions = Interactions(
+        interactWithSolidObject = { solid, trans ->
+            if (weAreCollidingWith(solid)) {
+                trans.remove(this)
+                trans.remove(solid)
+            }
+        }
+    )
+
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+        other.interactions.interactWithSolidObject(this,trans)
     }
 
     override fun toString(): String {
