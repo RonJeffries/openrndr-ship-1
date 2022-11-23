@@ -4,12 +4,12 @@ import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 interface SO {
-    fun interactWith(other: SO, trans: FakeTransaction)
+    fun callOther(other: SO, trans: FakeTransaction)
     fun interactWithOne(classOne: ClassOne, trans: FakeTransaction)
     fun interactWithTwo(classTwo: ClassTwo, trans: FakeTransaction)
 }
 class ClassOne: SO {
-    override fun interactWith(other: SO, trans: FakeTransaction) {
+    override fun callOther(other: SO, trans: FakeTransaction) {
         other.interactWithOne(this, trans)
     }
     override fun interactWithOne(classOne: ClassOne, trans: FakeTransaction) {
@@ -20,7 +20,7 @@ class ClassOne: SO {
     }
 }
 class ClassTwo: SO {
-    override fun interactWith(other: SO, trans: FakeTransaction) {
+    override fun callOther(other: SO, trans: FakeTransaction) {
         other.interactWithTwo(this, trans)
     }
     override fun interactWithOne(classOne: ClassOne, trans: FakeTransaction) {
@@ -31,30 +31,30 @@ class ClassTwo: SO {
 }
 
 class FakeTransaction() {
-    var message = ""
+    var messages = mutableListOf<String>()
     fun add(msg: String) {
-        message += msg
+        messages += msg
     }
 }
 
 class InteractionTest {
     fun interactBothWays(o1: SO, o2:SO, trans: FakeTransaction) {
-        o1.interactWith(o2, trans)
-        o2.interactWith(o1, trans)
+        o1.callOther(o2, trans)
+        o2.callOther(o1, trans)
     }
     @Test
     fun `ClassOne sees two interactions with self`(){
         val c1 = ClassOne()
         val trans = FakeTransaction()
         interactBothWays(c1,c1,trans)
-        assertThat(trans.message).isEqualTo("C1:C1 C1:C1 ")
+        assertThat(trans.messages).containsExactlyInAnyOrder("C1:C1 ", "C1:C1 ")
     }
     @Test
     fun `ClassTwo sees no interactions with self`(){
         val c2 = ClassTwo()
         val trans = FakeTransaction()
         interactBothWays(c2,c2,trans)
-        assertThat(trans.message).isEqualTo("")
+        assertThat(trans.messages.size).isEqualTo(0)
     }
     @Test
     fun `c2 c1 gets one of each`() {
@@ -62,7 +62,6 @@ class InteractionTest {
         val c2 = ClassTwo()
         val trans = FakeTransaction()
         interactBothWays(c1,c2,trans)
-        assertThat(trans.message).contains("C1:C2 ")
-        assertThat(trans.message).contains("C2:C1 ")
+        assertThat(trans.messages).containsExactlyInAnyOrder("C1:C2 ", "C2:C1 ")
     }
 }
