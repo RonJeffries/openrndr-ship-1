@@ -49,7 +49,11 @@ open class SolidObject(
     override val finalizer: IFinalizer = DefaultFinalizer()
 ) : ISolidObject {
     override var heading: Double = 0.0
-    var elapsedTime = 0.0
+
+    override fun update(deltaTime: Double, trans: Transaction) {
+        controls.control(this, deltaTime, trans)
+        move(deltaTime)
+    }
 
     override fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
@@ -104,11 +108,6 @@ open class SolidObject(
 
     override fun beforeInteractions() {}
     override fun afterInteractions(trans: Transaction) {}
-    override fun update(deltaTime: Double, trans: Transaction) {
-        elapsedTime += deltaTime
-        controls.control(this, deltaTime, trans)
-        move(deltaTime)
-    }
 
     companion object {
         fun asteroid(
