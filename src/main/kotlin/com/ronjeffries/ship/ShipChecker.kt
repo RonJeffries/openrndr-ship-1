@@ -27,10 +27,5 @@ class ShipChecker(val ship: SolidObject) : ISpaceObject {
     }
 
     override fun draw(drawer: Drawer) {}
-    override fun tick(deltaTime: Double, trans: Transaction) {
-        elapsedTime += deltaTime
-        update(deltaTime,trans)
-    }
-
-    private fun update(deltaTime: Double, trans: Transaction) { }
+    override fun tick(deltaTime: Double, trans: Transaction) {}
 }
