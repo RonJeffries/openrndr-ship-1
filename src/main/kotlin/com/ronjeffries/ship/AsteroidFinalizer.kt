@@ -45,12 +45,6 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
     }
 }
 
-class MissileFinalizer : IFinalizer {
-    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
-        return listOf(SolidObject.splat(solidObject))
-    }
-}
-
 class ShipFinalizer : IFinalizer {
     override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
         if ( solidObject.deathDueToCollision()) {
