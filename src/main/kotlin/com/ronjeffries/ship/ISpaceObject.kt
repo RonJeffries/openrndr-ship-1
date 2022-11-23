@@ -3,7 +3,6 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 
 interface ISpaceObject {
-    var elapsedTime: Double
     val lifetime: Double
     fun tick(deltaTime: Double, trans: Transaction)
 

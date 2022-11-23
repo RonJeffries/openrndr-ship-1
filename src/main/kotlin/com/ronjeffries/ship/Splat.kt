@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Splat(missile: Missile): ISpaceObject {
-    override var elapsedTime = 0.0
+    var elapsedTime = 0.0
     override val lifetime = 2.0
 
     var position = missile.position

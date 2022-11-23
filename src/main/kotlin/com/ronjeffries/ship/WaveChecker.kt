@@ -6,7 +6,7 @@ class WaveChecker: ISpaceObject {
     var sawAsteroid = false
     override val lifetime
         get() = Double.MAX_VALUE
-    override var elapsedTime = 0.0
+    var elapsedTime = 0.0
 
     override fun beginInteraction() {
         sawAsteroid = false

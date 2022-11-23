@@ -6,7 +6,7 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
 
     override val lifetime
         get() = Double.MAX_VALUE
-    override var elapsedTime = 0.0
+    var elapsedTime = 0.0
 
     override fun finalize(): List<ISpaceObject> {
         return emptyList()

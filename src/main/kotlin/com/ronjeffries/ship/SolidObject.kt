@@ -14,7 +14,6 @@ interface ISolidObject : ISpaceObject {
     val controls: Controls
     val finalizer: IFinalizer
     var heading: Double
-    override var elapsedTime: Double
     fun accelerate(deltaV: Acceleration)
     fun scale(): Double
     fun deathDueToCollision(): Boolean
@@ -51,7 +50,7 @@ open class SolidObject(
     override val finalizer: IFinalizer = DefaultFinalizer()
 ) : ISolidObject {
     override var heading: Double = 0.0
-    override var elapsedTime = 0.0
+    var elapsedTime = 0.0
 
     override fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()

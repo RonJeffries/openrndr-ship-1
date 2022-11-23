@@ -7,7 +7,7 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject {
     var asteroidTally = 0
     override val lifetime
         get() = Double.MAX_VALUE
-    override var elapsedTime = 0.0
+    var elapsedTime = 0.0
 
     override fun beginInteraction() {
         safeToEmerge = true
