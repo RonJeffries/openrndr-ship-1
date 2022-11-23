@@ -24,10 +24,6 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject, InteractingSpaceObje
     }
 
     override fun beforeInteractions() {}
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        throw NotImplementedError("wavemaker")
-        return emptyList()
-    }
     override fun afterInteractions(trans: Transaction) {}
 
     override fun finalize(): List<ISpaceObject> {

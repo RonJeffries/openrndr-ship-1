@@ -33,13 +33,6 @@ class Missile(
     override fun beforeInteractions() {
     }
 
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        return when {
-            weAreCollidingWith(other) -> listOf(this, other)
-            else -> emptyList()
-        }
-    }
-
     private fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other)
             && weAreInRange(other)
 

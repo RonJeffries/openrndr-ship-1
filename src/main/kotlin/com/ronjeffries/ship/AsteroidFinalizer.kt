@@ -60,7 +60,6 @@ class ShipFinalizer : IFinalizer {
 
 class DefaultFinalizer : IFinalizer {
     override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
-        println("$solidObject finalizing")
         return emptyList()
     }
 }

@@ -11,11 +11,6 @@ class ShipChecker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject 
         missingShip = true
     }
 
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        if ( other == ship ) { println("ship in interactWith"); missingShip = false}
-        return emptyList()
-    }
-
     override fun afterInteractions(trans: Transaction) {
         if ( missingShip ) {
             trans.add(ShipMaker(ship))

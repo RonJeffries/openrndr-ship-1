@@ -10,14 +10,6 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
 
     override fun beforeInteractions() {}
 
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        if (other is Score) {
-            totalScore += other.score
-            return listOf(other)
-        }
-        return emptyList()
-    }
-
     override fun afterInteractions(trans: Transaction) {}
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }

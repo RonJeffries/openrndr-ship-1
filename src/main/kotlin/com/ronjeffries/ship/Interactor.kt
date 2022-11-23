@@ -5,13 +5,10 @@ class Interactor(private val p: Pair<ISpaceObject, ISpaceObject>) {
         val newP = prioritize(p)
         val first = newP.first
         val second = newP.second
-        if ( first is InteractingSpaceObject && second is InteractingSpaceObject) {
-            val trans = Transaction()
-            first.callOther(second, trans)
-            second.callOther(first, trans)
-            return trans.removes.toList()
-        }
-        return first.interactWith(second)
+        val trans = Transaction()
+        first.callOther(second, trans)
+        second.callOther(first, trans)
+        return trans.removes.toList()
     }
 
     private fun prioritize(p: Pair<ISpaceObject, ISpaceObject>): Pair<ISpaceObject, ISpaceObject> {

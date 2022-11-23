@@ -19,7 +19,6 @@ interface ISolidObject : ISpaceObject {
 
     override fun draw(drawer: Drawer)
 
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject>
     fun weAreCollidingWith(other: ISpaceObject): Boolean
     fun weCanCollideWith(other: ISpaceObject): Boolean
     fun weAreInRange(other: ISpaceObject): Boolean
@@ -69,10 +68,6 @@ open class SolidObject(
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
-    }
-
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        TODO("never get here")
     }
 
     override fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)

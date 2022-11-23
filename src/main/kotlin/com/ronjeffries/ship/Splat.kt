@@ -18,10 +18,6 @@ class Splat(missile: Missile): ISpaceObject, InteractingSpaceObject {
 
     override fun beforeInteractions() {}
 
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        return emptyList()
-    }
-
     override fun afterInteractions(trans: Transaction) {}
 
     override fun draw(drawer: Drawer) {

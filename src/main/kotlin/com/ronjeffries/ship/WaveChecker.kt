@@ -12,12 +12,6 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
-    override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        if (other is SolidObject && other.isAsteroid)
-            sawAsteroid = true
-        return emptyList()
-    }
-
     override fun afterInteractions(trans: Transaction) {
         if ( elapsedTime > 1.0  ) {
             elapsedTime = 0.0
