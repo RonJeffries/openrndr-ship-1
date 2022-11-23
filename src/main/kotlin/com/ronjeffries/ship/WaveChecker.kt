@@ -8,7 +8,7 @@ class WaveChecker: ISpaceObject {
         get() = Double.MAX_VALUE
     var elapsedTime = 0.0
 
-    override fun beginInteraction() {
+    override fun beforeInteractions() {
         sawAsteroid = false
     }
 
@@ -20,7 +20,7 @@ class WaveChecker: ISpaceObject {
         return emptyList()
     }
 
-    override fun finishInteraction(trans: Transaction) {
+    override fun afterInteractions(trans: Transaction) {
         if ( elapsedTime > 1.0  ) {
             elapsedTime = 0.0
             if (!sawAsteroid) {

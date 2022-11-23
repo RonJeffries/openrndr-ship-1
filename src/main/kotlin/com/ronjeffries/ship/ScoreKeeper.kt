@@ -33,7 +33,7 @@ class ScoreKeeper: ISpaceObject {
         drawer.text(formatted(), Point(0.0, 0.0))
     }
 
-    override fun beginInteraction() {}
-    override fun finishInteraction(trans: Transaction) {}
+    override fun beforeInteractions() {}
+    override fun afterInteractions(trans: Transaction) {}
     override fun update(deltaTime: Double, trans: Transaction) {}
 }

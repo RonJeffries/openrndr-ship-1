@@ -30,7 +30,7 @@ class Missile(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun beginInteraction() {
+    override fun beforeInteractions() {
     }
 
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
@@ -49,7 +49,7 @@ class Missile(
     private fun weAreInRange(other: ISpaceObject): Boolean = other is SolidObject
             && position.distanceTo(other.position) < killRadius + other.killRadius
 
-    override fun finishInteraction(trans: Transaction) {
+    override fun afterInteractions(trans: Transaction) {
     }
 
     override fun draw(drawer: Drawer) {

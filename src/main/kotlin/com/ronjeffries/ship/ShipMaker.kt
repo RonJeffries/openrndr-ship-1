@@ -9,7 +9,7 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject {
         get() = Double.MAX_VALUE
     var elapsedTime = 0.0
 
-    override fun beginInteraction() {
+    override fun beforeInteractions() {
         safeToEmerge = true
         asteroidTally = 0
     }
@@ -27,7 +27,7 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject {
         else (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
 
-    override fun finishInteraction(trans: Transaction) {
+    override fun afterInteractions(trans: Transaction) {
         if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
             replaceTheShip(trans)
         }

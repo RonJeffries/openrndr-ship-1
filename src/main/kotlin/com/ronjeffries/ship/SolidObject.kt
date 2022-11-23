@@ -31,9 +31,9 @@ interface ISolidObject : ISpaceObject {
     override fun toString(): String
     fun turnBy(degrees: Double)
 
-    override fun beginInteraction()
+    override fun beforeInteractions()
 
-    override fun finishInteraction(trans: Transaction)
+    override fun afterInteractions(trans: Transaction)
 
     override fun update(deltaTime: Double, trans: Transaction)
 }
@@ -103,8 +103,8 @@ open class SolidObject(
         heading += degrees
     }
 
-    override fun beginInteraction() {}
-    override fun finishInteraction(trans: Transaction) {}
+    override fun beforeInteractions() {}
+    override fun afterInteractions(trans: Transaction) {}
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         controls.control(this, deltaTime, trans)
