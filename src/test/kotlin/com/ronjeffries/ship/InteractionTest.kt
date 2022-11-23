@@ -3,17 +3,17 @@ package com.ronjeffries.ship
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class Interactions(
+private class Interactions(
     val interactWithOne: (item: ClassOne, trans: FakeTransaction) -> Unit = {_, _, -> },
     val interactWithTwo: (item: ClassTwo, trans: FakeTransaction) -> Unit= {_, _, -> },
 )
 
-interface SO {
+private interface SO {
     val interactions: Interactions
     fun interactWith(other: SO, trans: FakeTransaction)
 }
 
-class ClassOne: SO {
+private class ClassOne: SO {
     override val interactions = Interactions(
         interactWithOne = { obj: ClassOne, trans: FakeTransaction -> trans.add("C1:C1")},
         interactWithTwo = { obj: ClassTwo, trans: FakeTransaction -> println("$this $obj"); trans.add("C1:C2")}
@@ -22,7 +22,7 @@ class ClassOne: SO {
         other.interactions.interactWithOne(this, trans)
     }
 }
-class ClassTwo: SO {
+private class ClassTwo: SO {
     override val interactions = Interactions(
         interactWithOne = { obj: ClassOne, trans -> trans.add("C2:C1") }
     )
@@ -38,7 +38,7 @@ class FakeTransaction() {
     }
 }
 
-class InteractionTest {
+private class InteractionTest {
     fun interactBothWays(o1: SO, o2:SO, trans: FakeTransaction) {
         o1.interactWith(o2, trans)
         o2.interactWith(o1, trans)
