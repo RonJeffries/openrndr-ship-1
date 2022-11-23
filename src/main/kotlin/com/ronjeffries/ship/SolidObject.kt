@@ -72,10 +72,7 @@ open class SolidObject(
     }
 
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
-        return when {
-            weAreCollidingWith(other) -> listOf(this, other)
-            else -> emptyList()
-        }
+        TODO("never get here")
     }
 
     override fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
