@@ -7,6 +7,10 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject {
     var asteroidTally = 0
     var elapsedTime = 0.0
 
+    override fun update(deltaTime: Double, trans: Transaction) {
+        elapsedTime += deltaTime
+    }
+
     override fun beforeInteractions() {
         safeToEmerge = true
         asteroidTally = 0
@@ -39,7 +43,4 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject {
     }
 
     override fun draw(drawer: Drawer) {}
-    override fun update(deltaTime: Double, trans: Transaction) {
-        elapsedTime += deltaTime
-    }
 }
