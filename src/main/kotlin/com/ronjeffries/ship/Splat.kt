@@ -11,7 +11,7 @@ class Splat(missile: Missile): ISpaceObject {
     var position = missile.position
     var view = SplatView(2.0)
 
-    override fun tick(deltaTime: Double, trans: Transaction) {
+    override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         if (elapsedTime > lifetime) trans.remove(this)
     }

@@ -16,7 +16,7 @@ class ShipCheckerAndMakerTest {
         assertThat(emptyTransaction.adds).isEmpty()
         assertThat(emptyTransaction.removes).isEmpty()
         val alsoNothing = Transaction()
-        checker.tick(0.01, alsoNothing)
+        checker.update(0.01, alsoNothing)
         assertThat(alsoNothing.adds).isEmpty()
         assertThat(alsoNothing.removes).isEmpty()
     }
@@ -33,7 +33,7 @@ class ShipCheckerAndMakerTest {
         assertThat(emptyTransaction.adds).isEmpty()
         assertThat(emptyTransaction.removes).isEmpty()
         val alsoNothing = Transaction()
-        checker.tick(0.01, alsoNothing)
+        checker.update(0.01, alsoNothing)
         assertThat(alsoNothing.adds).isEmpty()
         assertThat(alsoNothing.removes).isEmpty()
     }
@@ -54,7 +54,7 @@ class ShipCheckerAndMakerTest {
     fun `maker delays U MAKER_DELAY seconds`() {
         val ship = SolidObject.ship(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
-        maker.tick(U.MAKER_DELAY, Transaction())
+        maker.update(U.MAKER_DELAY, Transaction())
         maker.beginInteraction()
         // nothing in the way
         val nothing = Transaction()
@@ -70,8 +70,8 @@ class ShipCheckerAndMakerTest {
         ship.heading = 90.0
         val maker = ShipMaker(ship)
         val ignored = Transaction()
-        maker.tick(U.MAKER_DELAY, ignored)
-        maker.tick(0.01, ignored)
+        maker.update(U.MAKER_DELAY, ignored)
+        maker.update(0.01, ignored)
         maker.beginInteraction()
         // nothing in the way
         val trans = Transaction()
@@ -87,8 +87,8 @@ class ShipCheckerAndMakerTest {
         val asteroid = SolidObject.asteroid(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
         val ignored = Transaction()
-        maker.tick(U.MAKER_DELAY, ignored)
-        maker.tick(0.01, ignored)
+        maker.update(U.MAKER_DELAY, ignored)
+        maker.update(0.01, ignored)
         maker.beginInteraction()
         maker.interactWith(asteroid)
         val nothing = Transaction()
@@ -115,7 +115,7 @@ class ShipCheckerAndMakerTest {
         ship.heading = heading
         ship.velocity = velocity
         val maker = ShipMaker(ship)
-        maker.tick(U.MAKER_DELAY + 0.01, Transaction())
+        maker.update(U.MAKER_DELAY + 0.01, Transaction())
         maker.beginInteraction()
         // no obstacles
         maker.asteroidTally = 60 // no possible hyperspace failure

@@ -9,9 +9,9 @@ class MissileTest {
         val ship = SolidObject.ship(U.randomPoint())
         val missile = Missile(ship)
         val trans = Transaction()
-        missile.tick(0.1, trans)
+        missile.update(0.1, trans)
         assertThat((trans.removes.size)).isEqualTo(0)
-        missile.tick(3.1, trans)
+        missile.update(3.1, trans)
         assertThat((trans.removes.size)).isEqualTo(1)
     }
 
@@ -30,7 +30,7 @@ class MissileTest {
         val splat = splatList[0]
         assertThat(splat is Splat).isEqualTo(true)
         val trans = Transaction()
-        splat.tick(4.0, trans)
+        splat.update(4.0, trans)
         assertThat(trans.removes.size).isEqualTo(1)
     }
 }

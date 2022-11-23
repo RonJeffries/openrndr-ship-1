@@ -35,5 +35,5 @@ class ScoreKeeper: ISpaceObject {
 
     override fun beginInteraction() {}
     override fun finishInteraction(trans: Transaction) {}
-    override fun tick(deltaTime: Double, trans: Transaction) {}
+    override fun update(deltaTime: Double, trans: Transaction) {}
 }

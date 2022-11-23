@@ -20,7 +20,7 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
     override fun finishInteraction(trans: Transaction) {}
     override fun draw(drawer: Drawer) {}
 
-    override fun tick(deltaTime: Double, trans: Transaction) {
+    override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         if (elapsedTime > 3.0) {
             val toAdd = mutableListOf<ISpaceObject>()

@@ -64,7 +64,7 @@ class Game {
 
     fun tick(deltaTime: Double) {
         val trans = Transaction()
-        knownObjects.forEach { it.tick(deltaTime, trans) }
+        knownObjects.forEach { it.update(deltaTime, trans) }
         knownObjects.applyChanges(trans)
     }
 }

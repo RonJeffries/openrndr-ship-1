@@ -22,7 +22,7 @@ class Missile(
         velocity = ship.velocity + missileOwnVelocity
     }
 
-    override fun tick(deltaTime: Double, trans: Transaction) {
+    override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         if (elapsedTime > lifetime) {
             trans.remove(this)

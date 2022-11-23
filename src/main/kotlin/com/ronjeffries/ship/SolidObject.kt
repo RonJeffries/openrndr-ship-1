@@ -35,7 +35,7 @@ interface ISolidObject : ISpaceObject {
 
     override fun finishInteraction(trans: Transaction)
 
-    override fun tick(deltaTime: Double, trans: Transaction)
+    override fun update(deltaTime: Double, trans: Transaction)
 }
 
 open class SolidObject(
@@ -78,12 +78,12 @@ open class SolidObject(
     override fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
 
     override fun weCanCollideWith(other: ISpaceObject): Boolean {
-        return if ( other !is SolidObject) false
+        return if (other !is SolidObject) false
         else !(this.isAsteroid && other.isAsteroid)
     }
 
     override fun weAreInRange(other: ISpaceObject): Boolean {
-        return if ( other !is SolidObject) false
+        return if (other !is SolidObject) false
         else position.distanceTo(other.position) < killRadius + other.killRadius
     }
 
@@ -99,20 +99,16 @@ open class SolidObject(
         return "Flyer $position ($killRadius)"
     }
 
-    override fun turnBy(degrees:Double) {
+    override fun turnBy(degrees: Double) {
         heading += degrees
-    }
-
-    private fun update(deltaTime: Double, trans: Transaction) {
-        controls.control(this, deltaTime, trans)
-        move(deltaTime)
     }
 
     override fun beginInteraction() {}
     override fun finishInteraction(trans: Transaction) {}
-    override fun tick(deltaTime: Double, trans: Transaction) {
+    override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
-        update(deltaTime,trans)
+        controls.control(this, deltaTime, trans)
+        move(deltaTime)
     }
 
     companion object {
@@ -132,7 +128,7 @@ open class SolidObject(
             )
         }
 
-        fun ship(pos:Point, control:Controls= Controls()): SolidObject {
+        fun ship(pos: Point, control: Controls = Controls()): SolidObject {
             return SolidObject(
                 position = pos,
                 velocity = Velocity.ZERO,
