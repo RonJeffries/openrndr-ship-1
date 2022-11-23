@@ -4,7 +4,7 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
-class Splat(missile: Missile): ISpaceObject {
+class Splat(missile: Missile): ISpaceObject, InteractingSpaceObject {
     var elapsedTime = 0.0
     val lifetime = 2.0
 
@@ -32,6 +32,12 @@ class Splat(missile: Missile): ISpaceObject {
 
     override fun finalize(): List<ISpaceObject> {
         return emptyList()
+    }
+
+    override val interactions: Interactions = Interactions()
+
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+        // no op
     }
 
 }
