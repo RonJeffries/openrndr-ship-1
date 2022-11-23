@@ -9,6 +9,7 @@ interface Thing {
     fun callOther(other: Thing, accumulator: Accumulator)
 }
 
+
 class TypeOne : Thing {
     override val dispatch: Dispatch = Dispatch(
         handleTypeOne = this::handleTypeOne,
