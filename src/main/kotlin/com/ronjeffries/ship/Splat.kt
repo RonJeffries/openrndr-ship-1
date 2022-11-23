@@ -35,9 +35,5 @@ class Splat(missile: Missile): ISpaceObject, InteractingSpaceObject {
     }
 
     override val interactions: Interactions = Interactions()
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        // no op
-    }
-
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 }

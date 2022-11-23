@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
+class WaveMaker(val numberToCreate: Int = 8): ISpaceObject, InteractingSpaceObject {
 
     var elapsedTime = 0.0
 
@@ -25,6 +25,7 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
 
     override fun beforeInteractions() {}
     override fun interactWith(other: ISpaceObject): List<ISpaceObject> {
+        println("wave maker interactWith")
         return emptyList()
     }
     override fun afterInteractions(trans: Transaction) {}
@@ -34,4 +35,9 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject {
     }
 
     override fun draw(drawer: Drawer) {}
+
+    override val interactions: Interactions = Interactions()
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+        other.interactions.interactWithWaveMaker(this, trans)
+    }
 }
