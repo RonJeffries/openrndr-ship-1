@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import kotlin.random.Random
 
-class HyperspaceOperation(val ship:SolidObject, val asteroidTally: Int) {
+class HyperspaceOperation(val ship: SolidObject, val asteroidTally: Int) {
     fun execute(trans: Transaction) {
         if (hyperspaceFails()) {
             destroyTheShip(trans)
@@ -11,7 +11,7 @@ class HyperspaceOperation(val ship:SolidObject, val asteroidTally: Int) {
 
     private fun destroyTheShip(trans: Transaction) {
         trans.add(SolidObject.shipDestroyer(ship))
-        trans.add(SolidObject.splat(ship))
+        trans.add(Splat(ship))
     }
 
     private fun inHyperspace() = ship.position != U.CENTER_OF_UNIVERSE
