@@ -12,7 +12,7 @@ class Controls {
         if (hyperspace) {
             hyperspace = false
             recentHyperspace = true
-            trans.addAll(listOf(SolidObject.shipDestroyer(ship)))
+            trans.addAll(listOf(ShipDestroyer()))
         }
         turn(ship, deltaTime)
         accelerate(ship, deltaTime)

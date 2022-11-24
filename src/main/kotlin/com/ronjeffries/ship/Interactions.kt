@@ -7,4 +7,5 @@ class Interactions (
     val interactWithShipChecker: (checker: ShipChecker, trans: Transaction) -> Unit = { _,_, -> },
     val interactWithShipMaker: (maker: ShipMaker, trans: Transaction) -> Unit = { _,_, -> },
     val interactWithWaveMaker: (maker: WaveMaker, trans: Transaction) -> Unit = { _,_, -> },
+    val interactWithShipDestroyer: (destroyer: ShipDestroyer, trans: Transaction) -> Unit = { _,_, -> },
 )

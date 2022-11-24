@@ -42,24 +42,11 @@ open class SolidObject(
 
     override var killRadius: Double = -Double.MAX_VALUE,
     override val isAsteroid: Boolean = false,
-    val lifetime: Double = Double.MAX_VALUE,
     override val view: FlyerView = NullView(),
     override val controls: Controls = Controls(),
     override val finalizer: IFinalizer = DefaultFinalizer()
 ) : ISolidObject, InteractingSpaceObject {
     override var heading: Double = 0.0
-    override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
-                trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
-            }
-        }
-    )
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithSolidObject(this,trans)
-    }
 
     override fun update(deltaTime: Double, trans: Transaction) {
         controls.control(this, deltaTime, trans)
@@ -102,6 +89,22 @@ open class SolidObject(
         position = (position + velocity * deltaTime).cap()
     }
 
+    override val interactions: Interactions = Interactions(
+        interactWithSolidObject = { solid, trans ->
+            if (weAreCollidingWith(solid)) {
+                trans.remove(this)
+                trans.remove(solid) // TODO: should be able to remove this but a test fails
+            }
+        },
+        interactWithShipDestroyer = {_, trans ->
+            if (this.isShip()) trans.remove(this)}
+    )
+
+    private fun isShip(): Boolean = this.killRadius == 150.0
+
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+        other.interactions.interactWithSolidObject(this, trans)
+    }
 
     override fun toString(): String {
         return "Flyer $position ($killRadius)"
@@ -139,25 +142,6 @@ open class SolidObject(
                 view = ShipView(),
                 controls = control,
                 finalizer = ShipFinalizer()
-            )
-        }
-
-        fun shipDestroyer(ship: SolidObject): SolidObject {
-            return SolidObject(
-                position = ship.position,
-                velocity = Velocity.ZERO,
-                killRadius = 99.9,
-                view = InvisibleView()
-            )
-        }
-
-        fun splat(missile: SolidObject): SolidObject {
-            val lifetime = 2.0
-            return SolidObject(
-                position = missile.position,
-                velocity = Velocity.ZERO,
-                lifetime = lifetime,
-                view = SplatView(lifetime)
             )
         }
     }
