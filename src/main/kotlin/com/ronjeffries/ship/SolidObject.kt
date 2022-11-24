@@ -113,15 +113,4 @@ open class SolidObject(
     override fun beforeInteractions() {}
     override fun afterInteractions(trans: Transaction) {}
 
-    companion object {
-
-        fun shipDestroyer(ship: SolidObject): SolidObject {
-            return SolidObject(
-                position = ship.position,
-                velocity = Velocity.ZERO,
-                killRadius = 99.9,
-                view = InvisibleView()
-            )
-        }
-    }
 }

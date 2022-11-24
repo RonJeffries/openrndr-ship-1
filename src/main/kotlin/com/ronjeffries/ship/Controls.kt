@@ -12,14 +12,14 @@ class Controls {
         if (hyperspace) {
             hyperspace = false
             recentHyperspace = true
-            trans.addAll(listOf(SolidObject.shipDestroyer(ship)))
+            trans.addAll(listOf(ShipDestroyer(ship)))
         }
         turn(ship, deltaTime)
         accelerate(ship, deltaTime)
         trans.addAll(fire(ship))
     }
 
-    private fun accelerate(obj:SolidObject, deltaTime: Double) {
+    private fun accelerate(obj: SolidObject, deltaTime: Double) {
         if (accelerate) {
             val deltaV = U.SHIP_ACCELERATION.rotate(obj.heading) * deltaTime
             obj.accelerate(deltaV)
@@ -40,7 +40,7 @@ class Controls {
     }
 
     private fun turn(obj: SolidObject, deltaTime: Double) {
-        if (left) obj.turnBy(-U.SHIP_ROTATION_SPEED*deltaTime)
-        if (right) obj.turnBy(U.SHIP_ROTATION_SPEED*deltaTime)
+        if (left) obj.turnBy(-U.SHIP_ROTATION_SPEED * deltaTime)
+        if (right) obj.turnBy(U.SHIP_ROTATION_SPEED * deltaTime)
     }
 }
