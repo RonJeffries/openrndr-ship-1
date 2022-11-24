@@ -7,11 +7,11 @@ interface IFinalizer {
     fun scale(): Double = 1.0
 }
 
-class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
+class AsteroidFinalizer(private val splitCount: Int = 2) : IFinalizer {
     private fun asSplit(asteroid: SolidObject): SolidObject {
         val newKr = asteroid.killRadius / 2.0
         val newVel = asteroid.velocity.rotate(Math.random() * 360.0)
-        return SolidObject.asteroid(
+        return Asteroid(
             pos = asteroid.position,
             vel = newVel,
             killRad = newKr,
@@ -47,7 +47,7 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
 
 class ShipFinalizer : IFinalizer {
     override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
-        if ( solidObject.deathDueToCollision()) {
+        if (solidObject.deathDueToCollision()) {
             solidObject.position = U.CENTER_OF_UNIVERSE
             solidObject.velocity = Velocity.ZERO
             solidObject.heading = 0.0

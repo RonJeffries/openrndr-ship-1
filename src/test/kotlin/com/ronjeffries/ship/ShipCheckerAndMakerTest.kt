@@ -86,7 +86,7 @@ class ShipCheckerAndMakerTest {
     @Test
     fun `maker makes only when safe`() {
         val ship = Ship(U.CENTER_OF_UNIVERSE)
-        val asteroid = SolidObject.asteroid(U.CENTER_OF_UNIVERSE)
+        val asteroid = Asteroid(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
         val ignored = Transaction()
         maker.update(U.MAKER_DELAY, ignored)
@@ -133,7 +133,7 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `maker counts asteroids`() {
-        val a = SolidObject.asteroid(U.randomPoint())
+        val a = Asteroid(U.randomPoint())
         val ship = Ship(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
         maker.beforeInteractions()

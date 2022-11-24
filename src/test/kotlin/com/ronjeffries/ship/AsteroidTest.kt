@@ -10,7 +10,7 @@ class AsteroidTest {
 
     @Test
     fun `Asteroids Exist and Move`() {
-        val asteroid = SolidObject.asteroid(
+        val asteroid = Asteroid(
             pos = Point.ZERO,
             vel = Velocity(15.0, 30.0)
         )
@@ -20,7 +20,7 @@ class AsteroidTest {
 
     @Test
     fun `asteroid splits on finalize`() {
-        val full = SolidObject.asteroid(
+        val full = Asteroid(
             pos = Point.ZERO,
             vel = Velocity.ZERO
         )
@@ -40,7 +40,7 @@ class AsteroidTest {
     @Test
     fun `new split asteroids get new directions`() {
         val startingV = Vector2(100.0, 0.0)
-        val full = SolidObject.asteroid(
+        val full = Asteroid(
             pos = Vector2.ZERO,
             vel = startingV
         )

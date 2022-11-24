@@ -114,21 +114,6 @@ open class SolidObject(
     override fun afterInteractions(trans: Transaction) {}
 
     companion object {
-        fun asteroid(
-            pos: Point,
-            vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
-            killRad: Double = 500.0,
-            splitCount: Int = 2
-        ): SolidObject {
-            return SolidObject(
-                position = pos,
-                velocity = vel,
-                killRadius = killRad,
-                isAsteroid = true,
-                view = AsteroidView(),
-                finalizer = AsteroidFinalizer(splitCount)
-            )
-        }
 
         fun shipDestroyer(ship: SolidObject): SolidObject {
             return SolidObject(
