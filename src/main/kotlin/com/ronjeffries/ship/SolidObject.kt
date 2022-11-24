@@ -94,7 +94,7 @@ open class SolidObject(
         interactWithSolidObject = { solid, trans ->
             if (weAreCollidingWith(solid)) {
                 trans.remove(this)
-                trans.remove(solid)
+                trans.remove(solid) // TODO: should be able to remove this but a test fails
             }
         }
     )
