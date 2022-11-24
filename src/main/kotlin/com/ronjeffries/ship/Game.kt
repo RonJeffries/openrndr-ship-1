@@ -29,7 +29,7 @@ class Game {
     }
 
     private fun newShip(controls: Controls): SolidObject {
-        return  SolidObject.ship(U.CENTER_OF_UNIVERSE, controls)
+        return Ship(U.CENTER_OF_UNIVERSE, controls)
     }
 
     fun cycle(drawer: Drawer, seconds: Double) {
@@ -54,11 +54,11 @@ class Game {
         knownObjects.applyChanges(buffer)
     }
 
-    private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }
+    private fun draw(drawer: Drawer) = knownObjects.forEach { drawer.isolated { it.draw(drawer) } }
 
     fun processInteractions() {
         val toBeRemoved = removalsDueToInteraction()
-        if ( toBeRemoved.size > 0 ) {
+        if (toBeRemoved.size > 0) {
             knownObjects.removeAndFinalizeAll(toBeRemoved)
         }
     }

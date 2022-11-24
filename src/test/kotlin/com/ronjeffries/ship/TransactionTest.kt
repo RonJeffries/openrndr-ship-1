@@ -1,11 +1,11 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class TransactionTest {
     private fun newShip(): SolidObject {
-        return SolidObject.ship(U.randomPoint())
+        return Ship(U.randomPoint())
     }
 
     @Test
