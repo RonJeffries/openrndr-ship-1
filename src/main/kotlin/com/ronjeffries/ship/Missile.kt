@@ -63,7 +63,6 @@ class Missile(
             }
         }
     )
-
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithMissile(this, trans)
     }
