@@ -45,11 +45,4 @@ class GameTest {
         val pairs = game.knownObjects.pairsToCheck()
         assertThat(pairs.size).isEqualTo(n*(n-1)/2)
     }
-
-    @Test
-    fun `create and test interactor`() {
-        val ship1 = SolidObject.ship(U.randomPoint())
-        val ship2 = SolidObject.ship(U.randomPoint())
-        val int = Interactor(Pair(ship1,ship2))
-    }
 }

@@ -22,8 +22,12 @@ class ScoreKeeperTest {
         val score = Score(20)
         val keeper = ScoreKeeper()
         val p = Pair(keeper, score)
-        val interactor = Interactor(p)
-        val discards = interactor.findRemovals()
+        val first = p.first
+        val second = p.second
+        val trans = Transaction()
+        first.callOther(second, trans)
+        second.callOther(first, trans)
+        val discards = trans.removes.toList()
         assertThat(discards.size).isEqualTo(1)
         assertThat(discards).contains(score)
         assertThat(keeper.formatted()).isEqualTo("00020")
@@ -34,8 +38,12 @@ class ScoreKeeperTest {
         val score = Score(20)
         val keeper = ScoreKeeper()
         val p = Pair(score, keeper)
-        val interactor = Interactor(p)
-        val discards = interactor.findRemovals()
+        val first = p.first
+        val second = p.second
+        val trans = Transaction()
+        first.callOther(second, trans)
+        second.callOther(first, trans)
+        val discards = trans.removes.toList()
         assertThat(discards.size).isEqualTo(1)
         assertThat(discards).contains(score)
         assertThat(keeper.formatted()).isEqualTo("00020")

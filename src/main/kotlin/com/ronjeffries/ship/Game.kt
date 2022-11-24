@@ -10,13 +10,14 @@ class Game {
     fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
 
     fun removalsDueToInteraction(): MutableSet<ISpaceObject> {
-        val result = mutableSetOf<ISpaceObject>()
-        knownObjects.pairsToCheck().forEach {p ->
-            val interactor = Interactor(p)
-            val removes = interactor.findRemovals()
-            result.addAll(removes)
+        val trans = Transaction()
+        knownObjects.pairsToCheck().forEach { p ->
+            val first = p.first
+            val second = p.second
+            first.callOther(second, trans)
+            second.callOther(first, trans)
         }
-        return result
+        return trans.removes
     }
 
     fun createContents(controls: Controls) {
