@@ -48,6 +48,19 @@ open class SolidObject(
 ) : ISolidObject {
     override var heading: Double = 0.0
 
+    override val interactions: Interactions = Interactions(
+        interactWithSolidObject = { solid, trans ->
+            if (weAreCollidingWith(solid)) {
+                trans.remove(this)
+                trans.remove(solid) // TODO: should be able to remove this but a test fails
+            }
+        }
+    )
+
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+        other.interactions.interactWithSolidObject(this, trans)
+    }
+
     override fun update(deltaTime: Double, trans: Transaction) {
         move(deltaTime)
     }
@@ -88,18 +101,6 @@ open class SolidObject(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
-                trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
-            }
-        }
-    )
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithSolidObject(this, trans)
-    }
 
     override fun toString(): String {
         return "Flyer $position ($killRadius)"

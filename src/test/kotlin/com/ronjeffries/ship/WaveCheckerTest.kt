@@ -32,15 +32,15 @@ class WaveCheckerTest {
 
     @Test
     fun `returns empty when elapsed gt 1 and an asteroid IS scanned`() {
-        val a = Asteroid(U.randomPoint(), U.randomVelocity(U.ASTEROID_SPEED))
-        val ck = WaveChecker()
-        ck.update(1.1, Transaction())
-        ck.beforeInteractions()
-        ck.interactions.interactWithSolidObject(a, Transaction())
-        val trans = Transaction()
-        ck.afterInteractions(trans)
-        assertThat(trans.adds).isEmpty()
-        assertThat(trans.removes).isEmpty()
-        assertThat(ck.elapsedTime).isEqualTo(0.0)
+        val asteroid = Asteroid(U.randomPoint(), U.randomVelocity(U.ASTEROID_SPEED))
+        val checker = WaveChecker()
+        val transaction = Transaction()
+        checker.update(1.1, transaction)
+        checker.beforeInteractions()
+        interactBothWays(checker, asteroid, Transaction())
+        checker.afterInteractions(transaction)
+        assertThat(transaction.adds).isEmpty()
+        assertThat(transaction.removes).isEmpty()
+        assertThat(checker.elapsedTime).isEqualTo(0.0)
     }
 }

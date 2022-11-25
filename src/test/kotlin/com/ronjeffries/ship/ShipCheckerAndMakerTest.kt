@@ -10,16 +10,11 @@ class ShipCheckerAndMakerTest {
         val checker = ShipChecker(ship)
         checker.beforeInteractions()
         val nothing = Transaction()
-        checker.interactions.interactWithSolidObject(ship, nothing)
+        interactBothWays(checker, ship, nothing)
         assertThat(nothing.removes).isEmpty()
-        val emptyTransaction = Transaction()
-        checker.afterInteractions(emptyTransaction)
-        assertThat(emptyTransaction.adds).isEmpty()
-        assertThat(emptyTransaction.removes).isEmpty()
-        val alsoNothing = Transaction()
-        checker.update(0.01, alsoNothing)
-        assertThat(alsoNothing.adds).isEmpty()
-        assertThat(alsoNothing.removes).isEmpty()
+        checker.afterInteractions(nothing)
+        assertThat(nothing.adds).isEmpty()
+        assertThat(nothing.removes).isEmpty()
     }
 
     @Test
@@ -28,16 +23,11 @@ class ShipCheckerAndMakerTest {
         val checker = ShipChecker(ship)
         checker.beforeInteractions()
         val trans = Transaction()
-        checker.interactions.interactWithSolidObject(ship, trans)
+        interactBothWays(checker, ship, trans)
         assertThat(trans.removes).isEmpty()
-        val emptyTransaction = Transaction()
-        checker.afterInteractions(emptyTransaction)
-        assertThat(emptyTransaction.adds).isEmpty()
-        assertThat(emptyTransaction.removes).isEmpty()
-        val alsoNothing = Transaction()
-        checker.update(0.01, alsoNothing)
-        assertThat(alsoNothing.adds).isEmpty()
-        assertThat(alsoNothing.removes).isEmpty()
+        checker.afterInteractions(trans)
+        assertThat(trans.adds).isEmpty()
+        assertThat(trans.removes).isEmpty()
     }
 
     @Test
@@ -93,7 +83,7 @@ class ShipCheckerAndMakerTest {
         maker.update(0.01, ignored)
         maker.beforeInteractions()
         val notInteresting = Transaction()
-        maker.interactions.interactWithSolidObject(asteroid, notInteresting)
+        interactBothWays(maker, asteroid, notInteresting)
         val nothing = Transaction()
         maker.afterInteractions(nothing)
         assertThat(nothing.adds).isEmpty()
@@ -138,8 +128,8 @@ class ShipCheckerAndMakerTest {
         val maker = ShipMaker(ship)
         maker.beforeInteractions()
         val trans = Transaction()
-        maker.interactions.interactWithSolidObject(a, trans)
-        maker.interactions.interactWithSolidObject(a, trans)
+        interactBothWays(maker, a, trans)
+        interactBothWays(maker, a, trans)
         assertThat(maker.asteroidTally).isEqualTo(2)
     }
 
