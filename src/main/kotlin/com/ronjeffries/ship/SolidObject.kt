@@ -19,10 +19,6 @@ interface ISolidObject : ISpaceObject {
 
     override fun draw(drawer: Drawer)
 
-    fun weAreCollidingWith(other: ISpaceObject): Boolean
-    fun weCanCollideWith(other: ISpaceObject): Boolean
-    fun weAreInRange(other: ISpaceObject): Boolean
-
     override fun finalize(): List<ISpaceObject>
     fun move(deltaTime: Double)
 
@@ -67,17 +63,6 @@ open class SolidObject(
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
-    }
-
-    override fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
-
-    override fun weCanCollideWith(other: ISpaceObject): Boolean {
-        return if (other !is SolidObject) false
-        else !(this.isAsteroid && other.isAsteroid)
-    }
-
-    override fun weAreInRange(solid: ISpaceObject): Boolean {
-        return false
     }
 
     private fun weAreInRange(asteroid: Asteroid): Boolean {
