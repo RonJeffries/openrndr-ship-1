@@ -10,17 +10,14 @@ class AsteroidTest {
 
     @Test
     fun `Asteroids Exist and Move`() {
-        val asteroid = Asteroid(
-            pos = Point.ZERO,
-            vel = Velocity(15.0, 30.0)
-        )
+        val asteroid = Asteroid(Point.ZERO, Velocity(15.0, 30.0))
         asteroid.update(tick * 60, Transaction())
         checkVector(asteroid.position, Point(15.0, 30.0), "asteroid position")
     }
 
     @Test
     fun `asteroid splits on finalize`() {
-        val full = Asteroid(pos = Point.ZERO, vel = Velocity.ZERO)
+        val full = Asteroid(Point.ZERO, Velocity.ZERO)
         val radius = full.killRadius
         val halfSize = full.finalize()
         assertThat(halfSize.size).isEqualTo(3) // two asteroids and a score

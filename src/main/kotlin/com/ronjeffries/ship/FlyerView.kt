@@ -12,7 +12,7 @@ class MissileView {
     fun draw(missile: Missile, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
-        drawer.circle(Point.ZERO, missile.killRadius*3.0)
+        drawer.circle(Point.ZERO, missile.killRadius * 3.0)
     }
 }
 
@@ -27,100 +27,28 @@ class ShipView : FlyerView {
             Point(-3.0, -2.0)
         )
         drawer.scale(30.0, 30.0)
-        drawer.rotate(solidObject.heading )
+        drawer.rotate(solidObject.heading)
         drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 8.0/30.0
+        drawer.strokeWeight = 8.0 / 30.0
         drawer.lineStrip(points)
     }
 }
 
-class AsteroidView: FlyerView {
-    private val rock = defineRocks().random()
-
-    override fun draw(solidObject: SolidObject, drawer: Drawer) {
-        drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 16.0
-        drawer.fill = null
-        val sizer = 30.0
-        drawer.scale(sizer, sizer)
-        val sc = solidObject.scale()
-        drawer.scale(sc,sc)
-        drawer.rotate(solidObject.heading)
-        drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 8.0/30.0/sc
-        drawer.scale(1.0, -1.0)
-        drawer.lineStrip(rock)
-    }
-
-    private fun defineRocks(): List<List<Point>> {
-        val rock0 = listOf(
-            Point(4.0, 2.0),
-            Point(3.0, 0.0),
-            Point(4.0, -2.0),
-            Point(1.0, -4.0),
-            Point(-2.0, -4.0),
-            Point(-4.0, -2.0),
-            Point(-4.0, 2.0),
-            Point(-2.0, 4.0),
-            Point(0.0, 2.0),
-            Point(2.0, 4.0),
-            Point(4.0, 2.0),
-        )
-        val rock1 = listOf(
-            Point(2.0, 1.0),
-            Point(4.0, 2.0),
-            Point(2.0, 4.0),
-            Point(0.0, 3.0),
-            Point(-2.0, 4.0),
-            Point(-4.0, 2.0),
-            Point(-3.0, 0.0),
-            Point(-4.0, -2.0),
-            Point(-2.0, -4.0),
-            Point(-1.0, -3.0),
-            Point(2.0, -4.0),
-            Point(4.0, -1.0),
-            Point(2.0, 1.0)
-        )
-        val rock2 = listOf(
-            Point(-2.0, 0.0),
-            Point(-4.0, -1.0),
-            Point(-2.0, -4.0),
-            Point(0.0, -1.0),
-            Point(0.0, -4.0),
-            Point(2.0, -4.0),
-            Point(4.0, -1.0),
-            Point(4.0, 1.0),
-            Point(2.0, 4.0),
-            Point(-1.0, 4.0),
-            Point(-4.0, 1.0),
-            Point(-2.0, 0.0)
-        )
-
-        val rock3 = listOf(
-            Point(1.0, 0.0),
-            Point(4.0, 1.0),
-            Point(4.0, 2.0),
-            Point(1.0, 4.0),
-            Point(-2.0, 4.0),
-            Point(-1.0, 2.0),
-            Point(-4.0, 2.0),
-            Point(-4.0, -1.0),
-            Point(-2.0, -4.0),
-            Point(1.0, -3.0),
-            Point(2.0, -4.0),
-            Point(4.0, -2.0),
-            Point(1.0, 0.0)
-        )
-        return listOf(rock0,rock1,rock2,rock3)
-    }
-}
-
-class SplatView(lifetime: Double): FlyerView {
+class SplatView(lifetime: Double) : FlyerView {
     private val rot = Random.nextDouble(0.0, 360.0)
-    private var sizeTween = Tween(20.0,100.0, lifetime)
+    private var sizeTween = Tween(20.0, 100.0, lifetime)
     private var radiusTween = Tween(30.0, 5.0, lifetime)
     private val points = listOf(
-        Point(-2.0,0.0), Point(-2.0,-2.0), Point(2.0,-2.0), Point(3.0,1.0), Point(2.0,-1.0), Point(0.0,2.0), Point(1.0,3.0), Point(-1.0,3.0), Point(-4.0,-1.0), Point(-3.0,1.0)
+        Point(-2.0, 0.0),
+        Point(-2.0, -2.0),
+        Point(2.0, -2.0),
+        Point(3.0, 1.0),
+        Point(2.0, -1.0),
+        Point(0.0, 2.0),
+        Point(1.0, 3.0),
+        Point(-1.0, 3.0),
+        Point(-4.0, -1.0),
+        Point(-3.0, 1.0)
     )
 
     fun draw(splat: Splat, drawer: Drawer) {
@@ -130,7 +58,7 @@ class SplatView(lifetime: Double): FlyerView {
         for (point in points) {
             val size = sizeTween.value(splat.elapsedTime)
             val radius = radiusTween.value(splat.elapsedTime)
-            drawer.circle(size*point.x, size*point.y, radius)
+            drawer.circle(size * point.x, size * point.y, radius)
         }
     }
 
@@ -138,13 +66,13 @@ class SplatView(lifetime: Double): FlyerView {
     }
 }
 
-class InvisibleView: FlyerView {
+class InvisibleView : FlyerView {
     override fun draw(solidObject: SolidObject, drawer: Drawer) {
         // no visible view
     }
 }
 
-class NullView: FlyerView {
+class NullView : FlyerView {
     override fun draw(solidObject: SolidObject, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.text("???")

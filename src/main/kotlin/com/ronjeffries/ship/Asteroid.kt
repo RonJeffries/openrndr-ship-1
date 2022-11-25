@@ -1,22 +1,34 @@
 package com.ronjeffries.ship
 
+import org.openrndr.draw.Drawer
+import kotlin.math.pow
+
 class Asteroid(
-    pos: Point,
-    vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
-    killRad: Double = 500.0,
-    splitCount: Int = 2
-) : SolidObject(
-    pos,
-    vel,
-    killRad,
-    AsteroidView(),
-    Controls(),
-    AsteroidFinalizer(splitCount)
-) {
+    var position: Point,
+    var velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
+    val killRadius: Double = 500.0,
+    val splitCount: Int = 2
+) : ISpaceObject {
+
+    val scale = 2.0.pow(splitCount)
+    private val view = AsteroidView()
+    private val finalizer = AsteroidFinalizer(splitCount)
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithAsteroid(this, trans)
     }
+
+    override fun update(deltaTime: Double, trans: Transaction) {
+        position = (position + velocity * deltaTime).cap()
+    }
+
+    override fun beforeInteractions() {}
+
+    override fun afterInteractions(trans: Transaction) {}
+
+    override fun draw(drawer: Drawer) = view.draw(this, drawer)
+
+    override fun finalize(): List<ISpaceObject> = finalizer.finalize(this)
 
     override val interactions: Interactions = Interactions(
         interactWithShip = { ship, trans ->
