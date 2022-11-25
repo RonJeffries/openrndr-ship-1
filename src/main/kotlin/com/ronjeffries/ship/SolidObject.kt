@@ -9,8 +9,7 @@ abstract class SolidObject(
     var velocity: Velocity,
     var killRadius: Double = -Double.MAX_VALUE,
     val view: FlyerView = NullView(),
-    val controls: Controls = Controls(),
-    val finalizer: IFinalizer = DefaultFinalizer()
+    val controls: Controls = Controls()
 ) : ISpaceObject {
     var heading: Double = 0.0
 
@@ -22,8 +21,6 @@ abstract class SolidObject(
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    fun scale() = finalizer.scale()
-
     fun deathDueToCollision(): Boolean {
         return !controls.recentHyperspace
     }
@@ -32,10 +29,6 @@ abstract class SolidObject(
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
-    }
-
-    override fun finalize(): List<ISpaceObject> {
-        return finalizer.finalize(this)
     }
 
     fun move(deltaTime: Double) {

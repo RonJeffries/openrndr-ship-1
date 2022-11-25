@@ -6,8 +6,12 @@ class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
     150.0,
     ShipView(),
     control,
-    ShipFinalizer()
 ) {
+    val finalizer = ShipFinalizer()
+
+    override fun finalize(): List<ISpaceObject> {
+        return finalizer.finalize(this)
+    }
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithShip(this, trans)

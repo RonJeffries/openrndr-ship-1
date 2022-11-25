@@ -35,19 +35,6 @@ class AsteroidFinalizer(private val splitCount: Int = 2) {
     }
 }
 
-class ShipFinalizer : IFinalizer {
-    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
-        if (solidObject.deathDueToCollision()) {
-            solidObject.position = U.CENTER_OF_UNIVERSE
-            solidObject.velocity = Velocity.ZERO
-            solidObject.heading = 0.0
-        } else {
-            solidObject.position = U.randomPoint()
-        }
-        return emptyList()
-    }
-}
-
 class DefaultFinalizer : IFinalizer {
     override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
         return emptyList()
