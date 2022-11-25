@@ -4,33 +4,15 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
-interface ISolidObject : ISpaceObject {
-    var position: Point
-    var velocity: Velocity
-    var killRadius: Double
-    val finalizer: IFinalizer
-    var heading: Double
-
-    override fun draw(drawer: Drawer)
-
-    override fun finalize(): List<ISpaceObject>
-
-    override fun beforeInteractions()
-
-    override fun afterInteractions(trans: Transaction)
-
-    override fun update(deltaTime: Double, trans: Transaction)
-}
-
 class Ship(
-    override var position: Point,
-    override var velocity: Velocity,
+    var position: Point,
+    var velocity: Velocity,
 
-    override var killRadius: Double = -Double.MAX_VALUE,
+    var killRadius: Double = -Double.MAX_VALUE,
     val controls: Controls = Controls(),
-    override val finalizer: IFinalizer = DefaultFinalizer()
-) : ISolidObject, InteractingSpaceObject {
-    override var heading: Double = 0.0
+    val finalizer: IFinalizer = DefaultFinalizer()
+) : ISpaceObject, InteractingSpaceObject {
+    var heading: Double = 0.0
     val view = ShipView()
 
     override fun update(deltaTime: Double, trans: Transaction) {
