@@ -20,19 +20,16 @@ class AsteroidTest {
 
     @Test
     fun `asteroid splits on finalize`() {
-        val full = Asteroid(
-            pos = Point.ZERO,
-            vel = Velocity.ZERO
-        )
+        val full = Asteroid(pos = Point.ZERO, vel = Velocity.ZERO)
         val radius = full.killRadius
         val halfSize = full.finalize()
         assertThat(halfSize.size).isEqualTo(3) // two asteroids and a score
         val half = halfSize.last()
-        assertThat((half as SolidObject).killRadius).describedAs("half").isEqualTo(radius / 2.0)
+        assertThat((half as Asteroid).killRadius).describedAs("half").isEqualTo(radius / 2.0)
         val quarterSize = half.finalize()
         assertThat(quarterSize.size).isEqualTo(3)
         val quarter = quarterSize.last()
-        assertThat((quarter as SolidObject).killRadius).describedAs("quarter").isEqualTo(radius / 4.0)
+        assertThat((quarter as Asteroid).killRadius).describedAs("quarter").isEqualTo(radius / 4.0)
         val eighthSize = quarter.finalize()
         assertThat(eighthSize.size).describedAs("should not split third time").isEqualTo(1)
     }
@@ -40,17 +37,14 @@ class AsteroidTest {
     @Test
     fun `new split asteroids get new directions`() {
         val startingV = Vector2(100.0, 0.0)
-        val full = Asteroid(
-            pos = Vector2.ZERO,
-            vel = startingV
-        )
+        val full = Asteroid(Vector2.ZERO, startingV)
         val fullV = full.velocity
         assertThat(fullV.length).isEqualTo(100.0, within(1.0))
         assertThat(fullV).isEqualTo(startingV)
         val halfSize = full.finalize()
         var countSplits = 0
         halfSize.forEach {
-            if (it is SolidObject) {
+            if (it is Asteroid) {
                 countSplits += 1
                 val halfV = it.velocity
                 assertThat(halfV.length).isEqualTo(100.0, within(1.0))
