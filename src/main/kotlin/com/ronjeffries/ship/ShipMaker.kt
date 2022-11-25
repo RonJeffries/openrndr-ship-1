@@ -16,9 +16,8 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject {
         asteroidTally = 0
     }
 
-    // TODO: won't work when ship is not solid object
-    private fun tooClose(other:ISpaceObject): Boolean {
-        return other is SolidObject && (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
+    private fun tooClose(asteroid: Asteroid): Boolean {
+        return ship.position.distanceTo(asteroid.position) < U.SAFE_SHIP_DISTANCE
     }
 
     override fun afterInteractions(trans: Transaction) {
@@ -38,9 +37,9 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject {
 
     override fun draw(drawer: Drawer) {}
     override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, trans ->
-            if ( solid.isAsteroid) asteroidTally += 1
-            safeToEmerge = safeToEmerge && !tooClose(solid)
+        interactWithAsteroid = { asteroid, trans ->
+            asteroidTally += 1
+            safeToEmerge = safeToEmerge && !tooClose(asteroid)
         }
     )
 

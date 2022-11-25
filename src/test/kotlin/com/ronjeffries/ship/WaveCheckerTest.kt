@@ -36,7 +36,7 @@ class WaveCheckerTest {
         val ck = WaveChecker()
         ck.update(1.1, Transaction())
         ck.beforeInteractions()
-        ck.interactions.interactWithSolidObject(a, Transaction())
+        ck.interactions.interactWithAsteroid(a, Transaction())
         val trans = Transaction()
         ck.afterInteractions(trans)
         assertThat(trans.adds).isEmpty()

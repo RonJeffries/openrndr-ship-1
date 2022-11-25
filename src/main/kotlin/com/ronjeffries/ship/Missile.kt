@@ -30,20 +30,11 @@ class Missile(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun beforeInteractions() {
-    }
+    override fun beforeInteractions() {}
+    override fun afterInteractions(trans: Transaction) {}
 
-    private fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other)
-            && weAreInRange(other)
-
-    private fun weCanCollideWith(other: ISpaceObject): Boolean = (other is SolidObject)
-            && other.isAsteroid
-
-    private fun weAreInRange(other: ISpaceObject): Boolean = other is SolidObject
-            && position.distanceTo(other.position) < killRadius + other.killRadius
-
-    override fun afterInteractions(trans: Transaction) {
-    }
+    private fun weAreInRange(asteroid: Asteroid): Boolean
+    = position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
 
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
@@ -56,10 +47,9 @@ class Missile(
     }
 
     override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
+        interactWithAsteroid = { asteroid, trans ->
+            if (weAreInRange(asteroid)) {
                 trans.remove(this)
-                trans.remove(solid)
             }
         }
     )

@@ -34,18 +34,18 @@ class ShipView : FlyerView {
     }
 }
 
-class AsteroidView: FlyerView {
+class AsteroidView {
     private val rock = defineRocks().random()
 
-    override fun draw(solidObject: SolidObject, drawer: Drawer) {
+    fun draw(asteroid: Asteroid, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
         val sizer = 30.0
         drawer.scale(sizer, sizer)
-        val sc = solidObject.scale()
+        val sc = asteroid.scale()
         drawer.scale(sc,sc)
-        drawer.rotate(solidObject.heading)
+//        drawer.rotate(asteroid.heading)
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 8.0/30.0/sc
         drawer.scale(1.0, -1.0)

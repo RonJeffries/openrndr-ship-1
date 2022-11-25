@@ -76,9 +76,12 @@ open class SolidObject(
         else !(this.isAsteroid && other.isAsteroid)
     }
 
-    override fun weAreInRange(other: ISpaceObject): Boolean {
-        return if (other !is SolidObject) false
-        else position.distanceTo(other.position) < killRadius + other.killRadius
+    override fun weAreInRange(solid: ISpaceObject): Boolean {
+        return false
+    }
+
+    private fun weAreInRange(asteroid: Asteroid): Boolean {
+        return position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
     }
 
     override fun finalize(): List<ISpaceObject> {
@@ -90,12 +93,8 @@ open class SolidObject(
     }
 
     override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
-                trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
-            }
-        },
+        interactWithAsteroid = { asteroid, trans ->
+            if (weAreInRange(asteroid)) trans.remove(this) },
         interactWithShipDestroyer = {_, trans ->
             if (this.isShip()) trans.remove(this)}
     )
@@ -123,14 +122,12 @@ open class SolidObject(
             vel: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
             killRad: Double = 500.0,
             splitCount: Int = 2
-        ): SolidObject {
-            return SolidObject(
+        ): Asteroid {
+            return Asteroid(
                 position = pos,
                 velocity = vel,
                 killRadius = killRad,
-                isAsteroid = true,
-                view = AsteroidView(),
-                finalizer = AsteroidFinalizer(splitCount)
+                splitCount = splitCount
             )
         }
 
