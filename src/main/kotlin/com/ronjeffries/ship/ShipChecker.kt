@@ -24,7 +24,7 @@ class ShipChecker(val ship: Ship) : ISpaceObject {
     override fun update(deltaTime: Double, trans: Transaction) {}
 
     override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, _ ->
+        interactWithShip = { solid, _ ->
             if (solid == ship) missingShip = false
         }
     )

@@ -30,7 +30,7 @@ class WaveChecker : ISpaceObject {
     }
 
     override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, _ ->
+        interactWithAsteroid = { solid, _ ->
             if (solid.isAsteroid) {
                 sawAsteroid = true
             }

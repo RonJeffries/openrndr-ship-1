@@ -48,10 +48,6 @@ abstract class SolidObject(
 ) : ISolidObject {
     override var heading: Double = 0.0
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithSolidObject(this, trans)
-    }
-
     override fun update(deltaTime: Double, trans: Transaction) {
         move(deltaTime)
     }
