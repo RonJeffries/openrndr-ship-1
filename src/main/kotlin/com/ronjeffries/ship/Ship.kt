@@ -9,4 +9,9 @@ class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
     control,
     ShipFinalizer()
 ) {
+
+    override fun update(deltaTime: Double, trans: Transaction) {
+        controls.control(this, deltaTime, trans)
+        move(deltaTime)
+    }
 }

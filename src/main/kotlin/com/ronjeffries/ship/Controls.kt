@@ -8,7 +8,7 @@ class Controls {
     var hyperspace = false
     var recentHyperspace = false
 
-    fun control(ship: SolidObject, deltaTime: Double, trans: Transaction) {
+    fun control(ship: Ship, deltaTime: Double, trans: Transaction) {
         if (hyperspace) {
             hyperspace = false
             recentHyperspace = true

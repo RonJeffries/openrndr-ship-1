@@ -49,7 +49,6 @@ open class SolidObject(
     override var heading: Double = 0.0
 
     override fun update(deltaTime: Double, trans: Transaction) {
-        controls.control(this, deltaTime, trans)
         move(deltaTime)
     }
 
