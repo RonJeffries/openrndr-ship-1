@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class ShipMaker(val ship: SolidObject) : ISpaceObject {
+class ShipMaker(val ship: Ship) : ISpaceObject {
     var safeToEmerge = true
     var asteroidTally = 0
     var elapsedTime = 0.0

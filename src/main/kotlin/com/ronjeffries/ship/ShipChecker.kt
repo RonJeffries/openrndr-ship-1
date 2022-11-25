@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class ShipChecker(val ship: SolidObject) : ISpaceObject {
+class ShipChecker(val ship: Ship) : ISpaceObject {
     private var missingShip = true
 
     override fun finalize(): List<ISpaceObject> {

@@ -28,7 +28,7 @@ class Game {
         add(WaveChecker())
     }
 
-    private fun newShip(controls: Controls): SolidObject {
+    private fun newShip(controls: Controls): Ship {
         return Ship(U.CENTER_OF_UNIVERSE, controls)
     }
 
