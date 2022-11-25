@@ -36,7 +36,7 @@ interface ISolidObject : ISpaceObject {
     override fun update(deltaTime: Double, trans: Transaction)
 }
 
-open class SolidObject(
+abstract class SolidObject(
     override var position: Point,
     override var velocity: Velocity,
 
@@ -47,15 +47,6 @@ open class SolidObject(
     override val finalizer: IFinalizer = DefaultFinalizer()
 ) : ISolidObject {
     override var heading: Double = 0.0
-
-    override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
-                trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
-            }
-        }
-    )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithSolidObject(this, trans)
