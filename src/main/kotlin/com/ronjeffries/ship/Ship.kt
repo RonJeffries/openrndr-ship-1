@@ -9,7 +9,6 @@ interface ISolidObject : ISpaceObject {
     var velocity: Velocity
     var killRadius: Double
     val view: FlyerView
-    val controls: Controls
     val finalizer: IFinalizer
     var heading: Double
     fun deathDueToCollision(): Boolean
@@ -35,7 +34,7 @@ class Ship(
 
     override var killRadius: Double = -Double.MAX_VALUE,
     override val view: FlyerView = NullView(),
-    override val controls: Controls = Controls(),
+    val controls: Controls = Controls(),
     override val finalizer: IFinalizer = DefaultFinalizer()
 ) : ISolidObject, InteractingSpaceObject {
     override var heading: Double = 0.0
