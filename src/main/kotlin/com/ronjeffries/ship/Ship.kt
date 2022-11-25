@@ -10,7 +10,6 @@ interface ISolidObject : ISpaceObject {
     var killRadius: Double
     val finalizer: IFinalizer
     var heading: Double
-    fun deathDueToCollision(): Boolean
 
     override fun draw(drawer: Drawer)
 
@@ -43,7 +42,7 @@ class Ship(
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    override fun deathDueToCollision(): Boolean {
+    fun deathDueToCollision(): Boolean {
         return !controls.recentHyperspace
     }
 
