@@ -18,7 +18,6 @@ interface ISolidObject : ISpaceObject {
     fun move(deltaTime: Double)
 
     override fun toString(): String
-    fun turnBy(degrees: Double)
 
     override fun beforeInteractions()
 
@@ -86,7 +85,7 @@ class Ship(
         return "Flyer $position ($killRadius)"
     }
 
-    override fun turnBy(degrees: Double) {
+    fun turnBy(degrees: Double) {
         heading += degrees
     }
 
