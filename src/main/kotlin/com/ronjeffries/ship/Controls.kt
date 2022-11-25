@@ -8,7 +8,7 @@ class Controls {
     var hyperspace = false
     var recentHyperspace = false
 
-    fun control(ship: SolidObject, deltaTime: Double, trans: Transaction) {
+    fun control(ship: Ship, deltaTime: Double, trans: Transaction) {
         if (hyperspace) {
             hyperspace = false
             recentHyperspace = true
@@ -19,18 +19,18 @@ class Controls {
         trans.addAll(fire(ship))
     }
 
-    private fun accelerate(obj:SolidObject, deltaTime: Double) {
+    private fun accelerate(obj:Ship, deltaTime: Double) {
         if (accelerate) {
             val deltaV = U.SHIP_ACCELERATION.rotate(obj.heading) * deltaTime
             obj.accelerate(deltaV)
         }
     }
 
-    private fun fire(obj: SolidObject): List<ISpaceObject> {
+    private fun fire(obj: Ship): List<ISpaceObject> {
         return missilesToFire(obj).also { fire = false }
     }
 
-    private fun missilesToFire(obj: SolidObject): List<ISpaceObject> {
+    private fun missilesToFire(obj: Ship): List<ISpaceObject> {
         return if (fire) {
 //            listOf(SolidObject.missile(obj))
             listOf(Missile(obj))
@@ -39,7 +39,7 @@ class Controls {
         }
     }
 
-    private fun turn(obj: SolidObject, deltaTime: Double) {
+    private fun turn(obj: Ship, deltaTime: Double) {
         if (left) obj.turnBy(-U.SHIP_ROTATION_SPEED*deltaTime)
         if (right) obj.turnBy(U.SHIP_ROTATION_SPEED*deltaTime)
     }

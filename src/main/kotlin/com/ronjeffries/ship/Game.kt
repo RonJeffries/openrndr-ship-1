@@ -28,8 +28,8 @@ class Game {
         add(WaveChecker())
     }
 
-    private fun newShip(controls: Controls): SolidObject {
-        return  SolidObject.ship(U.CENTER_OF_UNIVERSE, controls)
+    private fun newShip(controls: Controls): Ship {
+        return  Ship.ship(U.CENTER_OF_UNIVERSE, controls)
     }
 
     fun cycle(drawer: Drawer, seconds: Double) {

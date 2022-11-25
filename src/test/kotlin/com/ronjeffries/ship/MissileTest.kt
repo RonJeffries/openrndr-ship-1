@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class MissileTest {
     @Test
     fun `can be created, dies on time`() {
-        val ship = SolidObject.ship(U.randomPoint())
+        val ship = Ship.ship(U.randomPoint())
         val missile = Missile(ship)
         val trans = Transaction()
         missile.update(0.1, trans)
@@ -16,15 +16,8 @@ class MissileTest {
     }
 
     @Test
-    fun `splat creation`() {
-        val ship = SolidObject.ship(U.randomPoint())
-        val missile = Missile(ship)
-        val splat = Splat(missile)
-    }
-
-    @Test
     fun `splat death`() {
-        val ship = SolidObject.ship(U.randomPoint())
+        val ship = Ship.ship(U.randomPoint())
         val missile = Missile(ship)
         val splatList = missile.finalize()
         val splat = splatList[0]

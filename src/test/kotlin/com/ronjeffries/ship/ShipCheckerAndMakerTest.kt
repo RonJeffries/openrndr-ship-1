@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test
 class ShipCheckerAndMakerTest {
     @Test
     fun `ShipChecker does nothing if ship seen`() {
-        val ship = SolidObject.ship(U.randomPoint())
+        val ship = Ship.ship(U.randomPoint())
         val checker = ShipChecker(ship)
         checker.beforeInteractions()
         val nothing = Transaction()
-        checker.interactions.interactWithSolidObject(ship, nothing)
+        checker.interactions.interactWithShip(ship, nothing)
         assertThat(nothing.removes).isEmpty()
         val emptyTransaction = Transaction()
         checker.afterInteractions(emptyTransaction)
@@ -24,11 +24,11 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `ShipChecker does nothing if ship seen via withOther`() {
-        val ship = SolidObject.ship(U.randomPoint())
+        val ship = Ship.ship(U.randomPoint())
         val checker = ShipChecker(ship)
         checker.beforeInteractions()
         val trans = Transaction()
-        checker.interactions.interactWithSolidObject(ship, trans)
+        checker.interactions.interactWithShip(ship, trans)
         assertThat(trans.removes).isEmpty()
         val emptyTransaction = Transaction()
         checker.afterInteractions(emptyTransaction)
@@ -42,7 +42,7 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `creates ShipMaker if no ship seen`() {
-        val ship = SolidObject.ship(U.randomPoint())
+        val ship = Ship.ship(U.randomPoint())
         val checker = ShipChecker(ship)
         checker.beforeInteractions()
         // we see no ship here
@@ -54,7 +54,7 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `maker delays U MAKER_DELAY seconds`() {
-        val ship = SolidObject.ship(U.CENTER_OF_UNIVERSE)
+        val ship = Ship.ship(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
         maker.update(U.MAKER_DELAY, Transaction())
         maker.beforeInteractions()
@@ -67,7 +67,7 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `maker makes after U MAKER_DELAY seconds`() {
-        val ship = SolidObject.ship(U.CENTER_OF_UNIVERSE)
+        val ship = Ship.ship(U.CENTER_OF_UNIVERSE)
         ship.velocity = Velocity(50.0,60.0)
         ship.heading = 90.0
         val maker = ShipMaker(ship)
@@ -85,7 +85,7 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `maker makes only when safe`() {
-        val ship = SolidObject.ship(U.CENTER_OF_UNIVERSE)
+        val ship = Ship.ship(U.CENTER_OF_UNIVERSE)
         val asteroid = Asteroid(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
         val ignored = Transaction()
@@ -114,7 +114,7 @@ class ShipCheckerAndMakerTest {
         val position = Point(123.0,456.0)
         val  velocity = Velocity(200.0,300.0)
         val heading = 37.5
-        val ship = SolidObject.ship(position)
+        val ship = Ship.ship(position)
         ship.heading = heading
         ship.velocity = velocity
         val maker = ShipMaker(ship)
@@ -134,7 +134,7 @@ class ShipCheckerAndMakerTest {
     @Test
     fun `maker counts asteroids`() {
         val a = Asteroid(U.randomPoint())
-        val ship = SolidObject.ship(U.CENTER_OF_UNIVERSE)
+        val ship = Ship.ship(U.CENTER_OF_UNIVERSE)
         val maker = ShipMaker(ship)
         maker.beforeInteractions()
         val trans = Transaction()
@@ -145,7 +145,7 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `hyperspace failure checks`() {
-        val ship = SolidObject.ship(Point(10.0, 10.0))
+        val ship = Ship.ship(Point(10.0, 10.0))
         val hyper = HyperspaceOperation(ship, 0)
         assertThat(hyper.hyperspaceFailure(62, 19)).describedAs("roll 62 19 asteroids").isEqualTo(false)
         assertThat(hyper.hyperspaceFailure(62, 18)).describedAs("roll 62 18 asteroids").isEqualTo(true)

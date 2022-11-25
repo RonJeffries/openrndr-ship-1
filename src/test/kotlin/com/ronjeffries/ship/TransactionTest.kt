@@ -4,8 +4,8 @@ import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class TransactionTest {
-    private fun newShip(): SolidObject {
-        return SolidObject.ship(U.randomPoint())
+    private fun newShip(): Ship {
+        return Ship.ship(U.randomPoint())
     }
 
     @Test

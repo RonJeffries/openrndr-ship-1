@@ -8,7 +8,7 @@ class UniverseTest {
 
     @Test
     fun `collision calculation`() {
-        val ship = SolidObject(
+        val ship = Ship(
             Vector2.ZERO,
             Vector2.ZERO,
             100.0

@@ -32,7 +32,7 @@ interface ISolidObject : ISpaceObject {
     override fun update(deltaTime: Double, trans: Transaction)
 }
 
-open class SolidObject(
+class Ship(
     override var position: Point,
     override var velocity: Velocity,
 
@@ -80,14 +80,14 @@ open class SolidObject(
     override val interactions: Interactions = Interactions(
         interactWithAsteroid = { asteroid, trans ->
             if (weAreInRange(asteroid)) trans.remove(this) },
-        interactWithShipDestroyer = {_, trans ->
+        interactWithShipDestroyer = { _, trans ->
             if (this.isShip()) trans.remove(this)}
     )
 
     private fun isShip(): Boolean = this.killRadius == 150.0
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithSolidObject(this, trans)
+        other.interactions.interactWithShip(this, trans)
     }
 
     override fun toString(): String {
@@ -102,8 +102,8 @@ open class SolidObject(
     override fun afterInteractions(trans: Transaction) {}
 
     companion object {
-        fun ship(pos: Point, control: Controls = Controls()): SolidObject {
-            return SolidObject(
+        fun ship(pos: Point, control: Controls = Controls()): Ship {
+            return Ship(
                 position = pos,
                 velocity = Velocity.ZERO,
                 killRadius = 150.0,

@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class ShipMaker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject {
+class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     var safeToEmerge = true
     var asteroidTally = 0
     var elapsedTime = 0.0
@@ -36,12 +36,10 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject {
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
     override fun draw(drawer: Drawer) {}
-    override val interactions: Interactions = Interactions(
-        interactWithAsteroid = { asteroid, trans ->
-            asteroidTally += 1
-            safeToEmerge = safeToEmerge && !tooClose(asteroid)
-        }
-    )
+    override val interactions: Interactions = Interactions { asteroid, trans ->
+        asteroidTally += 1
+        safeToEmerge = safeToEmerge && !tooClose(asteroid)
+    }
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithShipMaker(this, trans)

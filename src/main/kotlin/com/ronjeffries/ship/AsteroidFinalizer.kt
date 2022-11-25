@@ -48,13 +48,13 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
 
 class ShipFinalizer : IFinalizer {
     override fun finalize(spaceObject: ISpaceObject): List<ISpaceObject> {
-        val solidObject = spaceObject as SolidObject
-        if ( solidObject.deathDueToCollision()) {
-            solidObject.position = U.CENTER_OF_UNIVERSE
-            solidObject.velocity = Velocity.ZERO
-            solidObject.heading = 0.0
+        val ship = spaceObject as Ship
+        if ( ship.deathDueToCollision()) {
+            ship.position = U.CENTER_OF_UNIVERSE
+            ship.velocity = Velocity.ZERO
+            ship.heading = 0.0
         } else {
-            solidObject.position = U.randomPoint()
+            ship.position = U.randomPoint()
         }
         return emptyList()
     }

@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 import kotlin.random.Random
 
 interface FlyerView {
-    fun draw(solidObject: SolidObject, drawer: Drawer)
+    fun draw(ship: Ship, drawer: Drawer)
 }
 
 class MissileView {
@@ -17,7 +17,7 @@ class MissileView {
 }
 
 class ShipView : FlyerView {
-    override fun draw(solidObject: SolidObject, drawer: Drawer) {
+    override fun draw(ship: Ship, drawer: Drawer) {
         val points = listOf(
             Point(-3.0, -2.0),
             Point(-3.0, 2.0),
@@ -27,7 +27,7 @@ class ShipView : FlyerView {
             Point(-3.0, -2.0)
         )
         drawer.scale(30.0, 30.0)
-        drawer.rotate(solidObject.heading )
+        drawer.rotate(ship.heading )
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 8.0/30.0
         drawer.lineStrip(points)
@@ -134,18 +134,12 @@ class SplatView(lifetime: Double): FlyerView {
         }
     }
 
-    override fun draw(solidObject: SolidObject, drawer: Drawer) {
-    }
-}
-
-class InvisibleView: FlyerView {
-    override fun draw(solidObject: SolidObject, drawer: Drawer) {
-        // no visible view
+    override fun draw(ship: Ship, drawer: Drawer) {
     }
 }
 
 class NullView: FlyerView {
-    override fun draw(solidObject: SolidObject, drawer: Drawer) {
+    override fun draw(ship: Ship, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.text("???")
     }

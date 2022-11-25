@@ -4,7 +4,7 @@ import org.openrndr.draw.Drawer
 
 class ShipDestroyer() : ISpaceObject, InteractingSpaceObject {
     override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { _, trans ->
+        interactWithShip = { _, trans ->
             trans.remove(this)
         }
     )

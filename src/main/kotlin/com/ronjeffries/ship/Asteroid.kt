@@ -36,7 +36,7 @@ class Asteroid(
         return position.distanceTo(missile.position) < killRadius + missile.killRadius
     }
 
-    private fun weAreCollidingWith(solid: SolidObject): Boolean {
+    private fun weAreCollidingWith(solid: Ship): Boolean {
         return position.distanceTo(solid.position) < killRadius + solid.killRadius
     }
 
@@ -46,7 +46,7 @@ class Asteroid(
                 trans.remove(this)
             }
         },
-        interactWithSolidObject = { ship, trans ->
+        interactWithShip = { ship, trans ->
             if (weAreCollidingWith(ship)) {
                 trans.remove(this)
             }

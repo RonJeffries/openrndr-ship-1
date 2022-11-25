@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Missile(
-    ship: SolidObject,
+    ship: Ship,
 ): ISpaceObject, InteractingSpaceObject {
     var position: Point
     val velocity: Velocity
@@ -46,13 +46,12 @@ class Missile(
         return listOf(Splat(this))
     }
 
-    override val interactions: Interactions = Interactions(
-        interactWithAsteroid = { asteroid, trans ->
-            if (weAreInRange(asteroid)) {
-                trans.remove(this)
-            }
+    override val interactions: Interactions = Interactions { asteroid, trans ->
+        if (weAreInRange(asteroid)) {
+            trans.remove(this)
         }
-    )
+    }
+
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithMissile(this, trans)
     }

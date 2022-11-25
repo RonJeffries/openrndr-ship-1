@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class ShipChecker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject {
+class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     private var missingShip = true
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
@@ -22,7 +22,7 @@ class ShipChecker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject 
     override fun update(deltaTime: Double, trans: Transaction) {}
 
     override val interactions: Interactions = Interactions(
-        interactWithSolidObject = { solid, _ ->
+        interactWithShip = { solid, _ ->
             if ( solid == ship ) missingShip = false
         }
     )

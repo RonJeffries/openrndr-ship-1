@@ -61,7 +61,7 @@ class AsteroidTest {
 
     @Test
     fun `ships do not split on finalize`() {
-        val ship = SolidObject.ship(Vector2(100.0,100.0))
+        val ship = Ship.ship(Vector2(100.0,100.0))
         val didShipSplit = ship.finalize()
         assertThat(didShipSplit).isEmpty()
     }
