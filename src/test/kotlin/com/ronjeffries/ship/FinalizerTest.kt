@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test
 class FinalizerTest {
     @Test
     fun `asteroid finalizer`() {
-        val fin = AsteroidFinalizer()
         val asteroid = Asteroid(Point.ZERO)
-        val splits = fin.finalize(asteroid)
+        val splits = asteroid.finalize()
         assertThat(splits.size).isEqualTo(3) // split guys and a score
     }
 }

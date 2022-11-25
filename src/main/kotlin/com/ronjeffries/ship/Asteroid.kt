@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
+import kotlin.math.pow
 
 class Asteroid(
     var position: Point,
@@ -11,7 +12,6 @@ class Asteroid(
     val splitCount: Int = 2
 ) : ISpaceObject, InteractingSpaceObject {
     private val view = AsteroidView()
-    private val finalizer = AsteroidFinalizer(splitCount)
 
     override fun update(deltaTime: Double, trans: Transaction) {
         position = (position + velocity * deltaTime).cap()
@@ -27,10 +27,38 @@ class Asteroid(
     }
 
     override fun finalize(): List<ISpaceObject> {
-        return finalizer.finalize(this)
+        val objectsToAdd: MutableList<ISpaceObject> = mutableListOf()
+        val score = getScore()
+        objectsToAdd.add(score)
+        if (splitCount >= 1) {
+            objectsToAdd.add(asSplit(this))
+            objectsToAdd.add(asSplit(this))
+        }
+        return objectsToAdd
     }
 
-    fun scale() = finalizer.scale()
+    private fun asSplit(asteroid: Asteroid): Asteroid {
+        val newKr = asteroid.killRadius / 2.0
+        val newVel = asteroid.velocity.rotate(Math.random() * 360.0)
+        return Asteroid(
+            position = asteroid.position,
+            velocity = newVel,
+            killRadius = newKr,
+            splitCount = splitCount - 1
+        )
+    }
+
+    private fun getScore(): Score {
+        val score = when (splitCount) {
+            2 -> 20
+            1 -> 50
+            0 -> 100
+            else -> 0
+        }
+        return Score(score)
+    }
+
+    fun scale() =2.0.pow(splitCount)
 
     private fun weAreCollidingWith(missile: Missile): Boolean {
         return position.distanceTo(missile.position) < killRadius + missile.killRadius
