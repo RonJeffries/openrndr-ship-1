@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class WaveMaker(val numberToCreate: Int = 8) : ISpaceObject, InteractingSpaceObject {
+class WaveMaker(val numberToCreate: Int = 8) : ISpaceObject {
 
     var elapsedTime = 0.0
 

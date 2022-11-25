@@ -45,7 +45,7 @@ open class SolidObject(
     override val view: FlyerView = NullView(),
     override val controls: Controls = Controls(),
     override val finalizer: IFinalizer = DefaultFinalizer()
-) : ISolidObject, InteractingSpaceObject {
+) : ISolidObject {
     override var heading: Double = 0.0
 
     override fun update(deltaTime: Double, trans: Transaction) {

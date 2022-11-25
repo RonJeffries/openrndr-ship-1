@@ -6,7 +6,7 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Missile(
     ship: SolidObject,
-): ISpaceObject, InteractingSpaceObject {
+) : ISpaceObject {
     var position: Point
     val velocity: Velocity
     val killRadius = 10.0
@@ -63,6 +63,7 @@ class Missile(
             }
         }
     )
+
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithMissile(this, trans)
     }

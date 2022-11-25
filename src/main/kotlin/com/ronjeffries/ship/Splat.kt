@@ -4,8 +4,8 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
-class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
-    
+class Splat(var position: Point) : ISpaceObject {
+
     constructor(solidObject: SolidObject) : this(solidObject.position)
     constructor(missile: Missile) : this(missile.position)
 

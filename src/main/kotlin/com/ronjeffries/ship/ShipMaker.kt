@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class ShipMaker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject {
+class ShipMaker(val ship: SolidObject) : ISpaceObject {
     var safeToEmerge = true
     var asteroidTally = 0
     var elapsedTime = 0.0
@@ -17,7 +17,7 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject {
     }
 
     // TODO: won't work when ship is not solid object
-    private fun tooClose(other:ISpaceObject): Boolean {
+    private fun tooClose(other: ISpaceObject): Boolean {
         return other is SolidObject && (ship.position.distanceTo(other.position) < U.SAFE_SHIP_DISTANCE)
     }
 
@@ -34,12 +34,14 @@ class ShipMaker(val ship: SolidObject) : ISpaceObject, InteractingSpaceObject {
         HyperspaceOperation(ship, asteroidTally).execute(trans)
     }
 
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
+    override fun finalize(): List<ISpaceObject> {
+        return emptyList()
+    }
 
     override fun draw(drawer: Drawer) {}
     override val interactions: Interactions = Interactions(
         interactWithSolidObject = { solid, trans ->
-            if ( solid.isAsteroid) asteroidTally += 1
+            if (solid.isAsteroid) asteroidTally += 1
             safeToEmerge = safeToEmerge && !tooClose(solid)
         }
     )
