@@ -1,7 +1,7 @@
 package com.ronjeffries.ship
 
-import kotlin.random.Random
 import org.openrndr.math.Vector2
+import kotlin.random.Random
 
 typealias Point = Vector2
 typealias Velocity = Vector2
@@ -13,15 +13,15 @@ object U {
     const val ASTEROID_SPEED = 1000.0
     const val MAKER_DELAY = 3.0
     val SHIP_ACCELERATION = Velocity(1000.0, 0.0)
-    val SHIP_ROTATION_SPEED = 180.0 // degrees per second
+    const val SHIP_ROTATION_SPEED = 180.0 // degrees per second
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
-    const val SAFE_SHIP_DISTANCE = UNIVERSE_SIZE/10.0
+    const val SAFE_SHIP_DISTANCE = UNIVERSE_SIZE / 10.0
     fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))
     fun randomEdgePoint(): Point =
         if (Random.nextBoolean()) Point(0.0, Random.nextDouble(UNIVERSE_SIZE))
         else Point(Random.nextDouble(UNIVERSE_SIZE), 0.0)
 
-    fun randomVelocity(speed: Double): Velocity = Velocity(speed,0.0).rotate(Random.nextDouble(360.0))
+    fun randomVelocity(speed: Double): Velocity = Velocity(speed, 0.0).rotate(Random.nextDouble(360.0))
 }
 
 fun Point.cap(): Point {
@@ -35,5 +35,5 @@ fun Double.cap(): Double {
 fun Velocity.limitedToLightSpeed(): Velocity {
     val speed = this.length
     return if (speed < U.SPEED_OF_LIGHT) this
-    else this*(U.SPEED_OF_LIGHT/speed)
+    else this * (U.SPEED_OF_LIGHT / speed)
 }

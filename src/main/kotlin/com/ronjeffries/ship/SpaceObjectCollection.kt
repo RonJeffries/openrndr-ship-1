@@ -6,8 +6,8 @@ class SpaceObjectCollection {
     fun add(spaceObject: ISpaceObject) {
         spaceObjects.add(spaceObject)
     }
-    
-    fun addAll(newbies: Collection<ISpaceObject>){
+
+    fun addAll(newbies: Collection<ISpaceObject>) {
         spaceObjects.addAll(newbies)
     }
 
@@ -15,7 +15,7 @@ class SpaceObjectCollection {
         transaction.applyChanges(this)
     }
 
-    fun forEach(spaceObject: (ISpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
+    fun forEach(spaceObject: (ISpaceObject) -> Unit) = spaceObjects.forEach(spaceObject)
 
     fun pairsToCheck(): List<Pair<ISpaceObject, ISpaceObject>> {
         val pairs = mutableListOf<Pair<ISpaceObject, ISpaceObject>>()
@@ -27,9 +27,9 @@ class SpaceObjectCollection {
         return pairs
     }
 
-    fun removeAndFinalizeAll(moribund: Set<ISpaceObject>): Boolean{
+    fun removeAndFinalizeAll(moribund: Set<ISpaceObject>) {
         moribund.forEach { spaceObjects += it.finalize() }
-        return spaceObjects.removeAll(moribund)
+        spaceObjects.removeAll(moribund)
     }
 
     val size get() = spaceObjects.size

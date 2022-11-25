@@ -7,7 +7,7 @@ class Asteroid(
     var position: Point,
     var velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
     val killRadius: Double = 500.0,
-    val splitCount: Int = 2
+    splitCount: Int = 2
 ) : ISpaceObject {
 
     val scale = 2.0.pow(splitCount)

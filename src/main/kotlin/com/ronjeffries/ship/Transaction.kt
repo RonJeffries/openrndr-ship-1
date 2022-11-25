@@ -5,8 +5,8 @@ class Transaction {
     val removes = mutableSetOf<ISpaceObject>()
 
     fun accumulate(t: Transaction) {
-        t.adds.forEach {add(it)}
-        t.removes.forEach {remove(it)}
+        t.adds.forEach { add(it) }
+        t.removes.forEach { remove(it) }
     }
 
     fun add(spaceObject: ISpaceObject) {
@@ -22,31 +22,21 @@ class Transaction {
         spaceObjectCollection.addAll(adds)
     }
 
-    fun clear() {
-        adds.clear()
-        removes.clear()
-    }
-
-
     fun remove(spaceObject: ISpaceObject) {
         removes.add(spaceObject)
     }
 
     // testing
 
-    fun firstAdd(): ISpaceObject {
-        return adds.toList()[0]
-    }
-
     fun firstRemove(): ISpaceObject {
         return removes.toList()[0]
     }
 
-    fun hasAdd(so:ISpaceObject): Boolean {
+    fun hasAdd(so: ISpaceObject): Boolean {
         return adds.contains(so)
     }
 
-    fun hasRemove(so:ISpaceObject): Boolean {
+    fun hasRemove(so: ISpaceObject): Boolean {
         return removes.contains(so)
     }
 }

@@ -61,8 +61,8 @@ class Missile(
                 trans.remove(this)
             }
         },
-        interactWithMissile = { missle, trans ->
-            if (possibleCollision(missle.position, missle.killRadius)) {
+        interactWithMissile = { missile, trans ->
+            if (possibleCollision(missile.position, missile.killRadius)) {
                 trans.remove(this)
             }
         }
