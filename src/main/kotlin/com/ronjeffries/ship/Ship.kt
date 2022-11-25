@@ -15,7 +15,6 @@ interface ISolidObject : ISpaceObject {
     override fun draw(drawer: Drawer)
 
     override fun finalize(): List<ISpaceObject>
-    fun move(deltaTime: Double)
 
     override fun toString(): String
 
@@ -64,7 +63,7 @@ class Ship(
         return finalizer.finalize(this)
     }
 
-    override fun move(deltaTime: Double) {
+    fun move(deltaTime: Double) {
         position = (position + velocity * deltaTime).cap()
     }
 
