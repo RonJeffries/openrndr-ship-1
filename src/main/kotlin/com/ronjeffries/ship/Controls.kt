@@ -38,8 +38,8 @@ class Controls {
         }
     }
 
-    private fun turn(obj: SolidObject, deltaTime: Double) {
-        if (left) obj.turnBy(-U.SHIP_ROTATION_SPEED * deltaTime)
-        if (right) obj.turnBy(U.SHIP_ROTATION_SPEED * deltaTime)
+    private fun turn(ship: Ship, deltaTime: Double) {
+        if (left) ship.turnBy(-U.SHIP_ROTATION_SPEED * deltaTime)
+        if (right) ship.turnBy(U.SHIP_ROTATION_SPEED * deltaTime)
     }
 }

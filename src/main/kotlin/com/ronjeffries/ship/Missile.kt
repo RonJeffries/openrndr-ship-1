@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Missile(
-    ship: SolidObject,
+    ship: Ship,
 ) : ISpaceObject {
     var position: Point
     val velocity: Velocity

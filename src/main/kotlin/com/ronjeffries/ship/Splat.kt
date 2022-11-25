@@ -6,7 +6,7 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Splat(var position: Point) : ISpaceObject {
 
-    constructor(solidObject: SolidObject) : this(solidObject.position)
+    constructor(ship: Ship) : this(ship.position)
     constructor(missile: Missile) : this(missile.position)
 
     var elapsedTime = 0.0

@@ -1,10 +1,5 @@
 package com.ronjeffries.ship
 
-interface IFinalizer {
-    fun finalize(solidObject: SolidObject): List<ISpaceObject>
-    fun scale(): Double = 1.0
-}
-
 class AsteroidFinalizer(private val splitCount: Int = 2) {
 
     fun finalize(asteroid: Asteroid): List<ISpaceObject> {
@@ -35,8 +30,3 @@ class AsteroidFinalizer(private val splitCount: Int = 2) {
     }
 }
 
-class DefaultFinalizer : IFinalizer {
-    override fun finalize(solidObject: SolidObject): List<ISpaceObject> {
-        return emptyList()
-    }
-}

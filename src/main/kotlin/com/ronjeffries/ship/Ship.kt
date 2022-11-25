@@ -1,13 +1,15 @@
 package com.ronjeffries.ship
 
-class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
-    pos,
-    Velocity.ZERO,
-    150.0,
-    ShipView(),
-    control,
-) {
+import org.openrndr.color.ColorRGBa
+import org.openrndr.draw.Drawer
+import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
+
+class Ship(var position: Point, val controls: Controls = Controls()) : ISpaceObject {
+    var heading: Double = 0.0
+    var velocity = Velocity.ZERO
     val finalizer = ShipFinalizer()
+    val view = ShipView()
+    val killRadius = 150.0
 
     override fun finalize(): List<ISpaceObject> {
         return finalizer.finalize(this)
@@ -38,4 +40,30 @@ class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
 
     fun possibleCollision(otherPosition: Point, otherKillRadius: Double) =
         position.distanceTo(otherPosition) < killRadius + otherKillRadius
+
+    override fun draw(drawer: Drawer) {
+        drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
+        drawer.translate(position)
+        view.draw(this, drawer)
+    }
+
+
+    fun accelerate(deltaV: Acceleration) {
+        velocity = (velocity + deltaV).limitedToLightSpeed()
+    }
+
+    fun deathDueToCollision(): Boolean {
+        return !controls.recentHyperspace
+    }
+
+    fun move(deltaTime: Double) {
+        position = (position + velocity * deltaTime).cap()
+    }
+
+    fun turnBy(degrees: Double) {
+        heading += degrees
+    }
+
+    override fun beforeInteractions() {}
+    override fun afterInteractions(trans: Transaction) {}
 }
