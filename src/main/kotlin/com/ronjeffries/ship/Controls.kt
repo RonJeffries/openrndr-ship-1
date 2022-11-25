@@ -19,21 +19,20 @@ class Controls {
         trans.addAll(fire(ship))
     }
 
-    private fun accelerate(obj: SolidObject, deltaTime: Double) {
+    private fun accelerate(ship: Ship, deltaTime: Double) {
         if (accelerate) {
-            val deltaV = U.SHIP_ACCELERATION.rotate(obj.heading) * deltaTime
-            obj.accelerate(deltaV)
+            val deltaV = U.SHIP_ACCELERATION.rotate(ship.heading) * deltaTime
+            ship.accelerate(deltaV)
         }
     }
 
-    private fun fire(obj: SolidObject): List<ISpaceObject> {
-        return missilesToFire(obj).also { fire = false }
+    private fun fire(ship: Ship): List<ISpaceObject> {
+        return missilesToFire(ship).also { fire = false }
     }
 
-    private fun missilesToFire(obj: SolidObject): List<ISpaceObject> {
+    private fun missilesToFire(ship: Ship): List<ISpaceObject> {
         return if (fire) {
-//            listOf(SolidObject.missile(obj))
-            listOf(Missile(obj))
+            listOf(Missile(ship))
         } else {
             emptyList()
         }
