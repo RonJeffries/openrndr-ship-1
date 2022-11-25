@@ -19,10 +19,10 @@ class Controls {
         trans.addAll(fire(ship))
     }
 
-    private fun accelerate(obj:Ship, deltaTime: Double) {
+    private fun accelerate(ship:Ship, deltaTime: Double) {
         if (accelerate) {
-            val deltaV = U.SHIP_ACCELERATION.rotate(obj.heading) * deltaTime
-            obj.accelerate(deltaV)
+            val deltaV = U.SHIP_ACCELERATION.rotate(ship.heading) * deltaTime
+            ship.accelerate(deltaV)
         }
     }
 

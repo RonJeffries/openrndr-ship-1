@@ -13,7 +13,6 @@ interface ISolidObject : ISpaceObject {
     val controls: Controls
     val finalizer: IFinalizer
     var heading: Double
-    fun accelerate(deltaV: Acceleration)
     fun deathDueToCollision(): Boolean
 
     override fun draw(drawer: Drawer)
@@ -48,7 +47,7 @@ class Ship(
         move(deltaTime)
     }
 
-    override fun accelerate(deltaV: Acceleration) {
+    fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
