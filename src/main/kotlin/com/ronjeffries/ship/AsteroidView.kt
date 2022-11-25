@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
+import kotlin.math.pow
 
 class AsteroidView {
     private val rock = defineRocks().random()
@@ -15,7 +16,7 @@ class AsteroidView {
         drawer.fill = null
         val sizer = 30.0
         drawer.scale(sizer, sizer)
-        val sc = asteroid.scale
+        val sc = 2.0.pow(asteroid.splitCount)
         drawer.scale(sc, sc)
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 8.0 / 30.0 / sc
