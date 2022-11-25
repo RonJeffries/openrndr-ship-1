@@ -16,8 +16,6 @@ interface ISolidObject : ISpaceObject {
 
     override fun finalize(): List<ISpaceObject>
 
-    override fun toString(): String
-
     override fun beforeInteractions()
 
     override fun afterInteractions(trans: Transaction)
