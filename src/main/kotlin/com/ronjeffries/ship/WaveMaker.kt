@@ -16,7 +16,7 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject, InteractingSpaceObje
     private fun makeWave(trans: Transaction) {
         val toAdd = mutableListOf<ISpaceObject>()
         for (i in 1..numberToCreate) {
-            val a = SolidObject.asteroid((U.randomEdgePoint()))
+            val a = Asteroid(U.randomEdgePoint())
             toAdd.add(a)
         }
         trans.addAll(toAdd)

@@ -8,7 +8,7 @@ class GameTest {
     @Test
     fun `create game`() {
         val game = Game()
-        val asteroid = SolidObject.asteroid(Vector2(100.0, 100.0), Vector2(50.0, 50.0))
+        val asteroid = Asteroid(Vector2(100.0, 100.0), Vector2(50.0, 50.0))
         val ship = SolidObject.ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)
@@ -24,7 +24,7 @@ class GameTest {
     @Test
     fun `colliding ship and asteroid splits asteroid, loses ship`() {
         val game = Game()
-        val asteroid = SolidObject.asteroid(Vector2(1000.0, 1000.0))
+        val asteroid = Asteroid(Vector2(1000.0, 1000.0))
         val ship = SolidObject.ship(Vector2(1000.0, 1000.0))
         game.add(asteroid)
         game.add(ship)

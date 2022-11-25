@@ -11,10 +11,10 @@ class AsteroidFinalizer(private val splitCount:Int = 2): IFinalizer {
     private fun asSplit(asteroid: Asteroid): Asteroid {
         val newKr = asteroid.killRadius / 2.0
         val newVel = asteroid.velocity.rotate(Math.random() * 360.0)
-        return SolidObject.asteroid(
-            pos = asteroid.position,
-            vel = newVel,
-            killRad = newKr,
+        return Asteroid(
+            position = asteroid.position,
+            velocity = newVel,
+            killRadius = newKr,
             splitCount = splitCount - 1
         )
     }

@@ -6,8 +6,8 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Asteroid(
     var position: Point,
-    val velocity: Velocity,
-    val killRadius: Double,
+    val velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
+    val killRadius: Double = 500.0,
     val splitCount: Int = 2
 ) : ISpaceObject, InteractingSpaceObject {
     private val view = AsteroidView()

@@ -9,9 +9,9 @@ class AsteroidTest {
 
     @Test
     fun `Asteroids Exist and Move`() {
-        val asteroid = SolidObject.asteroid(
-            pos = Point.ZERO,
-            vel = Velocity(15.0,30.0)
+        val asteroid = Asteroid(
+            position = Point.ZERO,
+            velocity = Velocity(15.0,30.0)
         )
         asteroid.update(tick*60, Transaction())
         checkVector(asteroid.position, Point(15.0, 30.0),"asteroid position")
@@ -19,9 +19,9 @@ class AsteroidTest {
 
     @Test
     fun `asteroid splits on finalize`() {
-        val full = SolidObject.asteroid(
-            pos = Point.ZERO,
-            vel = Velocity.ZERO
+        val full = Asteroid(
+            position = Point.ZERO,
+            velocity = Velocity.ZERO
         )
         val radius = full.killRadius
         val halfSize= full.finalize()
@@ -39,9 +39,9 @@ class AsteroidTest {
     @Test
     fun `new split asteroids get new directions`() {
         val startingV = Vector2(100.0,0.0)
-        val full = SolidObject.asteroid(
-            pos = Vector2.ZERO,
-            vel = startingV
+        val full = Asteroid(
+            position = Vector2.ZERO,
+            velocity = startingV
         )
         val fullV = full.velocity
         assertThat(fullV.length).isEqualTo(100.0, within(1.0))
