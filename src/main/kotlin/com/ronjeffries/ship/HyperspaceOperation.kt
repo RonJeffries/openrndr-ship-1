@@ -10,7 +10,7 @@ class HyperspaceOperation(val ship: Ship, val asteroidTally: Int) {
     }
 
     private fun destroyTheShip(trans: Transaction) {
-        trans.add(ShipDestroyer(ship))
+        trans.remove(ship)
         trans.add(Splat(ship))
     }
 
