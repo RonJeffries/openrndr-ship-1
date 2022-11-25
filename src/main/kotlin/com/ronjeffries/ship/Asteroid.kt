@@ -9,7 +9,6 @@ class Asteroid(
     pos,
     vel,
     killRad,
-    true,
     AsteroidView(),
     Controls(),
     AsteroidFinalizer(splitCount)
@@ -20,23 +19,18 @@ class Asteroid(
     }
 
     override val interactions: Interactions = Interactions(
-        interactWithAsteroid = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
+        interactWithShip = { ship, trans ->
+            if (possibleCollision(ship.position, ship.killRadius)) {
                 trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
             }
         },
-        interactWithShip = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
+        interactWithMissile = { missile, trans ->
+            if (possibleCollision(missile.position, missile.killRadius)) {
                 trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
-            }
-        },
-        interactWithMissile = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
-                trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
             }
         }
     )
+
+    fun possibleCollision(otherPosition: Point, otherKillRadius: Double) =
+        position.distanceTo(otherPosition) < killRadius + otherKillRadius
 }

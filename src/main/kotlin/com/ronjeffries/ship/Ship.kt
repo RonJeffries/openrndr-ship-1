@@ -4,7 +4,6 @@ class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
     pos,
     Velocity.ZERO,
     150.0,
-    false,
     ShipView(),
     control,
     ShipFinalizer()
@@ -14,23 +13,16 @@ class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
         other.interactions.interactWithShip(this, trans)
     }
 
+
     override val interactions: Interactions = Interactions(
-        interactWithAsteroid = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
+        interactWithAsteroid = { asteroid, trans ->
+            if (possibleCollision(asteroid.position, asteroid.killRadius)) {
                 trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
             }
         },
-        interactWithShip = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
+        interactWithMissile = { missile, trans ->
+            if (possibleCollision(missile.position, missile.killRadius)) {
                 trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
-            }
-        },
-        interactWithMissile = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
-                trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
             }
         }
     )
@@ -39,4 +31,7 @@ class Ship(pos: Point, control: Controls = Controls()) : SolidObject(
         controls.control(this, deltaTime, trans)
         move(deltaTime)
     }
+
+    fun possibleCollision(otherPosition: Point, otherKillRadius: Double) =
+        position.distanceTo(otherPosition) < killRadius + otherKillRadius
 }

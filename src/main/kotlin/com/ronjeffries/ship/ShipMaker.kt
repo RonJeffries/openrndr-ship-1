@@ -41,7 +41,7 @@ class ShipMaker(val ship: Ship) : ISpaceObject {
     override fun draw(drawer: Drawer) {}
     override val interactions: Interactions = Interactions(
         interactWithAsteroid = { solid, trans ->
-            if (solid.isAsteroid) asteroidTally += 1
+            asteroidTally += 1
             safeToEmerge = safeToEmerge && !tooClose(solid)
         }
     )

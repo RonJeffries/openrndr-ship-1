@@ -30,17 +30,12 @@ class Missile(
         position = (position + velocity * deltaTime).cap()
     }
 
+    fun possibleCollision(otherPosition: Point, otherKillRadius: Double) =
+        position.distanceTo(otherPosition) < killRadius + otherKillRadius
+
+
     override fun beforeInteractions() {
     }
-
-    private fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other)
-            && weAreInRange(other)
-
-    private fun weCanCollideWith(other: ISpaceObject): Boolean = (other is SolidObject)
-            && other.isAsteroid
-
-    private fun weAreInRange(other: ISpaceObject): Boolean = other is SolidObject
-            && position.distanceTo(other.position) < killRadius + other.killRadius
 
     override fun afterInteractions(trans: Transaction) {
     }
@@ -56,22 +51,19 @@ class Missile(
     }
 
     override val interactions: Interactions = Interactions(
-        interactWithAsteroid = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
+        interactWithAsteroid = { asteroid, trans ->
+            if (possibleCollision(asteroid.position, asteroid.killRadius)) {
                 trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
             }
         },
-        interactWithShip = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
+        interactWithShip = { ship, trans ->
+            if (possibleCollision(ship.position, ship.killRadius)) {
                 trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
             }
         },
-        interactWithMissile = { solid, trans ->
-            if (weAreCollidingWith(solid)) {
+        interactWithMissile = { missle, trans ->
+            if (possibleCollision(missle.position, missle.killRadius)) {
                 trans.remove(this)
-                trans.remove(solid) // TODO: should be able to remove this but a test fails
             }
         }
     )

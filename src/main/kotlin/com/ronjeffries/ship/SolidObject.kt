@@ -7,9 +7,7 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 abstract class SolidObject(
     var position: Point,
     var velocity: Velocity,
-
     var killRadius: Double = -Double.MAX_VALUE,
-    val isAsteroid: Boolean = false,
     val view: FlyerView = NullView(),
     val controls: Controls = Controls(),
     val finalizer: IFinalizer = DefaultFinalizer()
@@ -34,18 +32,6 @@ abstract class SolidObject(
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
-    }
-
-    fun weAreCollidingWith(other: ISpaceObject) = weCanCollideWith(other) && weAreInRange(other)
-
-    fun weCanCollideWith(other: ISpaceObject): Boolean {
-        return if (other !is SolidObject) false
-        else !(this.isAsteroid && other.isAsteroid)
-    }
-
-    fun weAreInRange(other: ISpaceObject): Boolean {
-        return if (other !is SolidObject) false
-        else position.distanceTo(other.position) < killRadius + other.killRadius
     }
 
     override fun finalize(): List<ISpaceObject> {
