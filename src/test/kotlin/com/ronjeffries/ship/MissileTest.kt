@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class MissileTest {
@@ -19,15 +19,10 @@ class MissileTest {
 
     @Test
     fun `splat death`() {
-        val ship = Ship(
-            position = U.randomPoint()
-        )
-        val missile = Missile(ship)
-        val splatList = missile.finalize()
-        val splat = splatList[0]
-        assertThat(splat is Splat).isEqualTo(true)
-        val trans = Transaction()
-        splat.update(4.0, trans)
-        assertThat(trans.removes.size).isEqualTo(1)
+        val ship = Ship(position = U.randomPoint())
+        val splat = Splat(ship)
+        val transaction = Transaction()
+        splat.update(4.0, transaction)
+        assertThat(transaction.removes).containsExactly(splat)
     }
 }
