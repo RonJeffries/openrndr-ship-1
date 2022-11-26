@@ -4,6 +4,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 
 class Game {
+    val scorer = Scorer()
     val knownObjects = SpaceObjectCollection()
     private var lastTime = 0.0
 
@@ -57,11 +58,11 @@ class Game {
         knownObjects.applyChanges(buffer)
     }
 
-    private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }
+    private fun draw(drawer: Drawer) = knownObjects.forEach { drawer.isolated { it.draw(drawer) } }
 
     fun processInteractions() {
         val toBeRemoved = removalsDueToInteraction()
-        if ( toBeRemoved.size > 0 ) {
+        if (toBeRemoved.size > 0) {
             knownObjects.removeAndFinalizeAll(toBeRemoved)
         }
     }

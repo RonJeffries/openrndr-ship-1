@@ -1,22 +1,31 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class TransactionTest {
-    private fun newShip(): Ship {
-        return Ship(
-            position = U.randomPoint()
-        )
+
+    private val transaction = Transaction()
+    private val gameState = SpaceObjectCollection()
+
+    @Test
+    fun `transaction applies score`() {
+        transaction.score += 100
+        gameState.applyChanges(transaction)
+        assertThat(gameState.totalScore).isEqualTo(100)
     }
 
     @Test
     fun `transaction can add and remove`() {
         val coll = SpaceObjectCollection()
-        val shipOne = newShip()
+        val shipOne = Ship(
+            position = U.randomPoint()
+        )
         coll.add(shipOne)
         val t = Transaction()
-        val shipTwo = newShip()
+        val shipTwo = Ship(
+            position = U.randomPoint()
+        )
         t.add(shipTwo)
         t.remove(shipOne)
         coll.applyChanges(t)
@@ -29,8 +38,12 @@ class TransactionTest {
     fun `accumulate transactions`() {
         val toFill = Transaction()
         val filler = Transaction()
-        val toAdd = newShip()
-        val toRemove = newShip()
+        val toAdd = Ship(
+            position = U.randomPoint()
+        )
+        val toRemove = Ship(
+            position = U.randomPoint()
+        )
         filler.add(toAdd)
         filler.remove(toRemove)
         toFill.accumulate(filler)
