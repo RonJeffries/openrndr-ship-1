@@ -21,7 +21,7 @@ class SplatTest {
     }
 
     @Test
-    fun `splats die after three seconds`() {
+    fun `splats die after 2 seconds`() {
         val ship = Ship(U.randomPoint())
         val splat = Splat(ship)
         val transaction = Transaction()

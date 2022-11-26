@@ -4,15 +4,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class MissileTest {
+    val ship = Ship(U.randomPoint())
+    val missile = Missile(ship)
+    val transaction = Transaction()
+
     @Test
-    fun `can be created, dies on time`() {
-        val ship = Ship(U.randomPoint())
-        val missile = Missile(ship)
-        val trans = Transaction()
-        missile.update(0.1, trans)
-        assertThat(trans.removes).isEmpty()
-        missile.update(3.1, trans)
-        assertThat(trans.removes).containsExactly(missile)
+    fun `dies after three seconds`() {
+        missile.update(0.1, transaction)
+        assertThat(transaction.removes).isEmpty()
+        missile.update(3.1, transaction)
+        assertThat(transaction.removes).containsExactly(missile)
     }
 
 
