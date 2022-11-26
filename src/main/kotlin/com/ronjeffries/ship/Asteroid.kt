@@ -4,6 +4,7 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import kotlin.math.pow
+import kotlin.random.Random
 
 class Asteroid(
     var position: Point,
@@ -12,6 +13,7 @@ class Asteroid(
     private val splitCount: Int = 2
 ) : ISpaceObject, InteractingSpaceObject {
     private val view = AsteroidView()
+    val heading: Double = Random.nextDouble(360.0)
 
     override fun update(deltaTime: Double, trans: Transaction) {
         position = (position + velocity * deltaTime).cap()
