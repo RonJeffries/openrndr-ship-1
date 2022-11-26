@@ -18,7 +18,7 @@ class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
             if ( solid == ship ) missingShip = false
         },
         afterInteractions = { trans ->
-            if (missingShip ) {
+            if ( missingShip ) {
                 trans.add(ShipMaker(ship))
                 trans.remove(this)
             }
