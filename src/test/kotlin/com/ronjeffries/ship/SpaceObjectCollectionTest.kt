@@ -34,8 +34,7 @@ class SpaceObjectCollectionTest {
         val game = Game()
         val a0 = Asteroid(p1) // yes
         game.add(a0)
-        val m1 = Ship(p1) // yes
-        m1.killRadius = 10.0
+        val m1 = Ship(position=p1, killRadius = 10.0) // yes
         game.add(m1)
         val s2 = Ship.ship(p1) // yes kr=150
         game.add(s2)

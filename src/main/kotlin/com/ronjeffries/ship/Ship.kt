@@ -7,9 +7,9 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 class Ship(
     var position: Point,
     val controls: Controls = Controls(),
+    val killRadius: Double = 150.0
 ) : ISpaceObject, InteractingSpaceObject {
     var velocity:  Velocity = Velocity.ZERO
-    var killRadius: Double = 150.0
     var heading: Double = 0.0
     val view = ShipView()
     val finalizer = ShipFinalizer()
@@ -70,10 +70,11 @@ class Ship(
     override fun afterInteractions(trans: Transaction) {}
 
     companion object {
-        fun ship(pos: Point, control: Controls = Controls()): Ship {
+        fun ship(pos: Point, control: Controls = Controls(), killRadius: Double = 150.0): Ship {
             return Ship(
                 position = pos,
                 controls = control,
+                killRadius = killRadius
             )
         }
     }
