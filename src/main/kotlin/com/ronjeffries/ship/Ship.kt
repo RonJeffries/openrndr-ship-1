@@ -11,7 +11,6 @@ class Ship(
 ) : ISpaceObject, InteractingSpaceObject {
     var velocity: Velocity = Velocity.ZERO
     var heading: Double = 0.0
-    val view = ShipView()
 
     override fun update(deltaTime: Double, trans: Transaction) {
         controls.control(this, deltaTime, trans)
@@ -29,8 +28,21 @@ class Ship(
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
-        view.draw(this, drawer)
+        val points = listOf(
+            Point(-3.0, -2.0),
+            Point(-3.0, 2.0),
+            Point(-5.0, 4.0),
+            Point(7.0, 0.0),
+            Point(-5.0, -4.0),
+            Point(-3.0, -2.0)
+        )
+        drawer.scale(30.0, 30.0)
+        drawer.rotate(heading)
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.strokeWeight = 8.0 / 30.0
+        drawer.lineStrip(points)
     }
+
 
     private fun weAreInRange(asteroid: Asteroid): Boolean {
         return position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
