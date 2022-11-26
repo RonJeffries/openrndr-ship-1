@@ -2,11 +2,10 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Missile(
     ship: Ship,
-): ISpaceObject, InteractingSpaceObject {
+) : ISpaceObject, InteractingSpaceObject {
     var position: Point
     val killRadius = 10.0
     private val velocity: Velocity
@@ -29,13 +28,14 @@ class Missile(
         position = (position + velocity * deltaTime).cap()
     }
 
-    private fun weAreInRange(asteroid: Asteroid): Boolean
-    = position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
+    private fun weAreInRange(asteroid: Asteroid): Boolean =
+        position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
 
     override fun draw(drawer: Drawer) {
-        drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.fill = ColorRGBa.WHITE
         drawer.translate(position)
-        MissileView().draw(this, drawer)
+        drawer.circle(Point.ZERO, killRadius * 3.0)
     }
 
     override fun finalize(): List<ISpaceObject> {
