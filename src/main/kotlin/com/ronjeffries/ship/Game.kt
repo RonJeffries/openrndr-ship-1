@@ -46,13 +46,13 @@ class Game {
     }
 
     private fun beginInteractions() {
-        knownObjects.forEach { it.interactions.beforeInteractions() }
+        knownObjects.forEach { it.subscriptions.beforeInteractions() }
     }
 
     private fun finishInteractions() {
         val buffer = Transaction()
         knownObjects.forEach {
-            it.interactions.afterInteractions(buffer)
+            it.subscriptions.afterInteractions(buffer)
         }
         knownObjects.applyChanges(buffer)
     }

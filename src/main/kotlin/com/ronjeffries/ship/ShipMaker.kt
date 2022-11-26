@@ -26,7 +26,7 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
 
     override fun draw(drawer: Drawer) {}
 
-    override val interactions: Interactions = Interactions (
+    override val subscriptions = Subscriptions (
         beforeInteractions = {
             safeToEmerge = true
             asteroidTally = 0
@@ -43,6 +43,6 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithShipMaker(this, trans)
+        other.subscriptions.interactWithShipMaker(this, trans)
     }
 }

@@ -45,7 +45,7 @@ class Ship(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override val interactions: Interactions = Interactions(
+    override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
             if (weAreInRange(asteroid)) trans.remove(this) },
         interactWithShipDestroyer = { _, trans ->
@@ -54,7 +54,7 @@ class Ship(
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithShip(this, trans)
+        other.subscriptions.interactWithShip(this, trans)
     }
 
     override fun toString(): String {

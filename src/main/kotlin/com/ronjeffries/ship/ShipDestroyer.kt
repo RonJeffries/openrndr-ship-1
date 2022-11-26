@@ -4,13 +4,13 @@ import org.openrndr.draw.Drawer
 
 class ShipDestroyer() : ISpaceObject, InteractingSpaceObject {
 
-    override val interactions: Interactions = Interactions(
+    override val subscriptions = Subscriptions(
         interactWithShip = { _, trans ->
             trans.remove(this)
         }
     )
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithShipDestroyer(this, trans)
+        other.subscriptions.interactWithShipDestroyer(this, trans)
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {}

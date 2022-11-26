@@ -28,6 +28,6 @@ class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
         return emptyList()
     }
 
-    override val interactions: Interactions = Interactions()
+    override val subscriptions = Subscriptions()
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 }

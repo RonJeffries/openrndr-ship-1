@@ -42,7 +42,7 @@ class Missile(
         return listOf(Splat(this))
     }
 
-    override val interactions: Interactions = Interactions(
+    override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
             if (weAreInRange(asteroid)) {
                 trans.remove(this)
@@ -51,7 +51,7 @@ class Missile(
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithMissile(this, trans)
+        other.subscriptions.interactWithMissile(this, trans)
     }
 
 }

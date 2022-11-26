@@ -13,7 +13,7 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
         elapsedTime += deltaTime
     }
 
-    override val interactions: Interactions = Interactions (
+    override val subscriptions = Subscriptions (
         beforeInteractions = { sawAsteroid = false},
         interactWithAsteroid = { _, _ -> sawAsteroid = true },
         afterInteractions = this::makeWaveInDueTime

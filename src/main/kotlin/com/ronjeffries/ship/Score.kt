@@ -4,10 +4,10 @@ import org.openrndr.draw.Drawer
 
 class Score(val score: Int): ISpaceObject, InteractingSpaceObject {
 
-    override val interactions: Interactions = Interactions()
+    override val subscriptions = Subscriptions()
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithScore(this, trans)
+        other.subscriptions.interactWithScore(this, trans)
     }
 
     override fun update(deltaTime: Double, trans: Transaction) { }

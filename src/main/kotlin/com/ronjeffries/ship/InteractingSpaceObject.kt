@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
 interface InteractingSpaceObject {
-    val interactions: Interactions
+    val subscriptions: Subscriptions
     fun callOther(other: InteractingSpaceObject, trans: Transaction)
 }

@@ -10,7 +10,7 @@ class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     override fun draw(drawer: Drawer) {}
     override fun update(deltaTime: Double, trans: Transaction) {}
 
-    override val interactions: Interactions = Interactions(
+    override val subscriptions = Subscriptions(
         beforeInteractions = {
             missingShip = true
         },
@@ -26,6 +26,6 @@ class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithShipChecker(this, trans)
+        other.subscriptions.interactWithShipChecker(this, trans)
     }
 }

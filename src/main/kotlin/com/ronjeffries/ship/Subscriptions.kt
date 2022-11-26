@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class Interactions(
+class Subscriptions(
     val beforeInteractions: () -> Unit = {},
     val afterInteractions: (trans: Transaction) -> Unit = {_ -> },
     val interactWithScore: (score: Score, trans: Transaction) -> Unit = { _, _, -> },

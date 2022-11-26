@@ -6,7 +6,7 @@ import org.openrndr.draw.Drawer
 class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
     var totalScore = 0
 
-    override val interactions: Interactions = Interactions(
+    override val subscriptions = Subscriptions(
         interactWithScore = { score, trans ->
             totalScore += score.score
             trans.remove(score)
