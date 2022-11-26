@@ -13,6 +13,13 @@ class Asteroid(
 ) : ISpaceObject, InteractingSpaceObject {
     private val rock = myRock()
 
+    val score: Int
+        get() = when (splitCount) {
+            2 -> 20
+            1 -> 50
+            0 -> 100
+            else -> 0
+        }
 
     override fun update(deltaTime: Double, trans: Transaction) {
         position = (position + velocity * deltaTime).cap()
@@ -35,8 +42,7 @@ class Asteroid(
     }
 
     fun tempFinalize(transaction: Transaction) {
-        val score = getScore()
-        transaction.add(score)
+        transaction.score += score
         if (splitCount >= 1) {
             transaction.add(asSplit())
             transaction.add(asSplit())
@@ -52,15 +58,6 @@ class Asteroid(
         )
     }
 
-    private fun getScore(): Score {
-        val score = when (splitCount) {
-            2 -> 20
-            1 -> 50
-            0 -> 100
-            else -> 0
-        }
-        return Score(score)
-    }
 
     fun scale() = 2.0.pow(splitCount)
 

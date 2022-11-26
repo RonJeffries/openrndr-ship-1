@@ -24,7 +24,7 @@ class AsteroidTest {
         val full = Asteroid(Point.ZERO, Velocity.ZERO)
         val transaction = Transaction()
         interactBothWays(ship, full, transaction)
-        assertThat(transaction.adds.size).isEqualTo(3) // two asteroids and a score
+        assertThat(transaction.adds.size).isEqualTo(2)
     }
 
     @Test
@@ -54,7 +54,7 @@ class AsteroidTest {
         val transaction = Transaction()
         interactBothWays(missile, full, transaction)
         println(transaction.adds)
-        assertThat(transaction.adds.size).isEqualTo(4) // two asteroids and a score amd a splat
+        assertThat(transaction.adds.size).isEqualTo(3) // two asteroids and a splat
     }
 
     @Test

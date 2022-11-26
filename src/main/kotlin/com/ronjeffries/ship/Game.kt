@@ -1,10 +1,10 @@
 package com.ronjeffries.ship
 
+import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 
 class Game {
-    val scorer = Scorer()
     val knownObjects = SpaceObjectCollection()
     private var lastTime = 0.0
 
@@ -23,7 +23,6 @@ class Game {
         val ship = newShip(controls)
         add(ship)
         add(ShipChecker(ship))
-        add(ScoreKeeper())
         add(WaveChecker())
     }
 
@@ -56,7 +55,21 @@ class Game {
         knownObjects.applyChanges(buffer)
     }
 
-    private fun draw(drawer: Drawer) = knownObjects.forEach { drawer.isolated { it.draw(drawer) } }
+    private fun draw(drawer: Drawer) {
+        knownObjects.forEach { drawer.isolated { it.draw(drawer) } }
+        drawScore(drawer)
+    }
+
+    private fun drawScore(drawer: Drawer) {
+        drawer.translate(100.0, 500.0)
+        drawer.stroke = ColorRGBa.GREEN
+        drawer.fill = ColorRGBa.GREEN
+        drawer.text(formatted(), Point(0.0, 0.0))
+    }
+
+    fun formatted(): String {
+        return ("00000" + knownObjects.totalScore.toShort()).takeLast(5)
+    }
 
     fun tick(deltaTime: Double) {
         val trans = Transaction()
