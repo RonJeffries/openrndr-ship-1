@@ -8,7 +8,7 @@ class WaveCheckerTest {
     fun `checker returns nothing when elapsed lt 1`() {
         val ck = WaveChecker()
         ck.update(0.5, Transaction())
-        ck.beforeInteractions()
+        ck.interactions.beforeInteractions()
         val trans = Transaction()
         ck.afterInteractions(trans)
         assertThat(trans.adds).isEmpty()
@@ -23,7 +23,7 @@ class WaveCheckerTest {
     fun `returns WaveMaker when elapsed gt 1 and no asteroid scanned`() {
         val ck = WaveChecker()
         ck.update(1.1, Transaction())
-        ck.beforeInteractions()
+        ck.interactions.beforeInteractions()
         val trans = Transaction()
         ck.afterInteractions(trans)
         assertThat(trans.adds.toList()[0]).isInstanceOf(WaveMaker::class.java)
@@ -35,7 +35,7 @@ class WaveCheckerTest {
         val a = Asteroid(U.randomPoint(), U.randomVelocity(U.ASTEROID_SPEED))
         val ck = WaveChecker()
         ck.update(1.1, Transaction())
-        ck.beforeInteractions()
+        ck.interactions.beforeInteractions()
         ck.interactions.interactWithAsteroid(a, Transaction())
         val trans = Transaction()
         ck.afterInteractions(trans)

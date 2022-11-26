@@ -10,7 +10,7 @@ class ShipCheckerAndMakerTest {
             position = U.randomPoint()
         )
         val checker = ShipChecker(ship)
-        checker.beforeInteractions()
+        checker.interactions.beforeInteractions()
         val nothing = Transaction()
         checker.interactions.interactWithShip(ship, nothing)
         assertThat(nothing.removes).isEmpty()
@@ -30,7 +30,7 @@ class ShipCheckerAndMakerTest {
             position = U.randomPoint()
         )
         val checker = ShipChecker(ship)
-        checker.beforeInteractions()
+        checker.interactions.beforeInteractions()
         val trans = Transaction()
         checker.interactions.interactWithShip(ship, trans)
         assertThat(trans.removes).isEmpty()
@@ -50,7 +50,7 @@ class ShipCheckerAndMakerTest {
             position = U.randomPoint()
         )
         val checker = ShipChecker(ship)
-        checker.beforeInteractions()
+        checker.interactions.beforeInteractions()
         // we see no ship here
         val transaction = Transaction()
         checker.afterInteractions(transaction)
@@ -65,7 +65,7 @@ class ShipCheckerAndMakerTest {
         )
         val maker = ShipMaker(ship)
         maker.update(U.MAKER_DELAY, Transaction())
-        maker.beforeInteractions()
+        maker.interactions.beforeInteractions()
         // nothing in the way
         val nothing = Transaction()
         maker.afterInteractions(nothing)
@@ -84,7 +84,7 @@ class ShipCheckerAndMakerTest {
         val ignored = Transaction()
         maker.update(U.MAKER_DELAY, ignored)
         maker.update(0.01, ignored)
-        maker.beforeInteractions()
+        maker.interactions.beforeInteractions()
         // nothing in the way
         val trans = Transaction()
         maker.afterInteractions(trans)
@@ -103,14 +103,14 @@ class ShipCheckerAndMakerTest {
         val ignored = Transaction()
         maker.update(U.MAKER_DELAY, ignored)
         maker.update(0.01, ignored)
-        maker.beforeInteractions()
+        maker.interactions.beforeInteractions()
         val notInteresting = Transaction()
         maker.interactions.interactWithAsteroid(asteroid, notInteresting)
         val nothing = Transaction()
         maker.afterInteractions(nothing)
         assertThat(nothing.adds).isEmpty()
         assertThat(nothing.removes).isEmpty()
-        maker.beforeInteractions()
+        maker.interactions.beforeInteractions()
         // nothing
         val trans = Transaction()
         maker.afterInteractions(trans)
@@ -133,7 +133,7 @@ class ShipCheckerAndMakerTest {
         ship.velocity = velocity
         val maker = ShipMaker(ship)
         maker.update(U.MAKER_DELAY + 0.01, Transaction())
-        maker.beforeInteractions()
+        maker.interactions.beforeInteractions()
         // no obstacles
         maker.asteroidTally = 60 // no possible hyperspace failure
         val trans = Transaction()
@@ -152,7 +152,7 @@ class ShipCheckerAndMakerTest {
             position = U.CENTER_OF_UNIVERSE
         )
         val maker = ShipMaker(ship)
-        maker.beforeInteractions()
+        maker.interactions.beforeInteractions()
         val trans = Transaction()
         maker.interactions.interactWithAsteroid(a, trans)
         maker.interactions.interactWithAsteroid(a, trans)

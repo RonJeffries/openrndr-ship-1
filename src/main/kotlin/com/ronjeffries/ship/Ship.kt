@@ -66,7 +66,6 @@ class Ship(
         heading += degrees
     }
 
-    override fun beforeInteractions() {}
     override fun afterInteractions(trans: Transaction) {}
 
 }

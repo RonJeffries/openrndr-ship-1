@@ -46,7 +46,7 @@ class Game {
     }
 
     private fun beginInteractions() {
-        knownObjects.forEach { it.beforeInteractions() }
+        knownObjects.forEach { it.interactions.beforeInteractions() }
     }
 
     private fun finishInteractions() {

@@ -6,10 +6,6 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
     var sawAsteroid = false
     var elapsedTime = 0.0
 
-    override fun beforeInteractions() {
-        sawAsteroid = false
-    }
-
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
     override fun afterInteractions(trans: Transaction) {
@@ -27,7 +23,10 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
         elapsedTime += deltaTime
     }
 
-    override val interactions: Interactions = Interactions { _, _ -> sawAsteroid = true }
+    override val interactions: Interactions = Interactions (
+        beforeInteractions = { sawAsteroid = false},
+        interactWithAsteroid = { _, _ -> sawAsteroid = true }
+    )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         // no op

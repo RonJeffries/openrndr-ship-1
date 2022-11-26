@@ -29,7 +29,6 @@ class Missile(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun beforeInteractions() {}
     override fun afterInteractions(trans: Transaction) {}
 
     private fun weAreInRange(asteroid: Asteroid): Boolean

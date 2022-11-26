@@ -17,7 +17,6 @@ class Asteroid(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun beforeInteractions() { }
     override fun afterInteractions(trans: Transaction) { }
 
     override fun draw(drawer: Drawer) {

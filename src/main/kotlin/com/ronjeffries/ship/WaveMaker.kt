@@ -23,7 +23,6 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject, InteractingSpaceObje
         trans.remove(this)
     }
 
-    override fun beforeInteractions() {}
     override fun afterInteractions(trans: Transaction) {}
 
     override fun finalize(): List<ISpaceObject> {
