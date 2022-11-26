@@ -48,10 +48,6 @@ class Ship(
         return position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
     }
 
-    override fun finalize(): List<ISpaceObject> {
-        return emptyList()
-    }
-    
     fun tempFinalize() {
         if (deathDueToCollision()) {
             position = U.CENTER_OF_UNIVERSE

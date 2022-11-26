@@ -5,8 +5,6 @@ import org.openrndr.draw.Drawer
 class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     private var missingShip = true
 
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
-
     override fun draw(drawer: Drawer) {}
     override fun update(deltaTime: Double, trans: Transaction) {}
 
@@ -15,10 +13,10 @@ class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
             missingShip = true
         },
         interactWithShip = { solid, _ ->
-            if ( solid == ship ) missingShip = false
+            if (solid == ship) missingShip = false
         },
         afterInteractions = { trans ->
-            if ( missingShip ) {
+            if (missingShip) {
                 trans.add(ShipMaker(ship))
                 trans.remove(this)
             }

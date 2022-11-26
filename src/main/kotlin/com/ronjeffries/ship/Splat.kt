@@ -35,10 +35,6 @@ class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
         }
     }
 
-    override fun finalize(): List<ISpaceObject> {
-        return emptyList()
-    }
-
     override val interactions: Interactions = Interactions()
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 

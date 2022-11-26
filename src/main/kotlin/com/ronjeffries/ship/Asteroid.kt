@@ -34,8 +34,6 @@ class Asteroid(
         drawer.lineStrip(rock)
     }
 
-    override fun finalize(): List<ISpaceObject> = emptyList()
-
     fun tempFinalize(transaction: Transaction) {
         val score = getScore()
         transaction.add(score)

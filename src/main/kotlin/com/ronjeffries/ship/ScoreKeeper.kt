@@ -3,7 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 
-class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
+class ScoreKeeper : ISpaceObject, InteractingSpaceObject {
     var totalScore = 0
 
     override val interactions: Interactions = Interactions(
@@ -18,8 +18,6 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {}
-
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
 
     override fun draw(drawer: Drawer) {
         drawer.translate(100.0, 500.0)

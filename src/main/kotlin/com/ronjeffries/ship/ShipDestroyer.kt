@@ -9,11 +9,11 @@ class ShipDestroyer() : ISpaceObject, InteractingSpaceObject {
             trans.remove(this)
         }
     )
+
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithShipDestroyer(this, trans)
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {}
     override fun draw(drawer: Drawer) {}
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
 }

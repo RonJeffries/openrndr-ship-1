@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class Score(val score: Int): ISpaceObject, InteractingSpaceObject {
+class Score(val score: Int) : ISpaceObject, InteractingSpaceObject {
 
     override val interactions: Interactions = Interactions()
 
@@ -10,8 +10,7 @@ class Score(val score: Int): ISpaceObject, InteractingSpaceObject {
         other.interactions.interactWithScore(this, trans)
     }
 
-    override fun update(deltaTime: Double, trans: Transaction) { }
-    override fun draw(drawer: Drawer) { }
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
+    override fun update(deltaTime: Double, trans: Transaction) {}
+    override fun draw(drawer: Drawer) {}
 
 }

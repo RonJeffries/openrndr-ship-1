@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import org.openrndr.draw.Drawer
 
-class WaveMaker(val numberToCreate: Int = 8): ISpaceObject, InteractingSpaceObject {
+class WaveMaker(val numberToCreate: Int = 8) : ISpaceObject, InteractingSpaceObject {
 
     var elapsedTime = 0.0
 
@@ -21,10 +21,6 @@ class WaveMaker(val numberToCreate: Int = 8): ISpaceObject, InteractingSpaceObje
         }
         trans.addAll(toAdd)
         trans.remove(this)
-    }
-
-    override fun finalize(): List<ISpaceObject> {
-        return emptyList()
     }
 
     override fun draw(drawer: Drawer) {}

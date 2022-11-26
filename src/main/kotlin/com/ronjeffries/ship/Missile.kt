@@ -38,8 +38,6 @@ class Missile(
         drawer.circle(Point.ZERO, killRadius * 3.0)
     }
 
-    override fun finalize(): List<ISpaceObject> = emptyList()
-
     override val interactions: Interactions = Interactions(
         interactWithAsteroid = { asteroid, trans ->
             if (weAreInRange(asteroid)) {

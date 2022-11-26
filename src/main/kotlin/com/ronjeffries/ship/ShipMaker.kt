@@ -22,11 +22,9 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
         HyperspaceOperation(ship, asteroidTally).execute(trans)
     }
 
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
-
     override fun draw(drawer: Drawer) {}
 
-    override val interactions: Interactions = Interactions (
+    override val interactions: Interactions = Interactions(
         beforeInteractions = {
             safeToEmerge = true
             asteroidTally = 0
@@ -35,7 +33,7 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
             asteroidTally += 1
             safeToEmerge = safeToEmerge && !tooClose(asteroid)
         },
-        afterInteractions = { trans->
+        afterInteractions = { trans ->
             if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
                 replaceTheShip(trans)
             }

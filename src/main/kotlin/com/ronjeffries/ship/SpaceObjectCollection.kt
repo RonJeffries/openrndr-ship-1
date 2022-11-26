@@ -13,7 +13,7 @@ class SpaceObjectCollection {
     }
 
     fun applyChanges(transaction: Transaction) {
-        removeAndFinalizeAll(transaction.removes)
+        spaceObjects.removeAll(transaction.removes)
         addAll(transaction.adds)
         totalScore += transaction.score
     }
@@ -28,10 +28,6 @@ class SpaceObjectCollection {
             }
         }
         return pairs
-    }
-
-    fun removeAndFinalizeAll(moribund: Set<ISpaceObject>) {
-        spaceObjects.removeAll(moribund)
     }
 
     val size get() = spaceObjects.size
