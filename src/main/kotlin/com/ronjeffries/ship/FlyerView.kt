@@ -8,14 +8,6 @@ interface FlyerView {
     fun draw(ship: Ship, drawer: Drawer)
 }
 
-class MissileView {
-    fun draw(missile: Missile, drawer: Drawer) {
-        drawer.stroke = ColorRGBa.WHITE
-        drawer.fill = ColorRGBa.WHITE
-        drawer.circle(Point.ZERO, missile.killRadius*3.0)
-    }
-}
-
 class ShipView : FlyerView {
     override fun draw(ship: Ship, drawer: Drawer) {
         val points = listOf(
@@ -135,12 +127,5 @@ class SplatView(lifetime: Double): FlyerView {
     }
 
     override fun draw(ship: Ship, drawer: Drawer) {
-    }
-}
-
-class NullView: FlyerView {
-    override fun draw(ship: Ship, drawer: Drawer) {
-        drawer.stroke = ColorRGBa.WHITE
-        drawer.text("???")
     }
 }
