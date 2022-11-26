@@ -34,7 +34,7 @@ class ScoreKeeper : ISpaceObject {
         }
     )
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+    override fun callOther(other: ISpaceObject, trans: Transaction) {
         // try not doing anything
     }
 

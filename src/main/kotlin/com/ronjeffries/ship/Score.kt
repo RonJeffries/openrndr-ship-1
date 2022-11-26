@@ -14,7 +14,7 @@ class Score(val score: Int) : ISpaceObject {
 
     override val interactions: Interactions = Interactions()
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+    override fun callOther(other: ISpaceObject, trans: Transaction) {
         other.interactions.interactWithScore(this, trans)
     }
 }

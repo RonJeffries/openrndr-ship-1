@@ -33,7 +33,7 @@ class WaveMaker(val numberToCreate: Int = 8) : ISpaceObject {
     override fun draw(drawer: Drawer) {}
 
     override val interactions: Interactions = Interactions()
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+    override fun callOther(other: ISpaceObject, trans: Transaction) {
         other.interactions.interactWithWaveMaker(this, trans)
     }
 }

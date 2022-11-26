@@ -15,7 +15,7 @@ class Ship(var position: Point, val controls: Controls = Controls()) : ISpaceObj
         return finalizer.finalize(this)
     }
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+    override fun callOther(other: ISpaceObject, trans: Transaction) {
         other.interactions.interactWithShip(this, trans)
     }
 

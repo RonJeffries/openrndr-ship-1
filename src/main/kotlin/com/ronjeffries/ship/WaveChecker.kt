@@ -35,7 +35,7 @@ class WaveChecker : ISpaceObject {
         }
     )
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+    override fun callOther(other: ISpaceObject, trans: Transaction) {
         // no op
     }
 }

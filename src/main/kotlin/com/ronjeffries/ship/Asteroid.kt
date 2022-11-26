@@ -12,7 +12,7 @@ class Asteroid(
     private val view = AsteroidView()
     private val finalizer = AsteroidFinalizer(splitCount)
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+    override fun callOther(other: ISpaceObject, trans: Transaction) {
         other.interactions.interactWithAsteroid(this, trans)
     }
 
