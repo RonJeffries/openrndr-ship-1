@@ -6,10 +6,10 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Ship(
     var position: Point,
-    var velocity: Velocity,
     var killRadius: Double = -Double.MAX_VALUE,
     val controls: Controls = Controls(),
 ) : ISpaceObject, InteractingSpaceObject {
+    var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
     val view = ShipView()
     val finalizer = ShipFinalizer()
@@ -73,7 +73,6 @@ class Ship(
         fun ship(pos: Point, control: Controls = Controls()): Ship {
             return Ship(
                 position = pos,
-                velocity = Velocity.ZERO,
                 killRadius = 150.0,
                 controls = control,
             )

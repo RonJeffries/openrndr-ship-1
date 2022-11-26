@@ -10,7 +10,6 @@ class UniverseTest {
     fun `collision calculation`() {
         val ship = Ship(
             Vector2.ZERO,
-            Vector2.ZERO,
             100.0
         )
         val asteroid = Asteroid(
