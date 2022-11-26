@@ -12,7 +12,6 @@ class Ship(
     var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
     val view = ShipView()
-    val finalizer = ShipFinalizer()
 
     override fun update(deltaTime: Double, trans: Transaction) {
         controls.control(this, deltaTime, trans)
@@ -38,7 +37,14 @@ class Ship(
     }
 
     override fun finalize(): List<ISpaceObject> {
-        return finalizer.finalize(this)
+        if ( deathDueToCollision() ) {
+            position = U.CENTER_OF_UNIVERSE
+            velocity = Velocity.ZERO
+            heading = 0.0
+        } else {
+            position = U.randomPoint()
+        }
+        return emptyList()
     }
 
     fun move(deltaTime: Double) {
