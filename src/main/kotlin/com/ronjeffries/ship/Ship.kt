@@ -7,13 +7,12 @@ import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 class Ship(
     var position: Point,
     var velocity: Velocity,
-
     var killRadius: Double = -Double.MAX_VALUE,
     val controls: Controls = Controls(),
-    val finalizer: IFinalizer = DefaultFinalizer()
 ) : ISpaceObject, InteractingSpaceObject {
     var heading: Double = 0.0
     val view = ShipView()
+    val finalizer = ShipFinalizer()
 
     override fun update(deltaTime: Double, trans: Transaction) {
         controls.control(this, deltaTime, trans)
@@ -60,7 +59,7 @@ class Ship(
     }
 
     override fun toString(): String {
-        return "Flyer $position ($killRadius)"
+        return "Ship $position ($killRadius)"
     }
 
     fun turnBy(degrees: Double) {
@@ -77,7 +76,6 @@ class Ship(
                 velocity = Velocity.ZERO,
                 killRadius = 150.0,
                 controls = control,
-                finalizer = ShipFinalizer()
             )
         }
     }
