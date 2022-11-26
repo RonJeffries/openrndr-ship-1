@@ -9,7 +9,7 @@ class Asteroid(
     var position: Point,
     val velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
     val killRadius: Double = 500.0,
-    private val splitCount: Int = 2
+    val splitCount: Int = 2
 ) : ISpaceObject, InteractingSpaceObject {
     private val rock = myRock()
 
@@ -34,22 +34,23 @@ class Asteroid(
         drawer.lineStrip(rock)
     }
 
-    override fun finalize(): List<ISpaceObject> {
-        val objectsToAdd: MutableList<ISpaceObject> = mutableListOf()
+    override fun finalize(): List<ISpaceObject> = emptyList()
+
+    fun tempFinalize(transaction: Transaction) {
         val score = getScore()
-        objectsToAdd.add(score)
+        transaction.add(score)
         if (splitCount >= 1) {
-            objectsToAdd.add(asSplit(this))
-            objectsToAdd.add(asSplit(this))
+            transaction.add(asSplit())
+            transaction.add(asSplit())
         }
-        return objectsToAdd
     }
 
-    private fun asSplit(asteroid: Asteroid): Asteroid {
+    fun asSplit(): Asteroid {
         return Asteroid(
-            position = asteroid.position,
-            killRadius = asteroid.killRadius / 2.0,
-            splitCount = splitCount - 1
+            position,
+            U.randomVelocity(U.ASTEROID_SPEED),
+            killRadius / 2.0,
+            splitCount - 1
         )
     }
 
@@ -77,11 +78,13 @@ class Asteroid(
         interactWithMissile = { missile, trans ->
             if (weAreCollidingWith(missile)) {
                 trans.remove(this)
+                tempFinalize(trans)
             }
         },
         interactWithShip = { ship, trans ->
             if (weAreCollidingWith(ship)) {
                 trans.remove(this)
+                tempFinalize(trans)
             }
         }
     )

@@ -49,6 +49,10 @@ class Ship(
     }
 
     override fun finalize(): List<ISpaceObject> {
+        return emptyList()
+    }
+    
+    fun tempFinalize() {
         if (deathDueToCollision()) {
             position = U.CENTER_OF_UNIVERSE
             velocity = Velocity.ZERO
@@ -56,7 +60,6 @@ class Ship(
         } else {
             position = U.randomPoint()
         }
-        return emptyList()
     }
 
     fun move(deltaTime: Double) {
@@ -65,10 +68,14 @@ class Ship(
 
     override val interactions: Interactions = Interactions(
         interactWithAsteroid = { asteroid, trans ->
-            if (weAreInRange(asteroid)) trans.remove(this)
+            if (weAreInRange(asteroid)) {
+                trans.remove(this)
+                tempFinalize()
+            }
         },
         interactWithShipDestroyer = { _, trans ->
             trans.remove(this)
+            tempFinalize()
         }
     )
 

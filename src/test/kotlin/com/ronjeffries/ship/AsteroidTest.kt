@@ -1,70 +1,71 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.within
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
 
 class AsteroidTest {
-    private val tick = 1.0/60.0
+    private val tick = 1.0 / 60.0
 
     @Test
     fun `Asteroids Exist and Move`() {
         val asteroid = Asteroid(
             position = Point.ZERO,
-            velocity = Velocity(15.0,30.0)
+            velocity = Velocity(15.0, 30.0)
         )
-        asteroid.update(tick*60, Transaction())
-        checkVector(asteroid.position, Point(15.0, 30.0),"asteroid position")
+        asteroid.update(tick * 60, Transaction())
+        checkVector(asteroid.position, Point(15.0, 30.0), "asteroid position")
     }
 
     @Test
-    fun `asteroid splits on finalize`() {
-        val full = Asteroid(
-            position = Point.ZERO,
-            velocity = Velocity.ZERO
-        )
-        val radius = full.killRadius
-        val halfSize= full.finalize()
-        assertThat(halfSize.size).isEqualTo(3) // two asteroids and a score
-        val half = halfSize.last()
-        assertThat((half as Asteroid).killRadius).describedAs("half").isEqualTo(radius/2.0)
-        val quarterSize = half.finalize()
-        assertThat(quarterSize.size).isEqualTo(3)
-        val quarter = quarterSize.last()
-        assertThat((quarter as Asteroid).killRadius).describedAs("quarter").isEqualTo(radius/4.0)
-        val eighthSize = quarter.finalize()
-        assertThat(eighthSize.size).describedAs("should not split third time").isEqualTo(1)
+    fun `full asteroid splits on ship`() {
+        val ship = Ship(Point.ZERO)
+        val full = Asteroid(Point.ZERO, Velocity.ZERO)
+        val transaction = Transaction()
+        interactBothWays(ship, full, transaction)
+        assertThat(transaction.adds.size).isEqualTo(3) // two asteroids and a score
+    }
+
+    @Test
+    fun `full to half has correct values`() {
+        val asteroid = Asteroid(Point.ZERO)
+        val half = asteroid.asSplit()
+        assertThat(half.position).isEqualTo(asteroid.position)
+        assertThat(half.killRadius).isEqualTo(asteroid.killRadius / 2.0)
+        assertThat(half.splitCount).isEqualTo(1)
+    }
+
+    @Test
+    fun `half to quarter has correct values`() {
+        val asteroid = Asteroid(Point.ZERO)
+        val half = asteroid.asSplit()
+        val quarter = half.asSplit()
+        assertThat(quarter.position).isEqualTo(half.position)
+        assertThat(quarter.killRadius).isEqualTo(half.killRadius / 2.0)
+        assertThat(quarter.splitCount).isEqualTo(0)
+    }
+
+    @Test
+    fun `full asteroid splits on missile`() {
+        val ship = Ship(Point.ZERO)
+        val missile = Missile(ship)
+        val full = Asteroid(missile.position)
+        val transaction = Transaction()
+        interactBothWays(missile, full, transaction)
+        println(transaction.adds)
+        assertThat(transaction.adds.size).isEqualTo(4) // two asteroids and a score amd a splat
     }
 
     @Test
     fun `new split asteroids get new directions`() {
-        val startingV = Vector2(U.ASTEROID_SPEED,0.0)
+        val startingV = Vector2(U.ASTEROID_SPEED, 0.0)
         val full = Asteroid(
             position = Vector2.ZERO,
             velocity = startingV
         )
-        val fullV = full.velocity
-        assertThat(fullV.length).isEqualTo(U.ASTEROID_SPEED, within(1.0))
-        assertThat(fullV).isEqualTo(startingV)
-        val halfSize = full.finalize()
-        var countSplits = 0
-        halfSize.forEach {
-            if ( it is Asteroid) {
-                countSplits += 1
-                val halfV = it.velocity
-                assertThat(halfV.length).isEqualTo(U.ASTEROID_SPEED, within(1.0))
-                assertThat(halfV).isNotEqualTo(startingV)
-            }
-        }
-        assertThat(countSplits).describedAs("always two there are").isEqualTo(2)
-    }
-
-    @Test
-    fun `ships do not split on finalize`() {
-        val ship = Ship(
-            position = Vector2(100.0, 100.0)
-        )
-        val didShipSplit = ship.finalize()
-        assertThat(didShipSplit).isEmpty()
+        val half = full.asSplit()
+        assertThat(half.velocity.length).isEqualTo(U.ASTEROID_SPEED, within(1.0))
+        assertThat(half.velocity).isNotEqualTo(full.velocity)
     }
 }

@@ -30,9 +30,8 @@ class SpaceObjectCollection {
         return pairs
     }
 
-    fun removeAndFinalizeAll(moribund: Set<ISpaceObject>): Boolean {
-        moribund.forEach { spaceObjects += it.finalize() }
-        return spaceObjects.removeAll(moribund)
+    fun removeAndFinalizeAll(moribund: Set<ISpaceObject>) {
+        spaceObjects.removeAll(moribund)
     }
 
     val size get() = spaceObjects.size
