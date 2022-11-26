@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 
 class ShipDestroyer() : ISpaceObject, InteractingSpaceObject {
+
     override val interactions: Interactions = Interactions(
         interactWithShip = { _, trans ->
             trans.remove(this)
