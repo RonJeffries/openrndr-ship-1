@@ -8,15 +8,14 @@ class Missile(
     ship: Ship,
 ): ISpaceObject, InteractingSpaceObject {
     var position: Point
-    val velocity: Velocity
     val killRadius = 10.0
-    var elapsedTime: Double = 0.0
-    val lifetime: Double = 3.0
+    private val velocity: Velocity
+    private var elapsedTime: Double = 0.0
+    private val lifetime: Double = 3.0
 
     init {
-        val missileKillRadius = 10.0
         val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
-        val standardOffset = Point(2 * (ship.killRadius + missileKillRadius), 0.0)
+        val standardOffset = Point(2 * (ship.killRadius + killRadius), 0.0)
         val rotatedOffset = standardOffset.rotate(ship.heading)
         position = ship.position + rotatedOffset
         velocity = ship.velocity + missileOwnVelocity
