@@ -11,7 +11,8 @@ class Asteroid(
     val killRadius: Double = 500.0,
     private val splitCount: Int = 2
 ) : ISpaceObject, InteractingSpaceObject {
-    private val view = AsteroidView()
+    private val rock = myRock()
+
 
     override fun update(deltaTime: Double, trans: Transaction) {
         position = (position + velocity * deltaTime).cap()
@@ -20,7 +21,17 @@ class Asteroid(
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
-        view.draw(this, drawer)
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.strokeWeight = 16.0
+        drawer.fill = null
+        val sizer = 30.0
+        drawer.scale(sizer, sizer)
+        val sc = scale()
+        drawer.scale(sc, sc)
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.strokeWeight = 8.0 / 30.0 / sc
+        drawer.scale(1.0, -1.0)
+        drawer.lineStrip(rock)
     }
 
     override fun finalize(): List<ISpaceObject> {
@@ -52,7 +63,7 @@ class Asteroid(
         return Score(score)
     }
 
-    fun scale() =2.0.pow(splitCount)
+    fun scale() = 2.0.pow(splitCount)
 
     private fun weAreCollidingWith(missile: Missile): Boolean {
         return position.distanceTo(missile.position) < killRadius + missile.killRadius
@@ -77,6 +88,69 @@ class Asteroid(
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithAsteroid(this, trans)
+    }
+
+    companion object {
+        val rock0 = listOf(
+            Point(4.0, 2.0),
+            Point(3.0, 0.0),
+            Point(4.0, -2.0),
+            Point(1.0, -4.0),
+            Point(-2.0, -4.0),
+            Point(-4.0, -2.0),
+            Point(-4.0, 2.0),
+            Point(-2.0, 4.0),
+            Point(0.0, 2.0),
+            Point(2.0, 4.0),
+            Point(4.0, 2.0),
+        )
+        val rock1 = listOf(
+            Point(2.0, 1.0),
+            Point(4.0, 2.0),
+            Point(2.0, 4.0),
+            Point(0.0, 3.0),
+            Point(-2.0, 4.0),
+            Point(-4.0, 2.0),
+            Point(-3.0, 0.0),
+            Point(-4.0, -2.0),
+            Point(-2.0, -4.0),
+            Point(-1.0, -3.0),
+            Point(2.0, -4.0),
+            Point(4.0, -1.0),
+            Point(2.0, 1.0)
+        )
+        val rock2 = listOf(
+            Point(-2.0, 0.0),
+            Point(-4.0, -1.0),
+            Point(-2.0, -4.0),
+            Point(0.0, -1.0),
+            Point(0.0, -4.0),
+            Point(2.0, -4.0),
+            Point(4.0, -1.0),
+            Point(4.0, 1.0),
+            Point(2.0, 4.0),
+            Point(-1.0, 4.0),
+            Point(-4.0, 1.0),
+            Point(-2.0, 0.0)
+        )
+
+        val rock3 = listOf(
+            Point(1.0, 0.0),
+            Point(4.0, 1.0),
+            Point(4.0, 2.0),
+            Point(1.0, 4.0),
+            Point(-2.0, 4.0),
+            Point(-1.0, 2.0),
+            Point(-4.0, 2.0),
+            Point(-4.0, -1.0),
+            Point(-2.0, -4.0),
+            Point(1.0, -3.0),
+            Point(2.0, -4.0),
+            Point(4.0, -2.0),
+            Point(1.0, 0.0)
+        )
+
+        fun myRock() = listOf(rock0, rock1, rock2, rock3).random()
     }
 
 }
