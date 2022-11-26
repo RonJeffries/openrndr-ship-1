@@ -49,10 +49,9 @@ class Ship(
         interactWithAsteroid = { asteroid, trans ->
             if (weAreInRange(asteroid)) trans.remove(this) },
         interactWithShipDestroyer = { _, trans ->
-            if (this.isShip()) trans.remove(this)}
+            trans.remove(this)
+        }
     )
-
-    private fun isShip(): Boolean = this.killRadius == 150.0
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithShip(this, trans)
