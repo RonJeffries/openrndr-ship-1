@@ -29,7 +29,10 @@ class Game {
     }
 
     private fun newShip(controls: Controls): Ship {
-        return  Ship.ship(U.CENTER_OF_UNIVERSE, controls)
+        return Ship(
+            position = U.CENTER_OF_UNIVERSE,
+            controls = controls
+        )
     }
 
     fun cycle(drawer: Drawer, seconds: Double) {

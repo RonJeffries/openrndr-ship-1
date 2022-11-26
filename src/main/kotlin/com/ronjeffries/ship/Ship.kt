@@ -69,13 +69,4 @@ class Ship(
     override fun beforeInteractions() {}
     override fun afterInteractions(trans: Transaction) {}
 
-    companion object {
-        fun ship(pos: Point, control: Controls = Controls(), killRadius: Double = 150.0): Ship {
-            return Ship(
-                position = pos,
-                controls = control,
-                killRadius = killRadius
-            )
-        }
-    }
 }
