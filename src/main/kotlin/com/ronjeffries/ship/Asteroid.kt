@@ -9,7 +9,7 @@ class Asteroid(
     var position: Point,
     val velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
     val killRadius: Double = 500.0,
-    val splitCount: Int = 2
+    private val splitCount: Int = 2
 ) : ISpaceObject, InteractingSpaceObject {
     private val view = AsteroidView()
 
@@ -38,12 +38,9 @@ class Asteroid(
     }
 
     private fun asSplit(asteroid: Asteroid): Asteroid {
-        val newKr = asteroid.killRadius / 2.0
-        val newVel = asteroid.velocity.rotate(Math.random() * 360.0)
         return Asteroid(
             position = asteroid.position,
-            velocity = newVel,
-            killRadius = newKr,
+            killRadius = asteroid.killRadius / 2.0,
             splitCount = splitCount - 1
         )
     }

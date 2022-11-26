@@ -38,13 +38,13 @@ class AsteroidTest {
 
     @Test
     fun `new split asteroids get new directions`() {
-        val startingV = Vector2(100.0,0.0)
+        val startingV = Vector2(U.ASTEROID_SPEED,0.0)
         val full = Asteroid(
             position = Vector2.ZERO,
             velocity = startingV
         )
         val fullV = full.velocity
-        assertThat(fullV.length).isEqualTo(100.0, within(1.0))
+        assertThat(fullV.length).isEqualTo(U.ASTEROID_SPEED, within(1.0))
         assertThat(fullV).isEqualTo(startingV)
         val halfSize = full.finalize()
         var countSplits = 0
@@ -52,7 +52,7 @@ class AsteroidTest {
             if ( it is Asteroid) {
                 countSplits += 1
                 val halfV = it.velocity
-                assertThat(halfV.length).isEqualTo(100.0, within(1.0))
+                assertThat(halfV.length).isEqualTo(U.ASTEROID_SPEED, within(1.0))
                 assertThat(halfV).isNotEqualTo(startingV)
             }
         }
