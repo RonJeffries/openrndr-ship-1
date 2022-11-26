@@ -17,8 +17,6 @@ class Asteroid(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun afterInteractions(trans: Transaction) { }
-
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)

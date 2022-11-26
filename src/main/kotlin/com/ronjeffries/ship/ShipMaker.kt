@@ -15,12 +15,6 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
         return ship.position.distanceTo(asteroid.position) < U.SAFE_SHIP_DISTANCE
     }
 
-    override fun afterInteractions(trans: Transaction) {
-        if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
-            replaceTheShip(trans)
-        }
-    }
-
     private fun replaceTheShip(trans: Transaction) {
         trans.add(ship)
         trans.add(ShipChecker(ship))
@@ -41,6 +35,11 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
             asteroidTally += 1
             safeToEmerge = safeToEmerge && !tooClose(asteroid)
         },
+        afterInteractions = { trans->
+            if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
+                replaceTheShip(trans)
+            }
+        }
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {

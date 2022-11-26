@@ -19,8 +19,6 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
 
     override fun update(deltaTime: Double, trans: Transaction) {}
 
-    override fun afterInteractions(trans: Transaction) {}
-
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
     override fun draw(drawer: Drawer) {

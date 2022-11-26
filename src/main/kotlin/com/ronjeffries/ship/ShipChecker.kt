@@ -7,14 +7,6 @@ class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
-
-    override fun afterInteractions(trans: Transaction) {
-        if ( missingShip ) {
-            trans.add(ShipMaker(ship))
-            trans.remove(this)
-        }
-    }
-
     override fun draw(drawer: Drawer) {}
     override fun update(deltaTime: Double, trans: Transaction) {}
 
@@ -24,6 +16,12 @@ class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
         },
         interactWithShip = { solid, _ ->
             if ( solid == ship ) missingShip = false
+        },
+        afterInteractions = { trans ->
+            if (missingShip ) {
+                trans.add(ShipMaker(ship))
+                trans.remove(this)
+            }
         }
     )
 

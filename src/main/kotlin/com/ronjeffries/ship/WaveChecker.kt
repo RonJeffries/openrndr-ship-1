@@ -8,7 +8,18 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
-    override fun afterInteractions(trans: Transaction) {
+    override fun draw(drawer: Drawer) {}
+    override fun update(deltaTime: Double, trans: Transaction) {
+        elapsedTime += deltaTime
+    }
+
+    override val interactions: Interactions = Interactions (
+        beforeInteractions = { sawAsteroid = false},
+        interactWithAsteroid = { _, _ -> sawAsteroid = true },
+        afterInteractions = this::makeWaveInDueTime
+    )
+
+    private fun makeWaveInDueTime(trans: Transaction) {
         if ( elapsedTime > 1.0  ) {
             elapsedTime = 0.0
             if (!sawAsteroid) {
@@ -17,16 +28,6 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
             }
         }
     }
-
-    override fun draw(drawer: Drawer) {}
-    override fun update(deltaTime: Double, trans: Transaction) {
-        elapsedTime += deltaTime
-    }
-
-    override val interactions: Interactions = Interactions (
-        beforeInteractions = { sawAsteroid = false},
-        interactWithAsteroid = { _, _ -> sawAsteroid = true }
-    )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         // no op

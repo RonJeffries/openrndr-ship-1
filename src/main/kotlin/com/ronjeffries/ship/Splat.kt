@@ -18,8 +18,6 @@ class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
         if (elapsedTime > lifetime) trans.remove(this)
     }
 
-    override fun afterInteractions(trans: Transaction) {}
-
     override fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)

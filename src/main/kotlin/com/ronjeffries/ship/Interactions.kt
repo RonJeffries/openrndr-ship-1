@@ -2,6 +2,7 @@ package com.ronjeffries.ship
 
 class Interactions(
     val beforeInteractions: () -> Unit = {},
+    val afterInteractions: (trans: Transaction) -> Unit = {_ -> },
     val interactWithScore: (score: Score, trans: Transaction) -> Unit = { _, _, -> },
     val interactWithShip: (ship: Ship, trans: Transaction) -> Unit = { _, _, -> },
     val interactWithMissile: (missile: Missile, trans: Transaction) -> Unit = { _, _, -> },

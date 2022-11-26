@@ -29,8 +29,6 @@ class Missile(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun afterInteractions(trans: Transaction) {}
-
     private fun weAreInRange(asteroid: Asteroid): Boolean
     = position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
 

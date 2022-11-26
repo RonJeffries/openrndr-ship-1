@@ -52,7 +52,7 @@ class Game {
     private fun finishInteractions() {
         val buffer = Transaction()
         knownObjects.forEach {
-            it.afterInteractions(buffer)
+            it.interactions.afterInteractions(buffer)
         }
         knownObjects.applyChanges(buffer)
     }
