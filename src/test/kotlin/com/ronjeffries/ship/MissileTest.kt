@@ -9,11 +9,12 @@ class MissileTest {
     val transaction = Transaction()
 
     @Test
-    fun `dies after three seconds`() {
+    fun `dies after three seconds and adds Splat`() {
         missile.update(0.1, transaction)
         assertThat(transaction.removes).isEmpty()
         missile.update(3.1, transaction)
         assertThat(transaction.removes).containsExactly(missile)
+        assertThat(transaction.adds.size).isEqualTo(1)
     }
 
 

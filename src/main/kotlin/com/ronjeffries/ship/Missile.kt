@@ -24,6 +24,7 @@ class Missile(
         elapsedTime += deltaTime
         if (elapsedTime > lifetime) {
             trans.remove(this)
+            trans.add(Splat(this))
         }
         position = (position + velocity * deltaTime).cap()
     }
