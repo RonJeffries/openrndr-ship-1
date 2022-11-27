@@ -5,15 +5,23 @@ class Transaction {
     val typedAdds = TypedObjects()
     val typedRemoves = TypedObjects()
 
-    val adds = mutableSetOf<ISpaceObject>()
-    val removes = mutableSetOf<ISpaceObject>()
+    val adds get() = typedAdds.all
+    val removes get() = typedRemoves.all
     var score = 0
 
     fun add(spaceObject: ISpaceObject) {
-        adds.add(spaceObject)
+        typedAdds.add(spaceObject)
+    }
+
+    fun add(splat: Splat) {
+        typedAdds.add(splat)
     }
 
     fun remove(spaceObject: ISpaceObject) {
-        removes.add(spaceObject)
+        typedRemoves.add(spaceObject)
+    }
+
+    fun remove(splat: Splat) {
+        typedRemoves.add(splat)
     }
 }
