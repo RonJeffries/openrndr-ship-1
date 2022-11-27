@@ -34,10 +34,10 @@ class Transaction {
     }
 
     fun remove(asteroid: Asteroid) {
-        typedRemoves.remove(asteroid)
+        typedRemoves.add(asteroid)
     }
 
-    fun remove(missile:Missile) {
-        typedRemoves.remove(missile)
+    fun remove(missile: Missile) {
+        typedRemoves.add(missile)
     }
 }
