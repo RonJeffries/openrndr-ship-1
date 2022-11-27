@@ -1,20 +1,15 @@
 package com.ronjeffries.ship
 
 class SpaceObjectCollection {
-    val spaceObjects = mutableListOf<ISpaceObject>()
+    val spaceObjects get() = typedObjects.all.toList()
+    val typedObjects = TypedObjects()
     var totalScore = 0
 
-    fun add(spaceObject: ISpaceObject) {
-        spaceObjects.add(spaceObject)
-    }
-
-    fun addAll(newbies: Collection<ISpaceObject>) {
-        spaceObjects.addAll(newbies)
-    }
-
     fun applyChanges(transaction: Transaction) {
-        spaceObjects.removeAll(transaction.removes)
-        addAll(transaction.adds)
+        transaction.typedRemoves.splats.forEach { typedObjects.remove(it) }
+        transaction.typedRemoves.others.forEach { typedObjects.remove(it) }
+        transaction.typedAdds.splats.forEach { typedObjects.add(it) }
+        transaction.typedAdds.others.forEach { typedObjects.add(it)}
         totalScore += transaction.score
     }
 

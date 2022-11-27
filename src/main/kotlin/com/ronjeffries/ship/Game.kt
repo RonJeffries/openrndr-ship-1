@@ -8,8 +8,6 @@ class Game {
     val knownObjects = SpaceObjectCollection()
     private var lastTime = 0.0
 
-    fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
-
     fun processInteractions() {
         val trans = Transaction()
         knownObjects.pairsToCheck().forEach { p ->
@@ -20,10 +18,12 @@ class Game {
     }
 
     fun createContents(controls: Controls) {
+        val start = Transaction()
         val ship = newShip(controls)
-        add(ship)
-        add(ShipChecker(ship))
-        add(WaveChecker())
+        start.add(ship)
+        start.add(ShipChecker(ship))
+        start.add(WaveChecker())
+        knownObjects.applyChanges(start)
     }
 
     private fun newShip(controls: Controls): Ship {
