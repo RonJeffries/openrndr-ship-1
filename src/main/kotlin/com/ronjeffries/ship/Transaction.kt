@@ -17,11 +17,27 @@ class Transaction {
         typedAdds.add(splat)
     }
 
+    fun add(asteroid: Asteroid) {
+        typedAdds.add(asteroid)
+    }
+
+    fun add(missile: Missile) {
+        typedAdds.add(missile)
+    }
+
     fun remove(spaceObject: ISpaceObject) {
         typedRemoves.add(spaceObject)
     }
 
     fun remove(splat: Splat) {
         typedRemoves.add(splat)
+    }
+
+    fun remove(asteroid: Asteroid) {
+        typedRemoves.remove(asteroid)
+    }
+
+    fun remove(missile:Missile) {
+        typedRemoves.remove(missile)
     }
 }

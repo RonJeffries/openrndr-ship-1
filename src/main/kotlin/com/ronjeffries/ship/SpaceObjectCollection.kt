@@ -6,12 +6,15 @@ class SpaceObjectCollection {
     var totalScore = 0
 
     fun applyChanges(transaction: Transaction) {
+        transaction.typedRemoves.missiles.forEach { typedObjects.remove(it) }
         transaction.typedRemoves.asteroids.forEach { typedObjects.remove(it) }
         transaction.typedRemoves.splats.forEach { typedObjects.remove(it) }
         transaction.typedRemoves.others.forEach { typedObjects.remove(it) }
+
+        transaction.typedAdds.missiles.forEach { typedObjects.add(it) }
+        transaction.typedAdds.asteroids.forEach { typedObjects.add(it) }
         transaction.typedAdds.splats.forEach { typedObjects.add(it) }
         transaction.typedAdds.others.forEach { typedObjects.add(it) }
-        transaction.typedAdds.asteroids.forEach { typedObjects.add(it) }
         totalScore += transaction.score
     }
 
