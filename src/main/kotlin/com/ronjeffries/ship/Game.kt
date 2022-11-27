@@ -57,7 +57,7 @@ class Game {
         knownObjects.applyChanges(buffer)
     }
 
-    private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.draw(drawer) } }
+    private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.subscriptions.draw(drawer) } }
 
     fun processInteractions() {
         val toBeRemoved = removalsDueToInteraction()

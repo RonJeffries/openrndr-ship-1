@@ -18,7 +18,7 @@ class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
         if (elapsedTime > lifetime) trans.remove(this)
     }
 
-    override fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
@@ -28,6 +28,6 @@ class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
         return emptyList()
     }
 
-    override val subscriptions = Subscriptions()
+    override val subscriptions = Subscriptions(draw = this::draw)
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 }

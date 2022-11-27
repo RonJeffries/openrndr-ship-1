@@ -19,7 +19,7 @@ class Asteroid(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         view.draw(this, drawer)
@@ -74,7 +74,8 @@ class Asteroid(
             if (weAreCollidingWith(ship)) {
                 trans.remove(this)
             }
-        }
+        },
+        draw = this::draw
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {

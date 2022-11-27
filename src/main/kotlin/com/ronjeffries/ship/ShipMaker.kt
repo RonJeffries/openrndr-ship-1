@@ -1,7 +1,5 @@
 package com.ronjeffries.ship
 
-import org.openrndr.draw.Drawer
-
 class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     var safeToEmerge = true
     var asteroidTally = 0
@@ -23,8 +21,6 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     }
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
-
-    override fun draw(drawer: Drawer) {}
 
     override val subscriptions = Subscriptions (
         beforeInteractions = {

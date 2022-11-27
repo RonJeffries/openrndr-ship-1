@@ -1,7 +1,5 @@
 package com.ronjeffries.ship
 
-import org.openrndr.draw.Drawer
-
 class ShipDestroyer() : ISpaceObject, InteractingSpaceObject {
 
     override val subscriptions = Subscriptions(
@@ -14,6 +12,5 @@ class ShipDestroyer() : ISpaceObject, InteractingSpaceObject {
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {}
-    override fun draw(drawer: Drawer) {}
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 }

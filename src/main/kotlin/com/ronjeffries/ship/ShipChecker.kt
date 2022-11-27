@@ -1,13 +1,10 @@
 package com.ronjeffries.ship
 
-import org.openrndr.draw.Drawer
-
 class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     private var missingShip = true
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
-    override fun draw(drawer: Drawer) {}
     override fun update(deltaTime: Double, trans: Transaction) {}
 
     override val subscriptions = Subscriptions(

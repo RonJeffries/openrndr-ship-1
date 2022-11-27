@@ -32,7 +32,7 @@ class Missile(
     private fun weAreInRange(asteroid: Asteroid): Boolean
     = position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
 
-    override fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         drawer.stroke = ColorRGBa.WHITE
@@ -49,7 +49,8 @@ class Missile(
             if (weAreInRange(asteroid)) {
                 trans.remove(this)
             }
-        }
+        },
+        draw = this::draw
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {

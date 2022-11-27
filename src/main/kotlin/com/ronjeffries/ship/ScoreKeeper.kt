@@ -10,7 +10,8 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
         interactWithScore = { score, trans ->
             totalScore += score.score
             trans.remove(score)
-        }
+        },
+        draw = this::draw
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
@@ -21,7 +22,7 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
-    override fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         drawer.translate(100.0, 500.0)
         drawer.stroke = ColorRGBa.GREEN
         drawer.fill = ColorRGBa.GREEN
