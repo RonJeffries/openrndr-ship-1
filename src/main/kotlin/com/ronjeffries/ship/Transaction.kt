@@ -1,6 +1,10 @@
 package com.ronjeffries.ship
 
 class Transaction {
+
+    val typedAdds = TypedObjects()
+    val typedRemoves = TypedObjects()
+
     val adds = mutableSetOf<ISpaceObject>()
     val removes = mutableSetOf<ISpaceObject>()
     var score = 0
@@ -11,9 +15,5 @@ class Transaction {
 
     fun remove(spaceObject: ISpaceObject) {
         removes.add(spaceObject)
-    }
-
-    fun firstRemove(): ISpaceObject {
-        return removes.toList()[0]
     }
 }
