@@ -7,15 +7,12 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
     var totalScore = 0
 
     override val subscriptions = Subscriptions(
-        interactWithScore = { score, trans ->
-            totalScore += score.score
-            trans.remove(score)
-        },
+        interactWithScore = { score, trans -> totalScore += score.score },
         draw = this::draw
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        // try not doing anything
+        other.subscriptions.interactWithScoreKeeper(this, trans)
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {}
