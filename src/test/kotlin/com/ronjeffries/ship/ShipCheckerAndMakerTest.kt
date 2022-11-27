@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ShipCheckerAndMakerTest {
@@ -90,7 +90,7 @@ class ShipCheckerAndMakerTest {
         maker.interactions.afterInteractions(trans)
         assertThat(trans.adds.size).isEqualTo(2)
         assertThat(trans.adds).contains(ship)
-        assertThat(trans.firstRemove()).isEqualTo(maker)
+        assertThat(trans.removes.first()).isEqualTo(maker)
     }
 
     @Test
@@ -116,7 +116,7 @@ class ShipCheckerAndMakerTest {
         maker.interactions.afterInteractions(trans)
         assertThat(trans.adds.size).isEqualTo(2)
         assertThat(trans.adds).contains(ship)
-        assertThat(trans.firstRemove()).isEqualTo(maker)
+        assertThat(trans.removes.first()).isEqualTo(maker)
         assertThat(ship.velocity).isEqualTo(Velocity.ZERO)
         assertThat(ship.heading).isEqualTo(0.0)
     }
