@@ -15,21 +15,26 @@ class TransactionTest {
         assertThat(gameState.totalScore).isEqualTo(100)
     }
 
-    // TODO: Make sure these cases are covered
-//    @Test
-//    fun `transaction can add and remove`() {
-//        val coll = SpaceObjectCollection()
-//        val shipOne = Ship(U.randomPoint())
-//        coll.add(shipOne)
-//        val t = Transaction()
-//        val shipTwo = Ship(
-//            position = U.randomPoint()
-//        )
-//        t.add(shipTwo)
-//        t.remove(shipOne)
-//        coll.applyChanges(t)
-//        assertThat(coll.spaceObjects).contains(shipTwo)
-//        assertThat(coll.spaceObjects).doesNotContain(shipOne)
-//        assertThat(coll.size).isEqualTo(1)
-//    }
+    @Test
+    fun `transaction applies adds`() {
+        val asteroid1 = Asteroid(U.randomPoint())
+        transaction.add(asteroid1)
+        val asteroid2 = Asteroid(U.randomPoint())
+        transaction.add(asteroid2)
+        gameState.applyChanges(transaction)
+        assertThat(gameState.typedObjects.all).containsExactlyInAnyOrder(asteroid1,asteroid2)
+    }
+
+    @Test
+    fun `transaction removes`() {
+        val asteroid1 = Asteroid(U.randomPoint())
+        transaction.add(asteroid1)
+        val asteroid2 = Asteroid(U.randomPoint())
+        transaction.add(asteroid2)
+        gameState.applyChanges(transaction)
+        val removal = Transaction()
+        removal.remove(asteroid1)
+        gameState.applyChanges(removal)
+        assertThat(gameState.typedObjects.all).containsExactlyInAnyOrder(asteroid2)
+    }
 }
