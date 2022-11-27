@@ -8,12 +8,8 @@ class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     override fun update(deltaTime: Double, trans: Transaction) {}
 
     override val subscriptions = Subscriptions(
-        beforeInteractions = {
-            missingShip = true
-        },
-        interactWithShip = { solid, _ ->
-            if ( solid == ship ) missingShip = false
-        },
+        beforeInteractions = { missingShip = true },
+        interactWithShip = { _, _ -> missingShip = false },
         afterInteractions = { trans ->
             if ( missingShip ) {
                 trans.add(ShipMaker(ship))
