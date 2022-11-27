@@ -5,24 +5,9 @@ class Transaction {
     val removes = mutableSetOf<ISpaceObject>()
     var score = 0
 
-    fun accumulate(t: Transaction) {
-        t.adds.forEach { add(it) }
-        t.removes.forEach { remove(it) }
-    }
-
     fun add(spaceObject: ISpaceObject) {
         adds.add(spaceObject)
     }
-
-    fun addAll(adds: List<ISpaceObject>) {
-        adds.forEach { add(it) }
-    }
-
-    fun clear() {
-        adds.clear()
-        removes.clear()
-    }
-
 
     fun remove(spaceObject: ISpaceObject) {
         removes.add(spaceObject)
