@@ -6,35 +6,38 @@ import org.junit.jupiter.api.Test
 class TransactionTest {
 
     private val transaction = Transaction()
-    private val gameState = SpaceObjectCollection()
 
     @Test
-    fun `transaction applies score`() {
-        transaction.score += 100
-        gameState.applyChanges(transaction)
-        assertThat(gameState.totalScore).isEqualTo(100)
+    fun `transaction adds sorts types`() {
+        val asteroid = Asteroid(U.randomPoint())
+        val ship = Ship(U.randomPoint())
+        val splat = Splat(ship)
+        val missile = Missile(ship)
+        transaction.add(asteroid)
+        transaction.add(splat)
+        transaction.add(ship)
+        transaction.add(missile)
+        assertThat(transaction.typedAdds.all).containsExactlyInAnyOrder(asteroid, splat, ship, missile)
+        assertThat(transaction.typedAdds.asteroids).containsExactly(asteroid)
+        assertThat(transaction.typedAdds.splats).containsExactly(splat)
+        assertThat(transaction.typedAdds.others).containsExactly(ship)
+        assertThat(transaction.typedAdds.missiles).containsExactly(missile)
     }
 
     @Test
-    fun `transaction applies adds`() {
-        val asteroid1 = Asteroid(U.randomPoint())
-        transaction.add(asteroid1)
-        val asteroid2 = Asteroid(U.randomPoint())
-        transaction.add(asteroid2)
-        gameState.applyChanges(transaction)
-        assertThat(gameState.typedObjects.all).containsExactlyInAnyOrder(asteroid1,asteroid2)
-    }
-
-    @Test
-    fun `transaction removes`() {
-        val asteroid1 = Asteroid(U.randomPoint())
-        transaction.add(asteroid1)
-        val asteroid2 = Asteroid(U.randomPoint())
-        transaction.add(asteroid2)
-        gameState.applyChanges(transaction)
-        val removal = Transaction()
-        removal.remove(asteroid1)
-        gameState.applyChanges(removal)
-        assertThat(gameState.typedObjects.all).containsExactlyInAnyOrder(asteroid2)
+    fun `transaction removes sorts types`() {
+        val asteroid = Asteroid(U.randomPoint())
+        val ship = Ship(U.randomPoint())
+        val splat = Splat(ship)
+        val missile = Missile(ship)
+        transaction.remove(asteroid)
+        transaction.remove(splat)
+        transaction.remove(ship)
+        transaction.remove(missile)
+        assertThat(transaction.typedRemoves.all).containsExactlyInAnyOrder(asteroid, splat, ship, missile)
+        assertThat(transaction.typedRemoves.asteroids).containsExactly(asteroid)
+        assertThat(transaction.typedRemoves.splats).containsExactly(splat)
+        assertThat(transaction.typedRemoves.others).containsExactly(ship)
+        assertThat(transaction.typedRemoves.missiles).containsExactly(missile)
     }
 }

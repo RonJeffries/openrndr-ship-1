@@ -5,17 +5,17 @@ import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 
 
-class Delay(val lifetime:Double,val action: (gameState:SpaceObjectCollection)->Boolean) {
-    private var elapsedTime:Double=0.0
-    fun update(deltaTime: Double,gameState: SpaceObjectCollection):Boolean {
-        elapsedTime+=deltaTime
-        if(elapsedTime>lifetime && action(gameState)) return true
+class Delay(val lifetime: Double, val action: (gameState: GameState) -> Boolean) {
+    private var elapsedTime: Double = 0.0
+    fun update(deltaTime: Double, gameState: GameState): Boolean {
+        elapsedTime += deltaTime
+        if (elapsedTime > lifetime && action(gameState)) return true
         return false
     }
 }
 
 class Game {
-    val knownObjects = SpaceObjectCollection()
+    val knownObjects = GameState()
     private var lastTime = 0.0
 
     fun processInteractions() {

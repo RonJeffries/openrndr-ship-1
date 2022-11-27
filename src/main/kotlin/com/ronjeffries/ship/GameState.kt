@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class SpaceObjectCollection {
+class GameState {
     val spaceObjects get() = typedObjects.all.toList()
     val typedObjects = TypedObjects()
     var totalScore = 0
