@@ -32,12 +32,8 @@ class Ship(
         view.draw(this, drawer)
     }
 
-    private fun weAreCollidingWith(asteroid: Asteroid): Boolean {
-        return position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
-    }
-
-    private fun weAreCollidingWith(saucer: Saucer): Boolean {
-        return position.distanceTo(saucer.position) < killRadius + saucer.killRadius
+    private fun weAreCollidingWith(other: Collider): Boolean {
+        return Collision(other).hit(this)
     }
 
     override fun finalize(): List<ISpaceObject> {
