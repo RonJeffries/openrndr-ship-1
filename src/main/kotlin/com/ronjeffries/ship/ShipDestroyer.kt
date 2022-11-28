@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class ShipDestroyer() : ISpaceObject, InteractingSpaceObject {
+class ShipDestroyer: ISpaceObject, InteractingSpaceObject {
 
     override val subscriptions = Subscriptions(
         interactWithShip = { _, trans -> trans.remove(this) }

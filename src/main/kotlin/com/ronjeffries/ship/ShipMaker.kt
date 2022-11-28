@@ -1,9 +1,9 @@
 package com.ronjeffries.ship
 
 class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
-    var safeToEmerge = true
+    private var safeToEmerge = true
     var asteroidTally = 0
-    var elapsedTime = 0.0
+    private var elapsedTime = 0.0
 
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime

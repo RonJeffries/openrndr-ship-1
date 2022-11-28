@@ -1,7 +1,7 @@
 package com.ronjeffries.ship
 
 class WaveChecker: ISpaceObject, InteractingSpaceObject {
-    var sawAsteroid = false
+    private var sawAsteroid = false
     var elapsedTime = 0.0
 
     override fun finalize(): List<ISpaceObject> { return emptyList() }

@@ -11,7 +11,7 @@ class Ship(
 ) : ISpaceObject, InteractingSpaceObject, Collider {
     var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
-    val view = ShipView()
+    private val view = ShipView()
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->

@@ -1,8 +1,8 @@
 package com.ronjeffries.ship
 
-class WaveMaker(val numberToCreate: Int = 8): ISpaceObject, InteractingSpaceObject {
+class WaveMaker(private val numberToCreate: Int = 8): ISpaceObject, InteractingSpaceObject {
 
-    var elapsedTime = 0.0
+    private var elapsedTime = 0.0
 
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime

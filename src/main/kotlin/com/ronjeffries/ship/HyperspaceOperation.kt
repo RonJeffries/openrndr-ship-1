@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 import kotlin.random.Random
 
-class HyperspaceOperation(val ship: Ship, val asteroidTally: Int) {
+class HyperspaceOperation(val ship: Ship, private val asteroidTally: Int) {
     fun execute(trans: Transaction) {
         if (hyperspaceFails()) {
             destroyTheShip(trans)

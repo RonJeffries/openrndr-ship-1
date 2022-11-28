@@ -10,7 +10,7 @@ class Missile(
     shipKillRadius: Double = 100.0,
     shipVelocity: Velocity = Velocity.ZERO
 ): ISpaceObject, InteractingSpaceObject, Collider {
-    constructor(ship: Ship): this(ship.position, ship.heading, ship.killRadius, ship.velocity){}
+    constructor(ship: Ship): this(ship.position, ship.heading, ship.killRadius, ship.velocity)
 
     override var position: Point = Point.ZERO
     var velocity: Velocity = Velocity.ZERO

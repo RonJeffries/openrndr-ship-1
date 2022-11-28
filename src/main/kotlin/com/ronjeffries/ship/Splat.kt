@@ -10,8 +10,8 @@ class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
     constructor(missile: Missile) : this(missile.position)
 
     var elapsedTime = 0.0
-    val lifetime = 2.0
-    var view = SplatView(2.0)
+    private val lifetime = 2.0
+    private var view = SplatView(2.0)
 
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime

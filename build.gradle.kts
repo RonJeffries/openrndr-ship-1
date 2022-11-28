@@ -209,14 +209,14 @@ tasks.register<org.openrndr.extra.gitarchiver.GitArchiveToMarkdown>("gitArchiveT
 // ------------------------------------------------------------------------------------------------------------------ //
 
 class Openrndr {
-    val openrndrVersion = libs.versions.openrndr.get()
-    val orxVersion = libs.versions.orx.get()
-    val ormlVersion = libs.versions.orml.get()
+    private val openrndrVersion = libs.versions.openrndr.get()
+    private val orxVersion = libs.versions.orx.get()
+    private val ormlVersion = libs.versions.orml.get()
 
     // choices are "orx-tensorflow-gpu", "orx-tensorflow"
-    val orxTensorflowBackend = "orx-tensorflow"
+    private val orxTensorflowBackend = "orx-tensorflow"
 
-    val os = if (project.hasProperty("targetPlatform")) {
+    private val os = if (project.hasProperty("targetPlatform")) {
         val supportedPlatforms = setOf("windows", "macos", "linux-x64", "linux-arm64")
         val platform: String = project.property("targetPlatform") as String
         if (platform !in supportedPlatforms) {
@@ -238,11 +238,11 @@ class Openrndr {
         else -> throw IllegalArgumentException("os not supported")
     }
 
-    fun orx(module: String) = "org.openrndr.extra:$module:$orxVersion"
-    fun orml(module: String) = "org.openrndr.orml:$module:$ormlVersion"
-    fun openrndr(module: String) = "org.openrndr:openrndr-$module:$openrndrVersion"
-    fun openrndrNatives(module: String) = "org.openrndr:openrndr-$module-natives-$os:$openrndrVersion"
-    fun orxNatives(module: String) = "org.openrndr.extra:$module-natives-$os:$orxVersion"
+    private fun orx(module: String) = "org.openrndr.extra:$module:$orxVersion"
+    private fun orml(module: String) = "org.openrndr.orml:$module:$ormlVersion"
+    private fun openrndr(module: String) = "org.openrndr:openrndr-$module:$openrndrVersion"
+    private fun openrndrNatives(module: String) = "org.openrndr:openrndr-$module-natives-$os:$openrndrVersion"
+    private fun orxNatives(module: String) = "org.openrndr.extra:$module-natives-$os:$orxVersion"
 
     init {
         repositories {

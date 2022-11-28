@@ -4,15 +4,15 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import kotlin.random.Random
 
-class Saucer(): ISpaceObject, InteractingSpaceObject, Collider {
+class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     override var position = Point(0.0, Random.nextDouble(U.UNIVERSE_SIZE))
     override val killRadius = 100.0
-    var direction = -1.0 // right to left, will invert on `wakeUp`
+    private var direction = -1.0 // right to left, will invert on `wakeUp`
     var velocity = Velocity.ZERO
-    val directions = listOf(Velocity(1.0,0.0), Velocity(0.7071,0.7071), Velocity(0.7071, -0.7071))
-    val speed = 1500.0
-    var elapsedTime = 0.0
-    val points = listOf(
+    private val directions = listOf(Velocity(1.0,0.0), Velocity(0.7071,0.7071), Velocity(0.7071, -0.7071))
+    private val speed = 1500.0
+    private var elapsedTime = 0.0
+    private val points = listOf(
         Point(-2.0, 1.0),
         Point(2.0, 1.0),
         Point(5.0, -1.0),
