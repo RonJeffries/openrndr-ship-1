@@ -59,4 +59,16 @@ class SaucerTest {
         assertThat(trans.removes).contains(asteroid)
     }
 
+    @Test
+    fun `asteroid asteroid collision`() {
+        val asteroid = Asteroid(Point.ZERO)
+        asteroid.position = Point(249.0, 0.0)
+        val asteroid2 = Asteroid(Point.ZERO)
+        asteroid2.position = asteroid.position
+        val trans = Transaction()
+        asteroid2.subscriptions.interactWithAsteroid(asteroid, trans)
+        asteroid.subscriptions.interactWithAsteroid(asteroid2, trans)
+        assertThat(trans.removes).isEmpty()
+    }
+
 }

@@ -56,36 +56,22 @@ class Asteroid(
 
     fun scale() =2.0.pow(splitCount)
 
-    private fun weAreCollidingWith(missile: Missile): Boolean {
-        return position.distanceTo(missile.position) < killRadius + missile.killRadius
-    }
-
-    private fun weAreCollidingWith(ship: Ship): Boolean {
-        return position.distanceTo(ship.position) < killRadius + ship.killRadius
-    }
-
-    private fun weAreCollidingWith(saucer: Saucer): Boolean {
-        return position.distanceTo(saucer.position) < killRadius + saucer.killRadius
-    }
-
     override val subscriptions = Subscriptions(
         interactWithMissile = { missile, trans ->
-            if (weAreCollidingWith(missile)) {
-                trans.remove(this)
-            }
+            if (checkCollision(missile)) trans.remove(this)
         },
         interactWithShip = { ship, trans ->
-            if (weAreCollidingWith(ship)) {
-                trans.remove(this)
-            }
+            if (checkCollision(ship)) trans.remove(this)
         },
         interactWithSaucer = { saucer, trans ->
-            if (weAreCollidingWith(saucer)) {
-                trans.remove(this)
-            }
+            if (checkCollision(saucer)) trans.remove(this)
         },
         draw = this::draw
     )
+
+    private fun checkCollision(other: Collider): Boolean {
+        return Collision(other).hit(this)
+    }
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.subscriptions.interactWithAsteroid(this, trans)
