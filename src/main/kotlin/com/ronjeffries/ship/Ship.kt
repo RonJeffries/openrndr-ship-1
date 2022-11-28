@@ -5,10 +5,10 @@ import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Ship(
-    var position: Point,
+    override var position: Point,
     val controls: Controls = Controls(),
-    val killRadius: Double = 150.0
-) : ISpaceObject, InteractingSpaceObject {
+    override val killRadius: Double = 150.0
+) : ISpaceObject, InteractingSpaceObject, Collider {
     var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
     val view = ShipView()

@@ -2,15 +2,14 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import kotlin.random.Random
 
-class Saucer(): ISpaceObject, InteractingSpaceObject {
-    var position = Point(0.0, Random.nextDouble(U.UNIVERSE_SIZE))
+class Saucer(): ISpaceObject, InteractingSpaceObject, Collider {
+    override var position = Point(0.0, Random.nextDouble(U.UNIVERSE_SIZE))
+    override val killRadius = 100.0
     var direction = -1.0 // right to left, will invert on `wakeUp`
     var velocity = Velocity.ZERO
     val directions = listOf(Velocity(1.0,0.0), Velocity(0.7071,0.7071), Velocity(0.7071, -0.7071))
-    val killRadius = 100.0
     val speed = 1500.0
     var elapsedTime = 0.0
     val points = listOf(
@@ -32,32 +31,18 @@ class Saucer(): ISpaceObject, InteractingSpaceObject {
     override val subscriptions = Subscriptions(
         draw = this::draw,
         interactWithAsteroid = { asteroid, trans ->
-            if (weAreCollidingWith(asteroid) ) {
-                trans.remove(this)
-            }
+            checkCollision(asteroid, trans)
         },
         interactWithShip = { ship, trans ->
-            if (weAreCollidingWith(ship) ) {
-                trans.remove(this)
-            }
+            checkCollision(ship, trans)
         },
         interactWithMissile = { missile, trans ->
-            if (weAreCollidingWith(missile) ) {
-                trans.remove(this)
-            }
+            checkCollision(missile, trans)
         },
     )
 
-    private fun weAreCollidingWith(asteroid: Asteroid): Boolean {
-        return position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
-    }
-
-    private fun weAreCollidingWith(missile: Missile): Boolean {
-        return position.distanceTo(missile.position) < killRadius + missile.killRadius
-    }
-
-    private fun weAreCollidingWith(ship: Ship): Boolean {
-        return position.distanceTo(ship.position) < killRadius + ship.killRadius
+    private fun checkCollision(asteroid: Collider, trans: Transaction) {
+        if (Collision(asteroid).hit(this)) trans.remove(this)
     }
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {

@@ -7,11 +7,11 @@ import kotlin.math.pow
 import kotlin.random.Random
 
 class Asteroid(
-    var position: Point,
+    override var position: Point,
     val velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
-    val killRadius: Double = 500.0,
+    override val killRadius: Double = 500.0,
     private val splitCount: Int = 2
-) : ISpaceObject, InteractingSpaceObject {
+) : ISpaceObject, InteractingSpaceObject, Collider {
     private val view = AsteroidView()
     val heading: Double = Random.nextDouble(360.0)
 
