@@ -32,8 +32,12 @@ class Ship(
         view.draw(this, drawer)
     }
 
-    private fun weAreInRange(asteroid: Asteroid): Boolean {
+    private fun weAreCollidingWith(asteroid: Asteroid): Boolean {
         return position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
+    }
+
+    private fun weAreCollidingWith(saucer: Saucer): Boolean {
+        return position.distanceTo(saucer.position) < killRadius + saucer.killRadius
     }
 
     override fun finalize(): List<ISpaceObject> {
@@ -53,7 +57,9 @@ class Ship(
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
-            if (weAreInRange(asteroid)) trans.remove(this) },
+            if (weAreCollidingWith(asteroid)) trans.remove(this) },
+        interactWithSaucer = { saucer, trans ->
+            if (weAreCollidingWith(saucer)) trans.remove(this) },
         interactWithShipDestroyer = { _, trans ->
             trans.remove(this)
         },

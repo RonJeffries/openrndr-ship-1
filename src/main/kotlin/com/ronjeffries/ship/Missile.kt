@@ -32,6 +32,9 @@ class Missile(
     private fun weAreInRange(asteroid: Asteroid): Boolean
     = position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
 
+    private fun weAreInRange(saucer: Saucer): Boolean
+            = position.distanceTo(saucer.position) < killRadius + saucer.killRadius
+
     fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
@@ -46,9 +49,10 @@ class Missile(
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
-            if (weAreInRange(asteroid)) {
-                trans.remove(this)
-            }
+            if (weAreInRange(asteroid)) { trans.remove(this) }
+        },
+        interactWithSaucer = { saucer, trans ->
+            if (weAreInRange(saucer)) { trans.remove(this) }
         },
         draw = this::draw
     )

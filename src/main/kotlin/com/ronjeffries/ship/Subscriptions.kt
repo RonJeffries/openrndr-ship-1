@@ -6,6 +6,7 @@ class Subscriptions(
     val beforeInteractions: () -> Unit = {},
 
     val interactWithMissile: (missile: Missile, trans: Transaction) -> Unit = { _, _, -> },
+    val interactWithSaucer: (saucer: Saucer, trans: Transaction) -> Unit = { _, _, -> },
     val interactWithScore: (score: Score, trans: Transaction) -> Unit = { _, _, -> },
     val interactWithScoreKeeper: (keeper: ScoreKeeper, trans: Transaction) -> Unit = { _, _, -> },
     val interactWithShip: (ship: Ship, trans: Transaction) -> Unit = { _, _, -> },

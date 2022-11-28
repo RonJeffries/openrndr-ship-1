@@ -60,8 +60,12 @@ class Asteroid(
         return position.distanceTo(missile.position) < killRadius + missile.killRadius
     }
 
-    private fun weAreCollidingWith(solid: Ship): Boolean {
-        return position.distanceTo(solid.position) < killRadius + solid.killRadius
+    private fun weAreCollidingWith(ship: Ship): Boolean {
+        return position.distanceTo(ship.position) < killRadius + ship.killRadius
+    }
+
+    private fun weAreCollidingWith(saucer: Saucer): Boolean {
+        return position.distanceTo(saucer.position) < killRadius + saucer.killRadius
     }
 
     override val subscriptions = Subscriptions(
@@ -72,6 +76,11 @@ class Asteroid(
         },
         interactWithShip = { ship, trans ->
             if (weAreCollidingWith(ship)) {
+                trans.remove(this)
+            }
+        },
+        interactWithSaucer = { saucer, trans ->
+            if (weAreCollidingWith(saucer)) {
                 trans.remove(this)
             }
         },
