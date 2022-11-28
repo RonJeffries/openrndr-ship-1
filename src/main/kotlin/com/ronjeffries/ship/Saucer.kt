@@ -54,7 +54,7 @@ class Saucer(): ISpaceObject, InteractingSpaceObject, Collider {
         assignVelocity(Velocity(direction, 0.0))
     }
 
-    fun assignVelocity(unitV: Velocity) {
+    private fun assignVelocity(unitV: Velocity) {
         velocity = unitV*speed
     }
 
