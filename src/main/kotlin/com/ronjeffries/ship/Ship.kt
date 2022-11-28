@@ -13,6 +13,21 @@ class Ship(
     var heading: Double = 0.0
     val view = ShipView()
 
+    override val subscriptions = Subscriptions(
+        interactWithAsteroid = { asteroid, trans ->
+            if (weAreCollidingWith(asteroid)) trans.remove(this) },
+        interactWithSaucer = { saucer, trans ->
+            if (weAreCollidingWith(saucer)) trans.remove(this) },
+        interactWithShipDestroyer = { _, trans ->
+            trans.remove(this)
+        },
+        draw = this::draw
+    )
+
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+        other.subscriptions.interactWithShip(this, trans)
+    }
+
     override fun update(deltaTime: Double, trans: Transaction) {
         controls.control(this, deltaTime, trans)
         move(deltaTime)
@@ -22,7 +37,7 @@ class Ship(
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    fun deathDueToCollision(): Boolean {
+    private fun deathDueToCollision(): Boolean {
         return !controls.recentHyperspace
     }
 
@@ -47,23 +62,8 @@ class Ship(
         return emptyList()
     }
 
-    fun move(deltaTime: Double) {
+    private fun move(deltaTime: Double) {
         position = (position + velocity * deltaTime).cap()
-    }
-
-    override val subscriptions = Subscriptions(
-        interactWithAsteroid = { asteroid, trans ->
-            if (weAreCollidingWith(asteroid)) trans.remove(this) },
-        interactWithSaucer = { saucer, trans ->
-            if (weAreCollidingWith(saucer)) trans.remove(this) },
-        interactWithShipDestroyer = { _, trans ->
-            trans.remove(this)
-        },
-        draw = this::draw
-    )
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.subscriptions.interactWithShip(this, trans)
     }
 
     override fun toString(): String {
