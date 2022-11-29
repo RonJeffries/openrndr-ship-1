@@ -23,7 +23,7 @@ class Game {
     fun createContents(controls: Controls) {
         add(ShipChecker(newShip(controls)))
         add(ScoreKeeper())
-//        add(WaveChecker())
+        add(WaveChecker())
         add(SaucerMaker())
     }
 
