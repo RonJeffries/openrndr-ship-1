@@ -3,9 +3,10 @@ package com.ronjeffries.ship
 
 class SaucerMaker(saucer: Saucer): InteractingSpaceObject, ISpaceObject  {
     var sawSaucer: Boolean = false
+    var timeSinceLastSaucer = 0.0
 
     override fun update(deltaTime: Double, trans: Transaction) {
-        TODO("Not yet implemented")
+        timeSinceLastSaucer += deltaTime
     }
 
     override fun finalize(): List<ISpaceObject> {
@@ -14,7 +15,12 @@ class SaucerMaker(saucer: Saucer): InteractingSpaceObject, ISpaceObject  {
 
     override val subscriptions: Subscriptions = Subscriptions(
         beforeInteractions = { sawSaucer = false},
-        interactWithSaucer = { _, _ -> sawSaucer = true },
+        interactWithSaucer = { _, _ ->
+            timeSinceLastSaucer = 0.0
+            sawSaucer = true },
+        afterInteractions = { trans ->
+            if (timeSinceLastSaucer > 7.0) trans.add(saucer)
+        }
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {

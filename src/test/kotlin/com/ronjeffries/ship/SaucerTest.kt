@@ -13,16 +13,30 @@ class SaucerTest {
     @Test
     fun `starts left-right`() {
         val saucer = Saucer()
-        saucer.wakeUp()
         assertThat(saucer.velocity.x).isGreaterThan(0.0)
         assertThat(saucer.velocity.y).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `right left next time`() {
+        val saucer = Saucer()
+        saucer.finalize()
+        assertThat(saucer.velocity.x).isLessThan(0.0)
+        assertThat(saucer.velocity.y).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `direction changes maintain left-right`() {
+        val saucer = Saucer() // left to right
+        saucer.finalize() // right to left
+        saucer.zigZag()
+        assertThat(saucer.velocity.x).isLessThan(0.0)
     }
 
     @Test
     fun `direction changes`() {
         var dir: Velocity
         val saucer = Saucer()
-        saucer.wakeUp()
         dir = saucer.newDirection(1)
         assertThat(dir.x).isEqualTo(0.7071, within(0.0001))
         assertThat(dir.y).isEqualTo(0.7071, within(0.0001))

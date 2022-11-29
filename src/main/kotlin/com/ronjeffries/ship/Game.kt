@@ -24,9 +24,7 @@ class Game {
         add(ShipChecker(newShip(controls)))
         add(ScoreKeeper())
         add(WaveChecker())
-        val saucer = Saucer()
-        saucer.wakeUp()
-        add(saucer)
+        add(SaucerMaker(Saucer()))
     }
 
     private fun newShip(controls: Controls): Ship {
