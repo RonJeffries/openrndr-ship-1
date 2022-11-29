@@ -9,7 +9,7 @@ class Game {
 
     fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
 
-    fun removalsDueToInteraction(): MutableSet<ISpaceObject> {
+    fun changesDueToInteractions(): Transaction {
         val trans = Transaction()
         knownObjects.pairsToCheck().forEach { p ->
             val first = p.first
@@ -17,7 +17,7 @@ class Game {
             first.callOther(second, trans)
             second.callOther(first, trans)
         }
-        return trans.removes
+        return trans
     }
 
     fun createContents(controls: Controls) {
@@ -59,10 +59,7 @@ class Game {
     private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.subscriptions.draw(drawer) } }
 
     fun processInteractions() {
-        val toBeRemoved = removalsDueToInteraction()
-        if ( toBeRemoved.size > 0 ) {
-            knownObjects.removeAndFinalizeAll(toBeRemoved)
-        }
+        knownObjects.applyChanges(changesDueToInteractions())
     }
 
     fun tick(deltaTime: Double) {

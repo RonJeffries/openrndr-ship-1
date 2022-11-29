@@ -14,13 +14,15 @@ class GameTest {
         )
         game.add(asteroid)
         game.add(ship)
-        assertThat(game.removalsDueToInteraction().size).isEqualTo(0)
+        val trans = game.changesDueToInteractions()
+        assertThat(trans.removes.size).isEqualTo(0)
         for (i in 1..12 * 60) game.tick(1.0 / 60.0)
         val x = asteroid.position.x
         val y = asteroid.position.y
         assertThat(x).isEqualTo(100.0 + 12 * 50.0, within(0.1))
         assertThat(y).isEqualTo(100.0 + 12 * 50.0, within(0.1))
-        assertThat(game.removalsDueToInteraction().size).isEqualTo(2)
+        val trans2 = game.changesDueToInteractions()
+        assertThat(trans2.removes.size).isEqualTo(2)
     }
 
     @Test

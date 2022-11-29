@@ -27,8 +27,8 @@ class SpaceObjectCollectionTest {
         )
         game.add(s)
         assertThat(game.knownObjects.size).isEqualTo(2)
-        val colliders = game.removalsDueToInteraction()
-        assertThat(colliders.size).isEqualTo(2)
+        val colliders = game.changesDueToInteractions()
+        assertThat(colliders.removes.size).isEqualTo(2)
     }
 
     @Test
@@ -48,7 +48,7 @@ class SpaceObjectCollectionTest {
         game.add(a3)
         val a4 = Asteroid(p2) // no
         game.add(a4)
-        val colliders = game.removalsDueToInteraction()
-        assertThat(colliders.size).isEqualTo(3)
+        val colliders = game.changesDueToInteractions()
+        assertThat(colliders.removes.size).isEqualTo(3)
     }
 }
