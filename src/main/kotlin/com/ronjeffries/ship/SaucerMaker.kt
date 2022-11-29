@@ -1,7 +1,7 @@
 package com.ronjeffries.ship
 
 
-class SaucerMaker(saucer: Saucer): InteractingSpaceObject, ISpaceObject  {
+class SaucerMaker(saucer: Saucer = Saucer()): InteractingSpaceObject, ISpaceObject  {
     var sawSaucer: Boolean = false
     var timeSinceLastSaucer = 0.0
 
