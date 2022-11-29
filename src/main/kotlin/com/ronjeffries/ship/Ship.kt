@@ -48,9 +48,16 @@ class Ship(
     }
 
     fun draw(drawer: Drawer) {
-        drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
+//        drawKillRadius(drawer)
         view.draw(this, drawer)
+    }
+
+    private fun drawKillRadius(drawer: Drawer) {
+        drawer.stroke = ColorRGBa.RED
+        drawer.strokeWeight = 8.0
+        drawer.fill = null
+        drawer.circle(0.0, 0.0, killRadius)
     }
 
     private fun weAreCollidingWith(other: Collider): Boolean {

@@ -28,7 +28,7 @@ private val Directions = listOf(
 
 class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     override lateinit var position: Point
-    override val killRadius = 100.0
+    override val killRadius = 150.0
 
     private var direction: Double
     lateinit var velocity: Velocity
@@ -94,11 +94,18 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     fun draw(drawer: Drawer) {
         drawer.translate(position)
+//        drawKillRadius(drawer)
         drawer.stroke = ColorRGBa.GREEN
-        drawer.fill = ColorRGBa.GREEN
         val sc = 45.0
         drawer.scale(sc, -sc)
         drawer.strokeWeight = 8.0 / sc
         drawer.lineStrip(SaucerPoints)
+    }
+
+    private fun drawKillRadius(drawer: Drawer) {
+        drawer.stroke = ColorRGBa.RED
+        drawer.strokeWeight = 25.0
+        drawer.fill = null // ColorRGBa.GREEN
+        drawer.circle(0.0, 0.0, killRadius)
     }
 }
