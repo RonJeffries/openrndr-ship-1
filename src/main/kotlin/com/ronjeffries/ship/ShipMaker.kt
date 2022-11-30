@@ -22,7 +22,9 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     }
 
     override fun finalize(): List<ISpaceObject> = emptyList()
-    fun inHyperspace() = ship.position != U.CENTER_OF_UNIVERSE
+
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) =
+        other.subscriptions.interactWithShipMaker(this, trans)
 
     override val subscriptions = Subscriptions (
         beforeInteractions = {
@@ -39,8 +41,5 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
             }
         }
     )
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.subscriptions.interactWithShipMaker(this, trans)
-    }
+    private fun inHyperspace() = ship.position != U.CENTER_OF_UNIVERSE
 }
