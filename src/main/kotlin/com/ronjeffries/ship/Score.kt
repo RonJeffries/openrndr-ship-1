@@ -12,5 +12,4 @@ class Score(val score: Int): ISpaceObject, InteractingSpaceObject {
 
     override fun update(deltaTime: Double, trans: Transaction) { }
     override fun finalize(): List<ISpaceObject> = emptyList()
-
 }

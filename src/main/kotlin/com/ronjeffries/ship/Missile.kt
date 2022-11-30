@@ -10,9 +10,10 @@ class Missile(
     shipHeading: Double = 0.0,
     shipKillRadius: Double = 100.0,
     shipVelocity: Velocity = Velocity.ZERO,
-    val color: ColorRGBa = ColorRGBa.WHITE
+    val color: ColorRGBa = ColorRGBa.WHITE,
+    val missileIsFromShip: Boolean = false
 ): ISpaceObject, InteractingSpaceObject, Collider {
-    constructor(ship: Ship): this(ship.position, ship.heading, ship.killRadius, ship.velocity)
+    constructor(ship: Ship): this(ship.position, ship.heading, ship.killRadius, ship.velocity, ColorRGBa.WHITE, true)
     constructor(saucer: Saucer): this(saucer.position, Random.nextDouble(360.0), saucer.killRadius, saucer.velocity, ColorRGBa.GREEN)
 
     override var position: Point = Point.ZERO
@@ -52,7 +53,10 @@ class Missile(
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
-            if (checkCollision(asteroid)) { trans.remove(this) }
+            if (checkCollision(asteroid)) {
+                trans.remove(this)
+                if (missileIsFromShip) trans.add(asteroid.getScore())
+            }
         },
         interactWithSaucer = { saucer, trans ->
             if (checkCollision(saucer)) { trans.remove(this) }

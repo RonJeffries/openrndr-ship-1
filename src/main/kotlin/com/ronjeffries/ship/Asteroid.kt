@@ -27,8 +27,6 @@ class Asteroid(
 
     override fun finalize(): List<ISpaceObject> {
         val objectsToAdd: MutableList<ISpaceObject> = mutableListOf()
-        val score = getScore()
-        objectsToAdd.add(score)
         if (splitCount >= 1) {
             objectsToAdd.add(asSplit(this))
             objectsToAdd.add(asSplit(this))
@@ -44,7 +42,7 @@ class Asteroid(
         )
     }
 
-    private fun getScore(): Score {
+    fun getScore(): Score {
         val score = when (splitCount) {
             2 -> 20
             1 -> 50
