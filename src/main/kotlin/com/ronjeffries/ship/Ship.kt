@@ -4,12 +4,8 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 
 private val points = listOf(
-    Point(-3.0, -2.0),
-    Point(-3.0, 2.0),
-    Point(-5.0, 4.0),
-    Point(7.0, 0.0),
-    Point(-5.0, -4.0),
-    Point(-3.0, -2.0)
+    Point(-3.0, -2.0), Point(-3.0, 2.0), Point(-5.0, 4.0),
+    Point(7.0, 0.0), Point(-5.0, -4.0), Point(-3.0, -2.0)
 )
 
 class Ship(
@@ -22,18 +18,10 @@ class Ship(
     var dropScale = U.DROP_SCALE
 
     override val subscriptions = Subscriptions(
-        interactWithAsteroid = { asteroid, trans ->
-            checkCollision(asteroid, trans)
-        },
-        interactWithSaucer = { saucer, trans ->
-            checkCollision(saucer, trans)
-        },
-        interactWithMissile = { missile, trans ->
-            checkCollision(missile, trans)
-        },
-        interactWithShipDestroyer = { _, trans ->
-            trans.remove(this)
-        },
+        interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
+        interactWithSaucer = { saucer, trans -> checkCollision(saucer, trans) },
+        interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
+        interactWithShipDestroyer = { _, trans -> trans.remove(this) },
         draw = this::draw
     )
 
@@ -59,9 +47,7 @@ class Ship(
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
-    private fun deathDueToCollision(): Boolean {
-        return !controls.recentHyperspace
-    }
+    private fun deathDueToCollision(): Boolean = !controls.recentHyperspace
 
     fun dropIn() {
         dropScale = U.DROP_SCALE
@@ -85,9 +71,7 @@ class Ship(
         drawer.circle(0.0, 0.0, killRadius)
     }
 
-    private fun weAreCollidingWith(other: Collider): Boolean {
-        return Collision(other).hit(this)
-    }
+    private fun weAreCollidingWith(other: Collider): Boolean = Collision(other).hit(this)
 
     override fun finalize(): List<ISpaceObject> {
         if ( deathDueToCollision() ) {
@@ -105,9 +89,7 @@ class Ship(
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun toString(): String {
-        return "Ship $position ($killRadius)"
-    }
+    override fun toString(): String = "Ship $position ($killRadius)"
 
     fun turnBy(degrees: Double) {
         heading += degrees
