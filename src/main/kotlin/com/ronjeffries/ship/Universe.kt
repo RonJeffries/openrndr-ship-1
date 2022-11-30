@@ -12,6 +12,7 @@ object U {
     const val UNIVERSE_SIZE = 10000.0
     const val ASTEROID_SPEED = 1000.0
     const val MAKER_DELAY = 3.0
+    const val DROP_SCALE = 3.0
     val SHIP_ACCELERATION = Velocity(1000.0, 0.0)
     val SHIP_ROTATION_SPEED = 180.0 // degrees per second
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)

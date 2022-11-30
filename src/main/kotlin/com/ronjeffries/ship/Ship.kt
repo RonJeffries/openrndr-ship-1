@@ -19,6 +19,7 @@ class Ship(
 ) : ISpaceObject, InteractingSpaceObject, Collider {
     var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
+    var dropScale = U.DROP_SCALE
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
@@ -48,6 +49,8 @@ class Ship(
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {
+        dropScale -= U.DROP_SCALE/60.0
+        if (dropScale < 1.0 ) dropScale = 1.0
         controls.control(this, deltaTime, trans)
         move(deltaTime)
     }
@@ -60,10 +63,15 @@ class Ship(
         return !controls.recentHyperspace
     }
 
+    fun dropIn() {
+        dropScale = U.DROP_SCALE
+    }
+
     fun draw(drawer: Drawer) {
         drawer.translate(position)
 //        drawKillRadius(drawer)
         drawer.scale(30.0, 30.0)
+        drawer.scale(dropScale, dropScale)
         drawer.rotate(heading )
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 8.0/30.0

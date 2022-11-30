@@ -15,6 +15,7 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
 
     private fun replaceTheShip(trans: Transaction) {
         trans.add(ship)
+        ship.dropIn()
         trans.add(ShipChecker(ship))
         trans.remove(this)
         HyperspaceOperation(ship, asteroidTally).execute(trans)
