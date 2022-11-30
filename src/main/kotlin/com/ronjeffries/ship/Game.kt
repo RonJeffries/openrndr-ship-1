@@ -44,9 +44,8 @@ class Game {
         draw(drawer)
     }
 
-    private fun beginInteractions() {
-        knownObjects.forEach { it.subscriptions.beforeInteractions() }
-    }
+    private fun beginInteractions()
+        = knownObjects.forEach { it.subscriptions.beforeInteractions() }
 
     private fun finishInteractions() {
         val buffer = Transaction()
@@ -56,11 +55,10 @@ class Game {
         knownObjects.applyChanges(buffer)
     }
 
-    private fun draw(drawer: Drawer) = knownObjects.forEach {drawer.isolated { it.subscriptions.draw(drawer) } }
+    private fun draw(drawer: Drawer)
+        = knownObjects.forEach {drawer.isolated { it.subscriptions.draw(drawer) } }
 
-    fun processInteractions() {
-        knownObjects.applyChanges(changesDueToInteractions())
-    }
+    fun processInteractions() = knownObjects.applyChanges(changesDueToInteractions())
 
     fun tick(deltaTime: Double) {
         val trans = Transaction()
