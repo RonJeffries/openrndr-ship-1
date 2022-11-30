@@ -16,9 +16,7 @@ class SaucerMaker(saucer: Saucer = Saucer()): InteractingSpaceObject, ISpaceObje
         interactWithSaucer = { _, _ ->
             timeSinceLastSaucer = 0.0
             sawSaucer = true },
-        afterInteractions = { trans ->
-            if (timeSinceLastSaucer > 7.0) trans.add(saucer)
-        }
+        afterInteractions = { trans -> if (timeSinceLastSaucer > 7.0) trans.add(saucer) }
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {

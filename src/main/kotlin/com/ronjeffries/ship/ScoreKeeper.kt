@@ -11,12 +11,10 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
         draw = this::draw
     )
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) =
         other.subscriptions.interactWithScoreKeeper(this, trans)
-    }
 
     override fun update(deltaTime: Double, trans: Transaction) {}
-
     override fun finalize(): List<ISpaceObject> { return emptyList() }
 
     fun draw(drawer: Drawer) {
@@ -26,7 +24,5 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
         drawer.text(formatted(), Point(0.0, 0.0))
     }
 
-    fun formatted(): String {
-        return ("00000" + totalScore.toShort()).takeLast(5)
-    }
+    fun formatted(): String = ("00000" + totalScore.toShort()).takeLast(5)
 }
