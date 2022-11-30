@@ -4,26 +4,10 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import kotlin.random.Random
 
-private val SaucerPoints = listOf(
-    Point(-2.0, 1.0),
-    Point(2.0, 1.0),
-    Point(5.0, -1.0),
-    Point(-5.0, -1.0),
-    Point(-2.0, -3.0),
-    Point(2.0, -3.0),
-    Point(5.0, -1.0),
-    Point(2.0, 1.0),
-    Point(1.0, 3.0),
-    Point(-1.0, 3.0),
-    Point(-2.0, 1.0),
-    Point(-5.0, -1.0),
-    Point(-2.0, 1.0)
+private val SaucerPoints = listOf(Point(-2.0, 1.0), Point(2.0, 1.0), Point(5.0, -1.0), Point(-5.0, -1.0), Point(-2.0, -3.0), Point(2.0, -3.0), Point(5.0, -1.0), Point(2.0, 1.0), Point(1.0, 3.0), Point(-1.0, 3.0), Point(-2.0, 1.0), Point(-5.0, -1.0), Point(-2.0, 1.0)
 )
 
-private val Directions = listOf(
-    Velocity(1.0, 0.0),
-    Velocity(0.7071, 0.7071),
-    Velocity(0.7071, -0.7071)
+private val Directions = listOf(Velocity(1.0, 0.0), Velocity(0.7071, 0.7071), Velocity(0.7071, -0.7071)
 )
 
 class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
@@ -33,7 +17,8 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     private var direction: Double
     lateinit var velocity: Velocity
     private val speed = 1500.0
-    private var elapsedTime = 0.0
+    private var timeSinceSaucerSeen = 0.0
+    private var timeSinceLastMissileFired = 0.0
 
     init {
         direction = -1.0
@@ -60,7 +45,10 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     )
 
     private fun checkCollision(asteroid: Collider, trans: Transaction) {
-        if (Collision(asteroid).hit(this)) trans.remove(this)
+        if (Collision(asteroid).hit(this)) {
+            trans.add(Splat(this))
+            trans.remove(this)
+        }
     }
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
@@ -68,15 +56,20 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {
-        elapsedTime += deltaTime
-        if (elapsedTime > 1.5) {
-            elapsedTime = 0.0
-            zigZag()
-        }
+        timeSinceSaucerSeen += deltaTime
+        if (timeSinceSaucerSeen > 1.5) zigZag()
+        timeSinceLastMissileFired += deltaTime
+        if (timeSinceLastMissileFired > 0.5 ) fire(trans)
         position = (position + velocity * deltaTime).cap()
     }
 
+    private fun fire(trans: Transaction) {
+        timeSinceLastMissileFired = 0.0
+        trans.add(Missile(this))
+    }
+
     fun zigZag() {
+        timeSinceSaucerSeen = 0.0
         velocity = newDirection(Random.nextInt(3)) * speed * direction
     }
 
@@ -85,11 +78,9 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         return emptyList()
     }
 
-    fun newDirection(direction: Int): Velocity {
-        return when (direction) {
-            0, 1, 2 -> Directions[direction]
-            else -> Directions[0]
-        }
+    fun newDirection(direction: Int): Velocity = when (direction) {
+        0, 1, 2 -> Directions[direction]
+        else -> Directions[0]
     }
 
     fun draw(drawer: Drawer) {

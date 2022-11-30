@@ -22,9 +22,10 @@ class SplatView(lifetime: Double) {
     )
 
     fun draw(splat: Splat, drawer: Drawer) {
-        drawer.stroke = ColorRGBa.RED
-        drawer.fill = ColorRGBa.RED
+        drawer.stroke = splat.color
+        drawer.fill = splat.color
         drawer.rotate(rot)
+        drawer.scale(splat.scale, splat.scale)
         for (point in points) {
             val size = sizeTween.value(splat.elapsedTime)
             val radius = radiusTween.value(splat.elapsedTime)

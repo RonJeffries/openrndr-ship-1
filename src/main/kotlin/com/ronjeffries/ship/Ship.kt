@@ -20,6 +20,9 @@ class Ship(
         interactWithSaucer = { saucer, trans ->
             checkCollision(saucer, trans)
         },
+        interactWithMissile = { missile, trans ->
+            checkCollision(missile, trans)
+        },
         interactWithShipDestroyer = { _, trans ->
             trans.remove(this)
         },
@@ -27,7 +30,10 @@ class Ship(
     )
 
     private fun checkCollision(other: Collider, trans: Transaction) {
-        if (weAreCollidingWith(other)) trans.remove(this)
+        if (weAreCollidingWith(other)) {
+            trans.remove(this)
+            trans.add(Splat(this))
+        }
     }
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
