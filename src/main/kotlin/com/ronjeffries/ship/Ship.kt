@@ -96,8 +96,8 @@ class Ship(
             heading = 0.0
         } else {
             position = U.randomPoint()
-            controls.recentHyperspace = false
         }
+        controls.recentHyperspace = false
         return emptyList()
     }
 
