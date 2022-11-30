@@ -17,6 +17,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     private var direction: Double
     lateinit var velocity: Velocity
     private val speed = 1500.0
+    private var elapsedTime = 0.0
     private var timeSinceSaucerSeen = 0.0
     private var timeSinceLastMissileFired = 0.0
 
@@ -29,6 +30,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         direction = -direction
         position = Point(0.0, Random.nextDouble(U.UNIVERSE_SIZE))
         velocity = Velocity(direction, 0.0) * speed
+        elapsedTime = 0.0
     }
 
     override val subscriptions = Subscriptions(
@@ -56,6 +58,8 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {
+        elapsedTime += deltaTime
+        if (elapsedTime > U.SAUCER_LIFETIME) trans.remove(this)
         timeSinceSaucerSeen += deltaTime
         if (timeSinceSaucerSeen > 1.5) zigZag()
         timeSinceLastMissileFired += deltaTime
