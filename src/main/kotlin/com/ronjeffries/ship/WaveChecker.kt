@@ -10,6 +10,7 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
         elapsedTime += deltaTime
     }
 
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) = Unit
     override val subscriptions = Subscriptions (
         beforeInteractions = { sawAsteroid = false},
         interactWithAsteroid = { _, _ -> sawAsteroid = true },
@@ -24,9 +25,5 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
                 trans.add(WaveMaker(4))
             }
         }
-    }
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        // no op
     }
 }
