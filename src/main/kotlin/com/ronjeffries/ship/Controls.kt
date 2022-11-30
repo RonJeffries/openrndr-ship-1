@@ -26,9 +26,7 @@ class Controls {
         }
     }
 
-    private fun fire(obj: Ship): List<ISpaceObject> {
-        return missilesToFire(obj).also { fire = false }
-    }
+    private fun fire(obj: Ship): List<ISpaceObject> = missilesToFire(obj).also { fire = false }
 
     private fun missilesToFire(obj: Ship): List<ISpaceObject> {
         return if (fire) {
