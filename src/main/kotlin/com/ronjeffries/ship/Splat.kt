@@ -2,7 +2,6 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class Splat(
     var position: Point,
@@ -28,9 +27,7 @@ class Splat(
         view.draw(this, drawer)
     }
 
-    override fun finalize(): List<ISpaceObject> {
-        return emptyList()
-    }
+    override fun finalize(): List<ISpaceObject> = emptyList()
 
     override val subscriptions = Subscriptions(draw = this::draw)
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}

@@ -21,9 +21,7 @@ class WaveMaker(private val numberToCreate: Int = 8): ISpaceObject, InteractingS
         trans.remove(this)
     }
 
-    override fun finalize(): List<ISpaceObject> {
-        return emptyList()
-    }
+    override fun finalize(): List<ISpaceObject> = emptyList()
 
 
     override val subscriptions = Subscriptions()

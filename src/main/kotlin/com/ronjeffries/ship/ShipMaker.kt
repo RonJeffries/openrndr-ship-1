@@ -20,7 +20,7 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
         HyperspaceOperation(ship, asteroidTally).execute(trans)
     }
 
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
+    override fun finalize(): List<ISpaceObject> = emptyList()
 
     override val subscriptions = Subscriptions (
         beforeInteractions = {

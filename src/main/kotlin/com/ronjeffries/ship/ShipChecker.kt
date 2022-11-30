@@ -3,7 +3,7 @@ package com.ronjeffries.ship
 class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     private var missingShip = true
 
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
+    override fun finalize(): List<ISpaceObject> = emptyList()
 
     override fun update(deltaTime: Double, trans: Transaction) {}
 

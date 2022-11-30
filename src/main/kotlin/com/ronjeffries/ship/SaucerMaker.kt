@@ -9,9 +9,7 @@ class SaucerMaker(saucer: Saucer = Saucer()): InteractingSpaceObject, ISpaceObje
         timeSinceLastSaucer += deltaTime
     }
 
-    override fun finalize(): List<ISpaceObject> {
-        TODO("Not yet implemented")
-    }
+    override fun finalize(): List<ISpaceObject> = emptyList()
 
     override val subscriptions: Subscriptions = Subscriptions(
         beforeInteractions = { sawSaucer = false},
