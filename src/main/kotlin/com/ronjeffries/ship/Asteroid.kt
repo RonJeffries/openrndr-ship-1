@@ -2,7 +2,6 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import kotlin.math.pow
 import kotlin.random.Random
 
@@ -20,7 +19,7 @@ class Asteroid(
     }
 
     fun draw(drawer: Drawer) {
-        drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
+        drawer.fill = null
         drawer.translate(position)
         view.draw(this, drawer)
     }
@@ -55,21 +54,17 @@ class Asteroid(
     fun scale() =2.0.pow(splitCount)
 
     override val subscriptions = Subscriptions(
-        interactWithMissile = { missile, trans ->
-            if (checkCollision(missile)) trans.remove(this) },
-        interactWithShip = { ship, trans ->
-            if (checkCollision(ship)) trans.remove(this)
-        },
-        interactWithSaucer = { saucer, trans ->
-            if (checkCollision(saucer)) trans.remove(this)
-        },
+        interactWithMissile = { missile, trans -> dieIfColliding(missile, trans) },
+        interactWithShip = { ship, trans -> if (Collision(ship).hit(this)) trans.remove(this) },
+        interactWithSaucer = { saucer, trans -> if (Collision(saucer).hit(this)) trans.remove(this) },
         draw = this::draw
     )
 
-    private fun checkCollision(other: Collider): Boolean = Collision(other).hit(this)
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.subscriptions.interactWithAsteroid(this, trans)
+    private fun dieIfColliding(missile: Missile, trans: Transaction) {
+        if (Collision(missile).hit(this)) trans.remove(this)
     }
+
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) =
+        other.subscriptions.interactWithAsteroid(this, trans)
 
 }
