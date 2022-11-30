@@ -60,6 +60,9 @@ class Missile(
         interactWithShip = { ship, trans ->
             if (checkCollision(ship)) { trans.remove(this) }
         },
+        interactWithMissile = { missile, trans ->
+            if (checkCollision(missile)) { trans.remove(this) }
+        },
         draw = this::draw
     )
 
