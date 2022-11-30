@@ -35,15 +35,9 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     override val subscriptions = Subscriptions(
         draw = this::draw,
-        interactWithAsteroid = { asteroid, trans ->
-            checkCollision(asteroid, trans)
-        },
-        interactWithShip = { ship, trans ->
-            checkCollision(ship, trans)
-        },
-        interactWithMissile = { missile, trans ->
-            checkCollision(missile, trans)
-        },
+        interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
+        interactWithShip = { ship, trans -> checkCollision(ship, trans) },
+        interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
     )
 
     private fun checkCollision(asteroid: Collider, trans: Transaction) {
@@ -53,9 +47,8 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         }
     }
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) =
         other.subscriptions.interactWithSaucer(this, trans)
-    }
 
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
