@@ -71,10 +71,10 @@ class Ship(
         drawer.translate(position)
 //        drawKillRadius(drawer)
         drawer.scale(30.0, 30.0)
+        drawer.strokeWeight = 8.0/30.0
         drawer.scale(dropScale, dropScale)
         drawer.rotate(heading )
         drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 8.0/30.0
         drawer.lineStrip(points)
     }
 

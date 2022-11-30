@@ -5,7 +5,6 @@ import kotlin.random.Random
 class HyperspaceOperation(val ship: Ship, private val asteroidTally: Int) {
     fun execute(trans: Transaction) {
         if (hyperspaceFails()) {
-            println("hyperspace")
             destroyTheShip(trans)
         }
     }
