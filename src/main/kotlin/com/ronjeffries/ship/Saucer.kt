@@ -93,6 +93,8 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         drawer.lineStrip(SaucerPoints)
     }
 
+    fun getScore() = Score(200)
+
     private fun drawKillRadius(drawer: Drawer) {
         drawer.stroke = ColorRGBa.RED
         drawer.strokeWeight = 25.0

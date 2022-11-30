@@ -59,7 +59,10 @@ class Missile(
             }
         },
         interactWithSaucer = { saucer, trans ->
-            if (checkCollision(saucer)) { trans.remove(this) }
+            if (checkCollision(saucer)) {
+                trans.remove(this)
+                if (missileIsFromShip) trans.add(saucer.getScore())
+            }
         },
         interactWithShip = { ship, trans ->
             if (checkCollision(ship)) { trans.remove(this) }
