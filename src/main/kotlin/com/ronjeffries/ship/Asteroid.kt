@@ -34,30 +34,29 @@ class Asteroid(
         return objectsToAdd
     }
 
-    private fun asSplit(asteroid: Asteroid): Asteroid {
-        return Asteroid(
+    private fun asSplit(asteroid: Asteroid): Asteroid =
+        Asteroid(
             position = asteroid.position,
             killRadius = asteroid.killRadius / 2.0,
             splitCount = splitCount - 1
         )
-    }
 
     fun getScore(): Score {
-        val score = when (splitCount) {
-            2 -> 20
-            1 -> 50
-            0 -> 100
-            else -> 0
-        }
-        return Score(score)
+        return Score(
+            when (splitCount) {
+                2 -> 20
+                1 -> 50
+                0 -> 100
+                else -> 0
+            }
+        )
     }
 
     fun scale() =2.0.pow(splitCount)
 
     override val subscriptions = Subscriptions(
         interactWithMissile = { missile, trans ->
-            if (checkCollision(missile)) trans.remove(this)
-        },
+            if (checkCollision(missile)) trans.remove(this) },
         interactWithShip = { ship, trans ->
             if (checkCollision(ship)) trans.remove(this)
         },
@@ -67,9 +66,7 @@ class Asteroid(
         draw = this::draw
     )
 
-    private fun checkCollision(other: Collider): Boolean {
-        return Collision(other).hit(this)
-    }
+    private fun checkCollision(other: Collider): Boolean = Collision(other).hit(this)
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.subscriptions.interactWithAsteroid(this, trans)
