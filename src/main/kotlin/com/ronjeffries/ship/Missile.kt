@@ -32,14 +32,11 @@ class Missile(
 
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
-        if (elapsedTime > lifetime) {
-            trans.remove(this)
-        }
+        if (elapsedTime > lifetime) trans.remove(this)
         position = (position + velocity * deltaTime).cap()
     }
 
     fun draw(drawer: Drawer) {
-
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         drawer.stroke = color
@@ -47,9 +44,7 @@ class Missile(
         drawer.circle(Point.ZERO, killRadius * 3.0)
     }
 
-    override fun finalize(): List<ISpaceObject> {
-        return listOf(Splat(this))
-    }
+    override fun finalize(): List<ISpaceObject> = listOf(Splat(this))
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
