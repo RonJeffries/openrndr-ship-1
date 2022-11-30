@@ -7,13 +7,11 @@ class SpaceObjectCollection {
         spaceObjects.add(spaceObject)
     }
     
-    fun addAll(newbies: Collection<ISpaceObject>){
+    fun addAll(newbies: Collection<ISpaceObject>) {
         spaceObjects.addAll(newbies)
     }
 
-    fun applyChanges(transaction: Transaction) {
-        transaction.applyChanges(this)
-    }
+    fun applyChanges(transaction: Transaction) = transaction.applyChanges(this)
 
     fun forEach(spaceObject: (ISpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
 
