@@ -17,13 +17,17 @@ class AltShip(
     var position: Point = Point.ZERO,
     var velocity: Velocity = Velocity.ZERO,
 ) : ISpaceObject {
+    var asteroidTooClose = false
     var heading = 0.0
     val controlFlags = ControlFlags()
     var elapsedTime: Double = 0.0
     var asteroidsSeen = 0
 
+    var isActive = true
+
     override fun update(deltaTime: Double, trans: Transaction) {
         asteroidsSeen = 0
+        asteroidTooClose = false
         control(deltaTime, trans)
         move(deltaTime)
 
@@ -81,34 +85,55 @@ class AltShip(
 
     fun interactWith(asteroid: Asteroid) {
         asteroidsSeen += 1
+        if (!isActive && position.distanceTo(asteroid.position) < U.SAFE_SHIP_DISTANCE) asteroidTooClose = true
     }
+
 }
 
 class ShipTest {
     val transaction = Transaction()
-    val ship = AltShip(Point.ZERO, Velocity.ZERO)
+    val ship = AltShip(U.CENTER_OF_UNIVERSE, Velocity.ZERO)
+
+//    @Test
+//    fun `velocity moves ship`() {
+//        ship.velocity = Velocity(15.0, 30.0)
+//        ship.update(1.0, transaction)
+//        checkVector(ship.position, Point(15.0, 30.0), "ship position")
+//    }
+
 
     @Test
-    fun `velocity moves ship`() {
-        ship.velocity = Velocity(15.0, 30.0)
-        ship.update(1.0, transaction)
-        checkVector(ship.position, Point(15.0, 30.0), "ship position")
+    fun `update resets asteroidTooClose and asteroidsSeen`() {
+        ship.update(0.0, transaction)
+        assertThat(ship.asteroidsSeen).isEqualTo(0)
+        assertThat(ship.asteroidTooClose).isEqualTo(false)
     }
 
-
     @Test
-    fun `update resets asteroids`() {
+    fun `inactive vs asteroid increases asteroidsSeen`() {
         val asteroid = Asteroid(U.randomEdgePoint())
+        ship.isActive = false
         ship.update(0.0, transaction)
         ship.interactWith(asteroid)
         assertThat(ship.asteroidsSeen).isEqualTo(1)
     }
 
     @Test
-    fun `asteroid interactions count asteroids`() {
+    fun `inactive vs asteroid notices too close`() {
+        ship.isActive = false
+        val asteroid = Asteroid(ship.position)
+        ship.update(0.0, transaction)
+        ship.interactWith(asteroid)
+        assertThat(ship.asteroidTooClose).isEqualTo(true)
+    }
+
+    @Test
+    fun `inactive vs asteroid ignores too far`() {
+        ship.isActive = false
         val asteroid = Asteroid(U.randomEdgePoint())
         ship.update(0.0, transaction)
         ship.interactWith(asteroid)
         assertThat(ship.asteroidsSeen).isEqualTo(1)
     }
+
 }
