@@ -2,7 +2,15 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
+
+private val points = listOf(
+    Point(-3.0, -2.0),
+    Point(-3.0, 2.0),
+    Point(-5.0, 4.0),
+    Point(7.0, 0.0),
+    Point(-5.0, -4.0),
+    Point(-3.0, -2.0)
+)
 
 class Ship(
     override var position: Point,
@@ -11,7 +19,6 @@ class Ship(
 ) : ISpaceObject, InteractingSpaceObject, Collider {
     var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
-    private val view = ShipView()
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
@@ -56,7 +63,11 @@ class Ship(
     fun draw(drawer: Drawer) {
         drawer.translate(position)
 //        drawKillRadius(drawer)
-        view.draw(this, drawer)
+        drawer.scale(30.0, 30.0)
+        drawer.rotate(heading )
+        drawer.stroke = ColorRGBa.WHITE
+        drawer.strokeWeight = 8.0/30.0
+        drawer.lineStrip(points)
     }
 
     private fun drawKillRadius(drawer: Drawer) {
