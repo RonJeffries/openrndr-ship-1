@@ -25,15 +25,15 @@ class AsteroidTest {
         )
         val radius = full.killRadius
         val halfSize= full.finalize()
-        assertThat(halfSize.size).isEqualTo(3) // two asteroids and a score
+        assertThat(halfSize.size).isEqualTo(2) // two asteroids and no score
         val half = halfSize.last()
         assertThat((half as Asteroid).killRadius).describedAs("half").isEqualTo(radius/2.0)
         val quarterSize = half.finalize()
-        assertThat(quarterSize.size).isEqualTo(3)
+        assertThat(quarterSize.size).isEqualTo(2)
         val quarter = quarterSize.last()
         assertThat((quarter as Asteroid).killRadius).describedAs("quarter").isEqualTo(radius/4.0)
         val eighthSize = quarter.finalize()
-        assertThat(eighthSize.size).describedAs("should not split third time").isEqualTo(1)
+        assertThat(eighthSize.size).describedAs("should not split third time").isEqualTo(0)
     }
 
     @Test

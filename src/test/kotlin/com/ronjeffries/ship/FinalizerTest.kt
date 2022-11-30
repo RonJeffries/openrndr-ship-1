@@ -8,6 +8,6 @@ class FinalizerTest {
     fun `asteroid finalizer`() {
         val asteroid = Asteroid(Point.ZERO)
         val splits = asteroid.finalize()
-        assertThat(splits.size).isEqualTo(3) // split guys and a score
+        assertThat(splits.size).isEqualTo(2) // split guys and no score
     }
 }
