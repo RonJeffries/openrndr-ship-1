@@ -1,6 +1,5 @@
 package com.ronjeffries.ship
 
-import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import kotlin.random.Random
 
@@ -9,15 +8,9 @@ class SplatView(lifetime: Double) {
     private var sizeTween = Tween(20.0, 100.0, lifetime)
     private var radiusTween = Tween(30.0, 5.0, lifetime)
     private val points = listOf(
-        Point(-2.0, 0.0),
-        Point(-2.0, -2.0),
-        Point(2.0, -2.0),
-        Point(3.0, 1.0),
-        Point(2.0, -1.0),
-        Point(0.0, 2.0),
-        Point(1.0, 3.0),
-        Point(-1.0, 3.0),
-        Point(-4.0, -1.0),
+        Point(-2.0, 0.0), Point(-2.0, -2.0), Point(2.0, -2.0),
+        Point(3.0, 1.0), Point(2.0, -1.0), Point(0.0, 2.0),
+        Point(1.0, 3.0), Point(-1.0, 3.0), Point(-4.0, -1.0),
         Point(-3.0, 1.0)
     )
 
