@@ -21,6 +21,7 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     }
 
     override fun finalize(): List<ISpaceObject> = emptyList()
+    fun inHyperspace() = ship.position != U.CENTER_OF_UNIVERSE
 
     override val subscriptions = Subscriptions (
         beforeInteractions = {
@@ -32,7 +33,7 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
             safeToEmerge = safeToEmerge && !tooClose(asteroid)
         },
         afterInteractions = { trans->
-            if (elapsedTime > U.MAKER_DELAY && safeToEmerge) {
+            if (inHyperspace() || elapsedTime > U.MAKER_DELAY && safeToEmerge) {
                 replaceTheShip(trans)
             }
         }
