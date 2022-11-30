@@ -19,23 +19,19 @@ object U {
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
     const val SAFE_SHIP_DISTANCE = UNIVERSE_SIZE/10.0
     fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))
+    fun randomVelocity(speed: Double): Velocity = Velocity(speed,0.0).rotate(Random.nextDouble(360.0))
+
     fun randomEdgePoint(): Point =
         if (Random.nextBoolean()) Point(0.0, Random.nextDouble(UNIVERSE_SIZE))
         else Point(Random.nextDouble(UNIVERSE_SIZE), 0.0)
-
-    fun randomVelocity(speed: Double): Velocity = Velocity(speed,0.0).rotate(Random.nextDouble(360.0))
 }
 
-fun Point.cap(): Point {
-    return Point(this.x.cap(), this.y.cap())
-}
+    fun Point.cap(): Point = Point(this.x.cap(), this.y.cap())
 
-fun Double.cap(): Double {
-    return (this + U.UNIVERSE_SIZE) % U.UNIVERSE_SIZE
-}
+    fun Double.cap(): Double = (this + U.UNIVERSE_SIZE) % U.UNIVERSE_SIZE
 
-fun Velocity.limitedToLightSpeed(): Velocity {
-    val speed = this.length
-    return if (speed < U.SPEED_OF_LIGHT) this
-    else this*(U.SPEED_OF_LIGHT/speed)
-}
+    fun Velocity.limitedToLightSpeed(): Velocity {
+        val speed = this.length
+        return if (speed < U.SPEED_OF_LIGHT) this
+        else this*(U.SPEED_OF_LIGHT/speed)
+    }
