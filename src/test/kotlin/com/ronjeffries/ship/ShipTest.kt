@@ -55,7 +55,7 @@ class ShipTest {
     }
 
     @Test
-    fun `ship can turn right`() {
+    fun `ship turns right`() {
         ship.controlFlags.right = true
         ship.update(10.0 / 60.0, Transaction())
         val expected = U.SHIP_ROTATION_SPEED * 10.0 / 60.0
@@ -65,6 +65,13 @@ class ShipTest {
         val expectedVelocity = U.SHIP_ACCELERATION.rotate(expected)
         ship.update(1.0, Transaction())
         checkVector(ship.velocity, expectedVelocity, "rotated velocity")
+    }
+
+    @Test
+    fun `ship fires missile`() {
+        ship.controlFlags.fire = true
+        ship.update(1.0, transaction)
+        assertThat(transaction.typedAdds.missiles).isNotEmpty()
     }
 
     @Test

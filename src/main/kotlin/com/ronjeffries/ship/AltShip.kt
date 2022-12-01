@@ -50,7 +50,9 @@ class AltShip(
     }
 
     private fun fire(transaction: Transaction) {
-        controlFlags.fire = false
+        if (controlFlags.fire) {
+            transaction.add(Missile(this))
+        }
     }
 
     private fun turn(deltaTime: Double) {
