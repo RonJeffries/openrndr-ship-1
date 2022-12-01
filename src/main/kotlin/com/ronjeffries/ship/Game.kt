@@ -4,10 +4,20 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 
-class Game {
+class Game(val controlFlags: ControlFlags = ControlFlags()) {
     val knownObjects = GameState()
     val waveBuilder = WaveBuilder()
+    val controls = Controls(controlFlags)
+
     private var lastTime = 0.0
+
+    init {
+        val ship = newShip(controls)
+        val start = Transaction()
+        start.add(ship)
+        start.add(ShipChecker(ship))
+        knownObjects.applyChanges(start)
+    }
 
     fun processInteractions() {
         val trans = Transaction()
@@ -18,13 +28,6 @@ class Game {
         knownObjects.applyChanges(trans)
     }
 
-    fun createContents(controls: Controls) {
-        val start = Transaction()
-        val ship = newShip(controls)
-        start.add(ship)
-        start.add(ShipChecker(ship))
-        knownObjects.applyChanges(start)
-    }
 
     private fun newShip(controls: Controls): Ship {
         return Ship(

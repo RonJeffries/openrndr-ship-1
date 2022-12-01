@@ -1,5 +1,4 @@
 import com.ronjeffries.ship.ControlFlags
-import com.ronjeffries.ship.Controls
 import com.ronjeffries.ship.Game
 import org.openrndr.application
 import org.openrndr.draw.loadFont
@@ -13,8 +12,7 @@ fun main() = application {
     program {
         val font = loadFont("data/fonts/default.otf", 640.0)
         val flags = ControlFlags()
-        val controls = Controls(flags)
-        val game = Game().also { it.createContents(controls) }
+        val game = Game(flags)
         keyboard.keyDown.listen {
             when (it.name) {
                 "d" -> {
