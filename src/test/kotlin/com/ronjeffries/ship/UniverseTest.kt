@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
 
@@ -9,8 +9,7 @@ class UniverseTest {
     @Test
     fun `collision calculation`() {
         val ship = Ship(
-            position=Vector2.ZERO,
-            killRadius = 100.0
+            position = Vector2.ZERO
         )
         val asteroid = Asteroid(
             position = Vector2.ZERO,

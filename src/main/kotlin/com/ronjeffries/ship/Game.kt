@@ -7,7 +7,6 @@ import org.openrndr.draw.isolated
 class Game(val controlFlags: ControlFlags = ControlFlags()) {
     val knownObjects = GameState()
     val waveBuilder = WaveBuilder()
-    val controls = Controls(controlFlags)
 
     private var lastTime = 0.0
 
