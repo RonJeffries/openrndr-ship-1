@@ -1,5 +1,6 @@
 package com.ronjeffries.ship
 
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.openrndr.draw.Drawer
@@ -140,12 +141,36 @@ class ShipTest {
 
     @Test
     fun `accelerate accelerates`() {
-        println(ship.velocity)
         ship.controlFlags.accelerate = true
         ship.update(1.0, transaction)
-        println(ship.velocity)
+        assertThat(ship.velocity).isEqualTo(Velocity(1000.0, 0.0))
     }
 
+    @Test
+    fun `ship turns left`() {
+        ship.controlFlags.left = true
+        ship.update(0.5, transaction)
+        val expected = U.SHIP_ROTATION_SPEED * 30.0 / 60.0
+        assertThat(ship.heading).isEqualTo(-expected, Assertions.within(0.01))
+        ship.controlFlags.left = false
+        ship.controlFlags.accelerate = true
+        val expectedVelocity = U.SHIP_ACCELERATION.rotate(-expected)
+        ship.update(1.0, Transaction())
+        checkVector(ship.velocity, expectedVelocity, "rotated velocity")
+    }
+
+    @Test
+    fun `ship can turn right`() {
+        ship.controlFlags.right = true
+        ship.update(10.0 / 60.0, Transaction())
+        val expected = U.SHIP_ROTATION_SPEED * 10.0 / 60.0
+        assertThat(ship.heading).isEqualTo(expected, Assertions.within(0.01))
+        ship.controlFlags.right = false
+        ship.controlFlags.accelerate = true
+        val expectedVelocity = U.SHIP_ACCELERATION.rotate(expected)
+        ship.update(1.0, Transaction())
+        checkVector(ship.velocity, expectedVelocity, "rotated velocity")
+    }
 
     @Test
     fun `update resets asteroidTooClose and asteroidsSeen`() {
