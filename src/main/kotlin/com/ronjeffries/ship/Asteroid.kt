@@ -88,6 +88,15 @@ class Asteroid(
         other.interactions.interactWithAsteroid(this, trans)
     }
 
+    fun destroy(transaction: Transaction) {
+        transaction.remove(this)
+        transaction.score += score
+        if (splitCount >= 1) {
+            transaction.add(asSplit())
+            transaction.add(asSplit())
+        }
+    }
+
     companion object {
         val rock0 = listOf(
             Point(4.0, 2.0),

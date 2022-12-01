@@ -87,7 +87,13 @@ class AltShip(
     fun interactWith(asteroid: Asteroid, transaction: Transaction) {
         asteroidsSeen += 1
         if (!isActive && position.distanceTo(asteroid.position) < U.SAFE_SHIP_DISTANCE) asteroidTooClose = true
+        if (isActive && collidesWith(asteroid)) {
+            destroy(U.CENTER_OF_UNIVERSE, transaction)
+            asteroid.destroy(transaction)
+        }
     }
+
+    fun collidesWith(asteroid: Asteroid) = position.distanceTo(asteroid.position) < (KILL_RADIUS + asteroid.killRadius)
 
     fun deactivate() {
         isActive = false
@@ -104,6 +110,9 @@ class AltShip(
         isActive = false
     }
 
+    companion object {
+        const val KILL_RADIUS = 150.0
+    }
 }
 
 class ShipTest {
@@ -160,6 +169,32 @@ class ShipTest {
         assertThat(ship.asteroidsSeen).isEqualTo(1)
     }
 
+    @Test
+    fun `active vs large asteroid destroys and splits on collision`() {
+        // splitting rules tested separately on Asteroid
+        val asteroid = Asteroid(U.CENTER_OF_UNIVERSE)
+        ship.update(0.0, transaction)
+        ship.interactWith(asteroid, transaction)
+        assertThat(ship.isActive).isFalse()
+        assertThat(transaction.typedAdds.splats).isNotEmpty()
+        assertThat(transaction.typedAdds.asteroids).isNotEmpty()
+        assertThat(transaction.typedRemoves.asteroids).isNotEmpty()
+    }
+
+    @Test
+    fun `active vs small asteroid destroys and splits on collision`() {
+        // splitting rules tested separately on Asteroid
+        val asteroid = Asteroid(U.CENTER_OF_UNIVERSE)
+        val half = asteroid.asSplit()
+        val quarter = half.asSplit()
+        ship.update(0.0, transaction)
+        ship.interactWith(quarter, transaction)
+        assertThat(ship.isActive).isFalse()
+        assertThat(transaction.typedAdds.asteroids).isEmpty()
+        assertThat(transaction.typedAdds.splats).isNotEmpty()
+        assertThat(transaction.typedRemoves.asteroids).isNotEmpty()
+    }
+
 
     @Test
     fun `ship deactivation lasts 3 seconds if no asteroids too close`() {
@@ -179,7 +214,7 @@ class ShipTest {
     fun `ship deactivation lasts longer if asteroids too close`() {
         val asteroid = Asteroid(U.CENTER_OF_UNIVERSE)
         ship.deactivate()
-        ship.update(3.1, transaction)
+        ship.update(4.0, transaction)
         ship.interactWith(asteroid, transaction)
         ship.reactivateIfPossible()
         assertThat(ship.isActive).isFalse()
