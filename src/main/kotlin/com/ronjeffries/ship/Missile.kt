@@ -44,7 +44,7 @@ class Missile(
         drawer.circle(Point.ZERO, killRadius * 3.0)
     }
 
-    override fun finalize(): List<ISpaceObject> = listOf(Splat(this))
+    private fun finalize(): List<ISpaceObject> = listOf(Splat(this))
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
@@ -65,7 +65,8 @@ class Missile(
         interactWithMissile = { missile, trans ->
             if (checkCollision(missile)) { trans.remove(this) }
         },
-        draw = this::draw
+        draw = this::draw,
+        finalize = this::finalize
     )
 
     private fun checkCollision(other: Collider) = Collision(other).hit(this)

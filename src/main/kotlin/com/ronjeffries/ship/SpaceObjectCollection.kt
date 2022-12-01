@@ -26,7 +26,7 @@ class SpaceObjectCollection {
     }
 
     fun removeAndFinalizeAll(moribund: Set<ISpaceObject>): Boolean{
-        moribund.forEach { spaceObjects += it.finalize() }
+        moribund.forEach { spaceObjects += it.subscriptions.finalize() }
         return spaceObjects.removeAll(moribund)
     }
 

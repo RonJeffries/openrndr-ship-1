@@ -15,7 +15,6 @@ class ScoreKeeper: ISpaceObject, InteractingSpaceObject {
         other.subscriptions.interactWithScoreKeeper(this, trans)
 
     override fun update(deltaTime: Double, trans: Transaction) {}
-    override fun finalize(): List<ISpaceObject> { return emptyList() }
 
     fun draw(drawer: Drawer) {
         drawer.translate(100.0, 500.0)

@@ -1,6 +1,5 @@
 package com.ronjeffries.ship
 
-import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import kotlin.math.pow
 import kotlin.random.Random
@@ -24,7 +23,7 @@ class Asteroid(
         view.draw(this, drawer)
     }
 
-    override fun finalize(): List<ISpaceObject> {
+    private fun finalize(): List<ISpaceObject> {
         val objectsToAdd: MutableList<ISpaceObject> = mutableListOf()
         if (splitCount >= 1) {
             objectsToAdd.add(asSplit(this))
@@ -57,7 +56,8 @@ class Asteroid(
         interactWithMissile = { missile, trans -> dieIfColliding(missile, trans) },
         interactWithShip = { ship, trans -> if (Collision(ship).hit(this)) trans.remove(this) },
         interactWithSaucer = { saucer, trans -> if (Collision(saucer).hit(this)) trans.remove(this) },
-        draw = this::draw
+        draw = this::draw,
+        finalize = this::finalize
     )
 
     private fun dieIfColliding(missile: Missile, trans: Transaction) {

@@ -20,7 +20,7 @@ class SaucerTest {
     @Test
     fun `right left next time`() {
         val saucer = Saucer()
-        saucer.finalize()
+        saucer.subscriptions.finalize()
         assertThat(saucer.velocity.x).isLessThan(0.0)
         assertThat(saucer.velocity.y).isEqualTo(0.0)
     }
@@ -28,7 +28,7 @@ class SaucerTest {
     @Test
     fun `direction changes maintain left-right`() {
         val saucer = Saucer() // left to right
-        saucer.finalize() // right to left
+        saucer.subscriptions.finalize() // right to left
         saucer.zigZag()
         assertThat(saucer.velocity.x).isLessThan(0.0)
     }

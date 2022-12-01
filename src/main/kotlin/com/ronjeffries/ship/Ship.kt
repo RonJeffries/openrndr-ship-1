@@ -22,7 +22,8 @@ class Ship(
         interactWithSaucer = { saucer, trans -> checkCollision(saucer, trans) },
         interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
         interactWithShipDestroyer = { _, trans -> trans.remove(this) },
-        draw = this::draw
+        draw = this::draw,
+        finalize = this::finalize
     )
 
     private fun checkCollision(other: Collider, trans: Transaction) {
@@ -73,7 +74,7 @@ class Ship(
 
     private fun weAreCollidingWith(other: Collider): Boolean = Collision(other).hit(this)
 
-    override fun finalize(): List<ISpaceObject> {
+    private fun finalize(): List<ISpaceObject> {
         if ( deathDueToCollision() ) {
             position = U.CENTER_OF_UNIVERSE
             velocity = Velocity.ZERO

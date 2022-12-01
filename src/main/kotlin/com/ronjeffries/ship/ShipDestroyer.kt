@@ -9,5 +9,4 @@ class ShipDestroyer: ISpaceObject, InteractingSpaceObject {
         other.subscriptions.interactWithShipDestroyer(this, trans)
 
     override fun update(deltaTime: Double, trans: Transaction) {}
-    override fun finalize(): List<ISpaceObject> = emptyList()
 }

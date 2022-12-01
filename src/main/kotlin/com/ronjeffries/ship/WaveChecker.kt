@@ -4,7 +4,6 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
     private var sawAsteroid = false
     var elapsedTime = 0.0
 
-    override fun finalize(): List<ISpaceObject> = emptyList()
 
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime

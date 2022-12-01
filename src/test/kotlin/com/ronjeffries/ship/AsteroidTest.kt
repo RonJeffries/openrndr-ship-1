@@ -24,15 +24,15 @@ class AsteroidTest {
             velocity = Velocity.ZERO
         )
         val radius = full.killRadius
-        val halfSize= full.finalize()
+        val halfSize= full.subscriptions.finalize()
         assertThat(halfSize.size).isEqualTo(2) // two asteroids and no score
         val half = halfSize.last()
         assertThat((half as Asteroid).killRadius).describedAs("half").isEqualTo(radius/2.0)
-        val quarterSize = half.finalize()
+        val quarterSize = half.subscriptions.finalize()
         assertThat(quarterSize.size).isEqualTo(2)
         val quarter = quarterSize.last()
         assertThat((quarter as Asteroid).killRadius).describedAs("quarter").isEqualTo(radius/4.0)
-        val eighthSize = quarter.finalize()
+        val eighthSize = quarter.subscriptions.finalize()
         assertThat(eighthSize.size).describedAs("should not split third time").isEqualTo(0)
     }
 
@@ -46,7 +46,7 @@ class AsteroidTest {
         val fullV = full.velocity
         assertThat(fullV.length).isEqualTo(U.ASTEROID_SPEED, within(1.0))
         assertThat(fullV).isEqualTo(startingV)
-        val halfSize = full.finalize()
+        val halfSize = full.subscriptions.finalize()
         var countSplits = 0
         halfSize.forEach {
             if ( it is Asteroid) {
@@ -64,7 +64,7 @@ class AsteroidTest {
         val ship = Ship(
             position = Vector2(100.0, 100.0)
         )
-        val didShipSplit = ship.finalize()
+        val didShipSplit = ship.subscriptions.finalize()
         assertThat(didShipSplit).isEmpty()
     }
 }

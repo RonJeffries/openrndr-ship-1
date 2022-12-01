@@ -26,7 +26,6 @@ class Splat(
         view.draw(this, drawer)
     }
 
-    override fun finalize(): List<ISpaceObject> = emptyList()
     override val subscriptions = Subscriptions(draw = this::draw)
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 }

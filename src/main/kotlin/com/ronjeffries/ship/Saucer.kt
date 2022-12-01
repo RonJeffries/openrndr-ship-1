@@ -38,6 +38,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
         interactWithShip = { ship, trans -> checkCollision(ship, trans) },
         interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
+        finalize = this::finalize
     )
 
     private fun checkCollision(asteroid: Collider, trans: Transaction) {
@@ -70,7 +71,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         velocity = newDirection(Random.nextInt(3)) * speed * direction
     }
 
-    override fun finalize(): List<ISpaceObject> {
+    private fun finalize(): List<ISpaceObject> {
         wakeUp()
         return emptyList()
     }

@@ -16,7 +16,6 @@ class WaveMaker(private val numberToCreate: Int = 8): ISpaceObject, InteractingS
         trans.remove(this)
     }
 
-    override fun finalize(): List<ISpaceObject> = emptyList()
     override val subscriptions = Subscriptions()
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.subscriptions.interactWithWaveMaker(this, trans)
