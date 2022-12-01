@@ -1,11 +1,6 @@
 package com.ronjeffries.ship
 
 class TypedObjects {
-
-    val all: Set<ISpaceObject>
-        get() =
-            splats + others + asteroids + missiles
-
     val splats = mutableSetOf<Splat>()
     val others = mutableSetOf<ISpaceObject>()
     val asteroids = mutableSetOf<Asteroid>()

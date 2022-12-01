@@ -10,23 +10,20 @@ class WaveBuilderTest {
     @Test
     fun `no change if there are asteroids`() {
         builder.update(1.0, 1, transaction)
-        assertThat(transaction.adds.all).isEmpty()
-        assertThat(transaction.removes.all).isEmpty()
+        assertThat(transaction.adds.asteroids).isEmpty()
     }
 
     @Test
     fun `no change if no asteroids on first call`() {
         builder.update(1.0, 0, transaction)
-        assertThat(transaction.adds.all).isEmpty()
-        assertThat(transaction.removes.all).isEmpty()
+        assertThat(transaction.adds.asteroids).isEmpty()
     }
 
     @Test
     fun `no change if no asteroids on call within delay`() {
         builder.update(1.0, 0, transaction)
         builder.update(2.0, 0, transaction)
-        assertThat(transaction.adds.all).isEmpty()
-        assertThat(transaction.removes.all).isEmpty()
+        assertThat(transaction.adds.asteroids).isEmpty()
     }
 
     @Test
@@ -34,7 +31,6 @@ class WaveBuilderTest {
         builder.update(1.0, 0, transaction)
         builder.update(3.1, 0, transaction)
         assertThat(transaction.adds.asteroids.size).isEqualTo(4)
-        assertThat(transaction.removes.all).isEmpty()
     }
 
 

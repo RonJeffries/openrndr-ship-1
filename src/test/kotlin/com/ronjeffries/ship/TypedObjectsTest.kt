@@ -21,7 +21,6 @@ class TypedObjectsTest {
         assertThat(objects.splats).containsExactly(splat)
         assertThat(objects.missiles).containsExactly(missile)
         assertThat(objects.asteroids).containsExactly(asteroid)
-        assertThat(objects.all).containsExactlyInAnyOrder(ship, splat, missile, asteroid)
     }
 
     @Test
@@ -43,6 +42,5 @@ class TypedObjectsTest {
         assertThat(objects.splats).isEmpty()
         assertThat(objects.missiles).isEmpty()
         assertThat(objects.asteroids).isEmpty()
-        assertThat(objects.all).isEmpty()
     }
 }

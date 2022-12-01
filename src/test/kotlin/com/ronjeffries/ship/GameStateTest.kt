@@ -14,10 +14,10 @@ class GameStateTest {
         val asteroid = Asteroid(U.randomPoint())
         adds.add(asteroid)
         state.applyChanges(adds)
-        assertThat(state.typedObjects.asteroids).containsExactly(asteroid)
+        assertThat(state.objects.asteroids).containsExactly(asteroid)
         removes.remove(asteroid)
         state.applyChanges(removes)
-        assertThat(state.typedObjects.asteroids).isEmpty()
+        assertThat(state.objects.asteroids).isEmpty()
     }
 
     @Test
@@ -26,10 +26,10 @@ class GameStateTest {
         val missile = Missile(ship)
         adds.add(missile)
         state.applyChanges(adds)
-        assertThat(state.typedObjects.missiles).containsExactly(missile)
+        assertThat(state.objects.missiles).containsExactly(missile)
         removes.remove(missile)
         state.applyChanges(removes)
-        assertThat(state.typedObjects.missiles).isEmpty()
+        assertThat(state.objects.missiles).isEmpty()
     }
 
     @Test
@@ -38,10 +38,10 @@ class GameStateTest {
         val splat = Splat(ship)
         adds.add(splat)
         state.applyChanges(adds)
-        assertThat(state.typedObjects.splats).containsExactly(splat)
+        assertThat(state.objects.splats).containsExactly(splat)
         removes.remove(splat)
         state.applyChanges(removes)
-        assertThat(state.typedObjects.splats).isEmpty()
+        assertThat(state.objects.splats).isEmpty()
     }
 
     @Test
@@ -49,10 +49,10 @@ class GameStateTest {
         val ship = Ship(Point.ZERO)
         adds.add(ship)
         state.applyChanges(adds)
-        assertThat(state.typedObjects.others).containsExactly(ship)
+        assertThat(state.objects.others).containsExactly(ship)
         removes.remove(ship)
         state.applyChanges(removes)
-        assertThat(state.typedObjects.others).isEmpty()
+        assertThat(state.objects.others).isEmpty()
     }
 
     @Test

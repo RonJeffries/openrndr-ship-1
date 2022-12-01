@@ -17,33 +17,33 @@ class Game(val controlFlags: ControlFlags = ControlFlags()) {
         updateAll(deltaTime)
         val transaction2 = Transaction()
         missilesVsAstroids(transaction2)
-        state.typedObjects.asteroids.forEach { ship.interactWith(it, transaction2) }
+        state.objects.asteroids.forEach { ship.interactWith(it, transaction2) }
         state.applyChanges(transaction2)
         ship.reactivateIfPossible()
         drawAll(drawer)
     }
 
     fun missilesVsAstroids(transaction: Transaction) {
-        state.typedObjects.missiles.forEach { missile ->
-            state.typedObjects.asteroids.forEach { missile.interactWith(it, transaction) }
+        state.objects.missiles.forEach { missile ->
+            state.objects.asteroids.forEach { missile.interactWith(it, transaction) }
         }
     }
 
     fun updateAll(deltaTime: Double) {
         val transaction = Transaction()
-        waveBuilder.update(deltaTime, state.typedObjects.asteroids.size, transaction)
+        waveBuilder.update(deltaTime, state.objects.asteroids.size, transaction)
         ship.update(deltaTime, transaction)
-        state.typedObjects.asteroids.forEach { it.update(deltaTime, transaction) }
-        state.typedObjects.missiles.forEach { it.update(deltaTime, transaction) }
-        state.typedObjects.splats.forEach { it.update(deltaTime, transaction) }
+        state.objects.asteroids.forEach { it.update(deltaTime, transaction) }
+        state.objects.missiles.forEach { it.update(deltaTime, transaction) }
+        state.objects.splats.forEach { it.update(deltaTime, transaction) }
         state.applyChanges(transaction)
     }
 
     fun drawAll(drawer: Drawer) {
         drawer.isolated { ship.draw(drawer) }
-        state.typedObjects.asteroids.forEach { drawer.isolated { it.draw(drawer) } }
-        state.typedObjects.missiles.forEach { drawer.isolated { it.draw(drawer) } }
-        state.typedObjects.splats.forEach { drawer.isolated { it.draw(drawer) } }
+        state.objects.asteroids.forEach { drawer.isolated { it.draw(drawer) } }
+        state.objects.missiles.forEach { drawer.isolated { it.draw(drawer) } }
+        state.objects.splats.forEach { drawer.isolated { it.draw(drawer) } }
         drawer.isolated { drawScore(drawer) }
     }
 
