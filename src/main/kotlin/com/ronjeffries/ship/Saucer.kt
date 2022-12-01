@@ -2,12 +2,20 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.random.Random
 
-private val SaucerPoints = listOf(Point(-2.0, 1.0), Point(2.0, 1.0), Point(5.0, -1.0), Point(-5.0, -1.0), Point(-2.0, -3.0), Point(2.0, -3.0), Point(5.0, -1.0), Point(2.0, 1.0), Point(1.0, 3.0), Point(-1.0, 3.0), Point(-2.0, 1.0), Point(-5.0, -1.0), Point(-2.0, 1.0)
+private val SaucerPoints = listOf(
+    Point(-2.0, 1.0), Point(2.0, 1.0), Point(5.0, -1.0),
+    Point(-5.0, -1.0), Point(-2.0, -3.0), Point(2.0, -3.0),
+    Point(5.0, -1.0), Point(2.0, 1.0), Point(1.0, 3.0),
+    Point(-1.0, 3.0), Point(-2.0, 1.0), Point(-5.0, -1.0),
+    Point(-2.0, 1.0)
 )
 
-private val Directions = listOf(Velocity(1.0, 0.0), Velocity(0.7071, 0.7071), Velocity(0.7071, -0.7071)
+private val Directions = listOf(
+    Velocity(1.0, 0.0), Velocity(0.7071, 0.7071), Velocity(0.7071, -0.7071)
 )
 
 class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
@@ -76,10 +84,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         return emptyList()
     }
 
-    fun newDirection(direction: Int): Velocity = when (direction) {
-        0, 1, 2 -> Directions[direction]
-        else -> Directions[0]
-    }
+    fun newDirection(direction: Int): Velocity = Directions[min(max(0, direction), 2)]
 
     fun draw(drawer: Drawer) {
         drawer.translate(position)
