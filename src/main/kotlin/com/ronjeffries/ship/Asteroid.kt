@@ -66,12 +66,6 @@ class Asteroid(
     }
 
     override val interactions: Interactions = Interactions(
-        interactWithMissile = { missile, trans ->
-            if (weAreCollidingWith(missile)) {
-                trans.remove(this)
-                tempFinalize(trans)
-            }
-        },
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {

@@ -16,18 +16,16 @@ class Game(val controlFlags: ControlFlags = ControlFlags()) {
         lastTime = seconds
         updateAll(deltaTime)
         val transaction2 = Transaction()
-        asteroidsVsMissles(transaction2)
+        missilesVsAstroids(transaction2)
         state.typedObjects.asteroids.forEach { ship.interactWith(it, transaction2) }
         state.applyChanges(transaction2)
         ship.reactivateIfPossible()
         drawAll(drawer)
     }
 
-    fun asteroidsVsMissles(transaction: Transaction) {
-        state.typedObjects.asteroids.forEach { asteroid ->
-            state.typedObjects.missiles.forEach { missile ->
-                interactBothWays(missile, asteroid, transaction)
-            }
+    fun missilesVsAstroids(transaction: Transaction) {
+        state.typedObjects.missiles.forEach { missile ->
+            state.typedObjects.asteroids.forEach { missile.interactWith(it, transaction) }
         }
     }
 

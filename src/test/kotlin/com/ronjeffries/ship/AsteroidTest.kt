@@ -2,7 +2,6 @@ package com.ronjeffries.ship
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.within
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
 
@@ -17,16 +16,6 @@ class AsteroidTest {
         )
         asteroid.update(tick * 60, Transaction())
         checkVector(asteroid.position, Point(15.0, 30.0), "asteroid position")
-    }
-
-    @Disabled("Not relevant?")
-    @Test
-    fun `full asteroid splits on ship`() {
-        val ship = Ship(Point.ZERO)
-        val full = Asteroid(Point.ZERO, Velocity.ZERO)
-        val transaction = Transaction()
-        interactBothWays(ship, full, transaction)
-        assertThat(transaction.adds.size).isEqualTo(2)
     }
 
     @Test
@@ -49,23 +38,9 @@ class AsteroidTest {
     }
 
     @Test
-    fun `full asteroid splits on missile`() {
-        val ship = Ship(Point.ZERO)
-        val missile = Missile(ship)
-        val full = Asteroid(missile.position)
-        val transaction = Transaction()
-        interactBothWays(missile, full, transaction)
-        println(transaction.adds)
-        assertThat(transaction.adds.size).isEqualTo(3) // two asteroids and a splat
-    }
-
-    @Test
     fun `new split asteroids get new directions`() {
         val startingV = Vector2(U.ASTEROID_SPEED, 0.0)
-        val full = Asteroid(
-            position = Vector2.ZERO,
-            velocity = startingV
-        )
+        val full = Asteroid(Point.ZERO, startingV)
         val half = full.asSplit()
         assertThat(half.velocity.length).isEqualTo(U.ASTEROID_SPEED, within(1.0))
         assertThat(half.velocity).isNotEqualTo(full.velocity)

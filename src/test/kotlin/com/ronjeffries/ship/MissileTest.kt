@@ -17,5 +17,15 @@ class MissileTest {
         assertThat(transaction.adds.size).isEqualTo(1)
     }
 
+    @Test
+    fun `full asteroid splits on missile`() {
+        val ship = Ship(Point.ZERO)
+        val missile = Missile(ship)
+        val asteroid = Asteroid(missile.position)
+        val transaction = Transaction()
+        missile.interactWith(asteroid, transaction)
+        assertThat(transaction.adds.size).isEqualTo(3) // two asteroids and a splat
+    }
+
 
 }

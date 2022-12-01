@@ -35,6 +35,14 @@ class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Do
     private fun weAreInRange(asteroid: Asteroid): Boolean =
         position.distanceTo(asteroid.position) < killRadius + asteroid.killRadius
 
+    fun interactWith(asteroid: Asteroid, transaction: Transaction) {
+        if (weAreInRange(asteroid)) {
+            transaction.remove(this)
+            transaction.add(Splat(this))
+            asteroid.destroy(transaction)
+        }
+    }
+
     override fun draw(drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
