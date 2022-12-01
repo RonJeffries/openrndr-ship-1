@@ -12,10 +12,8 @@ class Game {
     fun changesDueToInteractions(): Transaction {
         val trans = Transaction()
         knownObjects.pairsToCheck().forEach { p ->
-            val first = p.first
-            val second = p.second
-            first.callOther(second, trans)
-            second.callOther(first, trans)
+            p.first.callOther(p.second, trans)
+            p.second.callOther(p.first, trans)
         }
         return trans
     }
@@ -27,12 +25,8 @@ class Game {
         add(SaucerMaker())
     }
 
-    private fun newShip(controls: Controls): Ship {
-        return Ship(
-            position = U.CENTER_OF_UNIVERSE,
-            controls = controls
-        )
-    }
+    private fun newShip(controls: Controls): Ship =
+        Ship(U.CENTER_OF_UNIVERSE, controls)
 
     fun cycle(drawer: Drawer, seconds: Double) {
         val deltaTime = seconds - lastTime
@@ -49,9 +43,7 @@ class Game {
 
     private fun finishInteractions() {
         val buffer = Transaction()
-        knownObjects.forEach {
-            it.subscriptions.afterInteractions(buffer)
-        }
+        knownObjects.forEach { it.subscriptions.afterInteractions(buffer) }
         knownObjects.applyChanges(buffer)
     }
 
