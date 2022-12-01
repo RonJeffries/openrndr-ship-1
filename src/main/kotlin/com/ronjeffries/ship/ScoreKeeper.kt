@@ -38,7 +38,7 @@ class ScoreKeeper(var shipCount: Int = 3): ISpaceObject, InteractingSpaceObject 
             ship.heading = -90.0
             translate(250.0, 900.0)
             drawer.scale(1 / U.DROP_SCALE, 1 / U.DROP_SCALE)
-            for (i in 1..shipCount) {
+            for (i in 0..shipCount) { // we include the live one currently in use
                 translate(1000.0, 0.0)
                 drawer.isolated {
                     ship.draw(drawer)
