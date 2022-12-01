@@ -1,6 +1,8 @@
 package com.ronjeffries.ship
 
+import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
+import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 
 class AltShip(
     var position: Point = Point.ZERO,
@@ -11,20 +13,11 @@ class AltShip(
     var heading = 0.0
     var elapsedTime: Double = 0.0
     var asteroidsSeen = 0
-    var inHyperspace = false
-
     var isActive = true
 
-    override fun draw(drawer: Drawer) {
-        TODO("Not yet implemented")
-    }
+    override val interactions: Interactions = Interactions()
 
-    override val interactions: Interactions
-        get() = TODO("Not yet implemented")
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        TODO("Not yet implemented")
-    }
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
@@ -74,6 +67,26 @@ class AltShip(
     }
 
     fun collidesWith(asteroid: Asteroid) = position.distanceTo(asteroid.position) < (KILL_RADIUS + asteroid.killRadius)
+
+    override fun draw(drawer: Drawer) {
+        if (isActive) {
+            drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
+            drawer.translate(position)
+            val points = listOf(
+                Point(-3.0, -2.0),
+                Point(-3.0, 2.0),
+                Point(-5.0, 4.0),
+                Point(7.0, 0.0),
+                Point(-5.0, -4.0),
+                Point(-3.0, -2.0)
+            )
+            drawer.scale(30.0, 30.0)
+            drawer.rotate(heading)
+            drawer.stroke = ColorRGBa.WHITE
+            drawer.strokeWeight = 8.0 / 30.0
+            drawer.lineStrip(points)
+        }
+    }
 
     fun deactivate() {
         isActive = false
