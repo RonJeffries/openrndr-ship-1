@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import kotlin.random.Random
 
-class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
+class Splat(var position: Point) : ISpaceObject {
 
     constructor(ship: Ship) : this(ship.position)
     constructor(missile: Missile) : this(missile.position)
@@ -34,9 +34,6 @@ class Splat(var position: Point) : ISpaceObject, InteractingSpaceObject {
             drawer.circle(size * point.x, size * point.y, radius)
         }
     }
-
-    override val interactions: Interactions = Interactions()
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 
     companion object {
         val points = listOf(

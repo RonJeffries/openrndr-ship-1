@@ -15,10 +15,6 @@ class Ship(
     var asteroidsSeen = 0
     var isActive = true
 
-    override val interactions: Interactions = Interactions()
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
-
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         asteroidsSeen = 0

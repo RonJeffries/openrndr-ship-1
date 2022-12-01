@@ -10,7 +10,7 @@ class Asteroid(
     val velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
     val killRadius: Double = 500.0,
     val splitCount: Int = 2
-) : ISpaceObject, InteractingSpaceObject {
+) : ISpaceObject {
     private val rock = myRock()
 
     val score: Int
@@ -60,17 +60,6 @@ class Asteroid(
 
 
     fun scale() = 2.0.pow(splitCount)
-
-    private fun weAreCollidingWith(missile: Missile): Boolean {
-        return position.distanceTo(missile.position) < killRadius + missile.killRadius
-    }
-
-    override val interactions: Interactions = Interactions(
-    )
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        other.interactions.interactWithAsteroid(this, trans)
-    }
 
     fun destroy(transaction: Transaction) {
         transaction.remove(this)
