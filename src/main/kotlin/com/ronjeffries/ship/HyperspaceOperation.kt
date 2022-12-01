@@ -12,10 +12,10 @@ class HyperspaceOperation(val ship: Ship, private val asteroidTally: Int) {
         trans.add(Splat(ship))
     }
 
-    private fun inHyperspace() = ship.position != U.CENTER_OF_UNIVERSE
-
     private fun hyperspaceFails(): Boolean
         = inHyperspace() && hyperspaceFailure(Random.nextInt(0, 63), asteroidTally)
+
+    private fun inHyperspace() = ship.position != U.CENTER_OF_UNIVERSE
 
     // allegedly the original arcade rule
     fun hyperspaceFailure(random0thru62: Int, asteroidTally: Int): Boolean
