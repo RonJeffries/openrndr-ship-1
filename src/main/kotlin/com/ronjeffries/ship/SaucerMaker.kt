@@ -1,6 +1,5 @@
 package com.ronjeffries.ship
 
-
 class SaucerMaker(saucer: Saucer = Saucer()): InteractingSpaceObject, ISpaceObject  {
     var sawSaucer: Boolean = false
     var timeSinceLastSaucer = 0.0
@@ -8,7 +7,6 @@ class SaucerMaker(saucer: Saucer = Saucer()): InteractingSpaceObject, ISpaceObje
     override fun update(deltaTime: Double, trans: Transaction) {
         timeSinceLastSaucer += deltaTime
     }
-
 
     override val subscriptions: Subscriptions = Subscriptions(
         beforeInteractions = { sawSaucer = false},

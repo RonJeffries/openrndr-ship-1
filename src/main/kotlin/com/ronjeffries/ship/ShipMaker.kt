@@ -21,7 +21,6 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
         HyperspaceOperation(ship, asteroidTally).execute(trans)
     }
 
-
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) =
         other.subscriptions.interactWithShipMaker(this, trans)
 
