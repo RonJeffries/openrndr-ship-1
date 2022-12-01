@@ -22,7 +22,7 @@ class Ship(
     }
 
     fun deathDueToCollision(): Boolean {
-        return !controls.recentHyperspace
+        return !controls.flags.recentHyperspace
     }
 
     override fun draw(drawer: Drawer) {

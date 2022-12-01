@@ -6,4 +6,5 @@ class ControlFlags {
     var right = false
     var fire = false
     var hyperspace = false
+    var recentHyperspace = false
 }
