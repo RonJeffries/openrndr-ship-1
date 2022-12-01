@@ -2,6 +2,7 @@ package com.ronjeffries.ship
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.within
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
 
@@ -18,6 +19,7 @@ class AsteroidTest {
         checkVector(asteroid.position, Point(15.0, 30.0), "asteroid position")
     }
 
+    @Disabled("Not relevant?")
     @Test
     fun `full asteroid splits on ship`() {
         val ship = Ship(Point.ZERO)

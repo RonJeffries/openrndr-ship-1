@@ -65,10 +65,6 @@ class Asteroid(
         return position.distanceTo(missile.position) < killRadius + missile.killRadius
     }
 
-    private fun weAreCollidingWith(solid: Ship): Boolean {
-        return position.distanceTo(solid.position) < killRadius + solid.killRadius
-    }
-
     override val interactions: Interactions = Interactions(
         interactWithMissile = { missile, trans ->
             if (weAreCollidingWith(missile)) {
@@ -76,12 +72,6 @@ class Asteroid(
                 tempFinalize(trans)
             }
         },
-        interactWithShip = { ship, trans ->
-            if (weAreCollidingWith(ship)) {
-                trans.remove(this)
-                tempFinalize(trans)
-            }
-        }
     )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {

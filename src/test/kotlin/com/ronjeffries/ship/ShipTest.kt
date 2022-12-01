@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class ShipTest {
     val transaction = Transaction()
-    val ship = AltShip(U.CENTER_OF_UNIVERSE, Velocity.ZERO)
+    val ship = Ship(U.CENTER_OF_UNIVERSE, Velocity.ZERO)
 
     @Test
     fun `velocity moves ship`() {

@@ -7,7 +7,7 @@ import org.openrndr.draw.isolated
 class Game(val controlFlags: ControlFlags = ControlFlags()) {
     val state = GameState()
     val waveBuilder = WaveBuilder()
-    val ship = AltShip(U.CENTER_OF_UNIVERSE, Velocity.ZERO, controlFlags)
+    val ship = Ship(U.CENTER_OF_UNIVERSE, Velocity.ZERO, controlFlags)
 
     private var lastTime = 0.0
 
@@ -31,7 +31,6 @@ class Game(val controlFlags: ControlFlags = ControlFlags()) {
         }
     }
 
-
     fun updateAll(deltaTime: Double) {
         val transaction = Transaction()
         waveBuilder.update(deltaTime, state.typedObjects.asteroids.size, transaction)
@@ -50,41 +49,6 @@ class Game(val controlFlags: ControlFlags = ControlFlags()) {
         drawer.isolated { drawScore(drawer) }
     }
 
-    fun processInteractions() {
-        val trans = Transaction()
-        state.pairsToCheck().forEach { p ->
-            p.first.callOther(p.second, trans)
-            p.second.callOther(p.first, trans)
-        }
-        state.applyChanges(trans)
-    }
-
-
-    private fun newShip(flags: ControlFlags): Ship {
-        return Ship(
-            position = U.CENTER_OF_UNIVERSE,
-            controlFlags = flags
-        )
-    }
-
-
-    private fun beginInteractions() {
-        state.forEach { it.interactions.beforeInteractions() }
-    }
-
-    private fun finishInteractions() {
-        val buffer = Transaction()
-        state.forEach {
-            it.interactions.afterInteractions(buffer)
-        }
-        state.applyChanges(buffer)
-    }
-
-    private fun draw(drawer: Drawer) {
-        state.forEach { drawer.isolated { it.draw(drawer) } }
-        drawScore(drawer)
-    }
-
     private fun drawScore(drawer: Drawer) {
         drawer.translate(100.0, 500.0)
         drawer.stroke = ColorRGBa.GREEN
@@ -94,12 +58,5 @@ class Game(val controlFlags: ControlFlags = ControlFlags()) {
 
     fun formatted(): String {
         return ("00000" + state.totalScore.toShort()).takeLast(5)
-    }
-
-    fun tick(deltaTime: Double) {
-        val trans = Transaction()
-        waveBuilder.update(deltaTime, state.typedObjects.asteroids.size, trans)
-        state.forEach { it.update(deltaTime, trans) }
-        state.applyChanges(trans)
     }
 }

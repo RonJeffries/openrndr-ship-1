@@ -18,8 +18,7 @@ class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Do
         }
     )
 
-    constructor(ship: Ship) : this(ship.position, ship.velocity, ship.heading, ship.killRadius)
-    constructor(ship: AltShip) : this(ship.position, ship.velocity, ship.heading, AltShip.KILL_RADIUS)
+    constructor(ship: Ship) : this(ship.position, ship.velocity, ship.heading, Ship.KILL_RADIUS)
 
     private var elapsedTime: Double = 0.0
     private val lifetime: Double = 3.0
