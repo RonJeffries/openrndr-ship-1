@@ -3,22 +3,26 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 
-class Missile(
-    ship: Ship,
-) : ISpaceObject, InteractingSpaceObject {
-    var position: Point
+class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Double, sourceKillRadius: Double) :
+    ISpaceObject, InteractingSpaceObject {
     val killRadius = 10.0
-    private val velocity: Velocity
+    var position = sourcePosition + Point(2 * (sourceKillRadius + killRadius), 0.0).rotate(sourceHeading)
+    var velocity = sourceVelocity + Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(sourceHeading)
+    override val interactions: Interactions = Interactions(
+        interactWithAsteroid =
+        { asteroid, trans ->
+            if (weAreInRange(asteroid)) {
+                trans.remove(this)
+                trans.add(Splat(this))
+            }
+        }
+    )
+
+    constructor(ship: Ship) : this(ship.position, ship.velocity, ship.heading, ship.killRadius)
+    constructor(ship: AltShip) : this(ship.position, ship.velocity, ship.heading, AltShip.KILL_RADIUS)
+
     private var elapsedTime: Double = 0.0
     private val lifetime: Double = 3.0
-
-    init {
-        val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(ship.heading)
-        val standardOffset = Point(2 * (ship.killRadius + killRadius), 0.0)
-        val rotatedOffset = standardOffset.rotate(ship.heading)
-        position = ship.position + rotatedOffset
-        velocity = ship.velocity + missileOwnVelocity
-    }
 
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
@@ -38,15 +42,6 @@ class Missile(
         drawer.translate(position)
         drawer.circle(Point.ZERO, killRadius * 3.0)
     }
-
-    override val interactions: Interactions = Interactions(
-        interactWithAsteroid = { asteroid, trans ->
-            if (weAreInRange(asteroid)) {
-                trans.remove(this)
-                trans.add(Splat(this))
-            }
-        }
-    )
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
         other.interactions.interactWithMissile(this, trans)
