@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import kotlin.random.Random
 
-class Splat(var position: Point) : ISpaceObject {
+class Splat(var position: Point) {
 
     constructor(ship: Ship) : this(ship.position)
     constructor(missile: Missile) : this(missile.position)
@@ -17,12 +17,12 @@ class Splat(var position: Point) : ISpaceObject {
     private val sizeTween = Tween(20.0, 100.0, lifetime)
     private val radiusTween = Tween(30.0, 5.0, lifetime)
 
-    override fun update(deltaTime: Double, trans: Transaction) {
+    fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         if (elapsedTime > lifetime) trans.remove(this)
     }
 
-    override fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         drawer.stroke = ColorRGBa.RED

@@ -6,10 +6,6 @@ class Transaction {
     val removes = TypedObjects()
     var score = 0
 
-    fun add(spaceObject: ISpaceObject) {
-        adds.add(spaceObject)
-    }
-
     fun add(splat: Splat) {
         adds.add(splat)
     }
@@ -20,10 +16,6 @@ class Transaction {
 
     fun add(missile: Missile) {
         adds.add(missile)
-    }
-
-    fun remove(spaceObject: ISpaceObject) {
-        removes.add(spaceObject)
     }
 
     fun remove(splat: Splat) {

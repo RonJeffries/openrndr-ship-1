@@ -3,8 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 
-class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Double, sourceKillRadius: Double) :
-    ISpaceObject {
+class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Double, sourceKillRadius: Double) {
     val killRadius = KILL_RADIUS
     var position = sourcePosition + Point(2 * (sourceKillRadius + killRadius), 0.0).rotate(sourceHeading)
     var velocity = sourceVelocity + Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(sourceHeading)
@@ -14,7 +13,7 @@ class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Do
     private var elapsedTime: Double = 0.0
     private val lifetime: Double = 3.0
 
-    override fun update(deltaTime: Double, trans: Transaction) {
+    fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         if (elapsedTime > lifetime) {
             trans.remove(this)
@@ -34,7 +33,7 @@ class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Do
         }
     }
 
-    override fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
         drawer.fill = ColorRGBa.WHITE
         drawer.translate(position)

@@ -8,14 +8,14 @@ class Ship(
     var position: Point = Point.ZERO,
     var velocity: Velocity = Velocity.ZERO,
     val controlFlags: ControlFlags = ControlFlags()
-) : ISpaceObject {
+) {
     var asteroidTooClose = false
     var heading = 0.0
     var elapsedTime: Double = 0.0
     var asteroidsSeen = 0
     var isActive = true
 
-    override fun update(deltaTime: Double, trans: Transaction) {
+    fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         asteroidsSeen = 0
         asteroidTooClose = false
@@ -68,7 +68,7 @@ class Ship(
         return collision
     }
 
-    override fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         if (isActive) {
             drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
             drawer.translate(position)

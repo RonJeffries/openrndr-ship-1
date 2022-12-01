@@ -15,11 +15,9 @@ class TransactionTest {
         val missile = Missile(ship)
         transaction.add(asteroid)
         transaction.add(splat)
-        transaction.add(ship)
         transaction.add(missile)
         assertThat(transaction.adds.asteroids).containsExactly(asteroid)
         assertThat(transaction.adds.splats).containsExactly(splat)
-        assertThat(transaction.adds.others).containsExactly(ship)
         assertThat(transaction.adds.missiles).containsExactly(missile)
     }
 
@@ -31,11 +29,9 @@ class TransactionTest {
         val missile = Missile(ship)
         transaction.remove(asteroid)
         transaction.remove(splat)
-        transaction.remove(ship)
         transaction.remove(missile)
         assertThat(transaction.removes.asteroids).containsExactly(asteroid)
         assertThat(transaction.removes.splats).containsExactly(splat)
-        assertThat(transaction.removes.others).containsExactly(ship)
         assertThat(transaction.removes.missiles).containsExactly(missile)
     }
 }

@@ -45,17 +45,6 @@ class GameStateTest {
     }
 
     @Test
-    fun `applyChanges with other (Ship)`() {
-        val ship = Ship(Point.ZERO)
-        adds.add(ship)
-        state.applyChanges(adds)
-        assertThat(state.objects.others).containsExactly(ship)
-        removes.remove(ship)
-        state.applyChanges(removes)
-        assertThat(state.objects.others).isEmpty()
-    }
-
-    @Test
     fun `applyChanges with score`() {
         adds.score = 100
         state.applyChanges(adds)

@@ -10,7 +10,7 @@ class Asteroid(
     val velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
     val killRadius: Double = 500.0,
     val splitCount: Int = 2
-) : ISpaceObject {
+) {
     private val rock = myRock()
 
     val score: Int
@@ -21,11 +21,11 @@ class Asteroid(
             else -> 0
         }
 
-    override fun update(deltaTime: Double, trans: Transaction) {
+    fun update(deltaTime: Double, trans: Transaction) {
         position = (position + velocity * deltaTime).cap()
     }
 
-    override fun draw(drawer: Drawer) {
+    fun draw(drawer: Drawer) {
         drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         drawer.stroke = ColorRGBa.WHITE
