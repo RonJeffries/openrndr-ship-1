@@ -16,12 +16,13 @@ class ControlFlags {
 class AltShip(
     var position: Point = Point.ZERO,
     var velocity: Velocity = Velocity.ZERO,
+    val controlFlags: ControlFlags = ControlFlags()
 ) : ISpaceObject {
     var asteroidTooClose = false
     var heading = 0.0
-    val controlFlags = ControlFlags()
     var elapsedTime: Double = 0.0
     var asteroidsSeen = 0
+    var inHyperspace = false
 
     var isActive = true
 
@@ -29,30 +30,22 @@ class AltShip(
         elapsedTime += deltaTime
         asteroidsSeen = 0
         asteroidTooClose = false
-        control(deltaTime, trans)
-        move(deltaTime)
-
-    }
-
-    fun accelerate(deltaV: Acceleration) {
-        velocity = (velocity + deltaV).limitedToLightSpeed()
+        if (isActive) {
+            control(deltaTime, trans)
+            move(deltaTime)
+        }
     }
 
     fun control(deltaTime: Double, trans: Transaction) {
-        if (controlFlags.hyperspace) {
-            controlFlags.hyperspace = false
-            controlFlags.recentHyperspace = true
-            trans.add(ShipDestroyer())
-        }
         turn(deltaTime)
-        control_accelerate(deltaTime)
+        accelerate(deltaTime)
         fire(trans)
     }
 
-    private fun control_accelerate(deltaTime: Double) {
+    private fun accelerate(deltaTime: Double) {
         if (controlFlags.accelerate) {
             val deltaV = U.SHIP_ACCELERATION.rotate(heading) * deltaTime
-            accelerate(deltaV)
+            velocity = (velocity + deltaV).limitedToLightSpeed()
         }
     }
 
@@ -119,12 +112,39 @@ class ShipTest {
     val transaction = Transaction()
     val ship = AltShip(U.CENTER_OF_UNIVERSE, Velocity.ZERO)
 
-//    @Test
-//    fun `velocity moves ship`() {
-//        ship.velocity = Velocity(15.0, 30.0)
-//        ship.update(1.0, transaction)
-//        checkVector(ship.position, Point(15.0, 30.0), "ship position")
-//    }
+    @Test
+    fun `velocity moves ship`() {
+        ship.position = Point.ZERO
+        ship.velocity = Velocity(15.0, 30.0)
+        ship.update(1.0, transaction)
+        checkVector(ship.position, Point(15.0, 30.0), "ship position")
+    }
+
+    @Test
+    fun `wrapping works high`() {
+        ship.position = Point(U.UNIVERSE_SIZE - 1, U.UNIVERSE_SIZE / 2)
+        ship.velocity = Velocity(120.0, 120.0)
+        ship.update(1.0 / 60.0, transaction)
+        assertThat(ship.position.x).isEqualTo(1.0)
+        assertThat(ship.position.y).isEqualTo(U.UNIVERSE_SIZE / 2 + 2)
+    }
+
+    @Test
+    fun `wrapping works low`() {
+        ship.position = Velocity(1.0, U.UNIVERSE_SIZE / 2)
+        ship.velocity = Velocity(-120.0, -120.0)
+        ship.update(1.0 / 60.0, transaction)
+        assertThat(ship.position.x).isEqualTo(U.UNIVERSE_SIZE - 1)
+        assertThat(ship.position.y).isEqualTo(U.UNIVERSE_SIZE / 2 - 2)
+    }
+
+    @Test
+    fun `accelerate accelerates`() {
+        println(ship.velocity)
+        ship.controlFlags.accelerate = true
+        ship.update(1.0, transaction)
+        println(ship.velocity)
+    }
 
 
     @Test
