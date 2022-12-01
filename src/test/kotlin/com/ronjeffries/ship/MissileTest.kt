@@ -14,10 +14,10 @@ class MissileTest {
     @Test
     fun `dies after three seconds and adds Splat`() {
         missile.update(0.1, transaction)
-        assertThat(transaction.removes).isEmpty()
+        assertThat(transaction.removes.missiles).isEmpty()
         missile.update(3.1, transaction)
-        assertThat(transaction.removes).containsExactly(missile)
-        assertThat(transaction.adds.size).isEqualTo(1)
+        assertThat(transaction.removes.missiles).containsExactly(missile)
+        assertThat(transaction.adds.splats.size).isEqualTo(1)
     }
 
     @Test
@@ -27,7 +27,8 @@ class MissileTest {
         val asteroid = Asteroid(missile.position)
         val transaction = Transaction()
         missile.interactWith(asteroid, transaction)
-        assertThat(transaction.adds.size).isEqualTo(3) // two asteroids and a splat
+        assertThat(transaction.adds.asteroids.size).isEqualTo(2)
+        assertThat(transaction.adds.splats.size).isEqualTo(1)
     }
 
 
@@ -38,7 +39,7 @@ class MissileTest {
         var expectedPosition = ship.position + missileOffset.rotate(ship.heading)
         var additions = Transaction()
         ship.update(sixtieth, additions)
-        val missile = additions.typedAdds.missiles.first()
+        val missile = additions.adds.missiles.first()
         assertThat(missile.position).isEqualTo(expectedPosition)
     }
 
@@ -50,7 +51,7 @@ class MissileTest {
         ship.controlFlags.fire = true
         val expectedPosition = ship.position + missileOffset.rotate(ship.heading)
         ship.update(sixtieth, additions)
-        val missile = additions.typedAdds.missiles.first()
+        val missile = additions.adds.missiles.first()
         assertThat(missile.position).isEqualTo(expectedPosition)
     }
 }

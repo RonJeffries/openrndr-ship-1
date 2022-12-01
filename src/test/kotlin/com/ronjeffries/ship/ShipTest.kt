@@ -89,7 +89,7 @@ class ShipTest {
     fun `ship fires missile`() {
         ship.controlFlags.fire = true
         ship.update(1.0, transaction)
-        assertThat(transaction.typedAdds.missiles).isNotEmpty()
+        assertThat(transaction.adds.missiles).isNotEmpty()
     }
 
     @Test
@@ -98,10 +98,10 @@ class ShipTest {
         ship.controlFlags.fire = true
         val oneMissile = Transaction()
         ship.update(1.0, oneMissile)
-        assertThat(oneMissile.typedAdds.missiles.size).isEqualTo(1)
+        assertThat(oneMissile.adds.missiles.size).isEqualTo(1)
         val noMissiles = Transaction()
         ship.update(1.0, noMissiles)
-        assertThat(noMissiles.typedAdds.missiles.size).isEqualTo(0) // no firing
+        assertThat(noMissiles.adds.missiles.size).isEqualTo(0) // no firing
     }
 
     @Test
@@ -153,9 +153,9 @@ class ShipTest {
         ship.update(0.0, transaction)
         ship.interactWith(asteroid, transaction)
         assertThat(ship.isActive).isFalse()
-        assertThat(transaction.typedAdds.splats).isNotEmpty()
-        assertThat(transaction.typedAdds.asteroids).isNotEmpty()
-        assertThat(transaction.typedRemoves.asteroids).isNotEmpty()
+        assertThat(transaction.adds.splats).isNotEmpty()
+        assertThat(transaction.adds.asteroids).isNotEmpty()
+        assertThat(transaction.removes.asteroids).isNotEmpty()
     }
 
     @Test
@@ -167,9 +167,9 @@ class ShipTest {
         ship.update(0.0, transaction)
         ship.interactWith(quarter, transaction)
         assertThat(ship.isActive).isFalse()
-        assertThat(transaction.typedAdds.asteroids).isEmpty()
-        assertThat(transaction.typedAdds.splats).isNotEmpty()
-        assertThat(transaction.typedRemoves.asteroids).isNotEmpty()
+        assertThat(transaction.adds.asteroids).isEmpty()
+        assertThat(transaction.adds.splats).isNotEmpty()
+        assertThat(transaction.removes.asteroids).isNotEmpty()
     }
 
 
@@ -205,8 +205,8 @@ class ShipTest {
         ship.position = U.randomEdgePoint()
         ship.destroy(U.CENTER_OF_UNIVERSE, transaction)
         assertThat(ship.isActive).isFalse()
-        assertThat(transaction.typedAdds.splats).isNotEmpty()
+        assertThat(transaction.adds.splats).isNotEmpty()
     }
 
- 
+
 }

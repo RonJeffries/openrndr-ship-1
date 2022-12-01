@@ -17,11 +17,11 @@ class TransactionTest {
         transaction.add(splat)
         transaction.add(ship)
         transaction.add(missile)
-        assertThat(transaction.typedAdds.all).containsExactlyInAnyOrder(asteroid, splat, ship, missile)
-        assertThat(transaction.typedAdds.asteroids).containsExactly(asteroid)
-        assertThat(transaction.typedAdds.splats).containsExactly(splat)
-        assertThat(transaction.typedAdds.others).containsExactly(ship)
-        assertThat(transaction.typedAdds.missiles).containsExactly(missile)
+        assertThat(transaction.adds.all).containsExactlyInAnyOrder(asteroid, splat, ship, missile)
+        assertThat(transaction.adds.asteroids).containsExactly(asteroid)
+        assertThat(transaction.adds.splats).containsExactly(splat)
+        assertThat(transaction.adds.others).containsExactly(ship)
+        assertThat(transaction.adds.missiles).containsExactly(missile)
     }
 
     @Test
@@ -34,10 +34,10 @@ class TransactionTest {
         transaction.remove(splat)
         transaction.remove(ship)
         transaction.remove(missile)
-        assertThat(transaction.typedRemoves.all).containsExactlyInAnyOrder(asteroid, splat, ship, missile)
-        assertThat(transaction.typedRemoves.asteroids).containsExactly(asteroid)
-        assertThat(transaction.typedRemoves.splats).containsExactly(splat)
-        assertThat(transaction.typedRemoves.others).containsExactly(ship)
-        assertThat(transaction.typedRemoves.missiles).containsExactly(missile)
+        assertThat(transaction.removes.all).containsExactlyInAnyOrder(asteroid, splat, ship, missile)
+        assertThat(transaction.removes.asteroids).containsExactly(asteroid)
+        assertThat(transaction.removes.splats).containsExactly(splat)
+        assertThat(transaction.removes.others).containsExactly(ship)
+        assertThat(transaction.removes.missiles).containsExactly(missile)
     }
 }

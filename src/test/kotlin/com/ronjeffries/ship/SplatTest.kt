@@ -26,6 +26,6 @@ class SplatTest {
         val splat = Splat(ship)
         val transaction = Transaction()
         splat.update(4.0, transaction)
-        assertThat(transaction.removes).containsExactly(splat)
+        assertThat(transaction.removes.splats).containsExactly(splat)
     }
 }

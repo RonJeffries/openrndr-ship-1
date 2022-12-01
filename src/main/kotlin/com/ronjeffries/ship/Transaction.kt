@@ -2,42 +2,39 @@ package com.ronjeffries.ship
 
 class Transaction {
 
-    val typedAdds = TypedObjects()
-    val typedRemoves = TypedObjects()
-
-    val adds get() = typedAdds.all
-    val removes get() = typedRemoves.all
+    val adds = TypedObjects()
+    val removes = TypedObjects()
     var score = 0
 
     fun add(spaceObject: ISpaceObject) {
-        typedAdds.add(spaceObject)
+        adds.add(spaceObject)
     }
 
     fun add(splat: Splat) {
-        typedAdds.add(splat)
+        adds.add(splat)
     }
 
     fun add(asteroid: Asteroid) {
-        typedAdds.add(asteroid)
+        adds.add(asteroid)
     }
 
     fun add(missile: Missile) {
-        typedAdds.add(missile)
+        adds.add(missile)
     }
 
     fun remove(spaceObject: ISpaceObject) {
-        typedRemoves.add(spaceObject)
+        removes.add(spaceObject)
     }
 
     fun remove(splat: Splat) {
-        typedRemoves.add(splat)
+        removes.add(splat)
     }
 
     fun remove(asteroid: Asteroid) {
-        typedRemoves.add(asteroid)
+        removes.add(asteroid)
     }
 
     fun remove(missile: Missile) {
-        typedRemoves.add(missile)
+        removes.add(missile)
     }
 }

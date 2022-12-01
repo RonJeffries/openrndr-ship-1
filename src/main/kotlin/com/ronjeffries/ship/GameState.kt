@@ -6,15 +6,15 @@ class GameState {
     var totalScore = 0
 
     fun applyChanges(transaction: Transaction) {
-        transaction.typedRemoves.missiles.forEach { typedObjects.remove(it) }
-        transaction.typedRemoves.asteroids.forEach { typedObjects.remove(it) }
-        transaction.typedRemoves.splats.forEach { typedObjects.remove(it) }
-        transaction.typedRemoves.others.forEach { typedObjects.remove(it) }
+        transaction.removes.missiles.forEach { typedObjects.remove(it) }
+        transaction.removes.asteroids.forEach { typedObjects.remove(it) }
+        transaction.removes.splats.forEach { typedObjects.remove(it) }
+        transaction.removes.others.forEach { typedObjects.remove(it) }
 
-        transaction.typedAdds.missiles.forEach { typedObjects.add(it) }
-        transaction.typedAdds.asteroids.forEach { typedObjects.add(it) }
-        transaction.typedAdds.splats.forEach { typedObjects.add(it) }
-        transaction.typedAdds.others.forEach { typedObjects.add(it) }
+        transaction.adds.missiles.forEach { typedObjects.add(it) }
+        transaction.adds.asteroids.forEach { typedObjects.add(it) }
+        transaction.adds.splats.forEach { typedObjects.add(it) }
+        transaction.adds.others.forEach { typedObjects.add(it) }
         totalScore += transaction.score
     }
 
