@@ -5,7 +5,7 @@ import org.openrndr.draw.Drawer
 
 class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Double, sourceKillRadius: Double) :
     ISpaceObject, InteractingSpaceObject {
-    val killRadius = 10.0
+    val killRadius = KILL_RADIUS
     var position = sourcePosition + Point(2 * (sourceKillRadius + killRadius), 0.0).rotate(sourceHeading)
     var velocity = sourceVelocity + Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(sourceHeading)
     override val interactions: Interactions = Interactions(
@@ -54,4 +54,7 @@ class Missile(sourcePosition: Point, sourceVelocity: Velocity, sourceHeading: Do
         other.interactions.interactWithMissile(this, trans)
     }
 
+    companion object {
+        const val KILL_RADIUS = 10.0
+    }
 }

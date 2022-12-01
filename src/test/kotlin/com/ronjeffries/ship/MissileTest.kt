@@ -2,8 +2,11 @@ package com.ronjeffries.ship
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.openrndr.math.Vector2
 
 class MissileTest {
+    val sixtieth = 1.0 / 60.0
+    val missileOffset = Vector2(2 * Ship.KILL_RADIUS + 2 * Missile.KILL_RADIUS, 0.0)
     val ship = Ship(U.randomPoint())
     val missile = Missile(ship)
     val transaction = Transaction()
@@ -28,4 +31,26 @@ class MissileTest {
     }
 
 
+    @Test
+    fun `missile starts ahead of ship`() {
+        val ship = Ship(Point(1000.0, 1000.0))
+        ship.controlFlags.fire = true
+        var expectedPosition = ship.position + missileOffset.rotate(ship.heading)
+        var additions = Transaction()
+        ship.update(sixtieth, additions)
+        val missile = additions.typedAdds.missiles.first()
+        assertThat(missile.position).isEqualTo(expectedPosition)
+    }
+
+    @Test
+    fun `missile starts ahead of ship at angle`() {
+        val ship = Ship(Point(1000.0, 1000.0))
+        val additions = Transaction()
+        ship.heading = 90.0
+        ship.controlFlags.fire = true
+        val expectedPosition = ship.position + missileOffset.rotate(ship.heading)
+        ship.update(sixtieth, additions)
+        val missile = additions.typedAdds.missiles.first()
+        assertThat(missile.position).isEqualTo(expectedPosition)
+    }
 }

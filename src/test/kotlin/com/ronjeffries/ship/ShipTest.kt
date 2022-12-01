@@ -3,6 +3,10 @@ package com.ronjeffries.ship
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.openrndr.math.Vector2
+import org.openrndr.math.asRadians
+import kotlin.math.cos
+import kotlin.math.sin
 
 class ShipTest {
     val transaction = Transaction()
@@ -42,6 +46,20 @@ class ShipTest {
     }
 
     @Test
+    fun `accelerate caps at speed of light`() {
+        val ship = Ship(Point.ZERO)
+        ship.heading = -60.0 // northeast ish
+        ship.controlFlags.accelerate = true
+        ship.update(100.0, Transaction()) // long time
+        val v = ship.velocity
+        val speed = v.length
+        assertThat(speed).isEqualTo(5000.0, Assertions.within(1.0))
+        val radians60 = 60.0.asRadians
+        val expected = Vector2(cos(radians60), -sin(radians60)) * 5000.0
+        checkVector(v, expected, "velocity", 1.0)
+    }
+
+    @Test
     fun `ship turns left`() {
         ship.controlFlags.left = true
         ship.update(0.5, transaction)
@@ -72,6 +90,18 @@ class ShipTest {
         ship.controlFlags.fire = true
         ship.update(1.0, transaction)
         assertThat(transaction.typedAdds.missiles).isNotEmpty()
+    }
+
+    @Test
+    fun `ship fires only once per press`() {
+        val ship = Ship(Vector2.ZERO)
+        ship.controlFlags.fire = true
+        val oneMissile = Transaction()
+        ship.update(1.0, oneMissile)
+        assertThat(oneMissile.typedAdds.missiles.size).isEqualTo(1)
+        val noMissiles = Transaction()
+        ship.update(1.0, noMissiles)
+        assertThat(noMissiles.typedAdds.missiles.size).isEqualTo(0) // no firing
     }
 
     @Test
@@ -178,4 +208,5 @@ class ShipTest {
         assertThat(transaction.typedAdds.splats).isNotEmpty()
     }
 
+ 
 }
