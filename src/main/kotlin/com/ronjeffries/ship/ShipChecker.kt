@@ -1,6 +1,9 @@
 package com.ronjeffries.ship
 
-class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
+class ShipChecker(
+    val ship: Ship,
+    val scoreKeeper: ScoreKeeper = ScoreKeeper()
+) : ISpaceObject, InteractingSpaceObject {
     private var missingShip = true
 
     override fun update(deltaTime: Double, trans: Transaction) {}
@@ -8,8 +11,8 @@ class ShipChecker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
         beforeInteractions = { missingShip = true },
         interactWithShip = { _, _ -> missingShip = false },
         afterInteractions = { trans ->
-            if ( missingShip ) {
-                trans.add(ShipMaker(ship))
+            if ( missingShip && scoreKeeper.takeShip()) {
+                trans.add(ShipMaker(ship, scoreKeeper))
                 trans.remove(this)
             }
         }

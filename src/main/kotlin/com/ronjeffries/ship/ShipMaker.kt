@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
+class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : ISpaceObject, InteractingSpaceObject {
     private var safeToEmerge = true
     var asteroidTally = 0
     private var elapsedTime = 0.0
@@ -16,7 +16,7 @@ class ShipMaker(val ship: Ship) : ISpaceObject, InteractingSpaceObject {
     private fun replaceTheShip(trans: Transaction) {
         trans.add(ship)
         ship.dropIn()
-        trans.add(ShipChecker(ship))
+        trans.add(ShipChecker(ship, scoreKeeper))
         trans.remove(this)
         HyperspaceOperation(ship, asteroidTally).execute(trans)
     }

@@ -19,8 +19,10 @@ class Game {
     }
 
     fun createContents(controls: Controls) {
-        add(ShipChecker(newShip(controls)))
-        add(ScoreKeeper())
+        val ship = newShip(controls)
+        val scoreKeeper = ScoreKeeper()
+        add(ShipChecker(ship, scoreKeeper))
+        add(scoreKeeper)
         add(WaveChecker())
         add(SaucerMaker())
     }

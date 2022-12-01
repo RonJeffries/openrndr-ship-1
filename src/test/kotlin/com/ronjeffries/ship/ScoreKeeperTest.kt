@@ -48,4 +48,23 @@ class ScoreKeeperTest {
         assertThat(discards).contains(score)
         assertThat(keeper.formatted()).isEqualTo("00020")
     }
+
+    @Test
+    fun `ScoreKeeper provides ships to be made`() {
+        val keeper = ScoreKeeper(2)
+        val ship = Ship(Point.ZERO)
+        val checker = ShipChecker(ship, keeper)
+        val t1 = Transaction()
+        checker.subscriptions.beforeInteractions()
+        checker.subscriptions.afterInteractions(t1)
+        assertThat(t1.adds.size).isEqualTo(1)
+        val t2 = Transaction()
+        checker.subscriptions.beforeInteractions()
+        checker.subscriptions.afterInteractions(t2)
+        assertThat(t2.adds.size).isEqualTo(1)
+        val t3 = Transaction()
+        checker.subscriptions.beforeInteractions()
+        checker.subscriptions.afterInteractions(t3)
+        assertThat(t3.adds.size).isEqualTo(0)
+    }
 }
