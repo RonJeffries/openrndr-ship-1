@@ -12,7 +12,7 @@ class Game(val controlFlags: ControlFlags = ControlFlags()) {
     private var lastTime = 0.0
 
     init {
-        val ship = newShip(controls)
+        val ship = newShip(controlFlags)
         val start = Transaction()
         start.add(ship)
         start.add(ShipChecker(ship))
@@ -29,10 +29,10 @@ class Game(val controlFlags: ControlFlags = ControlFlags()) {
     }
 
 
-    private fun newShip(controls: Controls): Ship {
+    private fun newShip(flags: ControlFlags): Ship {
         return Ship(
             position = U.CENTER_OF_UNIVERSE,
-            controls = controls
+            controlFlags = flags
         )
     }
 

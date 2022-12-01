@@ -46,17 +46,15 @@ class SolidObjectTest {
 
     @Test
     fun `acceleration works`() {
-        val control = Controls()
         val ship = Ship(
             position = Vector2.ZERO,
-            controls = control
         )
         assertThat(ship.position).isEqualTo(Vector2.ZERO)
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
         ship.update(tick, Transaction())
         assertThat(ship.position).isEqualTo(Vector2.ZERO)
         assertThat(ship.velocity).isEqualTo(Vector2.ZERO)
-        control.flags.accelerate = true
+        ship.controls.flags.accelerate = true
         ship.update(tick, Transaction())
         val deltaXPerSecond = U.SHIP_ACCELERATION.x
         checkVector(ship.velocity, Vector2.UNIT_X * deltaXPerSecond / 60.0, "velocity")
@@ -66,16 +64,13 @@ class SolidObjectTest {
     @Test
     fun `ship can turn left`() {
         val control = Controls()
-        val ship = Ship(
-            position = Vector2.ZERO,
-            controls = control
-        )
-        control.flags.left = true
+        val ship = Ship(position = Vector2.ZERO)
+        ship.controls.flags.left = true
         ship.update(tick * 30, Transaction())
         val expected = U.SHIP_ROTATION_SPEED * 30.0 / 60.0
         assertThat(ship.heading).isEqualTo(-expected, within(0.01))
-        control.flags.left = false
-        control.flags.accelerate = true
+        ship.controls.flags.left = false
+        ship.controls.flags.accelerate = true
         val expectedVelocity = U.SHIP_ACCELERATION.rotate(-expected)
         ship.update(tick * 60, Transaction())
         checkVector(ship.velocity, expectedVelocity, "rotated velocity")
@@ -85,10 +80,9 @@ class SolidObjectTest {
     fun `ship can turn right`() {
         val control = Controls()
         val ship = Ship(
-            position = Vector2.ZERO,
-            controls = control
+            position = Vector2.ZERO
         )
-        control.flags.right = true
+        ship.controls.flags.right = true
         ship.update(tick * 10, Transaction())
         val expected = U.SHIP_ROTATION_SPEED * 10.0 / 60.0
         assertThat(ship.heading).isEqualTo(expected, within(0.01))
@@ -99,10 +93,9 @@ class SolidObjectTest {
         val control = Controls()
         val ship = Ship(
             position = Vector2.ZERO,
-            controls = control
         )
         ship.heading = -60.0 // northeast ish
-        control.flags.accelerate = true
+        ship.controls.flags.accelerate = true
         ship.update(100.0, Transaction()) // long time
         val v = ship.velocity
         val speed = v.length
@@ -116,10 +109,9 @@ class SolidObjectTest {
     fun `ship can fire missile`() {
         val controls = Controls()
         val ship = Ship(
-            position = Vector2.ZERO,
-            controls = controls
+            position = Vector2.ZERO
         )
-        controls.flags.fire = true
+        ship.controls.flags.fire = true
         val newMissiles = Transaction()
         ship.update(tick, newMissiles)
         assertThat(newMissiles.adds.size).isEqualTo(1) // does not return itself
@@ -130,20 +122,19 @@ class SolidObjectTest {
         val controls = Controls()
         val ship = Ship(
             position = Vector2.ZERO,
-            controls = controls
         )
-        controls.flags.fire = true
+        ship.controls.flags.fire = true
         val oneMissile = Transaction()
         ship.update(tick, oneMissile)
         assertThat(oneMissile.adds.size).isEqualTo(1)
         val noMissiles = Transaction()
         ship.update(tick, noMissiles)
         assertThat(noMissiles.adds.size).isEqualTo(0) // no firing
-        controls.flags.fire = false
+        ship.controls.flags.fire = false
         val newMissiles = Transaction()
         ship.update(tick, newMissiles)
         assertThat(newMissiles.adds.size).isEqualTo(0)
-        controls.flags.fire = true
+        ship.controls.flags.fire = true
         ship.update(tick, newMissiles)
         assertThat(newMissiles.adds.size).isEqualTo(1)
     }
@@ -212,13 +203,11 @@ class SolidObjectTest {
     @Test
     fun `missile starts ahead of ship`() {
         val sixtieth = 1.0 / 60.0
-        val controls = Controls()
         val ship = Ship(
-            position = Vector2(1000.0, 1000.0),
-            controls = controls
+            position = Vector2(1000.0, 1000.0)
         )
         ship.heading = 0.0
-        controls.flags.fire = true
+        ship.controls.flags.fire = true
         val missileOffset = Vector2(2 * 150.0 + 2 * 10.0, 0.0)
         var expectedPosition = ship.position + missileOffset.rotate(ship.heading)
         var additions = Transaction()
@@ -227,12 +216,12 @@ class SolidObjectTest {
         var missile = additions.adds.first() as Missile
         print(missile.position)
         assertThat(missile.position).isEqualTo(expectedPosition)
-        controls.flags.fire = false
+        ship.controls.flags.fire = false
         additions = Transaction()
         ship.update(sixtieth, additions)
         assertThat(additions.adds).isEmpty()
         ship.heading = 90.0
-        controls.flags.fire = true
+        ship.controls.flags.fire = true
         expectedPosition = ship.position + missileOffset.rotate(ship.heading)
         additions = Transaction()
         ship.update(sixtieth, additions)
