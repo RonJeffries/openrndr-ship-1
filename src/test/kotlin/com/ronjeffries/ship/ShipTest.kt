@@ -26,6 +26,7 @@ class AltShip(
     var isActive = true
 
     override fun update(deltaTime: Double, trans: Transaction) {
+        elapsedTime += deltaTime
         asteroidsSeen = 0
         asteroidTooClose = false
         control(deltaTime, trans)
@@ -83,9 +84,24 @@ class AltShip(
         heading += degrees
     }
 
-    fun interactWith(asteroid: Asteroid) {
+    fun interactWith(asteroid: Asteroid, transaction: Transaction) {
         asteroidsSeen += 1
         if (!isActive && position.distanceTo(asteroid.position) < U.SAFE_SHIP_DISTANCE) asteroidTooClose = true
+    }
+
+    fun deactivate() {
+        isActive = false
+        elapsedTime = 0.0
+    }
+
+    fun reactivateIfPossible() {
+        if (!asteroidTooClose && elapsedTime > U.MAKER_DELAY) isActive = true
+    }
+
+    fun destroy(newPosition: Point, transaction: Transaction) {
+        transaction.add(Splat(position))
+        position = newPosition
+        isActive = false
     }
 
 }
@@ -114,7 +130,7 @@ class ShipTest {
         val asteroid = Asteroid(U.randomEdgePoint())
         ship.isActive = false
         ship.update(0.0, transaction)
-        ship.interactWith(asteroid)
+        ship.interactWith(asteroid, transaction)
         assertThat(ship.asteroidsSeen).isEqualTo(1)
     }
 
@@ -123,7 +139,7 @@ class ShipTest {
         ship.isActive = false
         val asteroid = Asteroid(ship.position)
         ship.update(0.0, transaction)
-        ship.interactWith(asteroid)
+        ship.interactWith(asteroid, transaction)
         assertThat(ship.asteroidTooClose).isEqualTo(true)
     }
 
@@ -132,8 +148,52 @@ class ShipTest {
         ship.isActive = false
         val asteroid = Asteroid(U.randomEdgePoint())
         ship.update(0.0, transaction)
-        ship.interactWith(asteroid)
+        ship.interactWith(asteroid, transaction)
         assertThat(ship.asteroidsSeen).isEqualTo(1)
+    }
+
+    @Test
+    fun `active vs asteroid ignores too far`() {
+        val asteroid = Asteroid(U.randomEdgePoint())
+        ship.update(0.0, transaction)
+        ship.interactWith(asteroid, transaction)
+        assertThat(ship.asteroidsSeen).isEqualTo(1)
+    }
+
+
+    @Test
+    fun `ship deactivation lasts 3 seconds if no asteroids too close`() {
+        ship.deactivate()
+        ship.update(1.0, transaction)
+        ship.reactivateIfPossible()
+        assertThat(ship.isActive).isFalse()
+        ship.update(1.0, transaction)
+        ship.reactivateIfPossible()
+        assertThat(ship.isActive).isFalse()
+        ship.update(1.1, transaction)
+        ship.reactivateIfPossible()
+        assertThat(ship.isActive).isTrue()
+    }
+
+    @Test
+    fun `ship deactivation lasts longer if asteroids too close`() {
+        val asteroid = Asteroid(U.CENTER_OF_UNIVERSE)
+        ship.deactivate()
+        ship.update(3.1, transaction)
+        ship.interactWith(asteroid, transaction)
+        ship.reactivateIfPossible()
+        assertThat(ship.isActive).isFalse()
+        ship.update(0.1, transaction)
+        ship.reactivateIfPossible()
+        assertThat(ship.isActive).isTrue()
+    }
+
+    @Test
+    fun `destroy ship adds splat, deactivates, re-positions`() {
+        ship.position = U.randomEdgePoint()
+        ship.destroy(U.CENTER_OF_UNIVERSE, transaction)
+        assertThat(ship.isActive).isFalse()
+        assertThat(transaction.typedAdds.splats).isNotEmpty()
     }
 
 }
