@@ -45,6 +45,7 @@ class AltShip(
     private fun fire(transaction: Transaction) {
         if (controlFlags.fire) {
             transaction.add(Missile(this))
+            controlFlags.fire = false
         }
     }
 
@@ -98,9 +99,9 @@ class AltShip(
     }
 
     fun destroy(newPosition: Point, transaction: Transaction) {
-        transaction.add(Splat(position))
         position = newPosition
-        isActive = false
+        deactivate()
+        transaction.add(Splat(position))
     }
 
     companion object {

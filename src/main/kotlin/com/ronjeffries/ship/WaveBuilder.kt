@@ -4,7 +4,7 @@ class WaveBuilder {
     var isWaiting = false
     var elapsedTime = 0.0
 
-    fun tick(deltaTime: Double, asteroidCount: Int, transaction: Transaction) {
+    fun update(deltaTime: Double, asteroidCount: Int, transaction: Transaction) {
         elapsedTime += deltaTime
         if (!isWaiting) {
             checkForAsteroids(asteroidCount)
