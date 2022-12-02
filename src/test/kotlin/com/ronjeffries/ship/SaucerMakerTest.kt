@@ -10,9 +10,9 @@ class SaucerMakerTest {
         val maker = SaucerMaker(saucer)
         val trans = Transaction()
         maker.subscriptions.beforeInteractions()
-        assertThat(maker.saucerMissing).isEqualTo(false)
-        maker.subscriptions.interactWithSaucer(saucer, trans)
         assertThat(maker.saucerMissing).isEqualTo(true)
+        maker.subscriptions.interactWithSaucer(saucer, trans)
+        assertThat(maker.saucerMissing).isEqualTo(false)
     }
 
     @Test
