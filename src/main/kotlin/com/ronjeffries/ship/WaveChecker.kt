@@ -11,16 +11,20 @@ class WaveChecker: ISpaceObject, InteractingSpaceObject {
     override val subscriptions = Subscriptions (
         beforeInteractions = { asteroidsMissing = true},
         interactWithAsteroid = { _, _ -> asteroidsMissing = false },
-        afterInteractions = this::makeWaveInDueTime
+        afterInteractions = this::makeWaveIfNeeded
     )
 
-    private fun makeWaveInDueTime(trans: Transaction) {
+    private fun makeWaveIfNeeded(trans: Transaction) {
         if ( asteroidsMissing && !makingWave ) {
-            makingWave = true
-            TellMeWhen (4.0, trans) {
-                makeWave(it)
-                makingWave = false
-            }
+            makeWaveSoon(trans)
+        }
+    }
+
+    private fun makeWaveSoon(trans: Transaction) {
+        makingWave = true
+        TellMeWhen(4.0, trans) {
+            makeWave(it)
+            makingWave = false
         }
     }
 

@@ -5,8 +5,8 @@ import org.openrndr.draw.*
 
 fun main() = application {
     configure {
-        width = 800
-        height = 800
+        width = 1000
+        height = width
     }
 
     program {
