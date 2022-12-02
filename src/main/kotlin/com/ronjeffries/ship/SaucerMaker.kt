@@ -1,19 +1,16 @@
 package com.ronjeffries.ship
 
 class SaucerMaker(saucer: Saucer = Saucer()): InteractingSpaceObject, ISpaceObject  {
-    var sawSaucer: Boolean = false
-    var timeSinceLastSaucer = 0.0
+    var saucerMissing: Boolean = true
 
     override fun update(deltaTime: Double, trans: Transaction) {}
 
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
     override val subscriptions: Subscriptions = Subscriptions(
-        beforeInteractions = { sawSaucer = false },
-        interactWithSaucer = { _, _ ->
-            timeSinceLastSaucer = 0.0
-            sawSaucer = true
-        },
+        beforeInteractions = { saucerMissing = true },
+        interactWithSaucer = { _, _ -> saucerMissing = false },
         afterInteractions = { trans ->
-            if (! sawSaucer ) {
+            if ( saucerMissing ) {
                 trans.remove(this) // stop looking
                 TellMeWhen(7.0, trans) {
                     it.add(saucer)
@@ -22,9 +19,4 @@ class SaucerMaker(saucer: Saucer = Saucer()): InteractingSpaceObject, ISpaceObje
             }
         }
     )
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        // no direct interactions
-    }
-
 }
