@@ -8,12 +8,20 @@ class SpaceObjectCollection {
     }
     
     fun addAll(newbies: Collection<ISpaceObject>) {
-        spaceObjects.addAll(newbies)
+        newbies.forEach{ add(it) }
+    }
+
+    fun any(predicate: (ISpaceObject)-> Boolean): Boolean {
+        return spaceObjects.any(predicate)
     }
 
     fun applyChanges(transaction: Transaction) = transaction.applyChanges(this)
 
     fun forEach(spaceObject: (ISpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
+
+    fun contains(obj:ISpaceObject): Boolean {
+        return spaceObjects.contains(obj)
+    }
 
     fun pairsToCheck(): List<Pair<ISpaceObject, ISpaceObject>> {
         val pairs = mutableListOf<Pair<ISpaceObject, ISpaceObject>>()

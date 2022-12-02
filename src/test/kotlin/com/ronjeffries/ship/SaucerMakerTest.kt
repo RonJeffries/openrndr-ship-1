@@ -31,4 +31,21 @@ class SaucerMakerTest {
         assertThat(newTrans.adds).contains(maker)
     }
 
+    @Test
+    fun `game-centric saucer appears after seven seconds`() {
+        // cycle receives ELAPSED TIME!
+        val mix = SpaceObjectCollection()
+        val saucer = Saucer()
+        val maker = SaucerMaker(saucer)
+        mix.add(maker)
+        val game = Game(mix) // makes game without the standard init
+        game.cycle(0.1) // ELAPSED seconds only
+        assertThat(mix.size).isEqualTo(1)
+        assertThat(mix.any { it is TellMeWhen }).isEqualTo(true)
+        game.cycle(7.2) //ELAPSED
+        assertThat(mix.contains(saucer)).describedAs("saucer missing").isEqualTo(true)
+        assertThat(mix.contains(maker)).describedAs("maker missing").isEqualTo(true)
+        assertThat(mix.size).isEqualTo(2)
+    }
+
 }

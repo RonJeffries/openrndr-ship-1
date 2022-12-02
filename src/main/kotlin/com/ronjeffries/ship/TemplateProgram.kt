@@ -39,7 +39,7 @@ fun main() = application {
             val worldScale = width/10000.0
             drawer.fontMap = font
             drawer.scale(worldScale, worldScale)
-            game.cycle(drawer,seconds)
+            game.cycle(seconds, drawer)
         }
     }
 }

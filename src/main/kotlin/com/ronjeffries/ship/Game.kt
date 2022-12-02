@@ -3,8 +3,7 @@ package com.ronjeffries.ship
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 
-class Game {
-    val knownObjects = SpaceObjectCollection()
+class Game(val knownObjects:SpaceObjectCollection = SpaceObjectCollection()) {
     private var lastTime = 0.0
 
     fun add(newObject: ISpaceObject) = knownObjects.add(newObject)
@@ -30,14 +29,14 @@ class Game {
     private fun newShip(controls: Controls): Ship =
         Ship(U.CENTER_OF_UNIVERSE, controls)
 
-    fun cycle(drawer: Drawer, seconds: Double) {
-        val deltaTime = seconds - lastTime
-        lastTime = seconds
+    fun cycle(elapsedSeconds: Double, drawer: Drawer? = null) {
+        val deltaTime = elapsedSeconds - lastTime
+        lastTime = elapsedSeconds
         tick(deltaTime)
         beginInteractions()
         processInteractions()
         finishInteractions()
-        draw(drawer)
+        drawer?.let {draw(drawer)}
     }
 
     private fun beginInteractions()
