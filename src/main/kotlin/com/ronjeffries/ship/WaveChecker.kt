@@ -1,27 +1,32 @@
 package com.ronjeffries.ship
 
 class WaveChecker: ISpaceObject, InteractingSpaceObject {
-    private var sawAsteroid = false
-    var elapsedTime = 0.0
+    private var asteroidsMissing = true
+    var makingWave = false
+    var numberToCreate = 4
 
-    override fun update(deltaTime: Double, trans: Transaction) {
-        elapsedTime += deltaTime
-    }
-
+    override fun update(deltaTime: Double, trans: Transaction) {}
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) = Unit
+
     override val subscriptions = Subscriptions (
-        beforeInteractions = { sawAsteroid = false},
-        interactWithAsteroid = { _, _ -> sawAsteroid = true },
+        beforeInteractions = { asteroidsMissing = true},
+        interactWithAsteroid = { _, _ -> asteroidsMissing = false },
         afterInteractions = this::makeWaveInDueTime
     )
 
     private fun makeWaveInDueTime(trans: Transaction) {
-        if ( elapsedTime > 1.0  ) {
-            elapsedTime = 0.0
-            if (!sawAsteroid) {
-                elapsedTime = -5.0 // judicious delay to allow time for creation
-                trans.add(WaveMaker(4))
+        if ( asteroidsMissing && !makingWave ) {
+            makingWave = true
+            TellMeWhen (4.0, trans) {
+                makeWave(it)
+                makingWave = false
             }
+        }
+    }
+
+    private fun makeWave(trans: Transaction) {
+        for (i in 1..numberToCreate) {
+            trans.add(Asteroid(U.randomEdgePoint()))
         }
     }
 }

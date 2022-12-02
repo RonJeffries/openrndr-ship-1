@@ -28,7 +28,6 @@ class SaucerMakerTest {
         val newTrans = Transaction()
         tmw.update(7.1, newTrans)
         assertThat(newTrans.adds).contains(saucer)
-        assertThat(newTrans.adds).contains(maker)
     }
 
     @Test
@@ -39,10 +38,11 @@ class SaucerMakerTest {
         val maker = SaucerMaker(saucer)
         mix.add(maker)
         val game = Game(mix) // makes game without the standard init
-        game.cycle(0.1) // ELAPSED seconds only
-        assertThat(mix.size).isEqualTo(1)
+        game.cycle(0.1) // ELAPSED seconds
+        assertThat(mix.size).isEqualTo(2)
+        assertThat(mix.contains(maker)).describedAs("maker sticks around").isEqualTo(true)
         assertThat(mix.any { it is TellMeWhen }).isEqualTo(true)
-        game.cycle(7.2) //ELAPSED
+        game.cycle(7.2) //ELAPSED seconds
         assertThat(mix.contains(saucer)).describedAs("saucer missing").isEqualTo(true)
         assertThat(mix.contains(maker)).describedAs("maker missing").isEqualTo(true)
         assertThat(mix.size).isEqualTo(2)

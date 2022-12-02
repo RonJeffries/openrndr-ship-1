@@ -5,42 +5,31 @@ import org.junit.jupiter.api.Test
 
 class WaveCheckerTest {
     @Test
-    fun `checker returns nothing when elapsed lt 1`() {
+    fun `checker creates wave after 4 seconds`() {
+        val mix = SpaceObjectCollection()
         val ck = WaveChecker()
+        mix.add(ck)
+        val game = Game(mix)
+        game.cycle(0.1)
+        assertThat(mix.any { it is TellMeWhen }).isEqualTo(true)
+        assertThat(mix.size).isEqualTo(2) // checker and TMW
+        game.cycle(4.2)
+        assertThat(mix.size).isEqualTo(5) // asteroids plus checker
         ck.update(0.5, Transaction())
-        ck.subscriptions.beforeInteractions()
-        val trans = Transaction()
-        ck.subscriptions.afterInteractions(trans)
-        assertThat(trans.adds).isEmpty()
-        assertThat(trans.removes).isEmpty()
-        assertThat(ck.elapsedTime).isEqualTo(0.5)
-        val toCreate = Transaction()
-        ck.update(0.1, toCreate)
-        assertThat(toCreate.adds).isEmpty() // always is, don't check again
     }
 
     @Test
-    fun `returns WaveMaker when elapsed gt 1 and no asteroid scanned`() {
+    fun `does not create wave if asteroid present`() {
+        val mix = SpaceObjectCollection()
         val ck = WaveChecker()
-        ck.update(1.1, Transaction())
-        ck.subscriptions.beforeInteractions()
-        val trans = Transaction()
-        ck.subscriptions.afterInteractions(trans)
-        assertThat(trans.adds.toList()[0]).isInstanceOf(WaveMaker::class.java)
-        assertThat(ck.elapsedTime).isEqualTo(-5.0)
-    }
-
-    @Test
-    fun `returns empty when elapsed gt 1 and an asteroid IS scanned`() {
-        val a = Asteroid(U.randomPoint(), U.randomVelocity(U.ASTEROID_SPEED))
-        val ck = WaveChecker()
-        ck.update(1.1, Transaction())
-        ck.subscriptions.beforeInteractions()
-        ck.subscriptions.interactWithAsteroid(a, Transaction())
-        val trans = Transaction()
-        ck.subscriptions.afterInteractions(trans)
-        assertThat(trans.adds).isEmpty()
-        assertThat(trans.removes).isEmpty()
-        assertThat(ck.elapsedTime).isEqualTo(0.0)
+        mix.add(ck)
+        val a = Asteroid(U.randomEdgePoint())
+        mix.add(a)
+        val game = Game(mix)
+        game.cycle(0.1)
+        assertThat(mix.any { it is TellMeWhen }).isEqualTo(false)
+        assertThat(mix.size).isEqualTo(2) // checker and asteroid
+        game.cycle(4.2)
+        assertThat(mix.size).isEqualTo(2) // checker and asteroid
     }
 }
