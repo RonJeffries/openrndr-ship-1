@@ -3,12 +3,12 @@ package com.ronjeffries.ship
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class TellMeWhenTest {
+class DeferredActionTest {
     var done = false
     @Test
     fun `triggers after n seconds`() {
         val trans = Transaction()
-        TellMeWhen(2.0, trans) { _ -> done = true}
+        DeferredAction(2.0, trans) { _ -> done = true}
         val tmw = trans.firstAdd()
         val newTrans = Transaction()
         tmw.update(1.1, newTrans)

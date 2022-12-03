@@ -24,7 +24,7 @@ class SaucerMakerTest {
         maker.subscriptions.beforeInteractions()
         // no saucer for you
         maker.subscriptions.afterInteractions(trans)
-        val tmw = trans.firstAdd() as TellMeWhen
+        val tmw = trans.firstAdd() as DeferredAction
         val newTrans = Transaction()
         tmw.update(7.1, newTrans)
         assertThat(newTrans.adds).contains(saucer)
@@ -41,7 +41,7 @@ class SaucerMakerTest {
         game.cycle(0.1) // ELAPSED seconds
         assertThat(mix.size).isEqualTo(2)
         assertThat(mix.contains(maker)).describedAs("maker sticks around").isEqualTo(true)
-        assertThat(mix.any { it is TellMeWhen }).isEqualTo(true)
+        assertThat(mix.any { it is DeferredAction }).isEqualTo(true)
         game.cycle(7.2) //ELAPSED seconds
         assertThat(mix.contains(saucer)).describedAs("saucer missing").isEqualTo(true)
         assertThat(mix.contains(maker)).describedAs("maker missing").isEqualTo(true)

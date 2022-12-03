@@ -22,7 +22,7 @@ class Game(val knownObjects:SpaceObjectCollection = SpaceObjectCollection()) {
         val scoreKeeper = ScoreKeeper()
         add(ShipChecker(ship, scoreKeeper))
         add(scoreKeeper)
-        add(WaveChecker())
+        add(WaveMaker())
         add(SaucerMaker())
     }
 

@@ -19,8 +19,10 @@ class Missile(
     override var position: Point = Point.ZERO
     var velocity: Velocity = Velocity.ZERO
     override val killRadius: Double = 10.0
-    private var elapsedTime: Double = 0.0
-    private val lifetime: Double = 3.0
+    private val timeOut = OneShot(3.0) {
+        it.remove(this)
+        it.add(Splat(this))
+    }
 
     init {
         val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(shipHeading)
@@ -31,8 +33,7 @@ class Missile(
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {
-        elapsedTime += deltaTime
-        if (elapsedTime > lifetime) trans.remove(this)
+        timeOut.execute(trans)
         position = (position + velocity * deltaTime).cap()
     }
 
@@ -43,8 +44,6 @@ class Missile(
         drawer.fill = color
         drawer.circle(Point.ZERO, killRadius * 3.0)
     }
-
-    private fun finalize(): List<ISpaceObject> = listOf(Splat(this))
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
@@ -66,7 +65,6 @@ class Missile(
             if (checkCollision(missile)) { trans.remove(this) }
         },
         draw = this::draw,
-        finalize = this::finalize
     )
 
     private fun checkCollision(other: Collider) = Collision(other).hit(this)

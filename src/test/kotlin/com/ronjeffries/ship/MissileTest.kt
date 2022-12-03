@@ -5,29 +5,21 @@ import org.junit.jupiter.api.Test
 
 class MissileTest {
     @Test
-    fun `can be created, dies on time`() {
+    fun `missile and splat death`() {
+        val mix = SpaceObjectCollection()
         val ship = Ship(
             position = U.randomPoint()
         )
         val missile = Missile(ship)
-        val trans = Transaction()
-        missile.update(0.1, trans)
-        assertThat((trans.removes.size)).isEqualTo(0)
-        missile.update(3.1, trans)
-        assertThat((trans.removes.size)).isEqualTo(1)
-    }
-
-    @Test
-    fun `splat death`() {
-        val ship = Ship(
-            position = U.randomPoint()
-        )
-        val missile = Missile(ship)
-        val splatList = missile.subscriptions.finalize()
-        val splat = splatList[0]
-        assertThat(splat is Splat).isEqualTo(true)
-        val trans = Transaction()
-        splat.update(4.0, trans)
-        assertThat(trans.removes.size).isEqualTo(1)
+        mix.add(missile)
+        val game = Game(mix)
+        assertThat(mix.contains(missile)).isEqualTo(true)
+        game.cycle(0.0)
+        assertThat(mix.any { it is DeferredAction }).describedAs("deferred action should be present").isEqualTo(true)
+        game.cycle(3.1)
+        assertThat(mix.contains(missile)).describedAs("missile should be dead").isEqualTo(false)
+        assertThat(mix.any { it is Splat }).describedAs("splat should be present").isEqualTo(true)
+        game.cycle(5.2)
+        assertThat(mix.any { it is Splat }).describedAs("splat should be gone").isEqualTo(false)
     }
 }

@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-class TellMeWhen(
+class DeferredAction(
     private val delay: Double,
     initialTransaction: Transaction,
     private val action: (Transaction) -> Unit
