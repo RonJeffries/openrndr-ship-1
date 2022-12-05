@@ -14,6 +14,7 @@ object U {
     const val MAKER_DELAY = 3.0
     const val DROP_SCALE = 3.0
     const val SAUCER_LIFETIME = 10.0
+    const val SPLAT_LIFETIME = 2.0
     val SHIP_ACCELERATION = Velocity(1000.0, 0.0)
     val SHIP_ROTATION_SPEED = 180.0 // degrees per second
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)

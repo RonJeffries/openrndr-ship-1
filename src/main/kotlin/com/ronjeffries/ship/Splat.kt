@@ -13,7 +13,7 @@ class Splat(
     constructor(saucer: Saucer) : this(saucer.position, 2.0, ColorRGBa.GREEN)
 
     var elapsedTime = 0.0
-    private val lifetime = 2.0
+    private val lifetime = U.SPLAT_LIFETIME
     private var view = SplatView(lifetime)
 
     override fun update(deltaTime: Double, trans: Transaction) {
