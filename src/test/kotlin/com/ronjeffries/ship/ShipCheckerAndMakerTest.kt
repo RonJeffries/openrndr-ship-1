@@ -25,23 +25,23 @@ class ShipCheckerAndMakerTest {
     }
 
     @Test
-    fun `ShipChecker does nothing if ship seen via withOther`() {
-        val ship = Ship(
-            position = U.randomPoint()
-        )
-        val checker = ShipChecker(ship)
-        checker.subscriptions.beforeInteractions()
+    fun `ship randomizes position on hyperspace entry`() {
+        val ship = Ship(U.CENTER_OF_UNIVERSE)
         val trans = Transaction()
-        checker.subscriptions.interactWithShip(ship, trans)
-        assertThat(trans.removes).isEmpty()
-        val emptyTransaction = Transaction()
-        checker.subscriptions.afterInteractions(emptyTransaction)
-        assertThat(emptyTransaction.adds).describedAs("something added").isEmpty()
-        assertThat(emptyTransaction.removes).isEmpty()
-        val alsoNothing = Transaction()
-        checker.update(0.01, alsoNothing)
-        assertThat(alsoNothing.adds).isEmpty()
-        assertThat(alsoNothing.removes).isEmpty()
+        ship.enterHyperspace(trans)
+        assertThat(trans.firstRemove()).isEqualTo(ship)
+        ship.finalize()
+        assertThat(ship.position).isNotEqualTo(U.CENTER_OF_UNIVERSE)
+    }
+
+    @Test
+    fun `ship goes to center on collision death`() {
+        val ship = Ship(U.randomPoint())
+        val trans = Transaction()
+        ship.collision(trans)
+        assertThat(trans.firstRemove()).isEqualTo(ship)
+        ship.finalize()
+        assertThat(ship.position).isEqualTo(U.CENTER_OF_UNIVERSE)
     }
 
     @Test
@@ -56,6 +56,31 @@ class ShipCheckerAndMakerTest {
         checker.subscriptions.afterInteractions(transaction)
         assertThat(transaction.removes.toList()[0]).isEqualTo(checker)
         assertThat(transaction.adds.toList()[0]).isInstanceOf(ShipMaker::class.java)
+    }
+
+    @Test
+    fun `debits ScoreKeeper if ship is dead`() {
+        val scoreKeeper = ScoreKeeper(1)
+        val ship = Ship(U.CENTER_OF_UNIVERSE)
+        val checker = ShipChecker(ship, scoreKeeper)
+        checker.subscriptions.beforeInteractions()
+        val trans = Transaction()
+        checker.subscriptions.afterInteractions(trans)
+        assertThat(scoreKeeper.shipCount).isEqualTo(0)
+    }
+
+    @Test
+    fun `does not debit ScoreKeeper if ship is in hyperspace`() {
+        val scoreKeeper = ScoreKeeper(1)
+        val ship = Ship(U.CENTER_OF_UNIVERSE)
+        val removalTrans = Transaction()
+        ship.enterHyperspace(removalTrans)
+        assertThat(removalTrans.firstRemove()).isEqualTo(ship)
+        val checker = ShipChecker(ship, scoreKeeper)
+        checker.subscriptions.beforeInteractions()
+        val makerTrans = Transaction()
+        checker.subscriptions.afterInteractions(makerTrans)
+        assertThat(scoreKeeper.shipCount).isEqualTo(1)
     }
 
     @Test
@@ -91,6 +116,26 @@ class ShipCheckerAndMakerTest {
         assertThat(trans.adds.size).isEqualTo(2)
         assertThat(trans.adds).contains(ship)
         assertThat(trans.firstRemove()).isEqualTo(maker)
+    }
+
+    @Test
+    fun `asteroid or saucer clears safeToEmerge`() {
+        val ship = Ship(
+            position = U.CENTER_OF_UNIVERSE
+        )
+        val asteroid = Asteroid(U.CENTER_OF_UNIVERSE)
+        val saucer = Saucer()
+        saucer.position = U.CENTER_OF_UNIVERSE
+        val maker = ShipMaker(ship)
+        val ignored = Transaction()
+        maker.subscriptions.beforeInteractions()
+        assertThat(maker.safeToEmerge).isEqualTo(true)
+        maker.subscriptions.interactWithAsteroid(asteroid, ignored)
+        assertThat(maker.safeToEmerge).isEqualTo(false)
+        maker.subscriptions.beforeInteractions()
+        assertThat(maker.safeToEmerge).isEqualTo(true)
+        maker.subscriptions.interactWithSaucer(saucer, ignored)
+        assertThat(maker.safeToEmerge).isEqualTo(false)
     }
 
     @Test

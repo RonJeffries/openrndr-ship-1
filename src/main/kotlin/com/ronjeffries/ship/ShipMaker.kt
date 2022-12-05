@@ -1,7 +1,7 @@
 package com.ronjeffries.ship
 
 class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : ISpaceObject, InteractingSpaceObject {
-    private var safeToEmerge = true
+    var safeToEmerge = true
     var asteroidTally = 0
     private var elapsedTime = 0.0
 
@@ -9,8 +9,8 @@ class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : 
         elapsedTime += deltaTime
     }
 
-    private fun tooClose(asteroid: Asteroid): Boolean {
-        return ship.position.distanceTo(asteroid.position) < U.SAFE_SHIP_DISTANCE
+    private fun tooClose(collider: Collider): Boolean {
+        return ship.position.distanceTo(collider.position) < U.SAFE_SHIP_DISTANCE
     }
 
     private fun replaceTheShip(trans: Transaction) {
@@ -33,11 +33,15 @@ class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : 
             asteroidTally += 1
             safeToEmerge = safeToEmerge && !tooClose(asteroid)
         },
+        interactWithSaucer = { saucer, _ ->
+            asteroidTally += 1
+            safeToEmerge = safeToEmerge && !tooClose(saucer)
+        },
         afterInteractions = { trans->
-            if (inHyperspace() || elapsedTime > U.MAKER_DELAY && safeToEmerge) {
+            if (ship.inHyperspace || elapsedTime > U.MAKER_DELAY && safeToEmerge) {
                 replaceTheShip(trans)
             }
         }
     )
-    private fun inHyperspace() = ship.position != U.CENTER_OF_UNIVERSE
+
 }

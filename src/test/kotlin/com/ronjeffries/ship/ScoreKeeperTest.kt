@@ -52,7 +52,7 @@ class ScoreKeeperTest {
     @Test
     fun `ScoreKeeper provides ships to be made`() {
         val keeper = ScoreKeeper(2)
-        val ship = Ship(Point.ZERO)
+        val ship = Ship(U.CENTER_OF_UNIVERSE)
         val checker = ShipChecker(ship, keeper)
         val t1 = Transaction()
         checker.subscriptions.beforeInteractions()

@@ -16,20 +16,20 @@ class Ship(
     var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
     var dropScale = U.DROP_SCALE
+    var inHyperspace = false
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
         interactWithSaucer = { saucer, trans -> checkCollision(saucer, trans) },
         interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
-        interactWithShipDestroyer = { _, trans -> trans.remove(this) },
+        interactWithShipDestroyer = { _, trans -> collision(trans) },
         draw = this::draw,
         finalize = this::finalize
     )
 
     private fun checkCollision(other: Collider, trans: Transaction) {
         if (weAreCollidingWith(other)) {
-            trans.remove(this)
-            trans.add(Splat(this))
+            collision(trans)
         }
     }
 
@@ -38,17 +38,27 @@ class Ship(
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {
+        inHyperspace = false
         dropScale -= U.DROP_SCALE/60.0
         if (dropScale < 1.0 ) dropScale = 1.0
         controls.control(this, deltaTime, trans)
         move(deltaTime)
     }
 
+    fun enterHyperspace(trans: Transaction) {
+        inHyperspace = true
+        trans.remove(this)
+    }
+
+    fun collision(trans: Transaction) {
+        trans.add(Splat(this))
+        trans.remove(this)
+        inHyperspace = false // belt and suspenders
+    }
+
     fun accelerate(deltaV: Acceleration) {
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
-
-    private fun deathDueToCollision(): Boolean = !controls.recentHyperspace
 
     fun dropIn() {
         dropScale = U.DROP_SCALE
@@ -74,15 +84,14 @@ class Ship(
 
     private fun weAreCollidingWith(other: Collider): Boolean = Collision(other).hit(this)
 
-    private fun finalize(): List<ISpaceObject> {
-        if ( deathDueToCollision() ) {
+    fun finalize(): List<ISpaceObject> {
+        if ( inHyperspace ) {
+            position = U.randomPoint()
+        } else {
             position = U.CENTER_OF_UNIVERSE
             velocity = Velocity.ZERO
             heading = 0.0
-        } else {
-            position = U.randomPoint()
         }
-        controls.recentHyperspace = false
         return emptyList()
     }
 

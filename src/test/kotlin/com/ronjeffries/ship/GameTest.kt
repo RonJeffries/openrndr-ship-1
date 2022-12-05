@@ -22,6 +22,7 @@ class GameTest {
         assertThat(x).isEqualTo(100.0 + 12 * 50.0, within(0.1))
         assertThat(y).isEqualTo(100.0 + 12 * 50.0, within(0.1))
         val trans2 = game.changesDueToInteractions()
+        println(trans2.firstRemove())
         assertThat(trans2.removes.size).isEqualTo(2)
     }
 

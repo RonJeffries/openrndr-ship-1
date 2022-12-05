@@ -30,7 +30,6 @@ fun main() = application {
                 "k" -> {controls.fire = false}
                 "space" -> {
                     controls.hyperspace = false
-                    controls.recentHyperspace = false
                 }
             }
         }

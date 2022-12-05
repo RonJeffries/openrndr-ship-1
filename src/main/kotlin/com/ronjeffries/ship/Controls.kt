@@ -6,13 +6,11 @@ class Controls {
     var right = false
     var fire = false
     var hyperspace = false
-    var recentHyperspace = false
 
     fun control(ship: Ship, deltaTime: Double, trans: Transaction) {
         if (hyperspace) {
             hyperspace = false
-            recentHyperspace = true
-            trans.addAll(listOf(ShipDestroyer()))
+            ship.enterHyperspace(trans)
         }
         turn(ship, deltaTime)
         accelerate(ship, deltaTime)
