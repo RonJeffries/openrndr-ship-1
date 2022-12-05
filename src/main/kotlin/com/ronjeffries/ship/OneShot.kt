@@ -12,7 +12,11 @@ class OneShot(private val delay: Double, private val action: (Transaction)->Unit
             }
         }
     }
+
     fun cancel(trans: Transaction) {
-        if (deferred != null) trans.remove(deferred!!)
+        if (deferred != null) {
+            triggered = false
+            trans.remove(deferred!!)
+        }
     }
 }
