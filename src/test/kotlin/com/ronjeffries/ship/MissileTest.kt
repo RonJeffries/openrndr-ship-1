@@ -19,7 +19,8 @@ class MissileTest {
         game.cycle(3.1)
         assertThat(mix.contains(missile)).describedAs("missile should be dead").isEqualTo(false)
         assertThat(mix.any { it is Splat }).describedAs("splat should be present").isEqualTo(true)
-        game.cycle(5.2)
+        game.cycle(3.2) // needs a tick to init
+        game.cycle(5.3)
         assertThat(mix.any { it is Splat }).describedAs("splat should be gone").isEqualTo(false)
     }
 }
