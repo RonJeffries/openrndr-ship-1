@@ -19,7 +19,7 @@ class OneShotTest {
     }
 
     @Test
-    fun `won't run twice `() {
+    fun `won't run twice immediately`() {
         val trans = Transaction()
         var count = 0
         val once = OneShot(2.0) { count += 1}
@@ -29,6 +29,23 @@ class OneShotTest {
         val empty = Transaction()
         once.execute(empty)
         assertThat(empty.adds).isEmpty()
+    }
+
+    @Test
+    fun `will run twice after action`() {
+        val trans = Transaction()
+        var count = 0
+        val once = OneShot(2.0) { count += 1}
+        assertThat(count).isEqualTo(0)
+        once.execute(trans)
+        val defer = trans.firstAdd()
+        val removeTrans = Transaction()
+        defer.update(2.1, removeTrans)
+        assertThat(count).isEqualTo(1)
+        assertThat(removeTrans.firstRemove()).isEqualTo(defer)
+        val another = Transaction()
+        once.execute(another)
+        val newDefer = another.firstAdd()
     }
 
     @Test
