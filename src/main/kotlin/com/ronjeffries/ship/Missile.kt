@@ -48,24 +48,33 @@ class Missile(
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans ->
             if (checkCollision(asteroid)) {
-                trans.remove(this)
                 if (missileIsFromShip) trans.add(asteroid.getScore())
+                terminateMissile(trans)
             }
         },
         interactWithSaucer = { saucer, trans ->
             if (checkCollision(saucer)) {
-                trans.remove(this)
                 if (missileIsFromShip) trans.add(saucer.getScore())
+                terminateMissile(trans)
             }
         },
         interactWithShip = { ship, trans ->
-            if (checkCollision(ship)) { trans.remove(this) }
+            if (checkCollision(ship)) {
+                terminateMissile(trans)
+            }
         },
         interactWithMissile = { missile, trans ->
-            if (checkCollision(missile)) { trans.remove(this) }
+            if (checkCollision(missile)) {
+                terminateMissile(trans)
+            }
         },
         draw = this::draw,
     )
+
+    private fun terminateMissile(trans: Transaction) {
+        timeOut.cancel(trans)
+        trans.remove(this)
+    }
 
     private fun checkCollision(other: Collider) = Collision(other).hit(this)
 

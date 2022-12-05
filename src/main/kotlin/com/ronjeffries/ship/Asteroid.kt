@@ -61,7 +61,10 @@ class Asteroid(
     )
 
     private fun dieIfColliding(missile: Missile, trans: Transaction) {
-        if (Collision(missile).hit(this)) trans.remove(this)
+        if (Collision(missile).hit(this)) {
+            trans.remove(this)
+            trans.add(Splat(this))
+        }
     }
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) =

@@ -11,6 +11,7 @@ class Splat(
     constructor(ship: Ship) : this(ship.position, 2.0, ColorRGBa.WHITE)
     constructor(missile: Missile) : this(missile.position, 0.5, missile.color)
     constructor(saucer: Saucer) : this(saucer.position, 2.0, ColorRGBa.GREEN)
+    constructor(asteroid: Asteroid) : this(asteroid.position, 1.0, ColorRGBa.WHITE)
 
     var elapsedTime = 0.0
     private val lifetime = U.SPLAT_LIFETIME
