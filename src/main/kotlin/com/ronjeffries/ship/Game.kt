@@ -19,10 +19,10 @@ class Game(val knownObjects:SpaceObjectCollection = SpaceObjectCollection()) {
 
     fun createContents(controls: Controls) {
         val ship = newShip(controls)
-        val scoreKeeper = ScoreKeeper(8)
+        val scoreKeeper = ScoreKeeper(4)
         add(ShipChecker(ship, scoreKeeper))
         add(scoreKeeper)
-        add(WaveMaker(1))
+        add(WaveMaker())
         add(SaucerMaker())
     }
 

@@ -22,7 +22,6 @@ class Ship(
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
         interactWithSaucer = { saucer, trans -> checkCollision(saucer, trans) },
         interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
-        interactWithShipDestroyer = { _, trans -> collision(trans) },
         draw = this::draw,
         finalize = this::finalize
     )

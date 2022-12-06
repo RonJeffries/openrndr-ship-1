@@ -1,5 +1,7 @@
 package com.ronjeffries.ship
 
+import kotlin.random.Random
+
 class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : ISpaceObject, InteractingSpaceObject {
     var safeToEmerge = true
     var asteroidTally = 0
@@ -39,8 +41,7 @@ class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : 
 
     private fun replaceTheShip(trans: Transaction) {
         trans.remove(this)
-        val hyp = HyperspaceOperation(asteroidTally)
-        if (!ship.inHyperspace || hyp.ok()) {
+        if (!ship.inHyperspace || hyperspaceOK()) {
             trans.add(ship)
             ship.dropIn()
         } else {
@@ -50,4 +51,10 @@ class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : 
         }
         trans.add(ShipChecker(ship, scoreKeeper))
     }
+
+    private fun hyperspaceOK(): Boolean = !hyperspaceFailure(Random.nextInt(0, 63), asteroidTally)
+
+    // allegedly the original arcade rule
+    fun hyperspaceFailure(random0thru62: Int, asteroidTally: Int): Boolean
+            = random0thru62 >= (asteroidTally + 44)
 }

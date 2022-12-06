@@ -206,7 +206,8 @@ class ShipCheckerAndMakerTest {
 
     @Test
     fun `hyperspace failure checks`() {
-        val hyper = HyperspaceOperation(0)
+        val ignoredShip = Ship(U.CENTER_OF_UNIVERSE)
+        val hyper = ShipMaker(ignoredShip)
         assertThat(hyper.hyperspaceFailure(62, 19)).describedAs("roll 62 19 asteroids").isEqualTo(false)
         assertThat(hyper.hyperspaceFailure(62, 18)).describedAs("roll 62 18 asteroids").isEqualTo(true)
         assertThat(hyper.hyperspaceFailure(45, 0)).describedAs("roll 45 0 asteroids").isEqualTo(true)
