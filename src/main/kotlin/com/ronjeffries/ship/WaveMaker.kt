@@ -1,9 +1,8 @@
 package com.ronjeffries.ship
 
-class WaveMaker: ISpaceObject, InteractingSpaceObject {
+class WaveMaker(var numberToCreate: Int = 4): ISpaceObject, InteractingSpaceObject {
     private val oneShot = OneShot(4.0) { makeWave(it) }
     private var asteroidsMissing = true
-    var numberToCreate = 4
 
     override fun update(deltaTime: Double, trans: Transaction) {}
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) = Unit

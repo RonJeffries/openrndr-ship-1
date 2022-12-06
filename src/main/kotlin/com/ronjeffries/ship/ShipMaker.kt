@@ -38,10 +38,16 @@ class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : 
     }
 
     private fun replaceTheShip(trans: Transaction) {
-        trans.add(ship)
-        ship.dropIn()
-        trans.add(ShipChecker(ship, scoreKeeper))
         trans.remove(this)
-        HyperspaceOperation(ship, asteroidTally).execute(trans)
+        val hyp = HyperspaceOperation(asteroidTally)
+        if (!ship.inHyperspace || hyp.ok()) {
+            trans.add(ship)
+            ship.dropIn()
+        } else {
+            ship.inHyperspace = false
+            trans.add(Splat(ship))
+            ship.finalize() // dead again
+        }
+        trans.add(ShipChecker(ship, scoreKeeper))
     }
 }

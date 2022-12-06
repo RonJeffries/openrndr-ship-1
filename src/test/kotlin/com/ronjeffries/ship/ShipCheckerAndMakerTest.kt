@@ -209,7 +209,7 @@ class ShipCheckerAndMakerTest {
         val ship = Ship(
             position = Point(10.0, 10.0)
         )
-        val hyper = HyperspaceOperation(ship, 0)
+        val hyper = HyperspaceOperation(0)
         assertThat(hyper.hyperspaceFailure(62, 19)).describedAs("roll 62 19 asteroids").isEqualTo(false)
         assertThat(hyper.hyperspaceFailure(62, 18)).describedAs("roll 62 18 asteroids").isEqualTo(true)
         assertThat(hyper.hyperspaceFailure(45, 0)).describedAs("roll 45 0 asteroids").isEqualTo(true)
