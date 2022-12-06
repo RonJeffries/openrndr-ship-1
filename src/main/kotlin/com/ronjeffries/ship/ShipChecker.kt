@@ -18,6 +18,5 @@ class ShipChecker(
         }
     )
 
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) =
-        other.subscriptions.interactWithShipChecker(this, trans)
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 }
