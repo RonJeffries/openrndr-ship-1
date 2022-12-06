@@ -16,10 +16,10 @@ class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : 
         },
         interactWithAsteroid = { asteroid, _ ->
             asteroidTally += 1
-            safeToEmerge = safeToEmerge && !tooClose(asteroid)
+            safeToEmerge = isAnythingInTheWay(asteroid)
         },
         interactWithSaucer = { saucer, _ ->
-            safeToEmerge = safeToEmerge && !tooClose(saucer)
+            safeToEmerge = isAnythingInTheWay(saucer)
         },
         afterInteractions = { trans->
             if (ship.inHyperspace || elapsedTime > U.MAKER_DELAY && safeToEmerge) {
@@ -27,6 +27,8 @@ class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : 
             }
         }
     )
+
+    private fun isAnythingInTheWay(collider: Collider) = safeToEmerge && !tooClose(collider)
 
     override fun callOther(other: InteractingSpaceObject, trans: Transaction) =
         other.subscriptions.interactWithShipMaker(this, trans)
