@@ -18,13 +18,15 @@ private val Directions = listOf(
     Velocity(1.0, 0.0), Velocity(0.7071, 0.7071), Velocity(0.7071, -0.7071)
 )
 
+private const val d = 1500.0
+
 class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     override lateinit var position: Point
     override val killRadius = 150.0
 
     private var direction: Double
     lateinit var velocity: Velocity
-    private val speed = 1500.0
+    private val speed = U.SAUCER_SPEED
     private var elapsedTime = 0.0
     private var timeSinceSaucerSeen = 0.0
     private var timeSinceLastMissileFired = 0.0
