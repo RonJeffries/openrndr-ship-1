@@ -2,7 +2,7 @@ package com.ronjeffries.ship
 
 class Quarter(private val controls: Controls): ISpaceObject, InteractingSpaceObject {
     override fun update(deltaTime: Double, trans: Transaction) {
-        trans.remove(this)
+        trans.clear()
         val scoreKeeper = ScoreKeeper(4)
         trans.add(scoreKeeper)
         trans.add(WaveMaker())

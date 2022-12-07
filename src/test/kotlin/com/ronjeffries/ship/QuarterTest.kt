@@ -13,9 +13,9 @@ class QuarterTest {
     }
 
     @Test
-    fun `removes self on update`() {
+    fun `clears all objects`() {
         quarter.update(0.0, trans)
-        assertThat(trans.firstRemove()).isEqualTo(quarter)
+        assertThat(trans.shouldClear).isEqualTo(true)
     }
 
     @Test
