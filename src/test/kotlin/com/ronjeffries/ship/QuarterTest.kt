@@ -16,4 +16,15 @@ class QuarterTest {
         quarter.update(0.0, trans)
         assertThat(trans.firstRemove()).isEqualTo(quarter)
     }
+
+    @Test
+    fun `adds ScoreKeeper`() {
+        quarter.update(0.0, trans)
+        assertThat(trans.adds.any { it is ScoreKeeper }).isEqualTo(true)
+    }
+
+    @Test
+    fun `name`() {
+        quarter.update(0.0, trans)
+    }
 }
