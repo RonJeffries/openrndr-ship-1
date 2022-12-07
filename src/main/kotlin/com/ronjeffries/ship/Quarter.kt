@@ -5,6 +5,7 @@ class Quarter: ISpaceObject, InteractingSpaceObject {
         trans.remove(this)
         val scoreKeeper = ScoreKeeper(4)
         trans.add(scoreKeeper)
+        trans.add(WaveMaker())
     }
 
     override val subscriptions: Subscriptions = Subscriptions()

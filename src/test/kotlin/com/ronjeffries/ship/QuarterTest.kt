@@ -24,6 +24,12 @@ class QuarterTest {
     }
 
     @Test
+    fun `adds WaveMaker`() {
+        quarter.update(0.0, trans)
+        assertThat(trans.adds.any { it is WaveMaker }).isEqualTo(true)
+    }
+
+    @Test
     fun `name`() {
         quarter.update(0.0, trans)
     }
