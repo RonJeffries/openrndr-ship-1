@@ -15,8 +15,8 @@ class Ship(
 ) : ISpaceObject, InteractingSpaceObject, Collider {
     var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
-    var dropScale = U.DROP_SCALE
     var inHyperspace = false
+    private var dropScale = U.DROP_SCALE
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
