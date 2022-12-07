@@ -30,6 +30,12 @@ class QuarterTest {
     }
 
     @Test
+    fun `adds SaucerMaker`() {
+        quarter.update(0.0, trans)
+        assertThat(trans.adds.any { it is SaucerMaker }).isEqualTo(true)
+    }
+
+    @Test
     fun `name`() {
         quarter.update(0.0, trans)
     }
