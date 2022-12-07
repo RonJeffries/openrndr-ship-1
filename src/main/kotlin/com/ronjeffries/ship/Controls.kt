@@ -6,6 +6,7 @@ class Controls {
     var right = false
     var fire = false
     var hyperspace = false
+    var quarter = false
 
     fun control(ship: Ship, deltaTime: Double, trans: Transaction) {
         if (hyperspace) {

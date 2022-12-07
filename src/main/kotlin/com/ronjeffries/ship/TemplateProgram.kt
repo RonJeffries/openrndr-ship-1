@@ -20,6 +20,7 @@ fun main() = application {
                 "j" -> {controls.accelerate = true}
                 "k" -> {controls.fire = true}
                 "space" -> {controls.hyperspace = true}
+                "q" -> { game.createContents(controls)}
             }
         }
         keyboard.keyUp.listen {
