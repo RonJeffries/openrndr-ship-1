@@ -18,11 +18,16 @@ class Game(val knownObjects:SpaceObjectCollection = SpaceObjectCollection()) {
     }
 
     fun createContents(controls: Controls) {
-        add(Quarter(controls))
+        knownObjects.clear()
+        val scoreKeeper = ScoreKeeper(4)
+        add(scoreKeeper)
+        add(WaveMaker())
+        add(SaucerMaker())
+        val shipPosition = U.CENTER_OF_UNIVERSE
+        val ship = Ship(shipPosition, controls)
+        val shipChecker = ShipChecker(ship, scoreKeeper)
+        add(shipChecker)
     }
-
-    private fun newShip(controls: Controls): Ship =
-        Ship(U.CENTER_OF_UNIVERSE, controls)
 
     fun cycle(elapsedSeconds: Double, drawer: Drawer? = null) {
         val deltaTime = elapsedSeconds - lastTime
