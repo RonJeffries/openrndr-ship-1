@@ -3,6 +3,7 @@ package com.ronjeffries.ship
 class Transaction {
     val adds = mutableSetOf<ISpaceObject>()
     val removes = mutableSetOf<ISpaceObject>()
+    var shouldClear = false
 
     fun accumulate(t: Transaction) {
         t.adds.forEach {add(it)}
@@ -18,8 +19,13 @@ class Transaction {
     }
 
     fun applyChanges(spaceObjectCollection: SpaceObjectCollection) {
+        if (shouldClear ) spaceObjectCollection.clear()
         spaceObjectCollection.removeAndFinalizeAll(removes)
         spaceObjectCollection.addAll(adds)
+    }
+
+    fun clear() {
+        shouldClear = true
     }
 
     fun remove(spaceObject: ISpaceObject) {

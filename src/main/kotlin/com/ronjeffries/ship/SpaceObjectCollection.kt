@@ -17,6 +17,10 @@ class SpaceObjectCollection {
 
     fun applyChanges(transaction: Transaction) = transaction.applyChanges(this)
 
+    fun clear() {
+        spaceObjects.clear()
+    }
+
     fun forEach(spaceObject: (ISpaceObject)->Unit) = spaceObjects.forEach(spaceObject)
 
     fun contains(obj:ISpaceObject): Boolean {

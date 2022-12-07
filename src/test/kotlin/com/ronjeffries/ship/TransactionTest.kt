@@ -37,4 +37,18 @@ class TransactionTest {
         assertThat(filler.hasAdd(toAdd)).isEqualTo(true)
         assertThat(filler.hasRemove(toRemove)).isEqualTo(true)
     }
+
+    @Test
+    fun `can clear collection`() {
+        val coll = SpaceObjectCollection()
+        val obj = Asteroid(U.CENTER_OF_UNIVERSE)
+        val trans = Transaction()
+        trans.add(obj)
+        trans.applyChanges(coll)
+        assertThat(coll.size).isEqualTo(1)
+        val clearTrans = Transaction()
+        clearTrans.clear()
+        clearTrans.applyChanges(coll)
+        assertThat(coll.size).isEqualTo(0)
+    }
 }
