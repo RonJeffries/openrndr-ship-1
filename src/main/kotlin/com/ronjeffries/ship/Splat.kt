@@ -6,12 +6,13 @@ import org.openrndr.draw.Drawer
 class Splat(
     var position: Point,
     var scale: Double = 1.0,
-    var color: ColorRGBa = ColorRGBa.WHITE
+    var color: ColorRGBa = ColorRGBa.WHITE,
+    val velocity: Velocity = Velocity.ZERO
 ) : ISpaceObject, InteractingSpaceObject {
-    constructor(ship: Ship) : this(ship.position, 2.0, ColorRGBa.WHITE)
-    constructor(missile: Missile) : this(missile.position, 0.5, missile.color)
-    constructor(saucer: Saucer) : this(saucer.position, 2.0, ColorRGBa.GREEN)
-    constructor(asteroid: Asteroid) : this(asteroid.position, 1.0, ColorRGBa.WHITE)
+    constructor(ship: Ship) : this(ship.position, 2.0, ColorRGBa.WHITE, ship.velocity*0.5)
+    constructor(missile: Missile) : this(missile.position, 0.5, missile.color, missile.velocity*0.5)
+    constructor(saucer: Saucer) : this(saucer.position, 2.0, ColorRGBa.GREEN, saucer.velocity*0.5)
+    constructor(asteroid: Asteroid) : this(asteroid.position, 2.0, ColorRGBa.WHITE, asteroid.velocity*0.5)
 
     var elapsedTime = 0.0
     private val lifetime = U.SPLAT_LIFETIME
@@ -20,6 +21,7 @@ class Splat(
     override fun update(deltaTime: Double, trans: Transaction) {
         elapsedTime += deltaTime
         if (elapsedTime > lifetime) trans.remove(this)
+        position = (position + velocity * deltaTime).cap()
     }
 
     fun draw(drawer: Drawer) {
