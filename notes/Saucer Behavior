@@ -2,7 +2,7 @@
 
 ## Large Saucer
 
-Large saucer appears seven seconds after it last disappeared. It flies for seven seconds. It changes direction every 1.5 seconds. (Possible new story: every 0.5-1.5 seconds randomly.) It chooses randomly between straight, up 45 degrees, or down 45 degrees. Its speed is 1500, which should become a U value. (Ship is capped to SPEED_OF_LIGHT, which is 5000, which is bloody fast.
+Large saucer appears seven seconds after it last disappeared. It flies for seven seconds. It changes direction every 1.5 seconds. (Possible new story: every 0.5-1.5 seconds randomly.) It chooses randomly between straight, up 45 degrees, or down 45 degrees. Its speed is U.SAUCER_SPEED = 1500, (Ship is capped to SPEED_OF_LIGHT, which is 5000, which is bloody fast.
 
 Saucer starts randomly in vertical on the x = left = right edge. It travels left to right on its first traversal, and alternates right to left and left to right thereafter.
 
