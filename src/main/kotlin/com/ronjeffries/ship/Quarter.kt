@@ -5,10 +5,6 @@ class Quarter: ISpaceObject, InteractingSpaceObject {
         trans.remove(this)
     }
 
-    override val subscriptions: Subscriptions
-        get() = TODO("Not yet implemented")
-
-    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {
-        TODO("Not yet implemented")
-    }
+    override val subscriptions: Subscriptions = Subscriptions()
+    override fun callOther(other: InteractingSpaceObject, trans: Transaction) {}
 }
