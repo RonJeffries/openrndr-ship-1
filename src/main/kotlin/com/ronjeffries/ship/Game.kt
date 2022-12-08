@@ -18,15 +18,7 @@ class Game(val knownObjects:SpaceObjectCollection = SpaceObjectCollection()) {
     }
 
     fun createContents(controls: Controls) {
-        knownObjects.clear()
-        val scoreKeeper = ScoreKeeper(4)
-        add(scoreKeeper)
-        add(WaveMaker())
-        add(SaucerMaker())
-        val shipPosition = U.CENTER_OF_UNIVERSE
-        val ship = Ship(shipPosition, controls)
-        val shipChecker = ShipChecker(ship, scoreKeeper)
-        add(shipChecker)
+        add(Quarter(controls))
     }
 
     fun cycle(elapsedSeconds: Double, drawer: Drawer? = null) {
