@@ -13,8 +13,15 @@ class WaveMaker(var numberToCreate: Int = 4): ISpaceObject, InteractingSpaceObje
         afterInteractions = { if (asteroidsMissing) oneShot.execute(it) }
     )
 
-    private fun makeWave(it: Transaction) {
-        for (i in 1..this.numberToCreate) {
+    fun howMany(): Int {
+        return numberToCreate.also {
+            numberToCreate += 2
+            if (numberToCreate > 11) numberToCreate = 11
+        }
+    }
+
+    fun makeWave(it: Transaction) {
+        for (i in 1..howMany()) {
             it.add(Asteroid(U.randomEdgePoint()))
         }
     }

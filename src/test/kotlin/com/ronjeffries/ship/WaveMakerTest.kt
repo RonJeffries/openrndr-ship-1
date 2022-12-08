@@ -32,4 +32,26 @@ class WaveMakerTest {
         game.cycle(4.2)
         assertThat(mix.size).isEqualTo(2) // checker and asteroid
     }
+
+    @Test
+    fun `makes 4,6,8,10,11`() {
+        val ck = WaveMaker()
+        val t1 = Transaction()
+        ck.makeWave(t1)
+        assertThat(t1.adds.size).isEqualTo(4)
+        val t2 = Transaction()
+        ck.makeWave(t2)
+        assertThat(t2.adds.size).isEqualTo(6)
+    }
+
+    @Test
+    fun `calls for 4,6,8,10,11`() {
+        val ck = WaveMaker()
+        assertThat(ck.howMany()).isEqualTo(4)
+        assertThat(ck.howMany()).isEqualTo(6)
+        assertThat(ck.howMany()).isEqualTo(8)
+        assertThat(ck.howMany()).isEqualTo(10)
+        assertThat(ck.howMany()).isEqualTo(11)
+        assertThat(ck.howMany()).isEqualTo(11)
+    }
 }
