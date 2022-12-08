@@ -43,6 +43,10 @@ class ScoreKeeper(var shipCount: Int = 3): ISpaceObject, InteractingSpaceObject 
             text("k     - Fire Missile")
             translate(0.0, 500.0)
             text("space - Hyperspace")
+            translate(0.0, 500.0)
+            text("q     - Insert 25 Cents")
+            translate(0.0, 500.0)
+            text("        for new game")
         }
     }
 
