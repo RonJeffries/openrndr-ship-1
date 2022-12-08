@@ -1,9 +1,9 @@
 package com.ronjeffries.ship
 
-class Quarter(private val controls: Controls): ISpaceObject, InteractingSpaceObject {
+class Quarter(private val controls: Controls, private val shipCount: Int = 4): ISpaceObject, InteractingSpaceObject {
     override fun update(deltaTime: Double, trans: Transaction) {
         trans.clear()
-        val scoreKeeper = ScoreKeeper(4)
+        val scoreKeeper = ScoreKeeper(shipCount)
         trans.add(scoreKeeper)
         trans.add(WaveMaker())
         trans.add(SaucerMaker())

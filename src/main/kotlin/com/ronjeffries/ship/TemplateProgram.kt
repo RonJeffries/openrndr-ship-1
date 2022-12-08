@@ -12,7 +12,7 @@ fun main() = application {
     program {
         val font = loadFont("data/fonts/default.otf", 640.0)
         val controls = Controls()
-        val game = Game().also { it.createContents(controls) }
+        val game = Game().also { it.createInitialContents(controls) }
         keyboard.keyDown.listen {
             when (it.name) {
                 "d" -> {controls.left = true}
@@ -20,7 +20,7 @@ fun main() = application {
                 "j" -> {controls.accelerate = true}
                 "k" -> {controls.fire = true}
                 "space" -> {controls.hyperspace = true}
-                "q" -> { game.createContents(controls)}
+                "q" -> { game.insertQuarter(controls)}
             }
         }
         keyboard.keyUp.listen {

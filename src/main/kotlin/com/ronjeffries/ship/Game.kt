@@ -17,7 +17,11 @@ class Game(val knownObjects:SpaceObjectCollection = SpaceObjectCollection()) {
         return trans
     }
 
-    fun createContents(controls: Controls) {
+    fun createInitialContents(controls: Controls) {
+        add(Quarter(controls,0))
+    }
+
+    fun insertQuarter(controls: Controls) {
         add(Quarter(controls))
     }
 

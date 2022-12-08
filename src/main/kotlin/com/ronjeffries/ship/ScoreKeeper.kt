@@ -4,6 +4,7 @@ import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
 import org.openrndr.draw.isolated
 
+
 class ScoreKeeper(var shipCount: Int = 3): ISpaceObject, InteractingSpaceObject {
     var totalScore = 0
 
@@ -29,6 +30,19 @@ class ScoreKeeper(var shipCount: Int = 3): ISpaceObject, InteractingSpaceObject 
         drawer.isolated{
             translate(3500.0,5000.0)
             text("GAME OVER")
+            translate(50.0, 500.0)
+            scale(0.5, 0.5)
+            text("Keyboard Controls")
+            translate(0.0, 500.0)
+            text("d     - Spin Left")
+            translate(0.0, 500.0)
+            text("f     - Spin Right")
+            translate(0.0, 500.0)
+            text("j     - Accelerate")
+            translate(0.0, 500.0)
+            text("k     - Fire Missile")
+            translate(0.0, 500.0)
+            text("space - Hyperspace")
         }
     }
 
@@ -38,7 +52,7 @@ class ScoreKeeper(var shipCount: Int = 3): ISpaceObject, InteractingSpaceObject 
             ship.heading = -90.0
             translate(250.0, 900.0)
             drawer.scale(1 / U.DROP_SCALE, 1 / U.DROP_SCALE)
-            for (i in 0..shipCount) { // we include the live one currently in use
+            for (i in 1..shipCount) { // ships remaining
                 translate(1000.0, 0.0)
                 drawer.isolated {
                     ship.draw(drawer)
