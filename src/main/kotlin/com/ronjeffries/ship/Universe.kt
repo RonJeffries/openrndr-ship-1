@@ -17,13 +17,13 @@ object U {
     const val SAUCER_LIFETIME = 10.0
     const val SPEED_OF_LIGHT = 5000.0
     const val SPLAT_LIFETIME = 2.0
+    const val SHIP_ROTATION_SPEED = 200.0 // degrees per second
     val SHIP_ACCELERATION = Velocity(1000.0, 0.0)
-    val SHIP_ROTATION_SPEED = 180.0 // degrees per second
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
     fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))
-    fun randomVelocity(speed: Double): Velocity = Velocity(speed,0.0).rotate(Random.nextDouble(360.0))
     fun randomInsidePoint() = Point(randomInsideDouble(), randomInsideDouble())
     fun randomInsideDouble() = 1000.0 + Random.nextDouble(UNIVERSE_SIZE-2000.0)
+    fun randomVelocity(speed: Double): Velocity = Velocity(speed,0.0).rotate(Random.nextDouble(360.0))
 
     fun randomEdgePoint(): Point =
         if (Random.nextBoolean()) Point(0.0, Random.nextDouble(UNIVERSE_SIZE))
