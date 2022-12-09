@@ -18,7 +18,7 @@ object U {
     const val SPEED_OF_LIGHT = 5000.0
     const val SPLAT_LIFETIME = 2.0
     const val SHIP_ROTATION_SPEED = 200.0 // degrees per second
-    val SHIP_ACCELERATION = Velocity(1000.0, 0.0)
+    val SHIP_ACCELERATION = Velocity(1200.0, 0.0)
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
     fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))
     fun randomInsidePoint() = Point(randomInsideDouble(), randomInsideDouble())
