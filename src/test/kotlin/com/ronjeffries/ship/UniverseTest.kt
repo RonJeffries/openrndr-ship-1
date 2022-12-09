@@ -32,4 +32,12 @@ class UniverseTest {
         ship.subscriptions.interactWithAsteroid(asteroid, trans2)
         assertThat(trans2.removes.size).describedAs("too close").isEqualTo(1)
     }
+//
+//    @Test
+//    fun `randomInsideDouble between 1000 and 9000`() {
+//        for (i in 1..100000) {
+//            var rd = U.randomInsideDouble()
+//            assertThat(rd).isBetween(1000.0, 9000.0)
+//        }
+//    }
 }

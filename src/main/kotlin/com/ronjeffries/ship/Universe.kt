@@ -22,6 +22,8 @@ object U {
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
     fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))
     fun randomVelocity(speed: Double): Velocity = Velocity(speed,0.0).rotate(Random.nextDouble(360.0))
+    fun randomInsidePoint() = Point(randomInsideDouble(), randomInsideDouble())
+    fun randomInsideDouble() = 1000.0 + Random.nextDouble(UNIVERSE_SIZE-2000.0)
 
     fun randomEdgePoint(): Point =
         if (Random.nextBoolean()) Point(0.0, Random.nextDouble(UNIVERSE_SIZE))

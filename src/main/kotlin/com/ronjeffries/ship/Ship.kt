@@ -8,6 +8,10 @@ private val points = listOf(
     Point(7.0, 0.0), Point(-5.0, -4.0), Point(-3.0, -2.0)
 )
 
+private val flare = listOf(
+    Point(-3.0,-2.0), Point(-7.0,0.0), Point(-3.0, 2.0)
+)
+
 class Ship(
     override var position: Point,
     val controls: Controls = Controls(),
@@ -17,6 +21,9 @@ class Ship(
     var heading: Double = 0.0
     var inHyperspace = false
     private var dropScale = U.DROP_SCALE
+    private var accelerating: Boolean = false
+    private var displayAcceleration: Int = 0
+    private val strokeWeight = 8.0/30.0
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
@@ -38,6 +45,7 @@ class Ship(
 
     override fun update(deltaTime: Double, trans: Transaction) {
         inHyperspace = false
+        accelerating = false
         dropScale -= U.DROP_SCALE/60.0
         if (dropScale < 1.0 ) dropScale = 1.0
         controls.control(this, deltaTime, trans)
@@ -56,6 +64,7 @@ class Ship(
     }
 
     fun accelerate(deltaV: Acceleration) {
+        accelerating = true
         velocity = (velocity + deltaV).limitedToLightSpeed()
     }
 
@@ -67,11 +76,18 @@ class Ship(
         drawer.translate(position)
 //        drawKillRadius(drawer)
         drawer.scale(30.0, 30.0)
-        drawer.strokeWeight = 8.0/30.0
+        drawer.strokeWeight = strokeWeight
         drawer.scale(dropScale, dropScale)
         drawer.rotate(heading )
         drawer.stroke = ColorRGBa.WHITE
         drawer.lineStrip(points)
+        if ( accelerating ) {
+            displayAcceleration = (displayAcceleration + 1)%3
+            if ( displayAcceleration == 0 ) {
+                drawer.strokeWeight = 2.0*strokeWeight
+                drawer.lineStrip(flare)
+            }
+        }
     }
 
     private fun drawKillRadius(drawer: Drawer) {
@@ -85,7 +101,7 @@ class Ship(
 
     fun finalize(): List<ISpaceObject> {
         if ( inHyperspace ) {
-            position = U.randomPoint()
+            position = U.randomInsidePoint()
         } else {
             position = U.CENTER_OF_UNIVERSE
             velocity = Velocity.ZERO
