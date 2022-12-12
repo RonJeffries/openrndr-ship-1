@@ -39,8 +39,6 @@ class AsteroidView {
         drawer.stroke = ColorRGBa.WHITE
         drawer.strokeWeight = 16.0
         drawer.fill = null
-        val sizer = 30.0
-        drawer.scale(sizer, sizer)
         val sc = asteroid.scale()
         drawer.scale(sc,sc)
         drawer.rotate(asteroid.heading)

@@ -7,7 +7,7 @@ import kotlin.random.Random
 class Asteroid(
     override var position: Point,
     val velocity: Velocity = U.randomVelocity(U.ASTEROID_SPEED),
-    override val killRadius: Double = 500.0,
+    override val killRadius: Double = 1000.0,
     private val splitCount: Int = 2
 ) : ISpaceObject, InteractingSpaceObject, Collider {
     private val view = AsteroidView()
@@ -20,6 +20,7 @@ class Asteroid(
     fun draw(drawer: Drawer) {
         drawer.fill = null
         drawer.translate(position)
+        drawer.scale(U.DRAW_SCALE, U.DRAW_SCALE)
         view.draw(this, drawer)
     }
 
@@ -50,7 +51,7 @@ class Asteroid(
         )
     }
 
-    fun scale() =2.0.pow(splitCount)
+    fun scale() =2.0.pow(splitCount)*2.0
 
     override val subscriptions = Subscriptions(
         interactWithMissile = { missile, trans -> dieIfColliding(missile, trans) },

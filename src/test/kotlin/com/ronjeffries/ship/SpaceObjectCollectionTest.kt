@@ -34,7 +34,7 @@ class SpaceObjectCollectionTest {
     @Test
     fun `stringent colliders`() {
         val p1 = Vector2(100.0, 100.0)
-        val p2 = Vector2(750.0, 100.0)
+        val p2 = Vector2(1250.0, 100.0)
         val game = Game()
         val a0 = Asteroid(p1) // yes
         game.add(a0)
