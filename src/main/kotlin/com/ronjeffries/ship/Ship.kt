@@ -75,7 +75,7 @@ class Ship(
     fun draw(drawer: Drawer) {
         drawer.translate(position)
 //        drawKillRadius(drawer)
-        drawer.scale(30.0, 30.0)
+        drawer.scale(U.DRAW_SCALE, U.DRAW_SCALE)
         drawer.strokeWeight = strokeWeight
         drawer.scale(dropScale, dropScale)
         drawer.rotate(heading )

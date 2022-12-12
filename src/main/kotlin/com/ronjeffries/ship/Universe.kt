@@ -8,7 +8,7 @@ typealias Velocity = Vector2
 typealias Acceleration = Vector2
 
 object U {
-    const val DRAW_SCALE = 30.0
+    const val DRAW_SCALE = 15.0
     const val UNIVERSE_SIZE = 10000.0
     const val ASTEROID_SPEED = 1000.0
     const val DROP_SCALE = 3.0

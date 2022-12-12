@@ -5,8 +5,9 @@ import kotlin.random.Random
 
 class SplatView(lifetime: Double) {
     private val rot = Random.nextDouble(0.0, 360.0)
-    private var sizeTween = Tween(20.0, 100.0, lifetime)
-    private var radiusTween = Tween(30.0, 5.0, lifetime)
+    private val ratio = U.DRAW_SCALE/30.0
+    private var sizeTween = Tween(20.0*ratio, 100.0*ratio, lifetime)
+    private var radiusTween = Tween(30.0*ratio, 5.0*ratio, lifetime)
     private val points = listOf(
         Point(-2.0, 0.0), Point(-2.0, -2.0), Point(2.0, -2.0),
         Point(3.0, 1.0), Point(2.0, -1.0), Point(0.0, 2.0),

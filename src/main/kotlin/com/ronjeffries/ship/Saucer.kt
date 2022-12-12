@@ -6,7 +6,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
 
-private val SaucerPoints = listOf(
+private val saucerPoints = listOf(
     Point(-2.0, 1.0), Point(2.0, 1.0), Point(5.0, -1.0),
     Point(-5.0, -1.0), Point(-2.0, -3.0), Point(2.0, -3.0),
     Point(5.0, -1.0), Point(2.0, 1.0), Point(1.0, 3.0),
@@ -14,7 +14,7 @@ private val SaucerPoints = listOf(
     Point(-2.0, 1.0)
 )
 
-private val Directions = listOf(
+private val directions = listOf(
     Velocity(1.0, 0.0), Velocity(0.7071, 0.7071), Velocity(0.7071, -0.7071)
 )
 
@@ -22,7 +22,7 @@ private const val d = 1500.0
 
 class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     override lateinit var position: Point
-    override val killRadius = 150.0
+    override val killRadius = 200.0
 
     private var direction: Double
     lateinit var velocity: Velocity
@@ -86,16 +86,17 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         return emptyList()
     }
 
-    fun newDirection(direction: Int): Velocity = Directions[min(max(0, direction), 2)]
+    fun newDirection(direction: Int): Velocity = directions[min(max(0, direction), 2)]
 
     fun draw(drawer: Drawer) {
         drawer.translate(position)
+        drawer.scale(U.DRAW_SCALE, U.DRAW_SCALE)
 //        drawKillRadius(drawer)
         drawer.stroke = ColorRGBa.GREEN
-        val sc = 45.0
+        val sc = 2.0
         drawer.scale(sc, -sc)
-        drawer.strokeWeight = 8.0 / sc
-        drawer.lineStrip(SaucerPoints)
+        drawer.strokeWeight = 2.0 / U.DRAW_SCALE*sc
+        drawer.lineStrip(saucerPoints)
     }
 
     fun getScore() = Score(200)
