@@ -21,8 +21,8 @@ class Ship(
     var heading: Double = 0.0
     var inHyperspace = false
     private var dropScale = U.DROP_SCALE
-    private var accelerating: Boolean = false
-    private var displayAcceleration: Int = 0
+    var accelerating: Boolean = false
+    var displayAcceleration: Int = 0
     private val strokeWeight = 8.0/30.0
 
     override val subscriptions = Subscriptions(
