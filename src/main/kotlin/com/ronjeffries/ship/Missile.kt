@@ -2,7 +2,6 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
-import org.openrndr.extra.color.presets.MEDIUM_SLATE_BLUE
 import kotlin.random.Random
 
 class Missile(
@@ -38,7 +37,6 @@ class Missile(
     }
 
     fun draw(drawer: Drawer) {
-        drawer.fill = ColorRGBa.MEDIUM_SLATE_BLUE
         drawer.translate(position)
         drawer.stroke = color
         drawer.fill = color
@@ -59,14 +57,10 @@ class Missile(
             }
         },
         interactWithShip = { ship, trans ->
-            if (checkCollision(ship)) {
-                terminateMissile(trans)
-            }
+            if (checkCollision(ship)) terminateMissile(trans)
         },
         interactWithMissile = { missile, trans ->
-            if (checkCollision(missile)) {
-                terminateMissile(trans)
-            }
+            if (checkCollision(missile)) terminateMissile(trans)
         },
         draw = this::draw,
     )
