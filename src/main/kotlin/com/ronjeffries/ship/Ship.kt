@@ -91,7 +91,7 @@ class Ship(
 
     private fun drawKillRadius(drawer: Drawer) {
         drawer.stroke = ColorRGBa.RED
-        drawer.strokeWeight = 8.0
+        drawer.strokeWeight = 1.0
         drawer.fill = null
         drawer.circle(0.0, 0.0, killRadius)
     }

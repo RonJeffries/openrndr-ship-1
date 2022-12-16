@@ -9,12 +9,12 @@ typealias Acceleration = Vector2
 
 object U {
     const val KILL_ASTEROID = 64.0
-    const val KILL_MISSILE = 1.0
-    const val KILL_SAUCER = 10.0
-    const val KILL_SHIP = 12.0
     const val SCALE_ASTEROID = 4.0
+    const val KILL_MISSILE = 1.0
+    const val KILL_SAUCER = 10.0 // scaled dx=40 dy=24 suggests 12.0 Make it hard.
+    const val SCALE_SAUCER = 4.0
+    const val KILL_SHIP = 12.0
     const val SCALE_SHIP = 2.0
-    const val SCALE_SAUCER = 2.0
     const val STROKE_ALL = 1.0
     const val DRAW_SCALE = 1.0
     const val UNIVERSE_SIZE = 1024.0
@@ -32,7 +32,7 @@ object U {
     val CENTER_OF_UNIVERSE = Point(UNIVERSE_SIZE / 2, UNIVERSE_SIZE / 2)
     fun randomPoint() = Point(Random.nextDouble(0.0, UNIVERSE_SIZE), Random.nextDouble(0.0, UNIVERSE_SIZE))
     fun randomInsidePoint() = Point(randomInsideDouble(), randomInsideDouble())
-    fun randomInsideDouble() = UNIVERSE_SIZE/10.0 + Random.nextDouble(UNIVERSE_SIZE-2* UNIVERSE_SIZE/10.0)
+    private fun randomInsideDouble() = UNIVERSE_SIZE/10.0 + Random.nextDouble(UNIVERSE_SIZE-2* UNIVERSE_SIZE/10.0)
     fun randomVelocity(speed: Double): Velocity = Velocity(speed,0.0).rotate(Random.nextDouble(360.0))
 
     fun randomEdgePoint(): Point =
