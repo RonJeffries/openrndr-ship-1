@@ -7,7 +7,7 @@ import kotlin.random.Random
 class Missile(
     shipPosition: Point,
     shipHeading: Double = 0.0,
-    shipKillRadius: Double = 100.0,
+    shipKillRadius: Double = U.KILL_SHIP,
     shipVelocity: Velocity = Velocity.ZERO,
     val color: ColorRGBa = ColorRGBa.WHITE,
     val missileIsFromShip: Boolean = false
