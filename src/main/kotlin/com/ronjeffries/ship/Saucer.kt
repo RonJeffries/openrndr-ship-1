@@ -22,7 +22,7 @@ private const val d = 1500.0
 
 class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     override lateinit var position: Point
-    override val killRadius = 200.0
+    override val killRadius = U.KILL_SAUCER
 
     private var direction: Double
     lateinit var velocity: Velocity
@@ -90,12 +90,10 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     fun draw(drawer: Drawer) {
         drawer.translate(position)
-        drawer.scale(U.DRAW_SCALE, U.DRAW_SCALE)
 //        drawKillRadius(drawer)
         drawer.stroke = ColorRGBa.GREEN
-        val sc = 2.0
-        drawer.scale(sc, -sc)
-        drawer.strokeWeight = 2.0 / U.DRAW_SCALE*sc
+        drawer.scale(U.SCALE_SAUCER, -U.SCALE_SAUCER)
+        drawer.strokeWeight = U.STROKE_ALL/U.SCALE_SAUCER
         drawer.lineStrip(saucerPoints)
     }
 
@@ -103,7 +101,6 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     private fun drawKillRadius(drawer: Drawer) {
         drawer.stroke = ColorRGBa.RED
-        drawer.strokeWeight = 25.0
         drawer.fill = null // ColorRGBa.GREEN
         drawer.circle(0.0, 0.0, killRadius)
     }

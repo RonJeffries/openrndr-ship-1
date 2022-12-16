@@ -15,7 +15,7 @@ private val flare = listOf(
 class Ship(
     override var position: Point,
     val controls: Controls = Controls(),
-    override val killRadius: Double = 150.0
+    override val killRadius: Double = U.KILL_SHIP
 ) : ISpaceObject, InteractingSpaceObject, Collider {
     var velocity:  Velocity = Velocity.ZERO
     var heading: Double = 0.0
@@ -23,7 +23,6 @@ class Ship(
     private var dropScale = U.DROP_SCALE
     var accelerating: Boolean = false
     var displayAcceleration: Int = 0
-    private val strokeWeight = 8.0/30.0
 
     override val subscriptions = Subscriptions(
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
@@ -75,8 +74,8 @@ class Ship(
     fun draw(drawer: Drawer) {
         drawer.translate(position)
 //        drawKillRadius(drawer)
-        drawer.scale(U.DRAW_SCALE, U.DRAW_SCALE)
-        drawer.strokeWeight = strokeWeight
+        drawer.strokeWeight = U.STROKE_ALL
+        drawer.scale(U.SCALE_SHIP, U.SCALE_SHIP)
         drawer.scale(dropScale, dropScale)
         drawer.rotate(heading )
         drawer.stroke = ColorRGBa.WHITE
@@ -84,7 +83,7 @@ class Ship(
         if ( accelerating ) {
             displayAcceleration = (displayAcceleration + 1)%3
             if ( displayAcceleration == 0 ) {
-                drawer.strokeWeight = 2.0*strokeWeight
+                drawer.strokeWeight = 2.0*U.STROKE_ALL
                 drawer.lineStrip(flare)
             }
         }

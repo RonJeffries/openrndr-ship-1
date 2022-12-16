@@ -1,16 +1,17 @@
 import com.ronjeffries.ship.Controls
 import com.ronjeffries.ship.Game
+import com.ronjeffries.ship.U
 import org.openrndr.application
 import org.openrndr.draw.*
 
 fun main() = application {
     configure {
-        width = 1000
+        width = U.WINDOW_SIZE
         height = width
     }
 
     program {
-        val font = loadFont("data/fonts/default.otf", 640.0)
+        val font = loadFont("data/fonts/default.otf", 64.0)
         val controls = Controls()
         val game = Game().also { it.createInitialContents(controls) }
         keyboard.keyDown.listen {
@@ -36,9 +37,7 @@ fun main() = application {
         }
 
         extend {
-            val worldScale = width/10000.0
             drawer.fontMap = font
-            drawer.scale(worldScale, worldScale)
             game.cycle(seconds, drawer)
         }
     }

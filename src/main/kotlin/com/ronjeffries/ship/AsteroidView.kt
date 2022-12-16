@@ -37,14 +37,13 @@ class AsteroidView {
 
     fun draw(asteroid: Asteroid, drawer: Drawer) {
         drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 16.0
         drawer.fill = null
-        val sc = asteroid.scale() // 2,4,8
-        drawer.scale(sc,sc) // 30, 60, 120 net
+        val sc = asteroid.scale()*U.SCALE_ASTEROID
+        drawer.scale(sc,sc)
         drawer.rotate(asteroid.heading)
         drawer.stroke = ColorRGBa.WHITE
-        drawer.strokeWeight = 8.0/30.0/sc
-        drawer.scale(1.0, -1.0)
+        drawer.strokeWeight = U.STROKE_ALL/sc
+        drawer.scale(1.0, -1.0) // upside down
         drawer.lineStrip(rock)
     }
 }

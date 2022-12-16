@@ -18,7 +18,7 @@ class Missile(
 
     override var position: Point = Point.ZERO
     var velocity: Velocity = Velocity.ZERO
-    override val killRadius: Double = 10.0
+    override val killRadius: Double = U.KILL_MISSILE
     private val timeOut = OneShot(3.0) {
         it.remove(this)
         it.add(Splat(this))
@@ -42,7 +42,7 @@ class Missile(
         drawer.translate(position)
         drawer.stroke = color
         drawer.fill = color
-        drawer.circle(Point.ZERO, killRadius * 3.0)
+        drawer.circle(Point.ZERO, killRadius * 2.0)
     }
 
     override val subscriptions = Subscriptions(

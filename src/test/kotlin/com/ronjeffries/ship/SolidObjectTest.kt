@@ -105,9 +105,9 @@ class SolidObjectTest {
         ship.update(100.0, Transaction()) // long time
         val v = ship.velocity
         val speed = v.length
-        assertThat(speed).isEqualTo(5000.0, within(1.0))
+        assertThat(speed).isEqualTo(U.SPEED_OF_LIGHT, within(1.0))
         val radians60 = 60.0.asRadians
-        val expected = Vector2(cos(radians60), -sin(radians60)) * 5000.0
+        val expected = Vector2(cos(radians60), -sin(radians60)) * U.SPEED_OF_LIGHT
         checkVector(v, expected, "velocity", 1.0)
     }
 
@@ -214,27 +214,52 @@ class SolidObjectTest {
         )
         ship.heading = 0.0
         controls.fire = true
-        val missileOffset = Vector2(2 * 150.0 + 2 * 10.0, 0.0)
-        var expectedPosition = ship.position + missileOffset.rotate(ship.heading)
-        var additions = Transaction()
+
+        // hand calculate expected result
+        val missileOffset = Vector2(2 * U.KILL_SHIP + 2 * U.KILL_MISSILE, 0.0)
+        val expectedPosition = ship.position + missileOffset.rotate(ship.heading)
+
+        // fire missile and check it
+        val additions = Transaction()
         ship.update(sixtieth, additions)
-        assertThat(additions.adds).isNotEmpty
-        var missile = additions.adds.first() as Missile
-        print(missile.position)
+        val missile = additions.firstAdd() as Missile
         assertThat(missile.position).isEqualTo(expectedPosition)
-        controls.fire = false
-        additions = Transaction()
-        ship.update(sixtieth, additions)
-        assertThat(additions.adds).isEmpty()
+    }
+
+    @Test
+    fun `missile starts ahead of ship when rotated`() {
+        val sixtieth = 1.0 / 60.0
+        val controls = Controls()
+        val ship = Ship(
+            position = Vector2(1000.0, 1000.0),
+            controls = controls
+        )
+
+        // hand calculate expected result
+        val missileOffset = Vector2(2 * U.KILL_SHIP + 2 * U.KILL_MISSILE, 0.0)
+
+        // check that we always position the missile in front of the ship
         ship.heading = 90.0
         controls.fire = true
-        expectedPosition = ship.position + missileOffset.rotate(ship.heading)
-        additions = Transaction()
+        val expectedPosition = ship.position + missileOffset.rotate(ship.heading)
+        val additions = Transaction()
         ship.update(sixtieth, additions)
-        assertThat(additions.adds).isNotEmpty
-        missile = additions.adds.first() as Missile
-        print(missile.position)
+        val missile = additions.firstAdd() as Missile
         assertThat(missile.position).isEqualTo(expectedPosition)
+    }
+
+    @Test
+    fun `does not fire if fire flag not set`() {
+        val sixtieth = 1.0 / 60.0
+        val controls = Controls()
+        val ship = Ship(
+            position = Vector2(1000.0, 1000.0),
+            controls = controls
+        )
+        controls.fire = false
+        val noMissile = Transaction()
+        ship.update(sixtieth, noMissile)
+        assertThat(noMissile.adds).isEmpty()
     }
 }
 

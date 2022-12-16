@@ -50,9 +50,9 @@ class SaucerTest {
 
     @Test
     fun `saucer asteroid collision`() {
-        val saucer = Saucer()
-        saucer.position = Point(249.0, 0.0)
-        val asteroid = Asteroid(Point.ZERO)
+        val saucer = Saucer() // kr = 10
+        saucer.position = Point(73.0, 0.0)
+        val asteroid = Asteroid(Point.ZERO) // kr = 64 tot = 74, test 73
         val trans = Transaction()
         saucer.subscriptions.interactWithAsteroid(asteroid, trans)
         asteroid.subscriptions.interactWithSaucer(saucer, trans)
