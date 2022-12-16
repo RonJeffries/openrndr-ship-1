@@ -19,6 +19,7 @@ object U {
     const val DRAW_SCALE = 1.0
     const val UNIVERSE_SIZE = 1024.0
     const val WINDOW_SIZE = 1024
+    const val FONT_SIZE = 64.0
     const val ASTEROID_SPEED = 100.0
     const val DROP_SCALE = 3.0
     const val MAKER_DELAY = 3.0

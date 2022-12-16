@@ -11,7 +11,7 @@ fun main() = application {
     }
 
     program {
-        val font = loadFont("data/fonts/default.otf", 64.0)
+        val font = loadFont("data/fonts/default.otf", U.FONT_SIZE)
         val controls = Controls()
         val game = Game().also { it.createInitialContents(controls) }
         keyboard.keyDown.listen {
