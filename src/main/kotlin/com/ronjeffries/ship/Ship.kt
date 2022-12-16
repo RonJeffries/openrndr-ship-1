@@ -89,12 +89,12 @@ class Ship(
         }
     }
 
-    private fun drawKillRadius(drawer: Drawer) {
-        drawer.stroke = ColorRGBa.RED
-        drawer.strokeWeight = 1.0
-        drawer.fill = null
-        drawer.circle(0.0, 0.0, killRadius)
-    }
+//    private fun drawKillRadius(drawer: Drawer) {
+//        drawer.stroke = ColorRGBa.RED
+//        drawer.strokeWeight = 1.0
+//        drawer.fill = null
+//        drawer.circle(0.0, 0.0, killRadius)
+//    }
 
     private fun weAreCollidingWith(other: Collider): Boolean = Collision(other).hit(this)
 

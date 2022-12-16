@@ -49,10 +49,10 @@ class AsteroidView {
 //        drawer.circle(0.0,0.0,U.KILL_ASTEROID)
     }
 
-    private fun drawKillRadius(drawer: Drawer, asteroid: Asteroid) {
-        drawer.stroke = ColorRGBa.RED
-        drawer.strokeWeight = 8.0
-        drawer.fill = null
-        drawer.circle(0.0, 0.0, asteroid.killRadius)
-    }
+//    private fun drawKillRadius(drawer: Drawer, asteroid: Asteroid) {
+//        drawer.stroke = ColorRGBa.RED
+//        drawer.strokeWeight = 8.0
+//        drawer.fill = null
+//        drawer.circle(0.0, 0.0, asteroid.killRadius)
+//    }
 }

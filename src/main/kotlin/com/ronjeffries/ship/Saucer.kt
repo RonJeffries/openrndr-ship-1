@@ -97,9 +97,9 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     fun getScore() = Score(200)
 
-    private fun drawKillRadius(drawer: Drawer) {
-        drawer.stroke = ColorRGBa.RED
-        drawer.fill =ColorRGBa.RED
-        drawer.circle(0.0, 0.0, killRadius)
-    }
+//    private fun drawKillRadius(drawer: Drawer) {
+//        drawer.stroke = ColorRGBa.RED
+//        drawer.fill =ColorRGBa.RED
+//        drawer.circle(0.0, 0.0, killRadius)
+//    }
 }
