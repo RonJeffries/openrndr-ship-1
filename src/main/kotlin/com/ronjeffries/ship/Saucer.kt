@@ -49,8 +49,8 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         finalize = this::finalize
     )
 
-    private fun checkCollision(asteroid: Collider, trans: Transaction) {
-        if (Collision(asteroid).hit(this)) {
+    private fun checkCollision(collider: Collider, trans: Transaction) {
+        if (Collision(collider).hit(this)) {
             trans.add(Splat(this))
             trans.remove(this)
         }
