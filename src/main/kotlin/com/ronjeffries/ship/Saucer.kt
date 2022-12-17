@@ -2,6 +2,8 @@ package com.ronjeffries.ship
 
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.Drawer
+import org.openrndr.math.asDegrees
+import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
@@ -28,6 +30,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     private var elapsedTime = 0.0
     private var timeSinceSaucerSeen = 0.0
     private var timeSinceLastMissileFired = 0.0
+    private var shipPosition = Point.ZERO
 
     init {
         direction = -1.0
@@ -44,7 +47,9 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     override val subscriptions = Subscriptions(
         draw = this::draw,
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
-        interactWithShip = { ship, trans -> checkCollision(ship, trans) },
+        interactWithShip = { ship, trans ->
+            shipPosition = ship.position
+            checkCollision(ship, trans) },
         interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
         finalize = this::finalize
     )
@@ -70,8 +75,21 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     }
 
     private fun fire(trans: Transaction) {
+        if (Random.nextInt(4) == 0 ) fireTargeted(trans)
+        else fireRandom(trans)
+    }
+
+    private fun fireRandom(trans: Transaction) {
         timeSinceLastMissileFired = 0.0
         trans.add(Missile(this))
+    }
+
+    private fun fireTargeted(trans: Transaction) {
+        timeSinceLastMissileFired = 0.0
+        val directionToShip = (shipPosition - position)
+        val heading = atan2(y = directionToShip.y, x = directionToShip.x).asDegrees
+        val missile = Missile(position, heading, killRadius, Velocity.ZERO, ColorRGBa.RED)
+        trans.add(missile)
     }
 
     fun zigZag() {
