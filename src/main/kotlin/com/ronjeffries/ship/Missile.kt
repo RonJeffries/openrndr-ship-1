@@ -5,8 +5,8 @@ import org.openrndr.draw.Drawer
 import kotlin.random.Random
 
 class Missile(
-    shipPosition: Point,
-    shipHeading: Double = 0.0,
+    shooterPosition: Point,
+    shooterHeading: Double = 0.0,
     shipKillRadius: Double = U.KILL_SHIP,
     shipVelocity: Velocity = Velocity.ZERO,
     val color: ColorRGBa = ColorRGBa.WHITE,
@@ -24,10 +24,10 @@ class Missile(
     }
 
     init {
-        val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(shipHeading)
+        val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(shooterHeading)
         val standardOffset = Point(2 * (shipKillRadius + killRadius), 0.0)
-        val rotatedOffset = standardOffset.rotate(shipHeading)
-        position = shipPosition + rotatedOffset
+        val rotatedOffset = standardOffset.rotate(shooterHeading)
+        position = shooterPosition + rotatedOffset
         velocity = shipVelocity + missileOwnVelocity
     }
 
