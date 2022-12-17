@@ -7,8 +7,8 @@ import kotlin.random.Random
 class Missile(
     shooterPosition: Point,
     shooterHeading: Double = 0.0,
-    shipKillRadius: Double = U.KILL_SHIP,
-    shipVelocity: Velocity = Velocity.ZERO,
+    shooterKillRadius: Double = U.KILL_SHIP,
+    shooterVelocity: Velocity = Velocity.ZERO,
     val color: ColorRGBa = ColorRGBa.WHITE,
     val missileIsFromShip: Boolean = false
 ): ISpaceObject, InteractingSpaceObject, Collider {
@@ -25,10 +25,10 @@ class Missile(
 
     init {
         val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(shooterHeading)
-        val standardOffset = Point(2 * (shipKillRadius + killRadius), 0.0)
+        val standardOffset = Point(2 * (shooterKillRadius + killRadius), 0.0)
         val rotatedOffset = standardOffset.rotate(shooterHeading)
         position = shooterPosition + rotatedOffset
-        velocity = shipVelocity + missileOwnVelocity
+        velocity = shooterVelocity + missileOwnVelocity
     }
 
     override fun update(deltaTime: Double, trans: Transaction) {
