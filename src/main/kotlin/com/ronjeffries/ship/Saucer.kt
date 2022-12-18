@@ -17,7 +17,7 @@ private val saucerPoints = listOf(
 )
 
 private val directions = listOf(
-    Velocity(1.0, 0.0), Velocity(0.7071, 0.7071), Velocity(0.7071, -0.7071)
+    Velocity(1.0, 0.0), Velocity(1.0, 0.0), Velocity(0.7071, 0.7071), Velocity(0.7071, -0.7071)
 )
 
 class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
@@ -94,7 +94,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     fun zigZag() {
         timeSinceSaucerSeen = 0.0
-        velocity = newDirection(Random.nextInt(3)) * speed * direction
+        velocity = newDirection(Random.nextInt(4)) * speed * direction
     }
 
     private fun finalize(): List<ISpaceObject> {
