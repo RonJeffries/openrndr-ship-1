@@ -29,4 +29,37 @@ class TargetingTest {
         val optimized = ShotOptimizer.optimizeShot(shooter, target)
         assertThat(optimized).isEqualTo(Point(-124.0, 1124.0))
     }
+
+    @Test
+    fun `approximations`() {
+        val S = Point(4.0, 4.0)
+        val Vs = Velocity(1.0,-2.0)
+        val M = Point(0.0, 0.0)
+        val Sm = 3.0
+        var t = 0.0
+        while (t <= 3.0 ) {
+            approximate(S, Vs, t, M, Sm)
+            t += 0.5
+        }
+        assertThat(2).isEqualTo(1)
+    }
+
+    private fun approximate(
+        S: Point,
+        Vs: Velocity,
+        t: Double,
+        M: Point,
+        Sm: Double
+    ) {
+        val St = S + Vs * t
+        val Dt = M.distanceTo(St)
+        val Mt = Dt / Sm
+        println("At time $t, ${status(t, Mt)}, missile time = $Mt, S at $St")
+    }
+
+    private fun status (t1:Double, t2: Double): String {
+        if (t1==t2) return "perfect"
+        if (t1<t2) return "slow"
+        return "fast"
+    }
 }
