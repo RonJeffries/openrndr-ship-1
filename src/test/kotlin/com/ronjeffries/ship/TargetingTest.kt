@@ -17,6 +17,10 @@ fun preferred(shooter: Double, target: Double) : Double {
     }
 }
 
+fun optimizeShot(shooter: Point, target:Point): Point {
+    return Point(preferred(shooter.x,target.x), preferred(shooter.y,target.y))
+}
+
 fun preferred(shooter: Int, target: Int): Double {
     return preferred(shooter.toDouble(), target.toDouble())
 }
@@ -38,5 +42,13 @@ class TargetingTest {
     @Test
     fun `right better`() {
         assertThat(preferred(1000, 100)).isEqualTo(1124.0)
+    }
+
+    @Test
+    fun `optimize point target`() {
+        val shooter = Point(100.0, 1000.0)
+        val target = Point(900.0, 100.0)
+        val optimized = optimizeShot(shooter, target)
+        assertThat(optimized).isEqualTo(Point(-124.0, 1124.0))
     }
 }
