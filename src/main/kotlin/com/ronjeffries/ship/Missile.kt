@@ -24,7 +24,7 @@ class Missile(
     }
 
     init {
-        val missileOwnVelocity = Velocity(U.SPEED_OF_LIGHT / 3.0, 0.0).rotate(shooterHeading)
+        val missileOwnVelocity = Velocity(U.MISSILE_SPEED, 0.0).rotate(shooterHeading)
         val standardOffset = Point(2 * (shooterKillRadius + killRadius), 0.0)
         val rotatedOffset = standardOffset.rotate(shooterHeading)
         position = shooterPosition + rotatedOffset

@@ -27,6 +27,7 @@ object U {
     const val SAUCER_SPEED = 150.0
     const val SAUCER_LIFETIME = 10.0
     const val SPEED_OF_LIGHT = 500.0
+    const val MISSILE_SPEED = SPEED_OF_LIGHT / 3.0
     const val SPLAT_LIFETIME = 2.0
     const val SHIP_ROTATION_SPEED = 200.0 // degrees per second
     val SHIP_ACCELERATION = Velocity(120.0, 0.0)
