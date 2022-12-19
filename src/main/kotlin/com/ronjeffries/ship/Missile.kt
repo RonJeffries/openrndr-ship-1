@@ -18,7 +18,7 @@ class Missile(
     override var position: Point = Point.ZERO
     var velocity: Velocity = Velocity.ZERO
     override val killRadius: Double = U.KILL_MISSILE
-    private val timeOut = OneShot(3.0) {
+    private val timeOut = OneShot(U.MISSILE_LIFETIME) {
         it.remove(this)
         it.add(Splat(this))
     }
