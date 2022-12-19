@@ -119,22 +119,39 @@ class ShipCheckerAndMakerTest {
     }
 
     @Test
-    fun `asteroid or saucer clears safeToEmerge`() {
-        val ship = Ship(
-            position = U.CENTER_OF_UNIVERSE
-        )
+    fun `asteroid clears safeToEmerge`() {
+        val ship = Ship(U.CENTER_OF_UNIVERSE)
         val asteroid = Asteroid(U.CENTER_OF_UNIVERSE)
-        val saucer = Saucer()
-        saucer.position = U.CENTER_OF_UNIVERSE
         val maker = ShipMaker(ship)
         val ignored = Transaction()
         maker.subscriptions.beforeInteractions()
         assertThat(maker.safeToEmerge).isEqualTo(true)
         maker.subscriptions.interactWithAsteroid(asteroid, ignored)
         assertThat(maker.safeToEmerge).isEqualTo(false)
+    }
+
+    @Test
+    fun `saucer clears safeToEmerge`() {
+        val ship = Ship(U.CENTER_OF_UNIVERSE)
+        val saucer = Saucer()
+        saucer.position = U.CENTER_OF_UNIVERSE
+        val maker = ShipMaker(ship)
+        val ignored = Transaction()
         maker.subscriptions.beforeInteractions()
         assertThat(maker.safeToEmerge).isEqualTo(true)
         maker.subscriptions.interactWithSaucer(saucer, ignored)
+        assertThat(maker.safeToEmerge).isEqualTo(false)
+    }
+
+    @Test
+    fun `missile clears safeToEmerge`() {
+        val ship = Ship(U.CENTER_OF_UNIVERSE)
+        val missile = Missile(Point.ZERO)
+        val maker = ShipMaker(ship)
+        val ignored = Transaction()
+        maker.subscriptions.beforeInteractions()
+        assertThat(maker.safeToEmerge).isEqualTo(true)
+        maker.subscriptions.interactWithMissile(missile, ignored)
         assertThat(maker.safeToEmerge).isEqualTo(false)
     }
 

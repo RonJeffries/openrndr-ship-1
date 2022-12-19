@@ -102,7 +102,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         return emptyList()
     }
 
-    fun newDirection(direction: Int): Velocity = directions[min(max(0, direction), 2)]
+    fun newDirection(direction: Int): Velocity = directions[min(max(0, direction), 3)]
 
     fun draw(drawer: Drawer) {
         drawer.translate(position)

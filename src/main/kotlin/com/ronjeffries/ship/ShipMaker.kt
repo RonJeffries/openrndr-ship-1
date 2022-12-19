@@ -5,7 +5,6 @@ import kotlin.random.Random
 class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : ISpaceObject, InteractingSpaceObject {
     var safeToEmerge = true
     var asteroidTally = 0
-    var missileTally = 0
     private var elapsedTime = 0.0
 
     override fun update(deltaTime: Double, trans: Transaction) {
@@ -16,15 +15,14 @@ class ShipMaker(val ship: Ship, val scoreKeeper: ScoreKeeper = ScoreKeeper()) : 
         beforeInteractions = {
             safeToEmerge = true
             asteroidTally = 0
-            missileTally = 0
         },
         interactWithMissile = { _, _ -> safeToEmerge = false },
         interactWithAsteroid = { asteroid, _ ->
             asteroidTally += 1
             safeToEmerge = isAnythingInTheWay(asteroid)
         },
-        interactWithSaucer = { saucer, _ ->
-            safeToEmerge = isAnythingInTheWay(saucer)
+        interactWithSaucer = { _, _ ->
+            safeToEmerge = false
         },
         afterInteractions = { trans->
             if (ship.inHyperspace || elapsedTime > U.MAKER_DELAY && safeToEmerge) {
