@@ -100,4 +100,26 @@ class SaucerTest {
         assertThat(trans.removes).isEmpty()
     }
 
+    @Test
+    fun `saucer records ship future position`() {
+        val saucer = Saucer()
+        saucer.position = Point(900.0,900.0)
+        val ship = Ship(Point(100.0, 100.0))
+        ship.velocity = Velocity(10.0, 0.0)
+        saucer.subscriptions.interactWithShip(ship, Transaction())
+        assertThat(saucer.shipFuturePosition).isEqualTo(Point(115.0, 100.0))
+    }
+
+    @Test
+    fun `saucer fires across border`() {
+        val x = 100.0
+        val y = 50.0
+        val saucer = Saucer()
+        saucer.position = Point(900.0,900.0)
+        val ship = Ship(Point(x,y))
+        saucer.subscriptions.interactWithShip(ship, Transaction())
+        val target = saucer.getTargetPosition()
+        assertThat(target).isEqualTo(Point(x + 1024.0, y + 1024.0))
+    }
+
 }

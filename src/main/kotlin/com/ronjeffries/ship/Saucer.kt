@@ -30,7 +30,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     private var elapsedTime = 0.0
     private var timeSinceSaucerSeen = 0.0
     private var timeSinceLastMissileFired = 0.0
-    private var shipPosition = Point.ZERO
+    var shipFuturePosition = Point.ZERO
 
     init {
         direction = -1.0
@@ -48,7 +48,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         draw = this::draw,
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
         interactWithShip = { ship, trans ->
-            shipPosition = ship.position
+            shipFuturePosition = ship.position + ship.velocity*1.5
             checkCollision(ship, trans) },
         interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
         finalize = this::finalize
@@ -86,11 +86,14 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     private fun fireTargeted(trans: Transaction) {
         timeSinceLastMissileFired = 0.0
-        val directionToShip = (shipPosition - position)
+        val targetPosition = getTargetPosition()
+        val directionToShip = (targetPosition - position)
         val heading = atan2(y = directionToShip.y, x = directionToShip.x).asDegrees
         val missile = Missile(position, heading, killRadius, Velocity.ZERO, ColorRGBa.RED)
         trans.add(missile)
     }
+
+    fun getTargetPosition() = ShotOptimizer.optimizeShot(position, shipFuturePosition)
 
     fun zigZag() {
         timeSinceSaucerSeen = 0.0
