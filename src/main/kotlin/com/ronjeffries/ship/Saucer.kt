@@ -30,6 +30,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     private var elapsedTime = 0.0
     private var timeSinceSaucerSeen = 0.0
     private var timeSinceLastMissileFired = 0.0
+    var sawShip = false
     var shipFuturePosition = Point.ZERO
 
     init {
@@ -46,8 +47,10 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     override val subscriptions = Subscriptions(
         draw = this::draw,
+        beforeInteractions = { sawShip = false },
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
         interactWithShip = { ship, trans ->
+            sawShip = true
             shipFuturePosition = ship.position + ship.velocity*1.5
             checkCollision(ship, trans) },
         interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
@@ -70,13 +73,15 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         timeSinceSaucerSeen += deltaTime
         if (timeSinceSaucerSeen > 1.5) zigZag()
         timeSinceLastMissileFired += deltaTime
-        if (timeSinceLastMissileFired > 0.5 ) fire(trans)
+        if (timeSinceLastMissileFired > 0.5) fire(trans)
         position = (position + velocity * deltaTime).cap()
     }
 
-    private fun fire(trans: Transaction) {
-        if (Random.nextInt(4) == 0 ) fireTargeted(trans)
-        else fireRandom(trans)
+    fun fire(trans: Transaction) {
+        if ( sawShip ) {
+            if (Random.nextInt(4) == 0 ) fireTargeted(trans)
+            else fireRandom(trans)
+        }
     }
 
     private fun fireRandom(trans: Transaction) {

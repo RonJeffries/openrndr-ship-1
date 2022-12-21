@@ -122,4 +122,31 @@ class SaucerTest {
         assertThat(target).isEqualTo(Point(x + 1024.0, y + 1024.0))
     }
 
+    @Test
+    fun `saucer will fire if ship present`() {
+        val saucer = Saucer()
+        saucer.sawShip = true
+        val trans = Transaction()
+        saucer.fire(trans)
+        assertThat(trans.adds.size).isEqualTo(1)
+    }
+
+    @Test
+    fun `saucer will not fire if ship not present`() {
+        val saucer = Saucer()
+        saucer.sawShip = false
+        val trans = Transaction()
+        saucer.fire(trans)
+        assertThat(trans.adds.size).isEqualTo(0)
+    }
+
+    @Test
+    fun `saucer knows if ship present`() {
+        val saucer = Saucer()
+        saucer.subscriptions.beforeInteractions()
+        assertThat(saucer.sawShip).isEqualTo(false)
+        saucer.subscriptions.interactWithShip(Ship(U.CENTER_OF_UNIVERSE), Transaction())
+        assertThat(saucer.sawShip).isEqualTo(true)
+    }
+
 }
