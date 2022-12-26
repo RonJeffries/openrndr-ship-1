@@ -109,8 +109,19 @@ class Ship(
         return emptyList()
     }
 
+    fun accelerateToNewSpeedInOneSecond(vNew:Velocity, vCurrent: Velocity): Velocity {
+//        vNew = vCurrent + a*t
+//        t = 1
+//        a = vNew - vCurrent
+        return vNew - vCurrent
+    }
+
     private fun move(deltaTime: Double) {
         position = (position + velocity * deltaTime).cap()
+        if (! accelerating ) {
+            val acceleration = accelerateToNewSpeedInOneSecond(velocity*0.5, velocity)*deltaTime
+            velocity += acceleration
+        }
     }
 
     override fun toString(): String = "Ship $position ($killRadius)"

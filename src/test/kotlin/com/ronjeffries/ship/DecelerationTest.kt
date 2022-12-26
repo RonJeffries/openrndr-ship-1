@@ -32,8 +32,15 @@ class DecelerationTest {
         return vNew - vCurrent
     }
 
+    fun accelerateToNewSpeedInOneSecond(vNew:Velocity, vCurrent: Velocity): Velocity {
+//        vNew = vCurrent + a*t
+//        t = 1
+//        a = vNew - vCurrent
+        return vNew - vCurrent
+    }
+
     @Test
-    fun `deceleration by a quarter`() {
+    fun `deceleration by 25`() {
         var speed = 100.0
         val acceleration = accelerateToNewSpeedInOneSecond(75.0, 100.0)
         speed += acceleration
