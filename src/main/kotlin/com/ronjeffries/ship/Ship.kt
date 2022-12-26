@@ -119,7 +119,7 @@ class Ship(
     private fun move(deltaTime: Double) {
         position = (position + velocity * deltaTime).cap()
         if (! accelerating ) {
-            val acceleration = accelerateToNewSpeedInOneSecond(velocity*0.5, velocity)*deltaTime
+            val acceleration = accelerateToNewSpeedInOneSecond(velocity*U.SHIP_DECELERATION_FACTOR, velocity)*deltaTime
             velocity += acceleration
         }
     }
