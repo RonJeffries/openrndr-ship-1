@@ -32,6 +32,8 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     private var timeSinceLastMissileFired = 0.0
     var sawShip = false
     var shipFuturePosition = Point.ZERO
+    var missileReady = true
+    var previousMissile: Missile? = null
 
     init {
         direction = -1.0
@@ -47,13 +49,15 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     override val subscriptions = Subscriptions(
         draw = this::draw,
-        beforeInteractions = { sawShip = false },
+        beforeInteractions = { sawShip = false; missileReady = true },
         interactWithAsteroid = { asteroid, trans -> checkCollision(asteroid, trans) },
         interactWithShip = { ship, trans ->
             sawShip = true
             shipFuturePosition = ship.position + ship.velocity*1.5
             checkCollision(ship, trans) },
-        interactWithMissile = { missile, trans -> checkCollision(missile, trans) },
+        interactWithMissile = { missile, trans ->
+            if (missile == previousMissile ) missileReady = false
+            checkCollision(missile, trans) },
         finalize = this::finalize
     )
 
@@ -78,7 +82,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     }
 
     fun fire(trans: Transaction) {
-        if ( sawShip ) {
+        if ( sawShip && missileReady ) {
             if (Random.nextInt(4) == 0 ) fireTargeted(trans)
             else fireRandom(trans)
         }
@@ -86,7 +90,9 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     private fun fireRandom(trans: Transaction) {
         timeSinceLastMissileFired = 0.0
-        trans.add(Missile(this))
+        val missile = Missile(this)
+        previousMissile = missile
+        trans.add(missile)
     }
 
     private fun fireTargeted(trans: Transaction) {
@@ -95,6 +101,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         val directionToShip = (targetPosition - position)
         val heading = atan2(y = directionToShip.y, x = directionToShip.x).asDegrees
         val missile = Missile(position, heading, killRadius, Velocity.ZERO, ColorRGBa.RED)
+        previousMissile = missile
         trans.add(missile)
     }
 

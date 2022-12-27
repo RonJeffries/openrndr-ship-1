@@ -149,4 +149,19 @@ class SaucerTest {
         assertThat(saucer.sawShip).isEqualTo(true)
     }
 
+    @Test
+    fun `saucer will not fire when its missile still lives`() {
+        val saucer = Saucer()
+        val trans = Transaction()
+        saucer.sawShip = true
+        saucer.fire(trans)
+        val missile: Missile = trans.firstAdd() as Missile
+        saucer.subscriptions.beforeInteractions()
+        saucer.subscriptions.interactWithMissile(missile, trans)
+        saucer.sawShip = true
+        val empty = Transaction()
+        saucer.fire(empty)
+        assertThat(empty.adds.size).isEqualTo(0)
+    }
+
 }
