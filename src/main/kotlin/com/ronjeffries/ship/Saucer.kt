@@ -33,7 +33,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     var sawShip = false
     var shipFuturePosition = Point.ZERO
     var missileReady = true
-    var previousMissile: Missile? = null
+    var currentMissile: Missile? = null
 
     init {
         direction = -1.0
@@ -56,7 +56,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
             shipFuturePosition = ship.position + ship.velocity*1.5
             checkCollision(ship, trans) },
         interactWithMissile = { missile, trans ->
-            if (missile == previousMissile ) missileReady = false
+            if (missile == currentMissile ) missileReady = false
             checkCollision(missile, trans) },
         finalize = this::finalize
     )
@@ -91,8 +91,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     private fun fireRandom(trans: Transaction) {
         timeSinceLastMissileFired = 0.0
         val missile = Missile(this)
-        previousMissile = missile
-        trans.add(missile)
+        fireMissile(missile, trans)
     }
 
     private fun fireTargeted(trans: Transaction) {
@@ -101,7 +100,11 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
         val directionToShip = (targetPosition - position)
         val heading = atan2(y = directionToShip.y, x = directionToShip.x).asDegrees
         val missile = Missile(position, heading, killRadius, Velocity.ZERO, ColorRGBa.RED)
-        previousMissile = missile
+        fireMissile(missile, trans)
+    }
+
+    private fun fireMissile(missile: Missile, trans: Transaction) {
+        currentMissile = missile
         trans.add(missile)
     }
 
