@@ -83,18 +83,17 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     fun fire(trans: Transaction) {
         if ( sawShip && missileReady ) {
+            timeSinceLastMissileFired = 0.0
             if (Random.nextInt(4) == 0 ) fireTargeted(trans)
             else fireRandom(trans)
         }
     }
 
     private fun fireRandom(trans: Transaction) {
-        timeSinceLastMissileFired = 0.0
         fireMissile(Missile(this), trans)
     }
 
     private fun fireTargeted(trans: Transaction) {
-        timeSinceLastMissileFired = 0.0
         val targetPosition = getTargetPosition()
         val directionToShip = (targetPosition - position)
         val heading = atan2(y = directionToShip.y, x = directionToShip.x).asDegrees
