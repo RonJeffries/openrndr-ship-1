@@ -32,8 +32,8 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     private var timeSinceLastMissileFired = 0.0
     var sawShip = false
     var shipFuturePosition = Point.ZERO
-    var missileReady = true
-    var currentMissile: Missile? = null
+    private var missileReady = true
+    private var currentMissile: Missile? = null
 
     init {
         direction = -1.0
@@ -90,8 +90,7 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
 
     private fun fireRandom(trans: Transaction) {
         timeSinceLastMissileFired = 0.0
-        val missile = Missile(this)
-        fireMissile(missile, trans)
+        fireMissile(Missile(this), trans)
     }
 
     private fun fireTargeted(trans: Transaction) {
