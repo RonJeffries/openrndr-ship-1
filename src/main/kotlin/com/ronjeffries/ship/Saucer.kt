@@ -94,11 +94,13 @@ class Saucer : ISpaceObject, InteractingSpaceObject, Collider {
     }
 
     private fun fireTargeted(trans: Transaction) {
-        val targetPosition = getTargetPosition()
-        val directionToShip = (targetPosition - position)
-        val heading = atan2(y = directionToShip.y, x = directionToShip.x).asDegrees
-        val missile = Missile(position, heading, killRadius, Velocity.ZERO, ColorRGBa.RED)
+        val missile = Missile(position, headingToShip(), killRadius, Velocity.ZERO, ColorRGBa.RED)
         fireMissile(missile, trans)
+    }
+
+    private fun headingToShip(): Double {
+        val directionToShip = (getTargetPosition() - position)
+        return atan2(y = directionToShip.y, x = directionToShip.x).asDegrees
     }
 
     private fun fireMissile(missile: Missile, trans: Transaction) {
