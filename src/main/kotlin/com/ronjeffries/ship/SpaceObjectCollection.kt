@@ -8,6 +8,7 @@ class SpaceObjectCollection {
         spaceObjects.add(spaceObject)
         if (spaceObject is Missile) attackers.add(spaceObject)
         if (spaceObject is Ship) attackers.add(spaceObject)
+        if (spaceObject is Saucer) attackers.add(spaceObject)
     }
     
     fun addAll(newbies: Collection<ISpaceObject>) {

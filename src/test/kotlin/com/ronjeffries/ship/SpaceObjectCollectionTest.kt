@@ -67,4 +67,12 @@ class SpaceObjectCollectionTest {
         s.add(toAdd)
         assertThat(s.attackers).contains(toAdd)
     }
+
+    @Test
+    fun `saucer is an attacker`() {
+        val s = SpaceObjectCollection()
+        val toAdd = Saucer()
+        s.add(toAdd)
+        assertThat(s.attackers).contains(toAdd)
+    }
 }
