@@ -1,6 +1,6 @@
 package com.ronjeffries.ship
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.openrndr.math.Vector2
 
@@ -50,5 +50,13 @@ class SpaceObjectCollectionTest {
         game.add(a4)
         val colliders = game.changesDueToInteractions()
         assertThat(colliders.removes.size).isEqualTo(3)
+    }
+
+    @Test
+    fun `missiles are attackers`() {
+        val s = SpaceObjectCollection()
+        val m = Missile(Point(100.0, 200.0))
+        s.add(m)
+        assertThat(s.attackers).contains(m)
     }
 }
