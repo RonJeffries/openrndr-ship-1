@@ -3,11 +3,15 @@ package com.ronjeffries.ship
 class SpaceObjectCollection {
     val spaceObjects = mutableListOf<ISpaceObject>()
     val attackers = mutableListOf<ISpaceObject>()
+    val targets = mutableListOf<ISpaceObject>()
 
     fun add(spaceObject: ISpaceObject) {
         spaceObjects.add(spaceObject)
         if (spaceObject is Missile) attackers.add(spaceObject)
-        if (spaceObject is Ship) attackers.add(spaceObject)
+        if (spaceObject is Ship) {
+            attackers.add(spaceObject)
+            targets.add(spaceObject)
+        }
         if (spaceObject is Saucer) attackers.add(spaceObject)
     }
     

@@ -69,6 +69,14 @@ class SpaceObjectCollectionTest {
     }
 
     @Test
+    fun `ship is a target`() {
+        val s = SpaceObjectCollection()
+        val toAdd = Ship(Point(100.0, 200.0))
+        s.add(toAdd)
+        assertThat(s.targets).contains(toAdd)
+    }
+
+    @Test
     fun `saucer is an attacker`() {
         val s = SpaceObjectCollection()
         val toAdd = Saucer()
