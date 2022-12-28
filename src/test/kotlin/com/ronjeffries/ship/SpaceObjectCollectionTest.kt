@@ -103,6 +103,15 @@ class SpaceObjectCollectionTest {
     }
 
     @Test
+    fun `remove removes ship from targets`() {
+        val s = SpaceObjectCollection()
+        val toAdd = Ship(Point(100.0, 200.0))
+        s.add(toAdd)
+        s.remove(toAdd)
+        assertThat(s.targets).doesNotContain(toAdd)
+    }
+
+    @Test
     fun `remove removes saucer from attackers`() {
         val s = SpaceObjectCollection()
         val toAdd = Saucer()
