@@ -12,7 +12,11 @@ class SpaceObjectCollection {
             attackers.add(spaceObject)
             targets.add(spaceObject)
         }
-        if (spaceObject is Saucer) attackers.add(spaceObject)
+        if (spaceObject is Saucer)  {
+            attackers.add(spaceObject)
+            targets.add(spaceObject)
+        }
+        if (spaceObject is Asteroid) targets.add(spaceObject)
     }
     
     fun addAll(newbies: Collection<ISpaceObject>) {
