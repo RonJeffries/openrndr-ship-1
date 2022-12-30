@@ -1,8 +1,7 @@
-import com.ronjeffries.ship.Controls
-import com.ronjeffries.ship.Game
-import com.ronjeffries.ship.U
+package com.ronjeffries.ship
+
 import org.openrndr.application
-import org.openrndr.draw.*
+import org.openrndr.draw.loadFont
 
 fun main() = application {
     configure {
